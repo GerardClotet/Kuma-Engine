@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kuma Engine", "Kuma Engine.vcxproj", "{BEEC28F6-497C-4106-A51D-A4A958250627}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEEC28F6-497C-4106-A51D-A4A958250627}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BEEC28F6-497C-4106-A51D-A4A958250627}.Debug|Win32.Build.0 = Debug|Win32
+		{BEEC28F6-497C-4106-A51D-A4A958250627}.Release|Win32.ActiveCfg = Release|Win32
+		{BEEC28F6-497C-4106-A51D-A4A958250627}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13D48B4A-8B52-4719-A870-E2220A0A1D63}
+	EndGlobalSection
+EndGlobal
