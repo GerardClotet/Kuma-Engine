@@ -114,7 +114,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Text
 	ImGui::Text("ImGui says hello");
 	
-	ImGui::SameLine(150);
+	ImGui::SameLine(ImGui::GetWindowSize().x -30);
 	HelpMarker("Here god will\n help you");
 	//Headers with options
 	if (ImGui::CollapsingHeader("Help"))
