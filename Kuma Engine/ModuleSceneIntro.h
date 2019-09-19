@@ -20,7 +20,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-
+	static void HelpMarker(const char* desc);
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];

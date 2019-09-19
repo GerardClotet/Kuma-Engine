@@ -91,31 +91,38 @@ update_status ModuleSceneIntro::Update(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();
-
 	bool show_another_window = true;
-
+	//ImGui::ShowStyleEditor();
+	
 	ImGui::Begin("ImGui Test", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 
+
+	
 	//Begin Menu
 	if (ImGui::BeginMenu("Menu"))
 	{
 		//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
 		ImGui::EndMenu();
 	}
-
+	ImGui::SameLine(50.0f);
 	if (ImGui::BeginMenu("Examples"))
 	{
 		ImGui::EndMenu();
 	}
 
+	
 	//Text
 	ImGui::Text("ImGui says hello");
-
+	
+	ImGui::SameLine(150);
+	HelpMarker("Here god will\n help you");
 	//Headers with options
 	if (ImGui::CollapsingHeader("Help"))
 	{
-
+		HelpMarker("Here god will\n help you");
 	}
+
+	
 
 	if (ImGui::CollapsingHeader("Window options"))
 	{
@@ -192,8 +199,14 @@ update_status ModuleSceneIntro::Update(float dt)
 			{
 				//Input text
 				static char str0[128] = "Hello, world!";
-				ImGui::InputText("input text", str0, IM_ARRAYSIZE(str0));
-
+				if (ImGui::InputText("input text", str0, IM_ARRAYSIZE(str0)))
+				{
+					
+					ImGui::CaptureKeyboardFromApp(true);
+					ImGui::SetKeyboardFocusHere();
+					io.WantCaptureKeyboard = true;
+					
+				}
 				//Input Int
 				static int i0 = 123;
 				ImGui::InputInt("input int", &i0);
@@ -252,13 +265,39 @@ update_status ModuleSceneIntro::Update(float dt)
 		{
 			ImGui::TreePop();
 		}
-		ImGui::TreeNode("Colored Text");
-		ImGui::TreeNode("Word Wrapping");
-		ImGui::TreeNode("UTF-8 Text");
-		ImGui::TreeNode("Images");
-		ImGui::TreeNode("Selectables");
-		ImGui::TreeNode("Filtered Text Input");
-		ImGui::TreeNode("Multi-line Text Input");
+		if (ImGui::TreeNode("Colored Text"))
+		{
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNode("Word Wrapping"))
+		{
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNode("UTF-8 Text"))
+		{
+			ImGui::TreePop();
+
+		}
+		if (ImGui::TreeNode("Images"))
+		{
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNode("Selectables"))
+		{
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Filtered Text Input"))
+		{
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Multi-line Text Input"))
+		{
+			ImGui::TreePop();
+		}
+
+	
 
 	}
 
@@ -280,5 +319,18 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+}
+
+void ModuleSceneIntro::HelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
 }
 
