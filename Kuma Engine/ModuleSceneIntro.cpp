@@ -4,7 +4,7 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "ImGui/imgui.h"
-#include "ImGui/examples/imgui_impl_opengl2.h"
+#include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
 
 #include <gl/GL.h>
@@ -24,7 +24,6 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -37,16 +36,8 @@ bool ModuleSceneIntro::Start()
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
-	ImGui_ImplOpenGL2_Init();
+	ImGui_ImplOpenGL3_Init();
 
-
-	/*io.Fonts->AddFontDefault();
-   io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-   io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-   io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-   io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-   ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-   IM_ASSERT(font != NULL);*/
 	return ret;
 }
 
@@ -65,29 +56,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	//SDL_Event event;
-	////main lloop
-	//bool done = false;
-
-	////while (!done)
-	////{
-	////	while (SDL_PollEvent(&event))
-	////	{
-	////		ImGui_ImplSDL2_ProcessEvent(&event);
-	////		if (event.type == SDL_QUIT)
-	////			done = true;
-	////	}
-	////	// Start the Dear ImGui frame
-	////	ImGui_ImplOpenGL2_NewFrame();
-	////	ImGui_ImplSDL2_NewFrame(window);
-	////	ImGui::NewFrame();
-	////}
-	//////ImGui::ShowDemoWindow();
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();
@@ -98,18 +71,21 @@ update_status ModuleSceneIntro::Update(float dt)
 
 
 	
-	//Begin Menu
-	if (ImGui::BeginMenu("Menu"))
+	if (ImGui::BeginMenuBar())
 	{
-		//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
-		ImGui::EndMenu();
-	}
-	ImGui::SameLine(50.0f);
-	if (ImGui::BeginMenu("Examples"))
-	{
-		ImGui::EndMenu();
-	}
+		//Begin Menu
+		if (ImGui::BeginMenu("Menu"))
+		{
+			//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
+			ImGui::EndMenu();
+		}
 
+		if (ImGui::BeginMenu("Examples"))
+		{
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 	
 	//Text
 	ImGui::Text("ImGui says hello");
@@ -312,7 +288,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
 	//glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
 }
