@@ -1,11 +1,15 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Primitive.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
+
+#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/include/MathBuildConfig.h"
+#include "MathGeoLib/include/MathGeoLibFwd.h"
+
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -32,7 +36,7 @@ public:
 	Sphere s_snake2[MAX_SNAKE];
 	*/
 
-	PhysBody3D* pb_chassis;
+	/*PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
 	PhysBody3D* pb_wheel;
@@ -42,6 +46,6 @@ public:
 	Cylinder p_wheel2;
 
 	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
+	PhysMotor3D* right_wheel;*/
 	SDL_Window* window;
 };

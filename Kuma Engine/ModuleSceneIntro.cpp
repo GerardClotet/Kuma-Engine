@@ -1,12 +1,20 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-#include "Primitive.h"
 
 
 
 
 #include <gl/GL.h>
+
+#include "MathGeoLib/include/Geometry/Plane.h"
+
+#ifdef NDEBUG //no debug
+#pragma comment (lib, "MathGeoLib/libx86/Release/MathGeoLib.lib") 
+#else
+#pragma comment (lib, "MathGeoLib/libx86/Debug/MathGeoLib.lib") 
+#endif
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -38,6 +46,7 @@ bool ModuleSceneIntro::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
 
+	
 	return ret;
 }
 
@@ -55,11 +64,18 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	//Plane p(0, 1, 0, 0);
+	//p.axis = true;
+	//p.Render();
 
-
+	Sphere es ({ 0,0,0 }, 5);
+	Sphere z({ 0,0,0 }, 3);
+	if (z.Intersects(es))
+	{
+		LOG("intersected");
+		Sphere ais({ 10,0,00 }, 500);
+		
+	}
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
