@@ -109,15 +109,6 @@
     <ClInclude Include="ModuleRenderer3D.h">
       <Filter>modules</Filter>
     </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -142,6 +133,7 @@
     <ClInclude Include="Color.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="p2Defs.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
