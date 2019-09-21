@@ -128,6 +128,7 @@ bool Application::CleanUp()
 		ret = (*item)->CleanUp();
 		++item;
 	}
+	list_modules.clear();
 	return ret;
 }
 
