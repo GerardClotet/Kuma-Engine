@@ -4,9 +4,9 @@
 #include "SDL\include\SDL_opengl.h"
 
 #include <gl/GL.h>
-#include <gl/GLU.h>
+//#include <gl/GLU.h>
 
-#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+//#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -31,6 +31,12 @@ bool ModuleRenderer3D::Init()
 		ret = false;
 	}
 	
+	GLenum error = glewInit();
+	if (error != GL_NO_ERROR)
+	{
+		LOG("Error initializing glew library! %s\n", SDL_GetError());
+		ret = false;
+	}
 	if(ret == true)
 	{
 		//Use Vsync
@@ -41,25 +47,19 @@ bool ModuleRenderer3D::Init()
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Check for error
-		GLenum error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+		////Check for error
+		//GLenum error = glGetError();
+		//if(error != GL_NO_ERROR)
+		//{
+		//	LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+		//	ret = false;
+		//}
 
 		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
+	
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
@@ -67,14 +67,6 @@ bool ModuleRenderer3D::Init()
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 		

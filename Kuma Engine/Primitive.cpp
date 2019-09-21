@@ -1,7 +1,7 @@
 
 #include "Globals.h"
 #include <gl/GL.h>
-#include <gl/GLU.h>
+//#include <gl/GLU.h>
 #include "Primitive.h"
 
 
