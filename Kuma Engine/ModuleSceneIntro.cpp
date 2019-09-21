@@ -5,9 +5,7 @@
 #include "PhysBody3D.h"
 
 
-#include "ImGui/imgui.h"
-#include "ImGui/examples/imgui_impl_opengl3.h"
-#include "ImGui/examples/imgui_impl_sdl.h"
+
 
 #include <gl/GL.h>
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -34,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 	  // Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -183,10 +181,15 @@ update_status ModuleSceneIntro::Update(float dt)
 				static char str0[128] = "Hello, world!";
 				if (ImGui::InputText("input text", str0, IM_ARRAYSIZE(str0)))
 				{
+					io.WantCaptureKeyboard = false;
+					/*ImGui::CaptureKeyboardFromApp(true);
+					io.WantCaptureKeyboard = true;*/
+					if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+					{
+						io.WantCaptureKeyboard = true;
+						ImGui::SetKeyboardFocusHere();
+					}
 					
-					ImGui::CaptureKeyboardFromApp(true);
-					ImGui::SetKeyboardFocusHere();
-					io.WantCaptureKeyboard = true;
 					
 				}
 				//Input Int

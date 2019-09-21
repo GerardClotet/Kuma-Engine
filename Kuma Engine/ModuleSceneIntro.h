@@ -4,6 +4,9 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include "ImGui/imgui.h"
+#include "ImGui/examples/imgui_impl_opengl3.h"
+#include "ImGui/examples/imgui_impl_sdl.h"
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
