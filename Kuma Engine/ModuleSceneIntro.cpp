@@ -60,8 +60,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	Sphere z({ 0,0,0 }, 3);
 	if (z.Intersects(es))
 	{
-	/*	LOG("intersected");
-		Sphere ais({ 10,0,00 }, 500);*/
+		LOG("intersected");
+		Sphere ais({ 10,0,00 }, 500);
 		
 	}
 	

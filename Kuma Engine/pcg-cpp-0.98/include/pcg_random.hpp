@@ -373,10 +373,10 @@ public:
     // It would be nice to use std::numeric_limits for these, but
     // we can't be sure that it'd be defined for the 128-bit types.
 
-    static constexpr result_type min()
-    {
-        return result_type(0UL);
-    }
+	static constexpr result_type min()
+	{
+		return result_type(0UL);
+	}
 
     static constexpr result_type max()
     {
@@ -537,15 +537,15 @@ public:
                               output_mixin1,output_previous1,
                               stream_mixin1, multiplier_mixin1>&);
 
-    template <typename CharT, typename Traits,
-              typename xtype1, typename itype1,
-              typename output_mixin1, bool output_previous1,
-              typename stream_mixin1, typename multiplier_mixin1>
-    friend std::basic_istream<CharT,Traits>&
-    operator>>(std::basic_istream<CharT,Traits>& in,
-               engine<xtype1, itype1,
-                        output_mixin1, output_previous1,
-                        stream_mixin1, multiplier_mixin1>& rng);
+	template <typename CharT, typename Traits,
+		typename xtype1, typename itype1,
+		typename output_mixin1, bool output_previous1,
+		typename stream_mixin1, typename multiplier_mixin1>
+		friend std::basic_istream<CharT, Traits>&
+		operator>>(std::basic_istream<CharT, Traits>& in,
+			engine<xtype1, itype1,
+			output_mixin1, output_previous1,
+			stream_mixin1, multiplier_mixin1>& rng);
 };
 
 template <typename CharT, typename Traits,
@@ -1204,12 +1204,12 @@ public:
         return baseclass::period_pow2() + table_size*extvalclass::period_pow2();
     }
 
-    __attribute__((always_inline)) result_type operator()()
-    {
-        result_type rhs = get_extended_value();
-        result_type lhs = this->baseclass::operator()();
-        return lhs ^ rhs;
-    }
+	__attribute__((always_inline)) result_type operator()()
+	{
+		result_type rhs = get_extended_value();
+		result_type lhs = this->baseclass::operator()();
+		return lhs ^ rhs;
+	}
 
     result_type operator()(result_type upper_bound)
     {
@@ -1474,38 +1474,39 @@ extended<table_pow2,advance_pow2,baseclass,extvalclass,kdd>::advance_table(
 
 template <bitcount_t table_pow2, bitcount_t advance_pow2,
           typename baseclass, typename extvalclass, bool kdd>
-void extended<table_pow2,advance_pow2,baseclass,extvalclass,kdd>::advance_table(
-    state_type distance, bool forwards)
+	void extended<table_pow2, advance_pow2, baseclass, extvalclass, kdd>::advance_table(
+		state_type distance, bool forwards)
 {
-    static_assert(kdd,
-        "Efficient advance is too hard for non-kdd extension. "
-        "For a weak advance, cast to base class");
-    state_type zero =
-        baseclass::is_mcg ? this->state_ & state_type(3U) : state_type(0U);
-    if (may_tick) {
-        state_type ticks = distance >> (advance_pow2*may_tick);
-                                        // ^-- stupidity to appease GCC
-                                        // warnings
-        state_type adv_mask =
-            baseclass::is_mcg ? tick_mask << 2 : tick_mask;
-        state_type next_advance_distance = this->distance(zero, adv_mask);
-        if (!forwards)
-            next_advance_distance = (-next_advance_distance) & tick_mask;
-        if (next_advance_distance < (distance & tick_mask)) {
-            ++ticks;
-        }
-        if (ticks)
-            advance_table(ticks, forwards);
-    }
-    if (forwards) {
-        if (may_tock && this->distance(zero) <= distance)
-            advance_table();
-        baseclass::advance(distance);
-    } else {
-        if (may_tock && -(this->distance(zero)) <= distance)
-            advance_table(state_type(1U), false);
-        baseclass::advance(-distance);
-    }
+	static_assert(kdd,
+		"Efficient advance is too hard for non-kdd extension. "
+		"For a weak advance, cast to base class");
+	state_type zero =
+		baseclass::is_mcg ? this->state_ & state_type(3U) : state_type(0U);
+	if (may_tick) {
+		state_type ticks = distance >> (advance_pow2*may_tick);
+		// ^-- stupidity to appease GCC
+		// warnings
+		state_type adv_mask =
+			baseclass::is_mcg ? tick_mask << 2 : tick_mask;
+		state_type next_advance_distance = this->distance(zero, adv_mask);
+		if (!forwards)
+			next_advance_distance = (-next_advance_distance) & tick_mask;
+		if (next_advance_distance < (distance & tick_mask)) {
+			++ticks;
+		}
+		if (ticks)
+			advance_table(ticks, forwards);
+	}
+	if (forwards) {
+		if (may_tock && this->distance(zero) <= distance)
+			advance_table();
+		baseclass::advance(distance);
+	}
+	else {
+		if (may_tock && -(this->distance(zero)) <= distance)
+			advance_table(state_type(1U), false);
+		baseclass::advance(-distance);
+	}
 }
 
 } // namespace pcg_detail
