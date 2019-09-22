@@ -8,7 +8,7 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-
+	ui = new ModuleUI(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -22,7 +22,7 @@ Application::Application()
 	
 	// Scenes
 	AddModule(scene_intro);
-
+	AddModule(ui);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -79,6 +79,7 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -110,6 +111,9 @@ update_status Application::Update()
 		ret = (*item)->PostUpdate(dt);
 		++item;
 	}
+
+	if (close_app)
+		ret = UPDATE_STOP;
 
 	FinishUpdate();
 	return ret;

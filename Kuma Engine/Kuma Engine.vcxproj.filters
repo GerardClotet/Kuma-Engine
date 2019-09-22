@@ -147,6 +147,9 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>tools\Time</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleUI.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="MathGeoLib\include\Time\Clock.h">
       <Filter>tools\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleUI.h">
+      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

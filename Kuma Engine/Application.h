@@ -10,7 +10,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-
+#include "ModuleUI.h"
 
 class Application
 {
@@ -20,7 +20,7 @@ public:
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-
+	ModuleUI* ui;
 
 private:
 
@@ -42,4 +42,7 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+public:
+	bool close_app = false;
 };
