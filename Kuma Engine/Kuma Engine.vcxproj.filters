@@ -392,6 +392,9 @@
     <ClInclude Include="ModuleUI.h">
       <Filter>modules</Filter>
     </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

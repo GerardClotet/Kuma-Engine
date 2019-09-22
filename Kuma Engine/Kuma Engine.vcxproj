@@ -155,6 +155,9 @@
     <ClInclude Include="ModuleUI.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Defs.h" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
