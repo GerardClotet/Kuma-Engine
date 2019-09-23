@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-
+#include <random>
 
 
 
@@ -30,11 +30,21 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	// Seed with a real random value, if available
+	pcg_extras::seed_seq_from<std::random_device> seed_source;
 
+	// Make a random number engine
+	pcg32 rng(seed_source);
+
+	// Choose a random mean between 1 and 6
+	std::uniform_int_distribution<int> uniform_dist(1, 6);
+	int mean = uniform_dist(rng);
+	
+	LOG("%i", mean);
 	
 	
 	return ret;
