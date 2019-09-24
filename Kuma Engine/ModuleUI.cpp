@@ -47,54 +47,68 @@ update_status ModuleUI::Update(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	if(demoWindow)
-	ImGui::ShowDemoWindow();
+	if (demoWindow)
+		ImGui::ShowDemoWindow();
 
-	if(stylewindow)
-	ImGui::ShowStyleEditor();
+	if (stylewindow)
+		ImGui::ShowStyleEditor();
 
 
-	
 
-		if (ImGui::BeginMainMenuBar())
+
+	if (ImGui::BeginMainMenuBar())
+	{
+		//Begin Menu
+		if (ImGui::BeginMenu("Menu"))
 		{
-			//Begin Menu
-			if (ImGui::BeginMenu("Menu"))
+			if (ImGui::MenuItem("Close")) { App->close_app = true; }
+			//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
+
+			if (ImGui::MenuItem("Floating window"))
 			{
-				if (ImGui::MenuItem("Close")) { App->close_app = true; }
-				//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
+				if (!show_another_window)
+					show_another_window = true;
+				else show_another_window = false;
 
-				if (ImGui::MenuItem("Floating window"))
-				{
-					if (!show_another_window)
-						show_another_window = true;
-					else show_another_window = false;
-						
 
-					
-				}
-				ImGui::EndMenu();
+
 			}
-
-			if (ImGui::BeginMenu("Examples"))
+			if (ImGui::MenuItem("SceneObjects"))
 			{
-				if (ImGui::MenuItem("DemoWindow"))
-				{
-					if (!demoWindow)
-						demoWindow = true;
-					else demoWindow = false;
-				}
-				if (ImGui::MenuItem("StyleEditor"))
-				{
-					if (!stylewindow)
-						stylewindow = true;
-					else stylewindow = false;
+				//ObjectEditor();
+				if (!show_obj_edit_window)
+					show_obj_edit_window = true;
+				else show_obj_edit_window = false;
 
-				}
-					ImGui::EndMenu();
+
 			}
-			ImGui::EndMainMenuBar();
+			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Examples"))
+		{
+			if (ImGui::MenuItem("DemoWindow"))
+			{
+				if (!demoWindow)
+					demoWindow = true;
+				else demoWindow = false;
+			}
+			if (ImGui::MenuItem("StyleEditor"))
+			{
+				if (!stylewindow)
+					stylewindow = true;
+				else stylewindow = false;
+
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	if (show_obj_edit_window)
+	{
+		ObjectEditor();
+	}
 
 		if (show_another_window)
 		{
@@ -123,6 +137,7 @@ update_status ModuleUI::Update(float dt)
 				//Sub menus
 				if (ImGui::TreeNode("Basic"))
 				{
+							//ObjectEditor();
 
 					//button
 					static int clicked = 0;
@@ -187,7 +202,7 @@ update_status ModuleUI::Update(float dt)
 
 					{
 						//Input text
-						static char str0[128] = "Hello, world!";
+						static char str0[30] = "Hello, world!";
 						if (ImGui::InputText("input text", str0, IM_ARRAYSIZE(str0)))
 						{
 							io.WantCaptureKeyboard = false;
@@ -324,3 +339,36 @@ void ModuleUI::HelpMarker(const char* desc)
 		ImGui::EndTooltip();
 	}
 }
+
+void ModuleUI::ObjectEditor()
+{
+	ImGui::Begin("Object Editor",&show_obj_edit_window);
+
+	if (ImGui::CollapsingHeader("Create"))
+
+	{
+		if (ImGui::TreeNode("Create"))
+		{
+
+			
+			static float vec4f[4] = { 0, 0, 0,0 };
+			 
+			ImGui::Text("Radius");
+			ImGui::InputFloat4("X , Y , Z , radius",vec4f );
+	
+
+		if(	ImGui::Button("Create Sphere"))
+			{
+			Sphere es({ vec4f[0],vec4f[1],vec4f[2] }, vec4f[3]);
+			spherelist.push_back(es);
+
+			}
+			ImGui::TreePop();
+		}
+	}
+	
+
+	ImGui::End();
+
+}
+
