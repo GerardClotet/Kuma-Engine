@@ -20,13 +20,21 @@ public:
 	static void HelpMarker(const char* desc);
 
 	void ObjectEditor();
-	bool show_another_window = false;
-	bool demoWindow = false;
-	bool stylewindow = false;
-	bool show_obj_edit_window = false;
-	bool configuration_window = false;
+	bool show_another_window	= false;
+	bool demoWindow 			= false;
+	bool stylewindow 			= false;
+	bool show_obj_edit_window	= false;
+	bool configuration_window	= false;
+	bool console_window			= false;
 
 
 
 	std::list<Sphere> spherelist;
+
+private:
+	void DisplayConsole();
+	void DisplayConfig();
+	void HelpScreen();
+	void ViewScreen();
+	void FileScreen();
 };
