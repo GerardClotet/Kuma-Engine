@@ -124,6 +124,8 @@ void Application::FinishUpdate()
 	{
 		SDL_Delay(waiting_time);
 	}
+
+	ui->AddFPS(prev_last_sec_frame_count, last_frame_ms);
 }
 
 
@@ -202,6 +204,8 @@ uint Application::GetFramesOnLatsUpdate()
 {
 	return prev_last_sec_frame_count;
 }
+
+
 
 void Application::AddModule(Module* mod)
 {

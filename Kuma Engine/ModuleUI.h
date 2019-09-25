@@ -4,11 +4,13 @@
 //#include "Globals.h"
 
 #include "ImGui/imgui.h"
+#include "ImGui/imconfig.h"
 #include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
 #include "ModuleSceneIntro.h"
 #include <list>
-
+#include <vector>
+#define LOG_ARRAY 100
 class ModuleUI : public Module
 {
 public:
@@ -28,7 +30,7 @@ public:
 	bool console_window			= false;
 
 
-
+	void AddFPS(float fps, float ms);
 	std::list<Sphere> spherelist;
 
 private:
@@ -37,4 +39,7 @@ private:
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
+
+	std::vector<float>fps_log;
+	std::vector<float>ms_log;
 };

@@ -2,6 +2,7 @@
 
 #include "glew-2.1.0/include/GL/glew.h"
 #include <list>
+#include <vector>
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
@@ -60,7 +61,6 @@ private:
 public:
 	bool close_app = false;
 	bool vsync = true; //need to add the condition to true
-	std::vector<float>fps_log;
-	std::vector<float>ms_log;
+
 
 };
