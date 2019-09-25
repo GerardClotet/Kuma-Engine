@@ -26,7 +26,7 @@ public:
 	bool show_obj_edit_window	= false;
 	bool configuration_window	= false;
 	bool console_window			= false;
-
+	bool config_default			= false;
 
 
 	std::list<Sphere> spherelist;
@@ -37,4 +37,8 @@ private:
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
+	void DisplayConfigDefault();
+
+private:
+	bool activeWindow = true;
 };

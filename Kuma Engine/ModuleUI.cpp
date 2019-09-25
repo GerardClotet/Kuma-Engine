@@ -94,6 +94,9 @@ update_status ModuleUI::Update(float dt)
 	//call config window function
 	if (configuration_window)
 		DisplayConfig();
+
+	if (config_default)
+		DisplayConfigDefault();
 		
 
 	if (show_obj_edit_window)
@@ -212,6 +215,19 @@ void ModuleUI::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
+		ImGui::Checkbox("Active", &activeWindow);
+		if (!activeWindow) //needs no te fixed because we are not freeing memory
+			exit(0);
+		ImGui::Text("Icon:");
+		ImGui::SameLine();
+		
+		if (ImGui::MenuItem("*default*"))
+		{
+			config_default = (config_default == false) ? true : false;
+			
+			
+		}
+		
 
 	}
 	if (ImGui::CollapsingHeader("File System"))
@@ -318,5 +334,12 @@ void ModuleUI::FileScreen()
 	ImGui::SameLine();
 	ImGui::TextDisabled("ESC");
 
+}
+
+void ModuleUI::DisplayConfigDefault()
+{
+	ImGui::Begin("Load File", &config_default);
+
+	ImGui::End();
 }
 
