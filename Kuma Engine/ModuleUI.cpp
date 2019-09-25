@@ -2,8 +2,12 @@
 #include "ModuleUI.h"
 #include "Application.h"
 #include "ModuleHardware.h"
+
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
-{}
+{
+	fps_log.resize(100);
+	ms_log.resize(100);
+}
 
 ModuleUI::~ModuleUI()
 {}
@@ -11,6 +15,7 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Start()
 {
+	
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -158,6 +163,25 @@ void ModuleUI::ObjectEditor()
 
 }
 
+void ModuleUI::AddFPS(float fps, float ms)
+{
+	static int count=0;
+	if (count = 100)
+	{
+		for (int i = 0; i < 100-1; ++i)
+		{
+			fps_log[i] = fps_log[i + 1];
+			ms_log[i] = ms_log[i + 1];
+		}
+	}
+
+	else ++count;
+
+	fps_log[count - 1] = fps;
+	ms_log[count - 1] = ms;
+
+}
+
 void ModuleUI::DisplayConsole()
 {
 	ImGui::Begin("Console", &console_window);
@@ -208,10 +232,13 @@ void ModuleUI::DisplayConfig()
 		ImGui::Text("Limit Framerate:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i",max_fps);
-		////char title[25];
-		////sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-		////ImGui::PlotHistogram("##framerate",
-		//ImGui::PlotHistogram("")
+		char title[25];
+		sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		ImGui::SameLine();
+		HelpMarker("framerato doesn't increase over 60,/n maybe cause the user screen refresh rate");
+		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
+		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
