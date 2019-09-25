@@ -61,9 +61,12 @@ update_status ModuleUI::Update(float dt)
 		//Begin Menu
 		if (ImGui::BeginMenu("Menu"))
 		{
-			if (ImGui::MenuItem("Close")) { App->close_app = true; }
 			//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
 
+			if (ImGui::MenuItem("Configuration"))
+			{
+				(configuration_window) ? (configuration_window = false) : (configuration_window = true);
+			}
 			if (ImGui::MenuItem("Floating window"))
 			{
 				if (!show_another_window)
@@ -73,6 +76,7 @@ update_status ModuleUI::Update(float dt)
 
 
 			}
+			
 			if (ImGui::MenuItem("SceneObjects"))
 			{
 				//ObjectEditor();
@@ -82,6 +86,9 @@ update_status ModuleUI::Update(float dt)
 
 
 			}
+
+			if (ImGui::MenuItem("Quit")) { App->close_app = true; }
+			
 			ImGui::EndMenu();
 		}
 
@@ -102,6 +109,31 @@ update_status ModuleUI::Update(float dt)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+
+			if (ImGui::MenuItem("Documentation"))
+			{
+				
+			}
+
+			if (ImGui::MenuItem("Download latest"))
+			{
+
+			}
+
+			if (ImGui::MenuItem("Report a bug"))
+			{
+
+			}
+			if (ImGui::MenuItem("About"))
+			{
+
+			}
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 
@@ -110,6 +142,11 @@ update_status ModuleUI::Update(float dt)
 		ObjectEditor();
 	}
 
+	if (configuration_window)
+	{
+		ImGui::Begin("options", &configuration_window);
+		ImGui::End();
+	}
 		if (show_another_window)
 		{
 			ImGui::Begin("ImGui Test", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)

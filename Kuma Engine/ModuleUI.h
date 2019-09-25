@@ -24,6 +24,8 @@ public:
 	bool demoWindow = false;
 	bool stylewindow = false;
 	bool show_obj_edit_window = false;
+	bool configuration_window = false;
+
 
 
 	std::list<Sphere> spherelist;
