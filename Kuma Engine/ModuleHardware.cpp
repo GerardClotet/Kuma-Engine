@@ -24,7 +24,11 @@ ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(ap
 	sse3 = SDL_HasSSE3();
 	sse41 = SDL_HasSSE41();
 	sse42 = SDL_HasSSE42();
+
 	LOG("%s", sdl_version);
+
+
+	
 }
 
 ModuleHardware::~ModuleHardware()

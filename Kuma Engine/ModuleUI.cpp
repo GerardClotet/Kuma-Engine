@@ -185,7 +185,30 @@ void ModuleUI::DisplayConfig()
 
 	if (ImGui::CollapsingHeader("Application"))
 	{
+		static char name;
+		if (ImGui::InputText("App Name", &name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		{
 
+		}
+		static char org_name;
+		if (ImGui::InputText("Organization", &org_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		{
+
+		}
+		int max_fps = App->GetFramerateCap();
+		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
+		{
+			App->vsync = true;
+			App->SetFramerateCap(max_fps);
+		}
+		
+		ImGui::Text("Limit Framerate:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i",max_fps);
+		////char title[25];
+		////sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+		////ImGui::PlotHistogram("##framerate",
+		//ImGui::PlotHistogram("")
 	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
@@ -202,22 +225,38 @@ void ModuleUI::DisplayConfig()
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
 		ImGui::Text("SDL Version: %s", App->hardware->sdl_version);
-
-		ImGui::Text("CPUs: %i", App->hardware->cpu_cores);
+		ImGui::Separator();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "CPUs:");
 		ImGui::SameLine();
-		ImGui::Text("Cache: %ukb", App->hardware->l1_cpu_cache_bytes);
-		ImGui::Text("System RAM: %uGb", App->hardware->system_RAM_gb);
-		if(App->hardware->rdtsc)  ImGui::Text("RDTSC");
-		if (App->hardware->altivec) ImGui::Text("AltiVec");
-		if (App->hardware->mmx) ImGui::Text("MMX");
-		if (App->hardware->has3D_now) ImGui::Text("3DNow");
-		if (App->hardware->sse) ImGui::Text("SSE");
-		if (App->hardware->sse2) ImGui::Text("SSE2");
-		if (App->hardware->sse3) ImGui::Text("SSE3");
-		if (App->hardware->sse41) ImGui::Text("SSE41");
-		if (App->hardware->sse42) ImGui::Text("SSE42");
-		if (App->hardware->avx) ImGui::Text("AVX");
-		if (App->hardware->avx2) ImGui::Text("AVX2");
+		ImGui::Text("  %i" , App->hardware->cpu_cores);
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Cache: ");
+		ImGui::SameLine();
+		ImGui::Text(" %ukb", App->hardware->l1_cpu_cache_bytes);
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "System RAM:"); 
+		ImGui::SameLine(); 
+		ImGui::Text("%.1fGb", App->hardware->system_RAM_gb);
+
+		if(App->hardware->rdtsc)  ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "RDTSC");
+		ImGui::SameLine();
+		if (App->hardware->altivec) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AltiVec");
+		ImGui::SameLine();
+		if (App->hardware->mmx) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "MMX");
+			ImGui::SameLine();
+		if (App->hardware->has3D_now) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "3DNow");
+		ImGui::SameLine();
+		if (App->hardware->sse)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE");
+		ImGui::SameLine();
+		if (App->hardware->sse2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE2");
+		/*ImGui::SameLine();*/
+		if (App->hardware->sse3) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE3");
+		ImGui::SameLine();
+		if (App->hardware->sse41) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE41");
+		ImGui::SameLine();
+		if (App->hardware->sse42)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE42");
+		ImGui::SameLine();
+		if (App->hardware->avx)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX");
+		ImGui::SameLine();
+		if (App->hardware->avx2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX2");
 
 
 	}

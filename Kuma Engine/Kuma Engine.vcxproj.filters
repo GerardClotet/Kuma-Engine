@@ -156,6 +156,9 @@
     <ClCompile Include="RandomHelper.cpp">
       <Filter>tools\Random</Filter>
     </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp">
       <Filter>tools\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
