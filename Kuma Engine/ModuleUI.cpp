@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "ModuleUI.h"
 #include "Application.h"
-
+#include "ModuleHardware.h"
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 
@@ -201,6 +201,24 @@ void ModuleUI::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
+		ImGui::Text("SDL Version: %s", App->hardware->sdl_version);
+
+		ImGui::Text("CPUs: %i", App->hardware->cpu_cores);
+		ImGui::SameLine();
+		ImGui::Text("Cache: %ukb", App->hardware->l1_cpu_cache_bytes);
+		ImGui::Text("System RAM: %uGb", App->hardware->system_RAM_gb);
+		if(App->hardware->rdtsc)  ImGui::Text("RDTSC");
+		if (App->hardware->altivec) ImGui::Text("AltiVec");
+		if (App->hardware->mmx) ImGui::Text("MMX");
+		if (App->hardware->has3D_now) ImGui::Text("3DNow");
+		if (App->hardware->sse) ImGui::Text("SSE");
+		if (App->hardware->sse2) ImGui::Text("SSE2");
+		if (App->hardware->sse3) ImGui::Text("SSE3");
+		if (App->hardware->sse41) ImGui::Text("SSE41");
+		if (App->hardware->sse42) ImGui::Text("SSE42");
+		if (App->hardware->avx) ImGui::Text("AVX");
+		if (App->hardware->avx2) ImGui::Text("AVX2");
+
 
 	}
 

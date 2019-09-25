@@ -150,7 +150,12 @@
     <ClCompile Include="ModuleUI.cpp">
       <Filter>modules</Filter>
     </ClCompile>
-    <ClCompile Include="RandomHelper.cpp" />
+    <ClCompile Include="ModuleHardware.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomHelper.cpp">
+      <Filter>tools\Random</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -393,10 +398,21 @@
     <ClInclude Include="ModuleUI.h">
       <Filter>modules</Filter>
     </ClInclude>
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp" />
-    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
-    <ClInclude Include="RandomHelper.h" />
+    <ClInclude Include="ModuleHardware.h">
+      <Filter>modules</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomHelper.h">
+      <Filter>tools\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp">
+      <Filter>tools\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp">
+      <Filter>tools\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp">
+      <Filter>tools\Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -425,6 +441,9 @@
     </Filter>
     <Filter Include="tools\Time">
       <UniqueIdentifier>{dd1a56b5-2a61-405d-b4c7-db271843b773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\Random">
+      <UniqueIdentifier>{b35715ec-3960-4d2d-81de-067712d6a650}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

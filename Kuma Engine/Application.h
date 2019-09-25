@@ -11,7 +11,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleUI.h"
-
+#include "ModuleHardware.h"
 class Application
 {
 public:
@@ -21,7 +21,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleUI* ui;
-
+	ModuleHardware* hardware;
 private:
 
 	Timer	ms_timer;
