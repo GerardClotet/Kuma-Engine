@@ -115,7 +115,14 @@ void PanelConfig::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("File System"))
 	{
-
+		ImGui::Checkbox("Active", &activeFileSystem);
+		ImGui::Text("Base Path:");
+		basePath = SDL_GetBasePath();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), basePath);
+		ImGui::Text("Read Paths:");
+		//TODO:/ WE NEED TO PUT HERE SOMETHING THAT I DON'T KNOW NOW WHAT'S IT
+		ImGui::Text("Write Path:");
+		//TODO:/ WE NEED TO PUT HERE SOMETHING THAT I DON'T KNOW NOW WHAT'S IT
 	}
 	if (ImGui::CollapsingHeader("Input"))
 	{
