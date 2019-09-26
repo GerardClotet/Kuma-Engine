@@ -10,12 +10,14 @@
 #include "ModuleSceneIntro.h"
 #include <list>
 #include <vector>
+#include "Panel.h"
+
 #define LOG_ARRAY 100
-class ModuleUI : public Module
+class ModuleEditor : public Module
 {
 public:
-	ModuleUI(Application* app, bool start_enabled = true);
-	~ModuleUI();
+	ModuleEditor(Application* app, bool start_enabled = true);
+	~ModuleEditor();
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
@@ -33,9 +35,12 @@ public:
 	void AddFPS(float fps, float ms);
 	std::list<Sphere> spherelist;
 
+
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
 private:
-	void DisplayConsole();
-	void DisplayConfig();
+	//void DisplayConsole();
+	//void DisplayConfig();
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
@@ -44,6 +49,9 @@ private:
 private:
 	bool activeWindow = true;
 	bool changeColor = false;
-	std::vector<float>fps_log;
-	std::vector<float>ms_log;
+	/*std::vector<float>fps_log;
+	std::vector<float>ms_log;*/
+
+public:
+	std::list<Panel*> panel_list;
 };

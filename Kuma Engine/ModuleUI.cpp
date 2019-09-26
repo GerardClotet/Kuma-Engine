@@ -3,18 +3,21 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleHardware.h"
+#include "PanelConfig.h"
+#include "PanelConsole.h"
 
-ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
 	ms_log.resize(100);
+
 }
 
-ModuleUI::~ModuleUI()
+ModuleEditor::~ModuleEditor()
 {}
 
 
-bool ModuleUI::Start()
+bool ModuleEditor::Start()
 {
 	
 	// Setup Dear ImGui context
@@ -30,12 +33,13 @@ bool ModuleUI::Start()
 	ImGui::StyleColorsDark();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
-
+	panel_list.push_back(new PanelConfig("Configuration"));
+	panel_list.push_back(new PanelConsole("Console"));
 	return true;
 
 }
 
-bool ModuleUI::CleanUp()
+bool ModuleEditor::CleanUp()
 {
 	LOG("Unloading UI module");
 	ImGui_ImplOpenGL3_Shutdown();
@@ -44,7 +48,7 @@ bool ModuleUI::CleanUp()
 	return true;
 }
 
-update_status ModuleUI::Update(float dt)
+update_status ModuleEditor::Update(float dt)
 {
 	//Change style color with hotkey
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -63,7 +67,7 @@ update_status ModuleUI::Update(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-
+	update_status ret = UPDATE_CONTINUE;
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -97,19 +101,23 @@ update_status ModuleUI::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
+	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
+	{
+		ret = (*item)->Draw();
 
+	}
 
 	//call demo function
 	if (demoWindow)
 		ImGui::ShowDemoWindow();
 
 	//call console function
-	if (console_window)
-		DisplayConsole();
+	/*if (console_window)
+		DisplayConsole();*/
 		
 	//call config window function
-	if (configuration_window)
-		DisplayConfig();
+	//if (configuration_window)
+	//	DisplayConfig();
 
 	if (config_default)
 		DisplayConfigDefault();
@@ -129,7 +137,7 @@ update_status ModuleUI::Update(float dt)
 
 
 
-void ModuleUI::HelpMarker(const char* desc)
+void ModuleEditor::HelpMarker(const char* desc)
 {
 	ImGui::TextDisabled("(?)");
 	if (ImGui::IsItemHovered())
@@ -142,7 +150,7 @@ void ModuleUI::HelpMarker(const char* desc)
 	}
 }
 
-void ModuleUI::ObjectEditor()
+void ModuleEditor::ObjectEditor()
 {
 	ImGui::Begin("Object Editor",&show_obj_edit_window);
 
@@ -174,7 +182,7 @@ void ModuleUI::ObjectEditor()
 
 }
 
-void ModuleUI::AddFPS(float fps, float ms)
+void ModuleEditor::AddFPS(float fps, float ms)
 {
 	static int count=0;
 	if (count = 100)
@@ -193,133 +201,133 @@ void ModuleUI::AddFPS(float fps, float ms)
 
 }
 
-void ModuleUI::DisplayConsole()
-{
-	ImGui::Begin("Console", &console_window);
+//void ModuleEditor::DisplayConsole()
+//{
+//	ImGui::Begin("Console", &console_window);
+//
+//
+//	ImGui::End();
+//
+//}
 
 
-	ImGui::End();
-
-}
-
-
-void ModuleUI::DisplayConfig()
-{
-	ImGui::Begin("Configuration", &configuration_window);
-
-	if (ImGui::BeginMenu("Options"))
-	{
-		if (ImGui::MenuItem("Set Defaults"))
-		{
-		}
-		if (ImGui::MenuItem("Load"))
-		{
-		}
-		if (ImGui::MenuItem("Save"))
-		{
-		}
-		ImGui::EndMenu();
-	}
-
-	if (ImGui::CollapsingHeader("Application"))
-	{
-		static char name;
-		if (ImGui::InputText("App Name", &name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-		{
-
-		}
-		static char org_name;
-		if (ImGui::InputText("Organization", &org_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-		{
-
-		}
-		int max_fps = App->GetFramerateCap();
-		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
-		{
-			App->vsync = true;
-			App->SetFramerateCap(max_fps);
-		}
-		
-		ImGui::Text("Limit Framerate:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i",max_fps);
-		char title[25];
-		sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-		ImGui::SameLine();
-		HelpMarker("framerato doesn't increase over 60,/n maybe cause the user screen refresh rate");
-		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
-		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-	}
-	if (ImGui::CollapsingHeader("Window"))
-	{
-		ImGui::Checkbox("Active", &activeWindow);
-		if (!activeWindow) //needs no te fixed because we are not freeing memory
-			exit(0);
-		ImGui::Text("Icon:");
-		ImGui::SameLine();
-		
-		if (ImGui::MenuItem("*default*"))
-		{
-			config_default = (config_default == false) ? true : false;
-			
-			
-		}
-		
-
-	}
-	if (ImGui::CollapsingHeader("File System"))
-	{
-
-	}
-	if (ImGui::CollapsingHeader("Input"))
-	{
-
-	}
-	if (ImGui::CollapsingHeader("Hardware"))
-	{
-		ImGui::Text("SDL Version: %s", App->hardware->sdl_version);
-		ImGui::Separator();
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "CPUs:");
-		ImGui::SameLine();
-		ImGui::Text("  %i" , App->hardware->cpu_cores);
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Cache: ");
-		ImGui::SameLine();
-		ImGui::Text(" %ukb", App->hardware->l1_cpu_cache_bytes);
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "System RAM:"); 
-		ImGui::SameLine(); 
-		ImGui::Text("%.1fGb", App->hardware->system_RAM_gb);
-
-		if(App->hardware->rdtsc)  ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "RDTSC");
-		ImGui::SameLine();
-		if (App->hardware->altivec) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AltiVec");
-		ImGui::SameLine();
-		if (App->hardware->mmx) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "MMX");
-			ImGui::SameLine();
-		if (App->hardware->has3D_now) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "3DNow");
-		ImGui::SameLine();
-		if (App->hardware->sse)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE");
-		ImGui::SameLine();
-		if (App->hardware->sse2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE2");
-		/*ImGui::SameLine();*/
-		if (App->hardware->sse3) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE3");
-		ImGui::SameLine();
-		if (App->hardware->sse41) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE41");
-		ImGui::SameLine();
-		if (App->hardware->sse42)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE42");
-		ImGui::SameLine();
-		if (App->hardware->avx)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX");
-		ImGui::SameLine();
-		if (App->hardware->avx2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX2");
-
-
-	}
-
-	ImGui::End();
-}
+//void ModuleEditor::DisplayConfig()
+//{
+//	ImGui::Begin("Configuration", &configuration_window);
+//
+//	if (ImGui::BeginMenu("Options"))
+//	{
+//		if (ImGui::MenuItem("Set Defaults"))
+//		{
+//		}
+//		if (ImGui::MenuItem("Load"))
+//		{
+//		}
+//		if (ImGui::MenuItem("Save"))
+//		{
+//		}
+//		ImGui::EndMenu();
+//	}
+//
+//	if (ImGui::CollapsingHeader("Application"))
+//	{
+//		static char name;
+//		if (ImGui::InputText("App Name", &name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+//		{
+//
+//		}
+//		static char org_name;
+//		if (ImGui::InputText("Organization", &org_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+//		{
+//
+//		}
+//		int max_fps = App->GetFramerateCap();
+//		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
+//		{
+//			App->vsync = true;
+//			App->SetFramerateCap(max_fps);
+//		}
+//		
+//		ImGui::Text("Limit Framerate:");
+//		ImGui::SameLine();
+//		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i",max_fps);
+//		char title[25];
+//		sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+//		ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+//		ImGui::SameLine();
+//		HelpMarker("framerato doesn't increase over 60,/n maybe cause the user screen refresh rate");
+//		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
+//		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+//	}
+//	if (ImGui::CollapsingHeader("Window"))
+//	{
+//		ImGui::Checkbox("Active", &activeWindow);
+//		if (!activeWindow) //needs no te fixed because we are not freeing memory
+//			exit(0);
+//		ImGui::Text("Icon:");
+//		ImGui::SameLine();
+//		
+//		if (ImGui::MenuItem("*default*"))
+//		{
+//			config_default = (config_default == false) ? true : false;
+//			
+//			
+//		}
+//		
+//
+//	}
+//	if (ImGui::CollapsingHeader("File System"))
+//	{
+//
+//	}
+//	if (ImGui::CollapsingHeader("Input"))
+//	{
+//
+//	}
+//	if (ImGui::CollapsingHeader("Hardware"))
+//	{
+//		ImGui::Text("SDL Version: %s", App->hardware->sdl_version);
+//		ImGui::Separator();
+//		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "CPUs:");
+//		ImGui::SameLine();
+//		ImGui::Text("  %i" , App->hardware->cpu_cores);
+//		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Cache: ");
+//		ImGui::SameLine();
+//		ImGui::Text(" %ukb", App->hardware->l1_cpu_cache_bytes);
+//		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "System RAM:"); 
+//		ImGui::SameLine(); 
+//		ImGui::Text("%.1fGb", App->hardware->system_RAM_gb);
+//
+//		if(App->hardware->rdtsc)  ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "RDTSC");
+//		ImGui::SameLine();
+//		if (App->hardware->altivec) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AltiVec");
+//		ImGui::SameLine();
+//		if (App->hardware->mmx) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "MMX");
+//			ImGui::SameLine();
+//		if (App->hardware->has3D_now) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "3DNow");
+//		ImGui::SameLine();
+//		if (App->hardware->sse)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE");
+//		ImGui::SameLine();
+//		if (App->hardware->sse2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE2");
+//		/*ImGui::SameLine();*/
+//		if (App->hardware->sse3) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE3");
+//		ImGui::SameLine();
+//		if (App->hardware->sse41) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE41");
+//		ImGui::SameLine();
+//		if (App->hardware->sse42)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "SSE42");
+//		ImGui::SameLine();
+//		if (App->hardware->avx)ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX");
+//		ImGui::SameLine();
+//		if (App->hardware->avx2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX2");
+//
+//
+//	}
+//
+//	ImGui::End();
+//}
 
 
-void ModuleUI::HelpScreen()
+void ModuleEditor::HelpScreen()
 {
 	if (ImGui::MenuItem("Gui Demo"))
 	{
@@ -346,7 +354,7 @@ void ModuleUI::HelpScreen()
 	}
 }
 
-void ModuleUI::ViewScreen()
+void ModuleEditor::ViewScreen()
 {
 	if (ImGui::MenuItem("Console"))
 	{
@@ -366,7 +374,7 @@ void ModuleUI::ViewScreen()
 	ImGui::TextDisabled("4");
 }
 
-void ModuleUI::FileScreen()
+void ModuleEditor::FileScreen()
 {
 	//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
 	ImGui::SameLine();
@@ -374,7 +382,7 @@ void ModuleUI::FileScreen()
 
 }
 
-void ModuleUI::DisplayConfigDefault()
+void ModuleEditor::DisplayConfigDefault()
 {
 	ImGui::Begin("Load File", &config_default);
 

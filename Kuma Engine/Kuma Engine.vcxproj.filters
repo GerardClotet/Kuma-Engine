@@ -159,6 +159,12 @@
     <ClCompile Include="PerfTimer.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="PanelConfig.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelConsole.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -419,6 +425,15 @@
     <ClInclude Include="PerfTimer.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelConfig.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelConsole.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -450,6 +465,9 @@
     </Filter>
     <Filter Include="tools\Random">
       <UniqueIdentifier>{b35715ec-3960-4d2d-81de-067712d6a650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{52636fbc-16b9-4696-9afc-889c7351420f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
