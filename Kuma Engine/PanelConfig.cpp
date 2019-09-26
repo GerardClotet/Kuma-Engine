@@ -8,18 +8,14 @@
 
 update_status PanelConfig::Draw()
 {
-	if (ImGui::Button(name))
-	{
-		
-		configuration_window = true;
-	}
-	if (configuration_window)DisplayConfig();
+	
+	if (App->ui->configuration_window)DisplayConfig();
 
 	return UPDATE_CONTINUE;
 }
 void PanelConfig::DisplayConfig()
 {
-	ImGui::Begin("Configuration",&configuration_window);
+	ImGui::Begin("Configuration",&App->ui->configuration_window);
 
 	if (ImGui::BeginMenu("Options"))
 	{

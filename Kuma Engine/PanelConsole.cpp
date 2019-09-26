@@ -7,19 +7,15 @@ update_status PanelConsole::Draw()
 
 
 
-	if (ImGui::Button(name))
-	{
 
-		console_window = true;
-	}
-	if (console_window)DisplayConsole();
+	if (App->ui->console_window)DisplayConsole();
 	return UPDATE_CONTINUE;
 }
 
 
 void PanelConsole::DisplayConsole()
 {
-	ImGui::Begin("Console", &console_window);
+	ImGui::Begin("Console", &App->ui->console_window);
 
 
 	ImGui::End();
