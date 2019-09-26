@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "p2Defs.h"
+#include "mmgr/mmgr.h"
 
 Application::Application()
 {

@@ -3,8 +3,7 @@
 
 #include "Application.h"
 
-#include "ModuleUI.h"
-#include "Module.h"
+#include "mmgr///mmgr.h"
 
 update_status PanelConfig::Draw()
 {
@@ -54,13 +53,48 @@ void PanelConfig::DisplayConfig()
 		ImGui::Text("Limit Framerate:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i", max_fps);
+
 		char title[25];
 		sprintf_s(title, 25, "Framerate %.1f", App->ui->fps_log[App->ui->fps_log.size() - 1]);
 		ImGui::PlotHistogram("##framerate", &App->ui->fps_log[0], App->ui->fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 		ImGui::SameLine();
 		App->ui->HelpMarker("framerato doesn't increase over 60,/n maybe cause the user screen refresh rate");
+
 		sprintf_s(title, 25, "Milliseconds %0.1f", App->ui->ms_log[App->ui->ms_log.size() - 1]);
 		ImGui::PlotHistogram("##milliseconds", &App->ui->ms_log[0], App->ui->ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+
+		sMStats stats = m_getMemoryStatistics();
+		static int speed = 0;
+		static std::vector<float> memory(100);
+		if (++speed > 20)
+		{
+			speed = 0;
+			if (memory.size() == 100)
+			{
+				for (uint i = 0; i < 100 - 1; ++i)
+				{
+					memory[i] = memory[i + 1];
+				}
+
+				memory[100 - 1] = stats.totalReportedMemory;
+
+			}
+			else
+				memory.push_back((float)stats.totalReportedMemory);
+		}
+		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Mmemory Consumption,", 0.0f, (float)stats.peakReportedMemory, ImVec2(310, 100));
+
+		ImGui::Text("Total Reported Memory: %u", stats.totalReportedMemory);
+
+		ImGui::Text("Total Actual Mem: %u", stats.totalActualMemory);
+		ImGui::Text("Peak Reported Mem: %u", stats.peakReportedMemory);
+		ImGui::Text("Peak Actual Mem: %u", stats.peakActualMemory);
+		ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
+		ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
+		ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
+		ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
+		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
+
 	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
