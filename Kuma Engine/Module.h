@@ -1,4 +1,5 @@
 #pragma once
+#include "Parson/parson.h"
 
 class Application;
 struct PhysBody3D;
@@ -49,4 +50,7 @@ public:
 
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{}
+
+	virtual void LoadConfig(JSON_Object*& config) {}
+	virtual void SaveConfig(JSON_Object*& config) {}
 };

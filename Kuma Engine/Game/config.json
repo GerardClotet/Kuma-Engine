@@ -1,0 +1,16 @@
+{
+  "Configuration": {
+
+    "Window": {
+
+      "Width": 1280,
+      "Height": 720,
+      "Brightness": 1.0,
+      "Fullscreen": false,
+      "Borderless": false,
+      "Resizable": true,
+      "FullDesktop": false
+    }
+  }
+
+}

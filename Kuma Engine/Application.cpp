@@ -1,5 +1,7 @@
 #include "Application.h"
+#include "Parson/parson.h"
 #include "p2Defs.h"
+
 
 Application::Application()
 {
@@ -43,12 +45,21 @@ Application::~Application()
 	}
 
 	list_modules.clear();
+
+	//to free memory
+	json_value_free(json_object_get_value(config, "config.json"));
 }
 
 bool Application::Init()
 {
 	PERF_START(ptimer);
 	bool ret = true;
+
+	config = LoadJSONFile("config.json");
+	if (config != nullptr)
+	{
+		LoadConfig();
+	}
 
 	// Call Init() in all modules
 	std::list<Module*>::iterator item = list_modules.begin();
@@ -203,6 +214,43 @@ void Application::SetFramerateCap(uint cap)
 uint Application::GetFramesOnLatsUpdate()
 {
 	return prev_last_sec_frame_count;
+}
+
+bool Application::LoadConfig()
+{
+	bool ret = true;
+	std::list<Module*>::iterator item = list_modules.begin();
+	while (item != list_modules.end())
+	{
+		(*item)->LoadConfig(config);
+		++item;
+	}
+	return ret;
+}
+
+bool Application::SaveConfig()
+{
+	bool ret = true;
+	std::list<Module*>::iterator item = list_modules.begin();
+	while (item != list_modules.end())
+	{
+		(*item)->SaveConfig(config);
+		++item;
+	}
+	return ret;
+}
+
+JSON_Object * Application::LoadJSONFile(const std::string & path)
+{
+	JSON_Value* value = json_parse_file(path.data());
+	JSON_Object* object = json_value_get_object(value);
+
+	if (value == nullptr || object == nullptr)
+	{
+		LOG("Error loading file %s", path);
+	}
+
+	return object;
 }
 
 

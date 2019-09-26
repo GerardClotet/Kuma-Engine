@@ -13,6 +13,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleUI.h"
 #include "ModuleHardware.h"
+#include "Parson/parson.h"
 
 #include "PerfTimer.h"
 #include "Timer.h"
@@ -40,6 +41,9 @@ private:
 	Timer frame_time;
 	int framerate_cap = 60;
 
+	JSON_Object* config = nullptr;
+	
+
 public:
 
 	Application();
@@ -52,8 +56,12 @@ public:
 	uint GetFramerateCap();
 	void SetFramerateCap(uint cap);
 	uint GetFramesOnLatsUpdate();
+	bool LoadConfig();
+	bool SaveConfig();
+	
 private:
 
+	JSON_Object* LoadJSONFile(const std::string &path);
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
