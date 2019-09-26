@@ -4,7 +4,7 @@
 #include "Application.h"
 
 #include "mmgr///mmgr.h"
-
+#include "ModuleWindow.h"
 update_status PanelConfig::Draw()
 {
 	
@@ -110,8 +110,46 @@ void PanelConfig::DisplayConfig()
 
 
 		}
+		float brightness = App->window->GetWindowBrightness();
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
+			App->window->SetWindowBrightness(brightness);
 
+		uint w=0;
+		uint h=0;
+		uint min_w=0, min_h=0, max_w=0, max_h=0;
+		App->window->GetWindowSize(w, h);
+		App->window->GetWindowsMinMax(min_w, min_h, max_w, max_h);
+		if(ImGui::SliderInt("Widht", (int*)&w, min_w, max_w));
+			App->window->SetScreenWidth(w);
+		
 
+		if (ImGui::SliderInt("Height", (int*)& h, min_h, max_h))
+			App->window->SetScreenHeight(h);
+
+		ImGui::Text("Refresh Rate:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%u", App->window->GetRefreshRate());
+		
+		bool fullscreen = App->window->Get_if_FullScreen();
+		bool resizable = App->window->Get_if_Resizable();
+		bool borderless = App->window->Get_if_Borderless();
+		bool full_desktop = App->window->Get_if_FullDesktop();
+
+		if (ImGui::Checkbox("Fullscreen", &fullscreen))
+			App->window->Set_FullScreen(fullscreen);
+
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Resizable", &resizable))
+			App->window->Set_Resizable(resizable);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Restart to apply");
+
+		if (ImGui::Checkbox("Borderless", &borderless))
+			App->window->Set_Borderless(borderless);
+
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Full Desktop", &full_desktop))
+			App->window->Set_FullDesktop(full_desktop);
 	}
 	if (ImGui::CollapsingHeader("File System"))
 	{
