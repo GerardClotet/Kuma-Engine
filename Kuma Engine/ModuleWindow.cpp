@@ -29,8 +29,7 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -57,8 +56,8 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, flags);
+		SDL_SetWindowBrightness(window, brightness);
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -222,4 +221,14 @@ void ModuleWindow::Set_FullDesktop(bool set)
 				LOG("Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
+}
+void ModuleWindow::LoadConfig(JSON_Object *& config)
+{
+	screen_width = json_object_dotget_number(config, "Configuration.Window.Width");
+	screen_height = json_object_dotget_number(config, "Configuration.Window.Height");
+	brightness = json_object_dotget_number(config, "Configuration.Window.Brightness");
+	fullscreen = json_object_dotget_boolean(config, "Configuration.Window.Fullscreen");
+	borderless = json_object_dotget_boolean(config, "Configuration.Window.Borderless");
+	resizable = json_object_dotget_boolean(config, "Configuration.Window.Resizable");
+	full_desktop = json_object_dotget_boolean(config, "Configuration.Window.FullDesktop");
 }

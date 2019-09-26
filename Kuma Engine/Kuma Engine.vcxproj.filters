@@ -165,6 +165,7 @@
     <ClCompile Include="PanelConsole.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Parson\parson.c" />
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>tools\mmgr</Filter>
     </ClCompile>
@@ -437,6 +438,7 @@
     <ClInclude Include="PanelConsole.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="Parson\parson.h" />
     <ClInclude Include="mmgr\mmgr.h">
       <Filter>tools\mmgr</Filter>
     </ClInclude>

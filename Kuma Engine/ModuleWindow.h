@@ -36,6 +36,7 @@ public:
 	void Set_Resizable(bool s);
 	void Set_Borderless(bool s);
 	void Set_FullDesktop(bool s);
+	void LoadConfig(JSON_Object*& config);
 
 public:
 	//The window we'll be rendering to
@@ -52,6 +53,12 @@ private:
 	bool resizable = false;
 	bool borderless = false;
 	bool full_desktop = false;
+public:
+	int width;
+	int height;
+	float brightness;
+	
+	
 };
 
 #endif // __ModuleWindow_H__
