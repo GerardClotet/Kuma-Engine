@@ -241,6 +241,8 @@ bool Application::SaveConfig()
 	return ret;
 }
 
+
+
 JSON_Object * Application::LoadJSONFile(const std::string & path)
 {
 	JSON_Value* value = json_parse_file(path.data());
@@ -254,7 +256,10 @@ JSON_Object * Application::LoadJSONFile(const std::string & path)
 	return object;
 }
 
-
+void Application::OpenWebsite(const std::string & link)
+{
+	ShellExecuteA(NULL, "open", link.c_str(), NULL, NULL, SW_SHOWNORMAL);
+}
 
 void Application::AddModule(Module* mod)
 {

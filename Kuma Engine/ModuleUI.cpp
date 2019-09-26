@@ -30,7 +30,7 @@ bool ModuleEditor::Start()
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 	  // Setup Dear ImGui style
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsEdited();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
 	panel_list.push_back(new PanelConfig("Configuration"));
@@ -55,9 +55,9 @@ update_status ModuleEditor::Update(float dt)
 	{
 		changeColor = (changeColor == false) ? true : false;
 		if (changeColor)
-			ImGui::StyleColorsEdited();
+		ImGui::StyleColorsDark();
 		else
-			ImGui::StyleColorsDark();
+			ImGui::StyleColorsEdited();
 	}
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -216,17 +216,17 @@ void ModuleEditor::HelpScreen()
 
 	if (ImGui::MenuItem("Documentation"))
 	{
-
+		//Add the link that guides users to the documentation
 	}
 
 	if (ImGui::MenuItem("Download latest"))
 	{
-
+		App->OpenWebsite("https://github.com/GerardClotet/Kuma-Engine/releases");
 	}
 
 	if (ImGui::MenuItem("Report a bug"))
 	{
-
+		App->OpenWebsite("https://github.com/GerardClotet/Kuma-Engine/issues");
 	}
 	if (ImGui::MenuItem("About"))
 	{

@@ -58,6 +58,7 @@ public:
 	uint GetFramesOnLatsUpdate();
 	bool LoadConfig();
 	bool SaveConfig();
+	void OpenWebsite(const std::string &link);
 	
 private:
 
