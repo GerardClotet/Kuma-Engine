@@ -166,6 +166,9 @@
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Parson\parson.c" />
+    <ClCompile Include="mmgr\mmgr.cpp">
+      <Filter>tools\mmgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -436,6 +439,12 @@
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Parson\parson.h" />
+    <ClInclude Include="mmgr\mmgr.h">
+      <Filter>tools\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="mmgr\nommgr.h">
+      <Filter>tools\mmgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -470,6 +479,9 @@
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{52636fbc-16b9-4696-9afc-889c7351420f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\mmgr">
+      <UniqueIdentifier>{32e0ada3-11e9-44f0-8c82-d5fb3fb1469a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Parson/parson.h"
 #include "p2Defs.h"
+#include "mmgr/mmgr.h"
 
 
 Application::Application()
