@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "ModuleUI.h"
 #include "Application.h"
+#include "ModuleInput.h"
 #include "ModuleHardware.h"
 
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -45,6 +46,16 @@ bool ModuleUI::CleanUp()
 
 update_status ModuleUI::Update(float dt)
 {
+	//Change style color with hotkey
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		changeColor = (changeColor == false) ? true : false;
+		if (changeColor)
+			ImGui::StyleColorsEdited();
+		else
+			ImGui::StyleColorsDark();
+	}
+
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 

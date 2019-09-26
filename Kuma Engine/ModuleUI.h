@@ -43,6 +43,7 @@ private:
 
 private:
 	bool activeWindow = true;
+	bool changeColor = false;
 	std::vector<float>fps_log;
 	std::vector<float>ms_log;
 };
