@@ -10,7 +10,7 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
 {
 	fps_log.resize(100);
 	ms_log.resize(100);
-
+	
 }
 
 ModuleEditor::~ModuleEditor()
@@ -19,6 +19,7 @@ ModuleEditor::~ModuleEditor()
 
 bool ModuleEditor::Start()
 {
+
 	
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -33,8 +34,9 @@ bool ModuleEditor::Start()
 	ImGui::StyleColorsEdited();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
-	panel_list.push_back(new PanelConfig("Configuration"));
-	panel_list.push_back(new PanelConsole("Console"));
+	panel_list.push_back(config_p =new PanelConfig("Configuration"));
+	panel_list.push_back(console_p =new PanelConsole("Console"));
+	console_window = true;
 	return true;
 
 }
@@ -50,6 +52,9 @@ bool ModuleEditor::CleanUp()
 
 update_status ModuleEditor::Update(float dt)
 {
+	update_status ret = UPDATE_CONTINUE;
+
+
 	//Change style color with hotkey
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
@@ -66,8 +71,11 @@ update_status ModuleEditor::Update(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
+	{
+		ret = (*item)->Draw();
 
-	update_status ret = UPDATE_CONTINUE;
+	}
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -101,11 +109,7 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
-	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
-	{
-		ret = (*item)->Draw();
-
-	}
+	
 
 	//call demo function
 	if (demoWindow)
@@ -204,6 +208,14 @@ void ModuleEditor::AddFPS(float fps, float ms)
 	fps_log[count - 1] = fps;
 	ms_log[count - 1] = ms;
 
+}
+
+void ModuleEditor::Log(const char* fmt)
+{
+	if (console_window)
+	{
+		console_p->AddLog(fmt);
+	}
 }
 
 

@@ -5,6 +5,7 @@
 
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
+
 update_status PanelConfig::Draw()
 {
 	

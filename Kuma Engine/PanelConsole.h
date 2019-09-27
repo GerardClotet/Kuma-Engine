@@ -4,7 +4,7 @@
 #include "Panel.h"
 #include <vector>
 #include "Module.h"
-
+#include "ImGui/imgui.h"
 
 class PanelConsole : public Panel
 {
@@ -16,6 +16,17 @@ public:
 
 	update_status Draw();
 	void DisplayConsole();
-	bool console_window = false;
+
+	void    Clear();
+	void AddLog(const char* fmt);
+	
+	bool console_window = true;
+
+public:
+	ImGuiTextBuffer		Buf;
+	ImGuiTextFilter     Filter;
+	ImVector<int>       LineOffsets;        // Index to lines offset
+	bool                ScrollToBottom;
+
 };
 #endif

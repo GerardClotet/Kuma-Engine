@@ -13,6 +13,10 @@
 #include "Panel.h"
 
 #define LOG_ARRAY 100
+class Panel;
+class PanelConfig;
+class PanelConsole;
+
 class ModuleEditor : public Module
 {
 public:
@@ -34,6 +38,9 @@ public:
 	bool config_default			= false;
 
 	void AddFPS(float fps, float ms);
+	
+	void Log(const char* fmt);
+
 	std::list<Sphere> spherelist;
 
 
@@ -54,5 +61,9 @@ private:
 	std::vector<float>ms_log;*/
 
 public:
+
+	PanelConsole* console_p;
+	PanelConfig* config_p;
+
 	std::list<Panel*> panel_list;
 };

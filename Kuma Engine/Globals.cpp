@@ -1,9 +1,8 @@
 #include "Globals.h"
-#define WIN32_MEAN_AND_LEAN
-
-#include <windows.h>   
+#include <windows.h>   // we only really need this for OutDebugString :(
 #include <stdio.h>
 #include "Application.h"
+
 
 void _log(const char file[], int line, const char* format, ...)
 {
@@ -17,5 +16,8 @@ void _log(const char file[], int line, const char* format, ...)
 	va_end(ap);
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 	OutputDebugString(tmp_string2);
-
+	if (App) {
+		sprintf_s(tmp_string2, 4096, "\n%s", tmp_string);
+		App->Log(tmp_string2);
+	}
 }

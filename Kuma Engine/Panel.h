@@ -3,7 +3,6 @@
 
 
 #include "Globals.h"
-
 class Panel
 {
 public:
@@ -12,8 +11,10 @@ public:
 	~Panel() {};
 	virtual update_status Draw() { return UPDATE_CONTINUE; };
 	virtual bool IsEnabled() { return true; };
+
+	const char* name = "";
+
 protected:
 	bool enabled;
-	const char* name = "";
 };
 #endif

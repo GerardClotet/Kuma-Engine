@@ -29,19 +29,19 @@ public:
 	ModuleHardware* hardware;
 private:
 
-	Timer	ms_timer;
-	float	dt;
-	uint64 frame_count =0;
-	uint32 last_sec_frame_count;
-	uint32 prev_last_sec_frame_count;
-	bool pause;
-	PerfTimer			ptimer;
-	Timer	last_sec_frame_time;
-	Timer frame_time;
-	int framerate_cap = 60;
+	Timer		ms_timer;
+	float		dt;
+	uint64		frame_count =0;
+	uint32		last_sec_frame_count;
+	uint32		prev_last_sec_frame_count;
+	bool		pause;
+	PerfTimer	ptimer;
+	Timer		last_sec_frame_time;
+	Timer		frame_time;
+	int			framerate_cap = 60;
 
 	JSON_Object* config = nullptr;
-	
+
 public:
 	std::list<Module*> list_modules;
 public:
@@ -60,7 +60,7 @@ public:
 	bool SaveConfig();
 	void OpenWebsite(const std::string &link);
 	JSON_Object* LoadJSONFile(const std::string &path);
-	
+	void Log(const char* fmt);
 private:
 
 	void AddModule(Module* mod);

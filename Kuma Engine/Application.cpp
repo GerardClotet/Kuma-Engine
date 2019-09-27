@@ -110,7 +110,6 @@ void Application::FinishUpdate()
 		prev_last_sec_frame_count = last_sec_frame_count;
 		last_sec_frame_count = 0;
 	}
-	LOG("framecount %i", frame_count);
 	float avg_fps = (float)frame_count / ms_timer.ReadSec();
 	float seconds_since_startup = ms_timer.ReadSec();
 	double last_frame_ms = frame_time.Read();
@@ -256,6 +255,11 @@ JSON_Object * Application::LoadJSONFile(const std::string & path)
 	}
 
 	return object;
+}
+
+void Application::Log(const char* fmt)
+{
+	ui->Log(fmt);
 }
 
 void Application::OpenWebsite(const std::string & link)
