@@ -22,6 +22,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	static void HelpMarker(const char* desc);
+	void LoadConfig(JSON_Object*& config);
 
 	void ObjectEditor();
 	bool show_another_window	= false;

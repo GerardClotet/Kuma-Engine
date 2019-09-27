@@ -31,7 +31,6 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
-	std::list<Module*> list_modules;
 	uint64 frame_count =0;
 	uint32 last_sec_frame_count;
 	uint32 prev_last_sec_frame_count;
@@ -43,7 +42,8 @@ private:
 
 	JSON_Object* config = nullptr;
 	
-
+public:
+	std::list<Module*> list_modules;
 public:
 
 	Application();
@@ -59,10 +59,10 @@ public:
 	bool LoadConfig();
 	bool SaveConfig();
 	void OpenWebsite(const std::string &link);
+	JSON_Object* LoadJSONFile(const std::string &path);
 	
 private:
 
-	JSON_Object* LoadJSONFile(const std::string &path);
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();

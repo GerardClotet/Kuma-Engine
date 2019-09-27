@@ -23,6 +23,14 @@ void PanelConfig::DisplayConfig()
 		}
 		if (ImGui::MenuItem("Load"))
 		{
+			JSON_Object* config = App->LoadJSONFile("LoadNewJSON.json");
+
+			std::list<Module*>::iterator item = App->list_modules.begin();
+			while (item != App->list_modules.end())
+			{
+				(*item)->LoadConfig(config);
+				++item;
+			}
 		}
 		if (ImGui::MenuItem("Save"))
 		{

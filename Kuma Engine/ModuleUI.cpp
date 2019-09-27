@@ -150,6 +150,11 @@ void ModuleEditor::HelpMarker(const char* desc)
 	}
 }
 
+void ModuleEditor::LoadConfig(JSON_Object *& config)
+{
+
+}
+
 void ModuleEditor::ObjectEditor()
 {
 	ImGui::Begin("Object Editor",&show_obj_edit_window);
