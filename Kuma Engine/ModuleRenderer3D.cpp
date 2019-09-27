@@ -4,9 +4,9 @@
 #include "SDL\include\SDL_opengl.h"
 
 #include <gl/GL.h>
-//#include <gl/GLU.h>
+#include <gl/GLU.h>
 
-//#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glew-2.1.0/lib/glew32.lib")
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -48,12 +48,12 @@ bool ModuleRenderer3D::Init()
 		glLoadIdentity();
 
 		////Check for error
-		//GLenum error = glGetError();
-		//if(error != GL_NO_ERROR)
-		//{
-		//	LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-		//	ret = false;
-		//}
+		GLenum error = glGetError();
+		if(error != GL_NO_ERROR)
+		{
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			ret = false;
+		}
 
 		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
