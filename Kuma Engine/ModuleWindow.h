@@ -53,6 +53,8 @@ private:
 	bool resizable = false;
 	bool borderless = false;
 	bool full_desktop = false;
+
+	bool firstLoadConfig = true;
 public:
 	/*int width;
 	int height;*/

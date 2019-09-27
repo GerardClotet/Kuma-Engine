@@ -192,7 +192,7 @@ void ModuleWindow::Set_FullScreen(bool set)
 
 void ModuleWindow::Set_Resizable(bool set)
 {
-	resizable = set;
+	SDL_SetWindowResizable(window, (SDL_bool)set);
 }
 
 void ModuleWindow::Set_Borderless(bool set)
@@ -231,4 +231,19 @@ void ModuleWindow::LoadConfig(JSON_Object *& config)
 	borderless = json_object_dotget_boolean(config, "Configuration.Window.Borderless");
 	resizable = json_object_dotget_boolean(config, "Configuration.Window.Resizable");
 	full_desktop = json_object_dotget_boolean(config, "Configuration.Window.FullDesktop");
+
+	if (!firstLoadConfig)
+	{
+		SetScreenWidth(screen_width);
+		SetScreenHeight(screen_height);
+		SetWindowBrightness(brightness);
+		Set_FullScreen(fullscreen);
+		Set_Borderless(borderless);
+		Set_Resizable(resizable);
+		Set_FullDesktop(full_desktop);
+		
+	}
+
+	if (firstLoadConfig)
+		firstLoadConfig = false;
 }

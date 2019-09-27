@@ -5,10 +5,10 @@
 
       "Width": 500,
       "Height": 300,
-      "Brightness": 2.0,
+      "Brightness": 1.0,
       "Fullscreen": false,
       "Borderless": false,
-      "Resizable": true,
+      "Resizable": false,
       "FullDesktop": false
     }
   }
