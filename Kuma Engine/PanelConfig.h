@@ -1,9 +1,15 @@
 #ifndef PANEL_CONFIG_H_
 #define PANEL_CONFIG_H_
 
+
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #include "Panel.h"
 #include "Application.h"
 #include <vector>
+#include <windows.h>
 #include "Module.h"
 
 class PanelConfig : public Panel
@@ -29,6 +35,11 @@ private:
 
 	uint w = App->window->GetScreenWidth();
 	uint h = App->window->GetScreenHeight();
+
+private:
+	std::string SelectFile(); //This allows you to select a .json file
+	char filename[MAX_PATH]; //This is the variable that will recieve the file path
+	OPENFILENAME ofn; //struct with all the info needed to create the dialogue to select the file
 };
 
 

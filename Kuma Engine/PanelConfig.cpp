@@ -1,6 +1,7 @@
 #include "PanelConfig.h"
 #include "ImGui/imgui.h"
 
+#include "Globals.h"
 #include "Application.h"
 
 #include "mmgr///mmgr.h"
@@ -24,7 +25,8 @@ void PanelConfig::DisplayConfig()
 		}
 		if (ImGui::MenuItem("Load"))
 		{
-			JSON_Object* config = App->LoadJSONFile("LoadNewJSON.json");
+			std::string file = SelectFile();
+			JSON_Object* config = App->LoadJSONFile(file);
 
 			std::list<Module*>::iterator item = App->list_modules.begin();
 			while (item != App->list_modules.end())
@@ -213,4 +215,47 @@ void PanelConfig::DisplayConfig()
 	}
 
 	ImGui::End();
+}
+
+std::string PanelConfig::SelectFile()
+{
+	ZeroMemory(&filename, sizeof(filename));
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = NULL;  // If you have a window to center over, put its HANDLE here
+	ofn.lpstrFilter = "JSON Files\0*.json";  //Add a filter, so you can limite the files you want. In this case you can only selet .json files
+	ofn.lpstrFile = filename; //This will recieve the name
+	ofn.nMaxFile = MAX_PATH; //max size in characters of the path
+	ofn.lpstrTitle = "Select a .json file to load"; //the title of the dialogue box
+	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST; //Flags that do flag things :)
+
+	if (GetOpenFileNameA(&ofn)) //the function that opens the file folder
+	{
+		LOG("%s is the file you have selected", filename);
+	}
+	else
+	{
+		//If you messed up things above, the exact error will be show in the output console
+		switch (CommDlgExtendedError())
+		{
+		case CDERR_DIALOGFAILURE: LOG("CDERR_DIALOGFAILURE\n");   break;
+		case CDERR_FINDRESFAILURE: LOG("CDERR_FINDRESFAILURE\n");  break;
+		case CDERR_INITIALIZATION: LOG("CDERR_INITIALIZATION\n");  break;
+		case CDERR_LOADRESFAILURE: LOG("CDERR_LOADRESFAILURE\n");  break;
+		case CDERR_LOADSTRFAILURE: LOG("CDERR_LOADSTRFAILURE\n");  break;
+		case CDERR_LOCKRESFAILURE: LOG("CDERR_LOCKRESFAILURE\n");  break;
+		case CDERR_MEMALLOCFAILURE: LOG("CDERR_MEMALLOCFAILURE\n"); break;
+		case CDERR_MEMLOCKFAILURE: LOG("CDERR_MEMLOCKFAILURE\n");  break;
+		case CDERR_NOHINSTANCE: LOG("CDERR_NOHINSTANCE\n");     break;
+		case CDERR_NOHOOK: LOG("CDERR_NOHOOK\n");          break;
+		case CDERR_NOTEMPLATE: LOG("CDERR_NOTEMPLATE\n");      break;
+		case CDERR_STRUCTSIZE: LOG("CDERR_STRUCTSIZE\n");      break;
+		case FNERR_BUFFERTOOSMALL: LOG("FNERR_BUFFERTOOSMALL\n");  break;
+		case FNERR_INVALIDFILENAME: LOG("FNERR_INVALIDFILENAME\n"); break;
+		case FNERR_SUBCLASSFAILURE: LOG("FNERR_SUBCLASSFAILURE\n"); break;
+		default: LOG("You cancelled.\n");
+		}
+	}
+
+	return filename;
 }
