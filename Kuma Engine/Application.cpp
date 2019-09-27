@@ -114,14 +114,15 @@ void Application::FinishUpdate()
 	float avg_fps = (float)frame_count / ms_timer.ReadSec();
 	float seconds_since_startup = ms_timer.ReadSec();
 	double last_frame_ms = frame_time.Read();
-	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 
 	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %.2f Last sec frames: %i Vsync: %s ",
-		avg_fps, last_frame_ms, frames_on_last_update, vsync ? "ON" : "OFF");
+		avg_fps, last_frame_ms, prev_last_sec_frame_count, vsync ? "ON" : "OFF");
 	window->SetTitle(title);
 
+	if (framerate_cap == 0)
+		framerate_cap = 1;
 	float waiting_time = (1000 / framerate_cap) - last_frame_ms;
 	if (waiting_time > (1000 / framerate_cap))
 	{
@@ -135,6 +136,7 @@ void Application::FinishUpdate()
 	if (vsync)
 	{
 		SDL_Delay(waiting_time);
+
 	}
 
 	ui->AddFPS(prev_last_sec_frame_count, last_frame_ms);
