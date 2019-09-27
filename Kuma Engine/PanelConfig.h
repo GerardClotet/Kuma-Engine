@@ -2,6 +2,7 @@
 #define PANEL_CONFIG_H_
 
 #include "Panel.h"
+#include "Application.h"
 #include <vector>
 #include "Module.h"
 
@@ -25,6 +26,9 @@ private:
 	bool activeFileSystem	= true;
 	bool config_default		= false;
 	char* basePath			= nullptr;
+
+	uint w = App->window->GetScreenWidth();
+	uint h = App->window->GetScreenHeight();
 };
 
 

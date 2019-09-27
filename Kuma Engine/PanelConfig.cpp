@@ -119,11 +119,9 @@ void PanelConfig::DisplayConfig()
 
 		}
 		float brightness = App->window->GetWindowBrightness();
-		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 1.0f))
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 2.0f))
 			App->window->SetWindowBrightness(brightness);
 
-		uint w=0;
-		uint h=0;
 		uint min_w=0, min_h=0, max_w=0, max_h=0;
 		App->window->GetWindowSize(w, h);
 		App->window->GetWindowsMinMax(min_w, min_h, max_w, max_h);

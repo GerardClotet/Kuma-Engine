@@ -19,7 +19,7 @@ public:
 	bool CleanUp();
 
 	void SetTitle(const char* title);
-	void GetWindowSize(uint w, uint h);
+	void GetWindowSize(uint &w, uint &h);
 	void GetWindowsMinMax(uint& min_w, uint& min_h, uint& max_w, uint& max_h_);
 	void SetWindowBrightness(float b);
 	float GetWindowBrightness();
@@ -54,8 +54,8 @@ private:
 	bool borderless = false;
 	bool full_desktop = false;
 public:
-	int width;
-	int height;
+	/*int width;
+	int height;*/
 	float brightness;
 	
 	

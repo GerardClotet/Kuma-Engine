@@ -19,8 +19,6 @@ bool ModuleWindow::Init()
 	LOG("Init SDL window & surface");
 	bool ret = true;
 
-	screen_width = SCREEN_WIDTH * SCREEN_SIZE;
-	screen_height = SCREEN_HEIGHT * SCREEN_SIZE;
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -94,10 +92,10 @@ void ModuleWindow::SetTitle(const char* title)
 	SDL_SetWindowTitle(window, title);
 }
 
-void ModuleWindow::GetWindowSize(uint w, uint h)
+void ModuleWindow::GetWindowSize(uint &w, uint &h)
 {
-	 w = SCREEN_WIDTH * SCREEN_SIZE;
-	 h = SCREEN_HEIGHT * SCREEN_SIZE;
+	 w = screen_width * SCREEN_SIZE;
+	 h = screen_height * SCREEN_SIZE;
 }
 
 void ModuleWindow::GetWindowsMinMax(uint& min_w, uint& min_h, uint& max_w, uint& max_h)
@@ -132,11 +130,13 @@ int ModuleWindow::GetScreenHeight()
 void ModuleWindow::SetScreenWidth(uint w)
 {
 	SDL_SetWindowSize(window, w, GetScreenHeight());
+	screen_width = w;
 }
 
 void ModuleWindow::SetScreenHeight(uint h)
 {
 	SDL_SetWindowSize(window, GetScreenWidth(), h);
+	screen_height = h;
 
 }
 
