@@ -10,11 +10,11 @@
 #include "MathGeoLib/include/Geometry/Plane.h"
 
 
-#ifdef NDEBUG //no debug
-#pragma comment (lib, "MathGeoLib/libx86/Release/MathGeoLib.lib") 
-#else
-#pragma comment (lib, "MathGeoLib/libx86/Debug/MathGeoLib.lib") 
-#endif
+//#ifdef NDEBUG //no debug
+//#pragma comment (lib, "MathGeoLib/libx86/Release/MathGeoLib.lib") 
+//#else
+//#pragma comment (lib, "MathGeoLib/libx86/Debug/MathGeoLib.lib") 
+//#endif
 
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
 
