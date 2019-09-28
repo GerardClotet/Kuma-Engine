@@ -23,7 +23,7 @@ public:
 
 	update_status Draw();
 	void DisplayConfig();
-
+	void AddInputToBuffer(const char* input);
 
 private:
 	bool configuration_window = false;
@@ -35,7 +35,9 @@ private:
 	bool activeInput		= true;
 	bool config_default		= false;
 	char* basePath			= nullptr;
-	std::string orgname = "UPC CITM";
+	std::string orgname		= "UPC CITM";
+	ImGuiTextBuffer	input_buf;
+	bool scrollToBottom		= false;
 
 
 	uint w = App->window->GetScreenWidth();

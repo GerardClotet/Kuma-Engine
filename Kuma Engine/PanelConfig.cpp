@@ -196,6 +196,14 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i", App->input->GetMouseWheel());
 
+		ImGui::Separator();
+
+		ImGui::TextUnformatted(input_buf.begin());
+
+		if (scrollToBottom)
+			ImGui::SetScrollHere(1.0f);
+		scrollToBottom = false;
+
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
@@ -243,6 +251,12 @@ void PanelConfig::DisplayConfig()
 	}
 
 	ImGui::End();
+}
+
+void PanelConfig::AddInputToBuffer(const char * input)
+{
+	input_buf.append(input);
+	scrollToBottom = true;
 }
 
 std::string PanelConfig::SelectFile()

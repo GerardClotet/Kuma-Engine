@@ -173,6 +173,24 @@ void ModuleEditor::LoadConfig(JSON_Object *& config)
 
 }
 
+void ModuleEditor::LoadInputEvent(uint id, uint state)
+{
+	static char input_event[64];
+	static const char* state_input[] = { "IDLE", "DOWN", "REPEAT", "UP" };
+	if (id < 500)
+	{
+		sprintf_s(input_event, 64, "Keybr: %02u - %s\n", id, state_input[state]);
+	}
+	else
+	{
+		sprintf_s(input_event, 64, "Mouse: %02u - %s\n", (id - 500), state_input[state]);
+	}
+	if (config_p != nullptr)
+	{
+		config_p->AddInputToBuffer(input_event);
+	}
+}
+
 void ModuleEditor::ObjectEditor()
 {
 	ImGui::Begin("Object Editor",&show_obj_edit_window);
