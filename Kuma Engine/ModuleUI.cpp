@@ -37,6 +37,18 @@ bool ModuleEditor::Start()
 	panel_list.push_back(config_p =new PanelConfig("Configuration"));
 	panel_list.push_back(console_p =new PanelConsole("Console"));
 	console_window = true;
+
+
+
+	std::list<const char*>::iterator item = App->log_saves.begin();
+
+	for (item; item != App->log_saves.end(); ++item)
+	{
+		const char* logs = (*item);
+
+		LOG("%s", logs);
+	}
+
 	return true;
 
 }
@@ -66,17 +78,7 @@ update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	//std::list<std::string> hoal;
-
-	//std::list<const char*>::iterator item;
-
-	//for (item; item != App->log_saves.end(); ++item)
-	//{
-	//	const char** hols;
-	//	
-	//	
-	//	LOG("%s", hols);
-	//}
+	
 
 	//Change style color with hotkey
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)

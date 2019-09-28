@@ -182,7 +182,6 @@ void PanelConfig::DisplayConfig()
 	{
 		ImGui::Checkbox("Active", &activeInput);
 
-
 		ImGui::Text("Mouse Position: ");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i , %i", App->input->GetMouseX(), App->input->GetMouseY());
