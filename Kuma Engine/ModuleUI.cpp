@@ -5,7 +5,7 @@
 #include "ModuleHardware.h"
 #include "PanelConfig.h"
 #include "PanelConsole.h"
-
+#include <list>
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -66,6 +66,17 @@ update_status ModuleEditor::Update(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 
+	//std::list<std::string> hoal;
+
+	//std::list<const char*>::iterator item;
+
+	//for (item; item != App->log_saves.end(); ++item)
+	//{
+	//	const char** hols;
+	//	
+	//	
+	//	LOG("%s", hols);
+	//}
 
 	//Change style color with hotkey
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -211,7 +222,7 @@ void ModuleEditor::AddFPS(float fps, float ms)
 
 }
 
-void ModuleEditor::Log(const char* fmt)
+void ModuleEditor::Log(const char* fmt,...)
 {
 	if ( console_p != nullptr &&console_window)
 	{

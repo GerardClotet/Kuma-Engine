@@ -23,6 +23,7 @@ ModuleInput::~ModuleInput()
 bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
+	App->saveLog("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 

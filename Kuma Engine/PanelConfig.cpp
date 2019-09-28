@@ -10,6 +10,7 @@
 update_status PanelConfig::Draw()
 {
 	
+
 	if (App->ui->configuration_window)DisplayConfig();
 
 	return UPDATE_CONTINUE;
@@ -218,7 +219,13 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		if (App->hardware->avx2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX2");
 
-
+		ImGui::Separator();
+		ImGui::Text("Vendor:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s",App->hardware->gpu_vendor);
+		ImGui::Text("Brand:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", App->hardware->gpu_brand);
 	}
 
 	ImGui::End();

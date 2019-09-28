@@ -18,7 +18,7 @@ public:
 	void DisplayConsole();
 
 	void    Clear();
-	void AddLog(const char* fmt);
+	void AddLog(const char* fmt,...);
 	
 	bool console_window = true;
 

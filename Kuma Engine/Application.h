@@ -60,7 +60,8 @@ public:
 	bool SaveConfig();
 	void OpenWebsite(const std::string &link);
 	JSON_Object* LoadJSONFile(const std::string &path);
-	void Log(const char* fmt);
+	void Log(const char* fmt,...);
+	void saveLog(const char* fmt,...);
 private:
 
 	void AddModule(Module* mod);
@@ -71,6 +72,7 @@ public:
 	bool close_app = false;
 	bool vsync = true; //need to add the condition to true
 
+	std::list<const char*> log_saves;
 
 };
 

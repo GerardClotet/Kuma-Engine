@@ -16,7 +16,9 @@ class PanelConfig : public Panel
 {
 public:
 	PanelConfig() {};
-	PanelConfig(const char* name) :Panel(name) {};
+	PanelConfig(const char* name) :Panel(name) {
+	
+	};
 	~PanelConfig() {};
 
 	update_status Draw();

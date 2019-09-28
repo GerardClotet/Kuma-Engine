@@ -26,5 +26,7 @@ public:
 	bool sse41;
 	bool sse42;
 
+	const char* gpu_vendor;
+	const char* gpu_brand;
 	char sdl_version[20]="";
 };

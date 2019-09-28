@@ -92,6 +92,12 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	App->hardware->gpu_vendor = (const char*)glGetString(GL_VENDOR);
+	App->hardware->gpu_brand = (const char*)glGetString(GL_RENDERER);
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	return ret;
 }
 

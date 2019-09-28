@@ -39,7 +39,7 @@ public:
 
 	void AddFPS(float fps, float ms);
 	
-	void Log(const char* fmt);
+	void Log(const char* fmt,...);
 
 	std::list<Sphere> spherelist;
 

@@ -31,6 +31,7 @@ int main(int argc, char ** argv)
 
 			LOG("-------------- Application Creation --------------");
 			App = new Application();
+			App->saveLog("-------------- Application Creation --------------");
 			state = MAIN_START;
 			break;
 

@@ -25,9 +25,10 @@ ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(ap
 	sse41 = SDL_HasSSE41();
 	sse42 = SDL_HasSSE42();
 
-	LOG("%s", sdl_version);
+	//GPU spec initialized in renderer3D
+	
 
-
+	App->saveLog(sdl_version);
 	
 }
 

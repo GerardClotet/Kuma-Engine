@@ -73,11 +73,13 @@ bool Application::Init()
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
+	saveLog("Application Start --------------");
 	item = list_modules.begin();
-
+	
 	while (item != list_modules.end() && ret == true)
 	{
 		ret = (*item)->Start();
+		
 		++item;
 	}
 	
@@ -139,6 +141,9 @@ void Application::FinishUpdate()
 	}
 
 	ui->AddFPS(prev_last_sec_frame_count, last_frame_ms);
+
+
+
 }
 
 
@@ -252,14 +257,20 @@ JSON_Object * Application::LoadJSONFile(const std::string & path)
 	if (value == nullptr || object == nullptr)
 	{
 		LOG("Error loading file %s", path);
+		saveLog("Error loading file %s", path);
 	}
 
 	return object;
 }
 
-void Application::Log(const char* fmt)
+void Application::Log(const char* fmt,...)
 {
 	ui->Log(fmt);
+}
+
+void Application::saveLog(const char* fmt,...)
+{
+	log_saves.push_back(fmt);
 }
 
 void Application::OpenWebsite(const std::string & link)

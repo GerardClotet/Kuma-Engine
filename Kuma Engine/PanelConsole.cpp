@@ -60,7 +60,7 @@ void PanelConsole::Clear()
 	Buf.clear(); LineOffsets.clear();
 }
 
-void PanelConsole::AddLog(const char* fmt)
+void PanelConsole::AddLog(const char* fmt,...)
 {
 	Buf.appendf(fmt);
 	ScrollToBottom = true;
