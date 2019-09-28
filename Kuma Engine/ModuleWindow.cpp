@@ -90,7 +90,10 @@ bool ModuleWindow::CleanUp()
 
 void ModuleWindow::SetTitle(const char* title)
 {
-	SDL_SetWindowTitle(window, title);
+	if (title != nullptr)
+	{
+		SDL_SetWindowTitle(window, title);
+	}
 }
 
 void ModuleWindow::GetWindowSize(uint &w, uint &h)

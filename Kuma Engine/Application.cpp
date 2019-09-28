@@ -117,10 +117,10 @@ void Application::FinishUpdate()
 	double last_frame_ms = frame_time.Read();
 
 
-	static char title[256];
+	/*static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %.2f Last sec frames: %i Vsync: %s ",
 		avg_fps, last_frame_ms, prev_last_sec_frame_count, vsync ? "ON" : "OFF");
-	window->SetTitle(title);
+	window->SetTitle(title);*/
 
 	if (framerate_cap == 0)
 		framerate_cap = 1;
@@ -145,7 +145,6 @@ void Application::FinishUpdate()
 
 
 }
-
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
@@ -232,7 +231,18 @@ bool Application::LoadConfig()
 		(*item)->LoadConfig(config);
 		++item;
 	}
+	LoadConfig(config);
 	return ret;
+}
+
+
+void Application::LoadConfig(JSON_Object *& config)
+{
+	app_name = json_object_dotget_string(config, "Application.Name");
+	org_name = json_object_dotget_string(config, "Application.Organization");
+
+	SetAppName(app_name.c_str());
+	SetOrgName(org_name.c_str());
 }
 
 bool Application::SaveConfig()
@@ -271,6 +281,33 @@ void Application::Log(const char* fmt,...)
 void Application::saveLog(const char* fmt,...)
 {
 	log_saves.push_back(fmt);
+}
+
+const char * Application::GetAppName() const
+{
+	return app_name.c_str();
+}
+
+void Application::SetAppName(const char * name)
+{
+	if (name != nullptr)
+	{
+		app_name = name;
+		window->SetTitle(name);
+	}
+}
+
+const char * Application::GetOrganizationName() const
+{
+	return org_name.c_str();
+}
+
+void Application::SetOrgName(const char * name)
+{
+	if (name != nullptr)
+	{
+		org_name = name;
+	}
 }
 
 void Application::OpenWebsite(const std::string & link)

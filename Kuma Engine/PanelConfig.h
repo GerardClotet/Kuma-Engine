@@ -35,6 +35,8 @@ private:
 	bool activeInput		= true;
 	bool config_default		= false;
 	char* basePath			= nullptr;
+	std::string orgname = "UPC CITM";
+
 
 	uint w = App->window->GetScreenWidth();
 	uint h = App->window->GetScreenHeight();

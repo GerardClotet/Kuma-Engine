@@ -42,6 +42,9 @@ private:
 
 	JSON_Object* config = nullptr;
 
+	std::string app_name;
+	std::string org_name;
+
 public:
 	std::list<Module*> list_modules;
 public:
@@ -62,11 +65,18 @@ public:
 	JSON_Object* LoadJSONFile(const std::string &path);
 	void Log(const char* fmt,...);
 	void saveLog(const char* fmt,...);
+
+	const char* GetAppName() const;
+	void SetAppName(const char* name);
+	const char* GetOrganizationName() const;
+	void SetOrgName(const char* name);
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+	void LoadConfig(JSON_Object*& config);
 
 public:
 	bool close_app = false;

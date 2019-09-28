@@ -52,17 +52,18 @@ void PanelConfig::DisplayConfig()
 
 	if (ImGui::CollapsingHeader("Application"))
 	{
-		static char name;
-		if (ImGui::InputText("App Name", &name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-		{
-
-		}
-		static char org_name;
-		if (ImGui::InputText("Organization", &org_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
-		{
+		static char app_name[150];
+		strcpy_s(app_name, 150, App->GetAppName());
+		if (ImGui::InputText("App Name", app_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			App->SetAppName(app_name);
 			
-			App->GetFramerateCap();
-		}
+		
+		static char org_name[150];
+		strcpy_s(org_name, 150, App->GetOrganizationName());
+		if (ImGui::InputText("Organization", org_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			App->SetOrgName(org_name);
+			
+		
 		int max_fps = App->GetFramerateCap();
 		if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
 		{

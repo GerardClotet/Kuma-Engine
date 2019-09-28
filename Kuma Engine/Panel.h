@@ -7,12 +7,12 @@ class Panel
 {
 public:
 	Panel() {};
-	Panel(const char* n) :name(n) {};
+	Panel(const char* n) {};
 	~Panel() {};
 	virtual update_status Draw() { return UPDATE_CONTINUE; };
 	virtual bool IsEnabled() { return true; };
 
-	const char* name = "";
+	
 
 protected:
 	bool enabled;
