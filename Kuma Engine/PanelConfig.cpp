@@ -7,7 +7,6 @@
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
 
-#define WM_MOUSEHWHEEL
 
 update_status PanelConfig::Draw()
 {
@@ -185,20 +184,16 @@ void PanelConfig::DisplayConfig()
 
 		ImGui::Text("Mouse Position: ");
 		ImGui::SameLine();
-		std::string mousePos = std::to_string(App->input->GetMouseX()) + " , " + std::to_string(App->input->GetMouseY());
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), mousePos.c_str());
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i , %i", App->input->GetMouseX(), App->input->GetMouseY());
 
 
 		ImGui::Text("Mouse Motion: ");
 		ImGui::SameLine();
-		std::string mouseMot = std::to_string(App->input->GetMouseXMotion()) + " , " + std::to_string(App->input->GetMouseYMotion());
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), mouseMot.c_str());
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i , %i", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
 
 		ImGui::Text("Mouse Wheel: ");
-		/*ImGui::SameLine();
-		int wParam = GET_WHEEL_DELTA_WPARAM(Addtl_Info_W);
-		std::string wheel = std::to_string(wParam);
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), wheel.c_str());*/
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i", App->input->GetMouseWheel());
 
 	}
 	if (ImGui::CollapsingHeader("Hardware"))

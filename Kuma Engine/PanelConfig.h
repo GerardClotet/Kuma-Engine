@@ -33,7 +33,6 @@ private:
 	bool activeInput		= true;
 	bool config_default		= false;
 	char* basePath			= nullptr;
-	WPARAM Addtl_Info_W;
 
 	uint w = App->window->GetScreenWidth();
 	uint h = App->window->GetScreenHeight();
