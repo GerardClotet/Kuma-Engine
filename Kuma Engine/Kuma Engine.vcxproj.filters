@@ -503,5 +503,6 @@
     <None Include="MathGeoLib\include\Math\Matrix.inl">
       <Filter>tools\mathgeolib\Math</Filter>
     </None>
+    <None Include="Game\config.json" />
   </ItemGroup>
 </Project>

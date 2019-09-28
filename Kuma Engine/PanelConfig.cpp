@@ -7,6 +7,7 @@
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
 
+
 update_status PanelConfig::Draw()
 {
 	
@@ -126,8 +127,6 @@ void PanelConfig::DisplayConfig()
 		if (ImGui::MenuItem("*default*"))
 		{
 			config_default = (config_default == false) ? true : false;
-
-
 		}
 		float brightness = App->window->GetWindowBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 2.0f))
@@ -181,6 +180,21 @@ void PanelConfig::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("Input"))
 	{
+		ImGui::Checkbox("Active", &activeInput);
+
+
+		ImGui::Text("Mouse Position: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i , %i", App->input->GetMouseX(), App->input->GetMouseY());
+
+
+		ImGui::Text("Mouse Motion: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i , %i", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+
+		ImGui::Text("Mouse Wheel: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i", App->input->GetMouseWheel());
 
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
