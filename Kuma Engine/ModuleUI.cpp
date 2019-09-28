@@ -47,6 +47,18 @@ bool ModuleEditor::CleanUp()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+	std::list<Panel*>::iterator item = panel_list.begin();
+	while (item != panel_list.end())
+	{
+		
+		//panel_list.erase(item);
+		/*panel_list.remove(*item);*/
+		++item;
+	}
+	console_p->Clear();
+	//panel_list.clear();
+	console_p = nullptr;
+	config_p = nullptr;
 	return true;
 }
 
@@ -71,11 +83,7 @@ update_status ModuleEditor::Update(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
-	{
-		ret = (*item)->Draw();
 
-	}
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -109,8 +117,11 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
-	
+		for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
+	{
+		ret = (*item)->Draw();
 
+	}
 	//call demo function
 	if (demoWindow)
 		ImGui::ShowDemoWindow();
@@ -212,7 +223,7 @@ void ModuleEditor::AddFPS(float fps, float ms)
 
 void ModuleEditor::Log(const char* fmt)
 {
-	if (console_window)
+	if ( console_p != nullptr &&console_window)
 	{
 		console_p->AddLog(fmt);
 	}

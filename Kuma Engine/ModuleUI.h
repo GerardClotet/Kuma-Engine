@@ -62,8 +62,8 @@ private:
 
 public:
 
-	PanelConsole* console_p;
-	PanelConfig* config_p;
+	PanelConsole* console_p = nullptr;
+	PanelConfig* config_p= nullptr;
 
 	std::list<Panel*> panel_list;
 };
