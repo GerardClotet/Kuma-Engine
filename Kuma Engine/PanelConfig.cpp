@@ -22,6 +22,13 @@ void PanelConfig::DisplayConfig()
 	{
 		if (ImGui::MenuItem("Set Defaults"))
 		{
+			JSON_Object* config_default = App->LoadJSONFile("config.json");
+			std::list<Module*>::iterator item = App->list_modules.begin();
+			while (item != App->list_modules.end())
+			{
+				(*item)->LoadConfig(config_default);
+				++item;
+			}
 		}
 		if (ImGui::MenuItem("Load"))
 		{

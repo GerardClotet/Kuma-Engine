@@ -52,7 +52,6 @@ private:
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
-	void DisplayConfigDefault();
 
 private:
 	bool activeWindow = true;

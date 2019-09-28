@@ -115,16 +115,6 @@ update_status ModuleEditor::Update(float dt)
 	if (demoWindow)
 		ImGui::ShowDemoWindow();
 
-	//call console function
-	/*if (console_window)
-		DisplayConsole();*/
-		
-	//call config window function
-	//if (configuration_window)
-	//	DisplayConfig();
-
-	if (config_default)
-		DisplayConfigDefault();
 		
 
 	if (show_obj_edit_window)
@@ -279,10 +269,5 @@ void ModuleEditor::FileScreen()
 
 }
 
-void ModuleEditor::DisplayConfigDefault()
-{
-	ImGui::Begin("Load File", &config_default);
 
-	ImGui::End();
-}
 
