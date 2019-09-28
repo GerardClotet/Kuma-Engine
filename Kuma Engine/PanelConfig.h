@@ -30,8 +30,10 @@ private:
 	//std::vector<float> ms_log;
 	bool activeWindow		= true;
 	bool activeFileSystem	= true;
+	bool activeInput		= true;
 	bool config_default		= false;
 	char* basePath			= nullptr;
+	WPARAM Addtl_Info_W;
 
 	uint w = App->window->GetScreenWidth();
 	uint h = App->window->GetScreenHeight();

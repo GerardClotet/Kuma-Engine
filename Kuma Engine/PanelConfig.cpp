@@ -7,6 +7,8 @@
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
 
+#define WM_MOUSEHWHEEL
+
 update_status PanelConfig::Draw()
 {
 	
@@ -125,8 +127,6 @@ void PanelConfig::DisplayConfig()
 		if (ImGui::MenuItem("*default*"))
 		{
 			config_default = (config_default == false) ? true : false;
-
-
 		}
 		float brightness = App->window->GetWindowBrightness();
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.0f, 2.0f))
@@ -180,6 +180,25 @@ void PanelConfig::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("Input"))
 	{
+		ImGui::Checkbox("Active", &activeInput);
+
+
+		ImGui::Text("Mouse Position: ");
+		ImGui::SameLine();
+		std::string mousePos = std::to_string(App->input->GetMouseX()) + " , " + std::to_string(App->input->GetMouseY());
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), mousePos.c_str());
+
+
+		ImGui::Text("Mouse Motion: ");
+		ImGui::SameLine();
+		std::string mouseMot = std::to_string(App->input->GetMouseXMotion()) + " , " + std::to_string(App->input->GetMouseYMotion());
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), mouseMot.c_str());
+
+		ImGui::Text("Mouse Wheel: ");
+		/*ImGui::SameLine();
+		int wParam = GET_WHEEL_DELTA_WPARAM(Addtl_Info_W);
+		std::string wheel = std::to_string(wParam);
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), wheel.c_str());*/
 
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
