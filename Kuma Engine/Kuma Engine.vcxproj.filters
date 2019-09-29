@@ -504,5 +504,7 @@
       <Filter>tools\mathgeolib\Math</Filter>
     </None>
     <None Include="Game\config.json" />
+    <None Include="Game\Configuration\config.json" />
+    <None Include="Game\Configuration\LoadNewJSON.json" />
   </ItemGroup>
 </Project>

@@ -48,7 +48,7 @@ Application::~Application()
 	list_modules.clear();
 
 	//to free memory
-	json_value_free(json_object_get_value(config, "config.json"));
+	json_value_free(json_object_get_value(config, "Configuration/config.json"));
 }
 
 bool Application::Init()
@@ -56,7 +56,7 @@ bool Application::Init()
 	PERF_START(ptimer);
 	bool ret = true;
 
-	config = LoadJSONFile("config.json");
+	config = LoadJSONFile("Configuration/config.json");
 	if (config != nullptr)
 	{
 		LoadConfig();
