@@ -45,6 +45,7 @@ private:
 	std::string app_name;
 	std::string org_name;
 	std::string version;
+	std::string license;
 
 public:
 	std::list<Module*> list_modules;
@@ -73,6 +74,8 @@ public:
 	void SetOrgName(const char* name);
 	void SetAppVersion(const char* version);
 	const char* GetAppVersion();
+	void SetLicense(const char* license);
+	const char* GetLicense();
 
 private:
 

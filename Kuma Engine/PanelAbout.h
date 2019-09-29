@@ -14,6 +14,7 @@ public:
 
 	update_status Draw();
 	void DisplayAbout();
+
 };
 
 

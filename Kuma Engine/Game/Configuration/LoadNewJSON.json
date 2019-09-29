@@ -1,4 +1,10 @@
 {
+  "Application": {
+    "Name": "KUMA ENGINE",
+    "Organization": "UPC CITM",
+    "Version": "v0.01"
+  },
+
   "Configuration": {
 
     "Window": {

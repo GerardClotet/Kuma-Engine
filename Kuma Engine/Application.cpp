@@ -241,10 +241,14 @@ void Application::LoadConfig(JSON_Object *& config)
 	app_name = json_object_dotget_string(config, "Application.Name");
 	org_name = json_object_dotget_string(config, "Application.Organization");
 	version = json_object_dotget_string(config, "Application.Version");
+	std::string firstline = json_object_dotget_string(config, "License.firstLine");
+	std::string secondLine= json_object_dotget_string(config, "License.secondLine");
+	license = firstline + secondLine;
 
 	SetAppName(app_name.c_str());
 	SetOrgName(org_name.c_str());
 	SetAppVersion(version.c_str());
+	SetLicense(license.c_str());
 }
 
 bool Application::SaveConfig()
@@ -321,6 +325,17 @@ void Application::SetAppVersion(const char * version)
 const char * Application::GetAppVersion()
 {
 	return version.c_str();
+}
+
+void Application::SetLicense(const char * license)
+{
+	if (license != nullptr)
+		this->license = license;
+}
+
+const char * Application::GetLicense()
+{
+	return license.c_str();
 }
 
 void Application::OpenWebsite(const std::string & link)
