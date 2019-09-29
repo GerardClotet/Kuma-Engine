@@ -16,6 +16,7 @@
 class Panel;
 class PanelConfig;
 class PanelConsole;
+class PanelAbout;
 
 class ModuleEditor : public Module
 {
@@ -37,6 +38,7 @@ public:
 	bool configuration_window	= false;
 	bool console_window			= false;
 	bool config_default			= false;
+	bool about_window			= false;
 
 	void AddFPS(float fps, float ms);
 	
@@ -62,8 +64,9 @@ private:
 
 public:
 
-	PanelConsole* console_p = nullptr;
-	PanelConfig* config_p= nullptr;
+	PanelConsole* console_p		= nullptr;
+	PanelConfig* config_p		= nullptr;
+	PanelAbout* about_p			= nullptr;
 
 	std::list<Panel*> panel_list;
 };

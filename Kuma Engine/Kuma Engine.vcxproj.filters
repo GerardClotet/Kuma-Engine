@@ -169,6 +169,7 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>tools\mmgr</Filter>
     </ClCompile>
+    <ClCompile Include="PanelAbout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -445,6 +446,7 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>tools\mmgr</Filter>
     </ClInclude>
+    <ClInclude Include="PanelAbout.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -506,5 +508,6 @@
     <None Include="Game\config.json" />
     <None Include="Game\Configuration\config.json" />
     <None Include="Game\Configuration\LoadNewJSON.json" />
+    <None Include="Game\imgui.ini" />
   </ItemGroup>
 </Project>

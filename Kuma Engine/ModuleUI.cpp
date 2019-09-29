@@ -5,6 +5,7 @@
 #include "ModuleHardware.h"
 #include "PanelConfig.h"
 #include "PanelConsole.h"
+#include "PanelAbout.h"
 #include <list>
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -36,6 +37,7 @@ bool ModuleEditor::Start()
 	ImGui_ImplOpenGL3_Init();
 	panel_list.push_back(config_p =new PanelConfig("Configuration"));
 	panel_list.push_back(console_p =new PanelConsole("Console"));
+	panel_list.push_back(about_p = new PanelAbout("About"));
 	console_window = true;
 
 
@@ -278,7 +280,7 @@ void ModuleEditor::HelpScreen()
 	}
 	if (ImGui::MenuItem("About"))
 	{
-
+		about_window = (about_window == false) ? true : false;
 	}
 }
 

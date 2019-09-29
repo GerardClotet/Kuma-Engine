@@ -159,6 +159,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Defs.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="PanelAbout.h" />
     <ClInclude Include="PanelConfig.h" />
     <ClInclude Include="PanelConsole.h" />
     <ClInclude Include="Parson\parson.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleUI.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="PanelAbout.cpp" />
     <ClCompile Include="PanelConfig.cpp" />
     <ClCompile Include="PanelConsole.cpp" />
     <ClCompile Include="Parson\parson.c" />
@@ -233,6 +235,7 @@
     <None Include="Game\config.json" />
     <None Include="Game\Configuration\config.json" />
     <None Include="Game\Configuration\LoadNewJSON.json" />
+    <None Include="Game\imgui.ini" />
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
