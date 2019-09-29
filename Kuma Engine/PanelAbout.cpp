@@ -10,11 +10,11 @@ update_status PanelAbout::Draw()
 
 void PanelAbout::DisplayAbout()
 {
-	ImGui::Begin("About Kuma Engine", &App->ui->about_window);
+	ImGui::Begin("About", &App->ui->about_window);
 
 	ImGui::Separator();
 	
-	ImGui::Text("this is just a test");
+	ImGui::Text("Kuma Engine %s", App->GetAppVersion());
 
 	ImGui::End();
 }

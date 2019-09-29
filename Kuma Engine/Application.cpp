@@ -240,9 +240,11 @@ void Application::LoadConfig(JSON_Object *& config)
 {
 	app_name = json_object_dotget_string(config, "Application.Name");
 	org_name = json_object_dotget_string(config, "Application.Organization");
+	version = json_object_dotget_string(config, "Application.Version");
 
 	SetAppName(app_name.c_str());
 	SetOrgName(org_name.c_str());
+	SetAppVersion(version.c_str());
 }
 
 bool Application::SaveConfig()
@@ -308,6 +310,17 @@ void Application::SetOrgName(const char * name)
 	{
 		org_name = name;
 	}
+}
+
+void Application::SetAppVersion(const char * version)
+{
+	if (version != nullptr)
+		this->version = version;
+}
+
+const char * Application::GetAppVersion()
+{
+	return version.c_str();
 }
 
 void Application::OpenWebsite(const std::string & link)
