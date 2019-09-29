@@ -36,7 +36,7 @@ bool ModuleEditor::Start()
 	ImGui_ImplOpenGL3_Init();
 	panel_list.push_back(config_p =new PanelConfig("Configuration"));
 	panel_list.push_back(console_p =new PanelConsole("Console"));
-	
+	console_window = true;
 
 
 
@@ -62,11 +62,11 @@ bool ModuleEditor::CleanUp()
 	std::list<Panel*>::iterator item = panel_list.begin();
 	while (item != panel_list.end())
 	{
-		
 		//panel_list.erase(item);
 		/*panel_list.remove(*item);*/
 		++item;
 	}
+	panel_list.clear();
 	console_p->Clear();
 	//panel_list.clear();
 	console_p = nullptr;
