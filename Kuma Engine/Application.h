@@ -89,7 +89,7 @@ public:
 	bool vsync = true; //need to add the condition to true
 
 	std::list<const char*> log_saves;
-
+	JSON_Value* value;
 };
 
 extern Application* App;

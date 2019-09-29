@@ -250,3 +250,14 @@ void ModuleWindow::LoadConfig(JSON_Object *& config)
 	if (firstLoadConfig)
 		firstLoadConfig = false;
 }
+
+void ModuleWindow::SaveConfig(JSON_Object*& config, std::string path)
+{
+	json_object_dotset_number(config, "Configuration.Window.Width", screen_width);
+	json_object_dotset_number(config, "Configuration.Window.Height", screen_height);
+	json_object_dotset_boolean(config, "Configuration.Window.Borderless", borderless);
+
+	//TODO:// WE NEED TO PUT MORE THINGS HERE
+	json_serialize_to_file(App->value, path.c_str());
+
+}

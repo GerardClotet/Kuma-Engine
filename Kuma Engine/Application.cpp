@@ -254,12 +254,12 @@ void Application::LoadConfig(JSON_Object *& config)
 bool Application::SaveConfig()
 {
 	bool ret = true;
-	std::list<Module*>::iterator item = list_modules.begin();
+	/*std::list<Module*>::iterator item = list_modules.begin();
 	while (item != list_modules.end())
 	{
 		(*item)->SaveConfig(config);
 		++item;
-	}
+	}*/
 	return ret;
 }
 
@@ -267,7 +267,7 @@ bool Application::SaveConfig()
 
 JSON_Object * Application::LoadJSONFile(const std::string & path)
 {
-	JSON_Value* value = json_parse_file(path.data());
+	value = json_parse_file(path.data());
 	JSON_Object* object = json_value_get_object(value);
 
 	if (value == nullptr || object == nullptr)

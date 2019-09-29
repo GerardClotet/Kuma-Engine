@@ -45,6 +45,14 @@ void PanelConfig::DisplayConfig()
 		}
 		if (ImGui::MenuItem("Save"))
 		{
+			std::string file = SelectFile();
+			JSON_Object* config = App->LoadJSONFile(file);
+			std::list<Module*>::iterator item = App->list_modules.begin();
+			while (item != App->list_modules.end())
+			{
+				(*item)->SaveConfig(config, file);
+				++item;
+			}
 		}
 		ImGui::EndMenu();
 	}

@@ -37,6 +37,7 @@ public:
 	void Set_Borderless(bool s);
 	void Set_FullDesktop(bool s);
 	void LoadConfig(JSON_Object*& config);
+	void SaveConfig(JSON_Object*& config, std::string path);
 
 public:
 	//The window we'll be rendering to
