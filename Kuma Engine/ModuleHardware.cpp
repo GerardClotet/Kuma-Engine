@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleHardware.h"
 #include "SDL/include/SDL_cpuinfo.h"
+
 ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -26,6 +27,7 @@ ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(ap
 	sse42 = SDL_HasSSE42();
 
 	//GPU spec initialized in renderer3D
+	
 	
 
 	App->saveLog(sdl_version);

@@ -180,17 +180,16 @@ bool ModuleWindow::Get_if_FullDesktop()
 
 void ModuleWindow::Set_FullScreen(bool set)
 {
-	if (fullscreen != set)
+	if (set)
 	{
-		if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
-			LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
-
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		fullscreen = set;
 		full_desktop = false;
 	}
 	else
 	{
-		if (SDL_SetWindowFullscreen(window, 0) != 0)
-			LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		SDL_SetWindowFullscreen(window, 0);
+		fullscreen = set;
 	}
 }
 

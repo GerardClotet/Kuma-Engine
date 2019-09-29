@@ -221,6 +221,8 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		ImGui::Text("%.1fGb", App->hardware->system_RAM_gb);
 
+		ImGui::Text("Caps: ");
+		ImGui::SameLine();
 		if (App->hardware->rdtsc)  ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "RDTSC");
 		ImGui::SameLine();
 		if (App->hardware->altivec) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AltiVec");

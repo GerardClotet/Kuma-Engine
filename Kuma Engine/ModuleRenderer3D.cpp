@@ -94,6 +94,7 @@ bool ModuleRenderer3D::Init()
 
 	App->hardware->gpu_vendor = (const char*)glGetString(GL_VENDOR);
 	App->hardware->gpu_brand = (const char*)glGetString(GL_RENDERER);
+	
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
 	LOG("Renderer: %s", glGetString(GL_RENDERER));
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
