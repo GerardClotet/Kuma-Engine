@@ -36,7 +36,7 @@ bool ModuleEditor::Start()
 	ImGui_ImplOpenGL3_Init();
 	panel_list.push_back(config_p =new PanelConfig("Configuration"));
 	panel_list.push_back(console_p =new PanelConsole("Console"));
-	console_window = true;
+	
 
 
 
@@ -130,10 +130,9 @@ update_status ModuleEditor::Update(float dt)
 
 		ImGui::EndMainMenuBar();
 	}
-		for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
+	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
 	{
 		ret = (*item)->Draw();
-
 	}
 	//call demo function
 	if (demoWindow)

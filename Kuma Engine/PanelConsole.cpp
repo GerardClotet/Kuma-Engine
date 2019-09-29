@@ -4,10 +4,6 @@
 #include "Application.h"
 update_status PanelConsole::Draw()
 {
-
-
-
-
 	if (App->ui->console_window)DisplayConsole();
 	return UPDATE_CONTINUE;
 }

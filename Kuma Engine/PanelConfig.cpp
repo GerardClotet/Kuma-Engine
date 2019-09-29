@@ -10,7 +10,6 @@
 
 update_status PanelConfig::Draw()
 {
-	
 
 	if (App->ui->configuration_window)DisplayConfig();
 
@@ -197,12 +196,15 @@ void PanelConfig::DisplayConfig()
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i", App->input->GetMouseWheel());
 
 		ImGui::Separator();
+		ImGui::BeginChild("scrolling");
 
 		ImGui::TextUnformatted(input_buf.begin());
 
 		if (scrollToBottom)
 			ImGui::SetScrollHere(1.0f);
 		scrollToBottom = false;
+
+		ImGui::EndChild();
 
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
