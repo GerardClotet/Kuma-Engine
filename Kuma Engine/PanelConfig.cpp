@@ -43,6 +43,7 @@ void PanelConfig::DisplayConfig()
 				(*item)->LoadConfig(config);
 				++item;
 			}
+			App->LoadConfig(config);
 		}
 		if (ImGui::MenuItem("Save"))
 		{
@@ -54,6 +55,7 @@ void PanelConfig::DisplayConfig()
 				(*item)->SaveConfig(config, file);
 				++item;
 			}
+			App->SaveConfig(config, file);
 		}
 		ImGui::EndMenu();
 	}

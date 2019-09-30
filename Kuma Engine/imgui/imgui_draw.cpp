@@ -365,9 +365,9 @@ IMGUI_API void ImGui::StyleColorsEdited(ImGuiStyle* dst)
     colors[ImGuiCol_CheckMark] = ImVec4(0.96f, 0.29f, 0.48f, 1.00f);
     colors[ImGuiCol_SliderGrab] = ImVec4(0.24f, 0.52f, 0.88f, 1.00f);
     colors[ImGuiCol_SliderGrabActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-    colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-    colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-    colors[ImGuiCol_ButtonActive] = ImVec4(0.06f, 0.53f, 0.98f, 1.00f);
+    colors[ImGuiCol_Button] = ImVec4(0.96f, 0.29f, 0.48f, 0.31f);
+    colors[ImGuiCol_ButtonHovered] = ImVec4(0.96f, 0.29f, 0.48f, 1.00f);
+    colors[ImGuiCol_ButtonActive] = ImVec4(0.96f, 0.29f, 0.78f, 1.00f);
     colors[ImGuiCol_Header] = ImVec4(0.96f, 0.29f, 0.48f, 0.31f);
     colors[ImGuiCol_HeaderHovered] = ImVec4(0.96f, 0.09f, 0.98f, 0.80f);
     colors[ImGuiCol_HeaderActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);

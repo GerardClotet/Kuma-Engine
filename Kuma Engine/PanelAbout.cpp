@@ -17,7 +17,8 @@ void PanelAbout::DisplayAbout()
 	
 	ImGui::Text("Kuma Engine %s", App->GetAppVersion());
 	ImGui::Text("The new oriental engine");
-	ImGui::Text("By Pol Recasens & Gerard Clotet https://github.com/GerardClotet/Kuma-Engine");
+	if (ImGui::Button("By Pol Recasens & Gerard Clotet"))
+		App->OpenWebsite("https://github.com/GerardClotet/Kuma-Engine");
 
 	ImGui::NewLine();
 
