@@ -242,7 +242,7 @@ void Application::LoadConfig(JSON_Object *& config)
 	org_name = json_object_dotget_string(config, "Application.Organization");
 	version = json_object_dotget_string(config, "Application.Version");
 	std::string firstline = json_object_dotget_string(config, "License.firstLine");
-	std::string secondLine= json_object_dotget_string(config, "License.secondLine");
+	std::string secondLine = json_object_dotget_string(config, "License.secondLine");
 	license = firstline + secondLine;
 
 	SetAppName(app_name.c_str());
@@ -251,7 +251,14 @@ void Application::LoadConfig(JSON_Object *& config)
 	SetLicense(license.c_str());
 }
 
-bool Application::SaveConfig()
+void Application::SaveConfig(JSON_Object *& config, std::string path)
+{
+	json_object_dotset_string(config, "Application.Name", app_name.c_str());
+
+	json_serialize_to_file(value, path.c_str());
+}
+
+bool Application::SaveConfigAllModules()
 {
 	bool ret = true;
 	/*std::list<Module*>::iterator item = list_modules.begin();
