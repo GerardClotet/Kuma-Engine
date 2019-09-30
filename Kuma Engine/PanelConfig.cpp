@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 #include "Application.h"
-
+#include "ModuleRenderer3D.h"
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
 
@@ -21,6 +21,7 @@ void PanelConfig::DisplayConfig()
 
 	if (ImGui::BeginMenu("Options"))
 	{
+		
 		if (ImGui::MenuItem("Set Defaults"))
 		{
 			JSON_Object* config_default = App->LoadJSONFile("Configuration/config.json");
@@ -262,6 +263,50 @@ void PanelConfig::DisplayConfig()
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", App->hardware->gpu_brand);
 	}
 
+	if (ImGui::CollapsingHeader("Renderer"))
+	{
+		ImGui::BulletText("GL_DEPTH_TEST");
+		ImGui::SameLine();
+		if(ImGui::Button("Enable")) glEnable(GL_DEPTH_TEST);
+		ImGui::SameLine();
+		if (ImGui::Button("Disable")) glDisable(GL_DEPTH_TEST);
+
+		ImGui::Separator();
+
+		ImGui::BulletText("GL_CULL_FACE");
+		ImGui::SameLine();
+		if (ImGui::Button("Enable")) glEnable(GL_CULL_FACE);
+		ImGui::SameLine();
+		if (ImGui::Button("Disable"))glDisable(GL_CULL_FACE);
+
+		ImGui::Separator();
+
+		ImGui::BulletText("GL_LIGHTING");
+		ImGui::SameLine();
+		if (ImGui::Button("Enable")) glEnable(GL_LIGHTING);
+		ImGui::SameLine();
+		if (ImGui::Button("Disable")) glDisable(GL_LIGHTING);
+
+
+		ImGui::Separator();
+		
+		ImGui::BulletText("GL_COLOR_MATERIAL");
+		ImGui::SameLine();
+		if (ImGui::Button("Enable")) glEnable(GL_COLOR_MATERIAL);
+		ImGui::SameLine();
+		if (ImGui::Button("Disable")) glDisable(GL_COLOR_MATERIAL);
+
+
+		ImGui::Separator();
+
+		ImGui::BulletText("GL_TEXTURE_2D");
+		ImGui::SameLine();
+		if (ImGui::Button("Enable")) glEnable(GL_TEXTURE_2D);
+		ImGui::SameLine();
+		if (ImGui::Button("Disable")) glDisable(GL_TEXTURE_2D);
+
+
+	}
 	ImGui::End();
 }
 

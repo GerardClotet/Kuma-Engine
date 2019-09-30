@@ -26,9 +26,8 @@ ModuleSceneIntro::~ModuleSceneIntro()
 {}
 
 // Load assets
-bool ModuleSceneIntro::Start()
+bool ModuleSceneIntro::Init()
 {
-	LOG("Loading Intro assets");
 	App->saveLog("Loading Intro assets");
 	bool ret = true;
 	
@@ -38,6 +37,7 @@ bool ModuleSceneIntro::Start()
 	RandomFloatGenerator();
 	RandomintGenerator(5, 6);
 	
+
 	return ret;
 }
 
@@ -53,18 +53,24 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p({ 0,1,0 }, 0);
-	
 
-	Sphere es ({ 0,0,0 }, 5);
+	
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneIntro::PostUpdate(float dt)
+{
+	Plane p({ 0,1,0 }, 0);
+
+
+	Sphere es({ 0,0,0 }, 5);
 	Sphere z({ 0,0,0 }, 3);
 	if (z.Intersects(es))
 	{
 		//LOG("intersected");
 		Sphere ais({ 10,0,00 }, 500);
-		
+
 	}
-	
 	return UPDATE_CONTINUE;
 }
 

@@ -5,13 +5,13 @@
 #include <vector>
 #include "Module.h"
 #include "ImGui/imgui.h"
-
+#include "Application.h"
 class PanelConsole : public Panel
 {
 public:
 	PanelConsole() {};
 
-	PanelConsole(const char* name) :Panel(name) {};
+	PanelConsole(const char* name) :Panel(name) { App->saveLog("Console Panel Created"); };
 	~PanelConsole() {};
 
 	update_status Draw();
@@ -25,7 +25,6 @@ public:
 public:
 	ImGuiTextBuffer		Buf;
 	ImGuiTextFilter     Filter;
-	ImVector<int>       LineOffsets;        // Index to lines offset
 	bool                ScrollToBottom;
 
 };

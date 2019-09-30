@@ -23,20 +23,28 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
-	if(context == NULL)
+	if (context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
-	
+	else App->saveLog("OpenGL context created");
 	GLenum error = glewInit();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error initializing glew library! %s\n", SDL_GetError());
 		ret = false;
 	}
+	else App->saveLog("Initialized glew lib");
 	if(ret == true)
 	{
 		//Use Vsync
@@ -52,6 +60,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->saveLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -87,6 +96,8 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+
+		
 	}
 
 	// Projection matrix for
@@ -96,9 +107,15 @@ bool ModuleRenderer3D::Init()
 	App->hardware->gpu_brand = (const char*)glGetString(GL_RENDERER);
 	
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	//App->saveLog("Vendor: %s", glGetString(GL_VENDOR));
+	//App->saveLog("Renderer: %s", glGetString(GL_RENDERER));
+	//App->saveLog("OpenGL version supported %s", glGetString(GL_VERSION));
+	//App->saveLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+
+	LOG("Rendererd3D init");
+	App->saveLog("Renderer3D init");
 	return ret;
 }
 

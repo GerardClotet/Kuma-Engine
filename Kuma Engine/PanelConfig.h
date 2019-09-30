@@ -17,7 +17,7 @@ class PanelConfig : public Panel
 public:
 	PanelConfig() {};
 	PanelConfig(const char* name) :Panel(name) {
-	
+		App->saveLog("Config Panel Created");
 	};
 	~PanelConfig() {};
 

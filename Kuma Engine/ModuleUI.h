@@ -24,7 +24,7 @@ public:
 	ModuleEditor(Application* app, bool start_enabled = true);
 	~ModuleEditor();
 	bool Start();
-	update_status Update(float dt);
+	update_status PostUpdate(float dt);
 	bool CleanUp();
 	static void HelpMarker(const char* desc);
 	void LoadConfig(JSON_Object*& config);
@@ -61,7 +61,6 @@ private:
 	bool changeColor = false;
 	/*std::vector<float>fps_log;
 	std::vector<float>ms_log;*/
-
 public:
 
 	PanelConsole* console_p		= nullptr;

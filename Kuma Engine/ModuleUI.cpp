@@ -41,6 +41,8 @@ bool ModuleEditor::Start()
 	console_window = true;
 
 
+	
+
 
 	std::list<const char*>::iterator item = App->log_saves.begin();
 
@@ -78,11 +80,12 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
-update_status ModuleEditor::Update(float dt)
+update_status ModuleEditor::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 
 	
+
 
 	//Change style color with hotkey
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
@@ -153,8 +156,10 @@ update_status ModuleEditor::Update(float dt)
 
 	
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	return UPDATE_CONTINUE;
+	return ret;
 }
+
+
 
 
 
@@ -210,7 +215,7 @@ void ModuleEditor::ObjectEditor()
 			ImGui::Text("Radius");
 			ImGui::InputFloat4("X , Y , Z , radius",vec4f );
 	
-
+			
 		if(	ImGui::Button("Create Sphere"))
 			{
 			Sphere es({ vec4f[0],vec4f[1],vec4f[2] }, vec4f[3]);

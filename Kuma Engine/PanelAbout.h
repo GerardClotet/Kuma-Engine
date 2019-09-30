@@ -9,7 +9,7 @@ class PanelAbout : public Panel
 {
 public:
 	PanelAbout() {};
-	PanelAbout(const char* name) :Panel(name) {};
+	PanelAbout(const char* name) :Panel(name) { App->saveLog("About Panel Created"); };
 	~PanelAbout() {};
 
 	update_status Draw();

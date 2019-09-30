@@ -72,8 +72,8 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
-	saveLog("Application Start --------------");
+	LOG("--------------Application Start---------------");
+	saveLog("--------------Application Start---------------");
 	item = list_modules.begin();
 	
 	while (item != list_modules.end() && ret == true)
@@ -249,6 +249,8 @@ void Application::LoadConfig(JSON_Object *& config)
 	SetOrgName(org_name.c_str());
 	SetAppVersion(version.c_str());
 	SetLicense(license.c_str());
+	LOG("load JSON config");
+	App->saveLog("load JSON config");
 }
 
 bool Application::SaveConfig()
