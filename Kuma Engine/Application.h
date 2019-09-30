@@ -61,7 +61,7 @@ public:
 	uint GetFramerateCap();
 	void SetFramerateCap(uint cap);
 	uint GetFramesOnLatsUpdate();
-	bool LoadConfig();
+	bool LoadConfigAllModules();
 	bool SaveConfig();
 	void OpenWebsite(const std::string &link);
 	JSON_Object* LoadJSONFile(const std::string &path);

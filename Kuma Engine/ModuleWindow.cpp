@@ -209,20 +209,17 @@ void ModuleWindow::Set_Borderless(bool set)
 
 void ModuleWindow::Set_FullDesktop(bool set)
 {
-	if (set != full_desktop)
+
+	if (set)
 	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		full_desktop = set;
-		if (full_desktop == true)
-		{
-			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
-				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
-			fullscreen = false;
-		}
-		else
-		{
-			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not switch to windowed: %s\n", SDL_GetError());
-		}
+		fullscreen = false;
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(window, 0);
+		full_desktop = set;
 	}
 }
 void ModuleWindow::LoadConfig(JSON_Object *& config)
@@ -256,6 +253,10 @@ void ModuleWindow::SaveConfig(JSON_Object*& config, std::string path)
 	json_object_dotset_number(config, "Configuration.Window.Width", screen_width);
 	json_object_dotset_number(config, "Configuration.Window.Height", screen_height);
 	json_object_dotset_boolean(config, "Configuration.Window.Borderless", borderless);
+	json_object_dotset_number(config, "Configuration.Window.Brightness", brightness);
+	json_object_dotset_boolean(config, "Configuration.Window.Fullscreen", fullscreen);
+	json_object_dotset_boolean(config, "Configuration.Window.FullDesktop", full_desktop);
+	json_object_dotset_boolean(config, "Configuration.Window.Resizable", resizable);
 
 	//TODO:// WE NEED TO PUT MORE THINGS HERE
 	json_serialize_to_file(App->value, path.c_str());

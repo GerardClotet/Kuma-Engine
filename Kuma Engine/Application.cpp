@@ -59,7 +59,7 @@ bool Application::Init()
 	config = LoadJSONFile("Configuration/config.json");
 	if (config != nullptr)
 	{
-		LoadConfig();
+		LoadConfigAllModules();
 	}
 
 	// Call Init() in all modules
@@ -222,7 +222,7 @@ uint Application::GetFramesOnLatsUpdate()
 	return prev_last_sec_frame_count;
 }
 
-bool Application::LoadConfig()
+bool Application::LoadConfigAllModules()
 {
 	bool ret = true;
 	std::list<Module*>::iterator item = list_modules.begin();
