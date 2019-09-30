@@ -172,6 +172,9 @@
     <ClCompile Include="PanelAbout.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="gpudetect\DeviceId.cpp">
+      <Filter>tools\gpudetect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -451,6 +454,12 @@
     <ClInclude Include="PanelAbout.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="gpudetect\DeviceId.h">
+      <Filter>tools\gpudetect</Filter>
+    </ClInclude>
+    <ClInclude Include="gpudetect\dxgi1_4.h">
+      <Filter>tools\gpudetect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -488,6 +497,9 @@
     </Filter>
     <Filter Include="tools\mmgr">
       <UniqueIdentifier>{32e0ada3-11e9-44f0-8c82-d5fb3fb1469a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\gpudetect">
+      <UniqueIdentifier>{5c6821a3-2fb6-48b3-881e-c71d06604ec1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

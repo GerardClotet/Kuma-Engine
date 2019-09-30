@@ -29,6 +29,7 @@ void PanelAbout::DisplayAbout()
 	ImGui::BulletText("MathGeoLib");
 	ImGui::BulletText("ImGui 1.73");
 	ImGui::BulletText("mmgr");
+	ImGui::BulletText("gpudetect");
 	ImGui::NewLine();
 
 	ImGui::Text("%s", App->GetLicense());

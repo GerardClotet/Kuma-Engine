@@ -257,12 +257,30 @@ void PanelConfig::DisplayConfig()
 		if (App->hardware->avx2) ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "AVX2");
 
 		ImGui::Separator();
-		ImGui::Text("Vendor:");
+		ImGui::Text("GPU:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s",App->hardware->gpu_vendor);
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "vendor %u device %u",App->hardware->gpu_vendor,App->hardware->gpu_device);
 		ImGui::Text("Brand:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", App->hardware->gpu_brand);
+
+
+		ImGui::Text("VRAM Budget:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.2f MB", App->hardware->vram_mb_budget);
+
+		ImGui::Text("VRAM Usage:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.2f MB", App->hardware->vram_mb_usage);
+
+
+		ImGui::Text("VRAM Available:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.2f MB", App->hardware->vram_mb_available);
+
+		ImGui::Text("VRAM Reserved:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.2f MB", App->hardware->vram_mb_reserved);
 	}
 
 	if (ImGui::CollapsingHeader("Renderer"))

@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleHardware.h"
 #include "SDL/include/SDL_cpuinfo.h"
-
+#include "gpudetect/DeviceId.h"
 ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -27,11 +27,20 @@ ModuleHardware::ModuleHardware(Application* app, bool start_enabled) : Module(ap
 	sse42 = SDL_HasSSE42();
 
 	//GPU spec initialized in renderer3D
+	uint vendor;
+	uint device;
 	
-	
+	if (getGraphicsDeviceInfo(&vendor, &device, &brand, &vid_mem_budget, &vid_mem_usage, &vid_mem_available, &vid_mem_reserved))
+	{
+		gpu_vendor = vendor;
+		gpu_device = device;
 
-	App->saveLog(sdl_version);
-	
+		sprintf_s(gpu_brand, 250, "%S", brand.c_str());
+		vram_mb_budget = float(vid_mem_budget) / (1024.f * 1024.f);
+		vram_mb_usage = float(vid_mem_usage) / (1024.f * 1024.f);
+		vram_mb_available = float(vid_mem_available) / (1024.f * 1024.f);
+		vram_mb_reserved = float(vid_mem_reserved) / (1024.f * 1024.f);
+	}
 }
 
 ModuleHardware::~ModuleHardware()

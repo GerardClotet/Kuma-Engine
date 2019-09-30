@@ -26,8 +26,19 @@ public:
 	bool sse41;
 	bool sse42;
 	
+	uint gpu_vendor;
+	uint gpu_device;
+	std::wstring brand;
+	unsigned __int64 vid_mem_budget;
+	unsigned __int64 vid_mem_usage;
+	unsigned __int64 vid_mem_available;
+	unsigned __int64 vid_mem_reserved;
 
-	const char* gpu_vendor;
-	const char* gpu_brand;
+	float vram_mb_budget;
+	float vram_mb_usage;
+	float vram_mb_available;
+	float vram_mb_reserved;
+
+	char gpu_brand[250] = "";
 	char sdl_version[20]="";
 };
