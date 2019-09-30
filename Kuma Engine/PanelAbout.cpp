@@ -16,8 +16,8 @@ void PanelAbout::DisplayAbout()
 	ImGui::Separator();
 	
 	ImGui::Text("Kuma Engine %s", App->GetAppVersion());
-	ImGui::Text("On line description must be filled here!!!");
-	ImGui::Text("By Pol Recasens & Gerard Clotet(need to put github repository)");
+	ImGui::Text("The new oriental engine");
+	ImGui::Text("By Pol Recasens & Gerard Clotet https://github.com/GerardClotet/Kuma-Engine");
 
 	ImGui::NewLine();
 
@@ -27,7 +27,7 @@ void PanelAbout::DisplayAbout()
 	ImGui::BulletText("PCG Random Number Generation 0.98");
 	ImGui::BulletText("MathGeoLib");
 	ImGui::BulletText("ImGui 1.73");
-
+	ImGui::BulletText("mmgr");
 	ImGui::NewLine();
 
 	ImGui::Text("%s", App->GetLicense());
