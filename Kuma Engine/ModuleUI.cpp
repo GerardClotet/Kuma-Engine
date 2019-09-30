@@ -71,8 +71,10 @@ bool ModuleEditor::CleanUp()
 	panel_list.clear();
 	console_p->Clear();
 	//panel_list.clear();
+	panel_list.clear();
 	console_p = nullptr;
 	config_p = nullptr;
+	about_p = nullptr;
 	return true;
 }
 
@@ -266,7 +268,7 @@ void ModuleEditor::HelpScreen()
 
 	if (ImGui::MenuItem("Documentation"))
 	{
-		//Add the link that guides users to the documentation
+		App->OpenWebsite("https://github.com/GerardClotet/Kuma-Engine/blob/master/README.md");
 	}
 
 	if (ImGui::MenuItem("Download latest"))

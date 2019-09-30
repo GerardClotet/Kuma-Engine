@@ -169,7 +169,9 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>tools\mmgr</Filter>
     </ClCompile>
-    <ClCompile Include="PanelAbout.cpp" />
+    <ClCompile Include="PanelAbout.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -446,7 +448,9 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>tools\mmgr</Filter>
     </ClInclude>
-    <ClInclude Include="PanelAbout.h" />
+    <ClInclude Include="PanelAbout.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
