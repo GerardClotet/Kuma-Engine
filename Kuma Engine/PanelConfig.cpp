@@ -285,45 +285,64 @@ void PanelConfig::DisplayConfig()
 
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
-		ImGui::BulletText("GL_DEPTH_TEST");
-		ImGui::SameLine();
-		if(ImGui::Button("Enable")) glEnable(GL_DEPTH_TEST);
-		ImGui::SameLine();
-		if (ImGui::Button("Disable")) glDisable(GL_DEPTH_TEST);
+
+		if (ImGui::Checkbox("GL_DEPTH_TEST", &GL_Depth_test))
+		{
+			if (GL_Depth_test)
+				glEnable(GL_DEPTH_TEST), LOG("Enabled ColorMaterial");
+
+			else if (!GL_Depth_test)
+				glDisable(GL_DEPTH_TEST), LOG("Disabled ColorMaterial");
+		}
 
 		ImGui::Separator();
 
-		ImGui::BulletText("GL_CULL_FACE");
-		ImGui::SameLine();
-		if (ImGui::Button("Enable")) glEnable(GL_CULL_FACE);
-		ImGui::SameLine();
-		if (ImGui::Button("Disable"))glDisable(GL_CULL_FACE);
+		if (ImGui::Checkbox("GL_CULL_FACE", &GL_Cull_face))
+		{
+			if (GL_Cull_face)
+				glEnable(GL_CULL_FACE), LOG("Enabled Cullface");
+
+			else if (!GL_Cull_face)
+				glDisable(GL_CULL_FACE), LOG("Disabled Cullface");
+		}
 
 		ImGui::Separator();
 
-		ImGui::BulletText("GL_LIGHTING");
-		ImGui::SameLine();
-		if (ImGui::Button("Enable")) glEnable(GL_LIGHTING);
-		ImGui::SameLine();
-		if (ImGui::Button("Disable")) glDisable(GL_LIGHTING);
 
 
-		ImGui::Separator();
-		
-		ImGui::BulletText("GL_COLOR_MATERIAL");
-		ImGui::SameLine();
-		if (ImGui::Button("Enable")) glEnable(GL_COLOR_MATERIAL);
-		ImGui::SameLine();
-		if (ImGui::Button("Disable")) glDisable(GL_COLOR_MATERIAL);
+		if (ImGui::Checkbox("GL_LIGHTING", &GL_Lightning))
+		{
+			if (GL_Lightning)
+				glEnable(GL_LIGHTING), LOG("Enabled Lightning");
 
+			else if (!GL_Lightning)
+				glDisable(GL_LIGHTING), LOG("Disabled Lightning");
+
+		}
 
 		ImGui::Separator();
 
-		ImGui::BulletText("GL_TEXTURE_2D");
-		ImGui::SameLine();
-		if (ImGui::Button("Enable")) glEnable(GL_TEXTURE_2D);
-		ImGui::SameLine();
-		if (ImGui::Button("Disable")) glDisable(GL_TEXTURE_2D);
+		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &GL_Lightning))
+		{
+			if (GL_Lightning)
+				glEnable(GL_COLOR_MATERIAL), LOG("Enabled ColorMaterial");
+
+			else if (!GL_Lightning)
+				glDisable(GL_COLOR_MATERIAL), LOG("Disabled ColorMaterial");
+		}
+
+
+
+		ImGui::Separator();
+		if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
+		{
+			if (GL_Texture_2D)
+				glEnable(GL_TEXTURE_2D), LOG("Enabled Texture 2D");
+
+			else if (!GL_Texture_2D)
+				glDisable(GL_TEXTURE_2D), LOG("Disabled Texture 2D");
+
+		}
 
 
 	}

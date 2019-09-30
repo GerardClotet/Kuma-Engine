@@ -47,6 +47,12 @@ private:
 	std::string SelectFile(); //This allows you to select a .json file
 	char filename[MAX_PATH]; //This is the variable that will recieve the file path
 	OPENFILENAME ofn; //struct with all the info needed to create the dialogue to select the file
+	bool GL_Depth_test = true;
+	bool GL_Cull_face = true;
+	bool GL_Lightning = true;
+	bool GL_Color_material = true;
+	bool GL_Texture_2D = true;
+
 };
 
 
