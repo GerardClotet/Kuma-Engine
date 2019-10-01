@@ -52,6 +52,7 @@ private:
 	bool GL_Lightning = true;
 	bool GL_Color_material = true;
 	bool GL_Texture_2D = true;
+	bool GL_Wireframe = false;
 
 };
 
