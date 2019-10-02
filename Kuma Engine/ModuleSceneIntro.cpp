@@ -38,6 +38,8 @@ bool ModuleSceneIntro::Init()
 	RandomintGenerator(5, 6);
 	
 
+
+
 	return ret;
 }
 
@@ -53,12 +55,19 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	
+	
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSceneIntro::PostUpdate(float dt)
+{
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);
-	
-	for (int i=-100; i <= 100; i++)
+
+	for (int i = -100; i <= 100; i++)
 	{
-	
+
 		float sunX = 2 * i;
 		float sunZ = 150;
 
@@ -74,23 +83,46 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	glEnd();
+
+
+
+	//cube
+	glBegin(GL_TRIANGLES);
+
+	//front face
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f,1.0f,0.0f);
 	
-	return UPDATE_CONTINUE;
-}
 
-update_status ModuleSceneIntro::PostUpdate(float dt)
-{
-	Plane p({ 0,1,0 }, 0);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+
+	//back face
+
+	//top face
+
+	//bottom face
 
 
-	Sphere es({ 0,0,0 }, 5);
-	Sphere z({ 0,0,0 }, 3);
-	if (z.Intersects(es))
-	{
-		//LOG("intersected");
-		Sphere ais({ 10,0,00 }, 500);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+	glVertex3f(1.0f, 0.0f, 1.0f);
 
-	}
+	glVertex3f(1.0f, 0.0f, 1.0f);
+	glVertex3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+
+
+
+	
+	//left face
+
+
+	glEnd();
+
+
 
 	
 

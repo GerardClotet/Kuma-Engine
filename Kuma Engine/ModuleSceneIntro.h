@@ -27,4 +27,10 @@ public:
 public:
 	
 	SDL_Window* window;
+
+
+
+
+	
+	
 };
