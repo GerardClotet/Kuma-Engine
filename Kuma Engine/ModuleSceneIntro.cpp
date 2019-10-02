@@ -3,7 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include <random>
 #include "RandomHelper.h"
-#include "par_shapes.h"
+
 
 #include <gl/GL.h>
 
@@ -46,9 +46,9 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-	glGenBuffers(1, (GLuint*) & (my_id0));
+	/*glGenBuffers(1, (GLuint*) & (my_id0));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);*/
 
 	return true;
 }
@@ -97,75 +97,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 
 
-	//cube
-	//glBegin(GL_TRIANGLES);
-
-	////front face
-	//glVertex3f(0.0f, 0.0f, 0.0f);
-	//glVertex3f(0.0f, 1.0f, 0.0f);
-	//glVertex3f(1.0f,1.0f,0.0f);
-	//
-
-	//glVertex3f(1.0f, 1.0f, 0.0f);
-	//glVertex3f(1.0f, 0.0f, 0.0f);
-	//glVertex3f(0.0f, 0.0f, 0.0f);
-
-	////back face
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-	//glVertex3f(1.0f, 0.0f, 1.0f); //v4
-	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
-
-	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
-	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-
-
-	////top face
-	//glVertex3f(1.0f, 1.0f, 0.0f); //v0
-	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
-	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
-
-	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
-	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
-	//glVertex3f(1.0f, 1.0f, 0.0f); //v0
-
-	////bottom face
-
-	//glVertex3f(1.0f, 0.0f, 0.0f); //v3
-	//glVertex3f(1.0f, 0.0f, 1.0f); //v4
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-
-	//glVertex3f(1.0f, 0.0f, 0.0f); //v3
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-	//glVertex3f(0.0f, 0.0f, 0.0f); //v2
-
-	////right face
-	//glVertex3f(1.0f, 1.0f, 0.0f);
-	//glVertex3f(1.0f, 1.0f, 1.0f);
-	//glVertex3f(1.0f, 0.0f, 1.0f);
-
-	//glVertex3f(1.0f, 0.0f, 1.0f);
-	//glVertex3f(1.0f, 0.0f, 0.0f);
-	//glVertex3f(1.0f, 1.0f, 0.0f);
-
-
-
-	//
-	////left face
-
-	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
-	//glVertex3f(0.0f, 0.0f, 0.0f); //v2
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-
-	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
-	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
-	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
-
-
-
-//	glEnd();
-
-	//glBegin(GL_TRIANGLES);
+	
+	glBegin(GL_TRIANGLES);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
@@ -175,8 +108,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
-	//glEnd();
-
+	glEnd();
 
 	float vertices2[] = {
 					0.0f,0.0f,0.0f,
@@ -201,12 +133,12 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, vertices2);
-	// � draw other buffers
+	// … draw other buffers
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
-
-	par_shapes_create_cylinder(50, 50);
+	
+	//test = par_shapes_create_cube();
 
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;

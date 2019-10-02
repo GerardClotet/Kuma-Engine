@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-
+#include "par_shapes.h"
 
 
 #include "MathGeoLib/include/MathGeoLib.h"
@@ -29,11 +29,14 @@ public:
 	
 	SDL_Window* window;
 
-	uint my_id = 1;
+	uint my_id = 0;
 
 private:
+	par_shapes_mesh* test;
 	uint my_id0 = 0;
 	int num_vertices = 8;
+
+	
 
 	float vertices[36*3] = {
 	0.0f,0.0f,0.0f,
