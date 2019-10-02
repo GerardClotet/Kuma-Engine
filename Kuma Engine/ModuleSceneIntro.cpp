@@ -130,15 +130,17 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 					 6,7,4, 4,5,6 };
 
 
+	test = par_shapes_create_cube();
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, vertices2);
+	glVertexPointer(3, GL_FLOAT, 0, test->points);
 	// … draw other buffers
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
 	
-	test = par_shapes_create_cube();
+	
 
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
