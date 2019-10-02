@@ -53,7 +53,27 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);
+	
+	for (int i=-100; i <= 100; i++)
+	{
+	
+		float sunX = 2 * i;
+		float sunZ = 150;
 
+		glVertex3f(sunX, 0.0f, -150.0f);
+		glVertex3f(sunX, 0, sunZ);
+
+
+		float sunQ = 2 * i;
+		float sunW = 150;
+
+		glVertex3f(-150.0f, 0.0f, sunQ);
+		glVertex3f(sunW, 0, sunQ);
+	}
+
+	glEnd();
 	
 	return UPDATE_CONTINUE;
 }
@@ -71,6 +91,9 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		Sphere ais({ 10,0,00 }, 500);
 
 	}
+
+	
+
 	return UPDATE_CONTINUE;
 }
 
