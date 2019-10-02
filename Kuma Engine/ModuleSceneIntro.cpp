@@ -102,10 +102,25 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//back face
 
 	//top face
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	glVertex3f(1.0f, 1.0f, 1.0f); //v5
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
 
 	//bottom face
 
+	glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	glVertex3f(1.0f, 0.0f, 1.0f); //v4
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
 
+	glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glVertex3f(0.0f, 0.0f, 0.0f); //v2
+
+	//right face
 	glVertex3f(1.0f, 1.0f, 0.0f);
 	glVertex3f(1.0f, 1.0f, 1.0f);
 	glVertex3f(1.0f, 0.0f, 1.0f);
@@ -118,6 +133,14 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	
 	//left face
+
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	glVertex3f(0.0f, 0.0f, 0.0f); //v2
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
 
 
 	glEnd();
