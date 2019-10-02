@@ -38,9 +38,19 @@ bool ModuleSceneIntro::Init()
 	RandomintGenerator(5, 6);
 	
 
+	
 
 
 	return ret;
+}
+
+bool ModuleSceneIntro::Start()
+{
+	glGenBuffers(1, (GLuint*) & (my_id0));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
+
+	return true;
 }
 
 // Load assets
@@ -57,6 +67,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	
 	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -85,17 +96,98 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glEnd();
 
 
-	float vertices[] = {
-						0.0f,0.0f,0.0f,
-						1.0f,0.0f,0.0f,
-						1.0f,1.0f,0.0f,
-						0.0f,1.0f,0.0f,
-						0.0f,1.0f,1.0f,
-						0.0f,0.0f,1.0f,
-						1.0f,0.0f,1.0f,
-						1.0f,1.0f,1.0f
-						};
 
+	//cube
+	//glBegin(GL_TRIANGLES);
+
+	////front face
+	//glVertex3f(0.0f, 0.0f, 0.0f);
+	//glVertex3f(0.0f, 1.0f, 0.0f);
+	//glVertex3f(1.0f,1.0f,0.0f);
+	//
+
+	//glVertex3f(1.0f, 1.0f, 0.0f);
+	//glVertex3f(1.0f, 0.0f, 0.0f);
+	//glVertex3f(0.0f, 0.0f, 0.0f);
+
+	////back face
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	//glVertex3f(1.0f, 0.0f, 1.0f); //v4
+	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
+
+	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
+	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+
+
+	////top face
+	//glVertex3f(1.0f, 1.0f, 0.0f); //v0
+	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
+
+	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	//glVertex3f(1.0f, 1.0f, 1.0f); //v5
+	//glVertex3f(1.0f, 1.0f, 0.0f); //v0
+
+	////bottom face
+
+	//glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	//glVertex3f(1.0f, 0.0f, 1.0f); //v4
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+
+	//glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	//glVertex3f(0.0f, 0.0f, 0.0f); //v2
+
+	////right face
+	//glVertex3f(1.0f, 1.0f, 0.0f);
+	//glVertex3f(1.0f, 1.0f, 1.0f);
+	//glVertex3f(1.0f, 0.0f, 1.0f);
+
+	//glVertex3f(1.0f, 0.0f, 1.0f);
+	//glVertex3f(1.0f, 0.0f, 0.0f);
+	//glVertex3f(1.0f, 1.0f, 0.0f);
+
+
+
+	//
+	////left face
+
+	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	//glVertex3f(0.0f, 0.0f, 0.0f); //v2
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+
+	//glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	//glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	//glVertex3f(0.0f, 1.0f, 0.0f); //v1
+
+
+
+//	glEnd();
+
+	//glBegin(GL_TRIANGLES);
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	// ï¿½ draw other buffers
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+
+	//glEnd();
+
+
+	float vertices2[] = {
+					0.0f,0.0f,0.0f,
+					1.0f,0.0f,0.0f,
+					1.0f,1.0f,0.0f,
+					0.0f,1.0f,0.0f,
+					0.0f,1.0f,1.0f,
+					0.0f,0.0f,1.0f,
+					1.0f,0.0f,1.0f,
+					1.0f,1.0f,1.0f
+	};
 
 
 	int indices[] = { 2,1,0, 0,3,2,  //front face // 36 of indices
@@ -108,8 +200,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	// … draw other buffers
+	glVertexPointer(3, GL_FLOAT, 0, vertices2);
+	// ï¿½ draw other buffers
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
