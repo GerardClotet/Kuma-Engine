@@ -85,68 +85,33 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glEnd();
 
 
-
-	//cube
-	glBegin(GL_TRIANGLES);
-
-	//front face
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f,1.0f,0.0f);
-	
-
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-
-	//back face
-
-	//top face
-	glVertex3f(1.0f, 1.0f, 0.0f); //v0
-	glVertex3f(0.0f, 1.0f, 0.0f); //v1
-	glVertex3f(0.0f, 1.0f, 1.0f); //v6
-
-	glVertex3f(0.0f, 1.0f, 1.0f); //v6
-	glVertex3f(1.0f, 1.0f, 1.0f); //v5
-	glVertex3f(1.0f, 1.0f, 0.0f); //v0
-
-	//bottom face
-
-	glVertex3f(1.0f, 0.0f, 0.0f); //v3
-	glVertex3f(1.0f, 0.0f, 1.0f); //v4
-	glVertex3f(0.0f, 0.0f, 1.0f); //v7
-
-	glVertex3f(1.0f, 0.0f, 0.0f); //v3
-	glVertex3f(0.0f, 0.0f, 1.0f); //v7
-	glVertex3f(0.0f, 0.0f, 0.0f); //v2
-
-	//right face
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(1.0f, 0.0f, 1.0f);
-
-	glVertex3f(1.0f, 0.0f, 1.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
+	float vertices[] = {
+						0.0f,0.0f,0.0f,
+						1.0f,0.0f,0.0f,
+						1.0f,1.0f,0.0f,
+						0.0f,1.0f,0.0f,
+						0.0f,1.0f,1.0f,
+						0.0f,0.0f,1.0f,
+						1.0f,0.0f,1.0f,
+						1.0f,1.0f,1.0f
+						};
 
 
 
-	
-	//left face
-
-	glVertex3f(0.0f, 1.0f, 0.0f); //v1
-	glVertex3f(0.0f, 0.0f, 0.0f); //v2
-	glVertex3f(0.0f, 0.0f, 1.0f); //v7
-
-	glVertex3f(0.0f, 0.0f, 1.0f); //v7
-	glVertex3f(0.0f, 1.0f, 1.0f); //v6
-	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	int indices[] = { 2,1,0, 0,3,2,  //front face // 36 of indices
+					 4,3,0, 0,5,4,
+					 6,5,0, 0,1,6,
+					 7,6,1, 1,2,7,
+					 3,4,7, 7,2,3,
+					 6,7,4, 4,5,6 };
 
 
-	glEnd();
-
-
-
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	// … draw other buffers
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	
 
 	return UPDATE_CONTINUE;

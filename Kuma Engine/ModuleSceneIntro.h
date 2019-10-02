@@ -28,6 +28,9 @@ public:
 	
 	SDL_Window* window;
 
+private:
+	uint my_id = 0;
+	int num_vertices = 8;
 
 
 
