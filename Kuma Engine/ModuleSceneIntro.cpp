@@ -138,7 +138,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
 	
-	//test = par_shapes_create_cube();
+	test = par_shapes_create_cube();
 
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
