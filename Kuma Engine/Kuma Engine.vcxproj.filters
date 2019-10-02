@@ -175,6 +175,7 @@
     <ClCompile Include="gpudetect\DeviceId.cpp">
       <Filter>tools\gpudetect</Filter>
     </ClCompile>
+    <ClCompile Include="par_shapes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -460,6 +461,7 @@
     <ClInclude Include="gpudetect\dxgi1_4.h">
       <Filter>tools\gpudetect</Filter>
     </ClInclude>
+    <ClInclude Include="par_shapes.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

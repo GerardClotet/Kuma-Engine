@@ -3,7 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include <random>
 #include "RandomHelper.h"
-
+#include "par_shapes.h"
 
 #include <gl/GL.h>
 
@@ -81,7 +81,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		glVertex3f(-150.0f, 0.0f, sunQ);
 		glVertex3f(sunW, 0, sunQ);
 	}
-
+	glColor3f(255, 255, 0);
 	glEnd();
 
 
@@ -114,6 +114,9 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
 
+	par_shapes_create_cylinder(50, 50);
+
+	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
 }
 
