@@ -46,8 +46,8 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-	glGenBuffers(1, (GLuint*) & (my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glGenBuffers(1, (GLuint*) & (my_id0));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
 
 	return true;
@@ -168,15 +168,42 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//glBegin(GL_TRIANGLES);
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	// … draw other buffers
+	// ï¿½ draw other buffers
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
 	//glEnd();
 
+
+	float vertices2[] = {
+					0.0f,0.0f,0.0f,
+					1.0f,0.0f,0.0f,
+					1.0f,1.0f,0.0f,
+					0.0f,1.0f,0.0f,
+					0.0f,1.0f,1.0f,
+					0.0f,0.0f,1.0f,
+					1.0f,0.0f,1.0f,
+					1.0f,1.0f,1.0f
+	};
+
+
+	int indices[] = { 2,1,0, 0,3,2,  //front face // 36 of indices
+					 4,3,0, 0,5,4,
+					 6,5,0, 0,1,6,
+					 7,6,1, 1,2,7,
+					 3,4,7, 7,2,3,
+					 6,7,4, 4,5,6 };
+
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, vertices2);
+	// ï¿½ draw other buffers
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	
 
 	return UPDATE_CONTINUE;

@@ -31,6 +31,10 @@ public:
 
 	uint my_id = 1;
 
+private:
+	uint my_id0 = 0;
+	int num_vertices = 8;
+
 	float vertices[36*3] = {
 	0.0f,0.0f,0.0f,
 	1.f,1.f,0.f,
