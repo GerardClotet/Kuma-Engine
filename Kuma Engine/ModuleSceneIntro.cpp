@@ -3,19 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include <random>
 #include "RandomHelper.h"
-
-
 #include <gl/GL.h>
-
-#include "MathGeoLib/include/Geometry/Plane.h"
-
-
-//#ifdef NDEBUG //no debug
-//#pragma comment (lib, "MathGeoLib/libx86/Release/MathGeoLib.lib") 
-//#else
-//#pragma comment (lib, "MathGeoLib/libx86/Debug/MathGeoLib.lib") 
-//#endif
-
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -46,9 +34,7 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-	/*glGenBuffers(1, (GLuint*) & (my_id0));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);*/
+	
 
 	return true;
 }
@@ -73,81 +59,76 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-	glLineWidth(2.0f);
-	glBegin(GL_LINES);
-
-	for (int i = -100; i <= 100; i++)
-	{
-
-		float sunX = 2 * i;
-		float sunZ = 150;
-
-		glVertex3f(sunX, 0.0f, -150.0f);
-		glVertex3f(sunX, 0, sunZ);
-
-
-		float sunQ = 2 * i;
-		float sunW = 150;
-
-		glVertex3f(-150.0f, 0.0f, sunQ);
-		glVertex3f(sunW, 0, sunQ);
-	}
-	glColor3f(255, 255, 0);
-	glEnd();
-
-
+	createGrid();
 
 	
-	glBegin(GL_TRIANGLES);
+	createCube(vec3(0, 0, 0), { 0,255,255,255 });
+	createCube(vec3(5, 0, 0), { 255,0,255,255 });
+	createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id0);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	// � draw other buffers
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-
-	glEnd();
-
-	float vertices2[] = {
-					0.0f,0.0f,0.0f,
-					1.0f,0.0f,0.0f,
-					1.0f,1.0f,0.0f,
-					0.0f,1.0f,0.0f,
-					0.0f,1.0f,1.0f,
-					0.0f,0.0f,1.0f,
-					1.0f,0.0f,1.0f,
-					1.0f,1.0f,1.0f
-	};
-
-
-	int indices[] = { 2,1,0, 0,3,2,  //front face // 36 of indices
-					 4,3,0, 0,5,4,
-					 6,5,0, 0,1,6,
-					 7,6,1, 1,2,7,
-					 3,4,7, 7,2,3,
-					 6,7,4, 4,5,6 };
-
-
-	test = par_shapes_create_cube();
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, test->points);
-	// … draw other buffers
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	
-	
-	
-
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+}
+
+void ModuleSceneIntro::createCube(const vec3 &position, Color color)
+{
+	glColor3f(color.r, color.g, color.b);
+
+	par_shapes_mesh* cube = par_shapes_create_cube();
+
+	par_shapes_translate(cube, position.x, position.y, position.z);
+
+	uint my_id = 0;
+	uint my_indices = 0;
+
+	// buffer points
+	glGenBuffers(1, &my_id);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube->npoints * 3, cube->points, GL_STATIC_DRAW);
+
+	// buffer index
+	glGenBuffers(1, &my_indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * cube->ntriangles * 3, cube->triangles, GL_STATIC_DRAW);
+
+
+	//Draw
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glDrawElements(GL_TRIANGLES, cube->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	
+}
+
+void ModuleSceneIntro::createGrid()
+{
+	glLineWidth(1.0f);
+	glBegin(GL_LINES);
+
+	for (int i = -max_grid; i <= max_grid; i++)
+	{
+
+		sunX = separator * i;
+		
+
+		glVertex3f(sunX, 0.0f, -sunZ);
+		glVertex3f(sunX, 0, sunZ);
+
+
+		sunQ = separator * i;
+		
+
+		glVertex3f(-sunW, 0.0f, sunQ);
+		glVertex3f(sunW, 0, sunQ);
+	}
+	glEnd();
 }
 
 

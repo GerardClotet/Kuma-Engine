@@ -1,14 +1,4 @@
-#ifdef PAR_SHAPES_IMPLEMENTATION
-#endif
-
 #include "par_shapes.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <float.h>
-#include <string.h>
-#include <math.h>
-#include <errno.h>
 
 static void par_shapes__sphere(float const* uv, float* xyz, void*);
 static void par_shapes__hemisphere(float const* uv, float* xyz, void*);

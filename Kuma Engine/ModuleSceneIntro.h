@@ -2,7 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include "par_shapes.h"
-
+#include "glmath.h"
+#include "Color.h"
 
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
@@ -25,56 +26,24 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void createCube(const vec3 &position, Color color = { 255,255,255,255 });
+	void createGrid();
+
 public:
 	
 	SDL_Window* window;
 
-	uint my_id = 0;
-
 private:
-	par_shapes_mesh* test;
-	uint my_id0 = 0;
-	int num_vertices = 8;
+	int max_grid = 100;
+	float sunX = 2;
+	float sunZ = 150;
+	float sunQ = 2;
+	float sunW = 150;
+	int separator = 2;
+
 
 	
 
-	float vertices[36*3] = {
-	0.0f,0.0f,0.0f,
-	1.f,1.f,0.f,
-	1.f,1.f,0.f,
-	1,1,0.f,
-	1,0,0,
-	0,0,0,//6
-	0,0,1,
-	1,0,1,
-	1,1,1,//9
-	1,1,1,
-	0,1,1,
-	0,0,1,//12
-	1,1,0,
-	0,1,0,
-	0,1,1,//15
-	0,1,1,
-	1,1,1,
-	1,1,0,//18
-	1,0,0,
-	1,0,1,
-	0,0,1,//21
-	1,0,0,
-	0,0,1,
-	0,0,0,//24
-	1,1,0,
-	1,1,1,
-	1,0,1,//27
-	1,0,1,
-	1,0,0,
-	1,1,0,//30
-	0,1,0,
-	0,0,0,
-	0,0,1,//33
-	0,0,1,
-	0,1,1,
-	0,1,0//36
-	};
+	
 	
 };

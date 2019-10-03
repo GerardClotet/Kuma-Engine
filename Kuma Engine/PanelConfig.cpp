@@ -356,6 +356,7 @@ void PanelConfig::DisplayConfig()
 		}
 		ImGui::SameLine();
 		App->ui->HelpMarker("Polygon mode refers to wireframe mode");
+
 	}
 	ImGui::End();
 }
