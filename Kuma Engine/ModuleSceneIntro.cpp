@@ -61,18 +61,22 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	createGrid();
 
-	
+	createSphere(vec3(-1, 2, -2), 1, { 255,0,0,255 }); //memory leak function 
+
 	createCube(vec3(0, 0, 0), { 0,255,255,255 });
 	createCube(vec3(5, 0, 0), { 255,0,255,255 });
 	createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
+
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	
 }
+
 
 void ModuleSceneIntro::createCube(const vec3 &position, Color color)
 {
@@ -106,6 +110,36 @@ void ModuleSceneIntro::createCube(const vec3 &position, Color color)
 
 	
 }
+
+void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions, Color color)
+{
+	glColor3f(color.r, color.g, color.b);
+	par_shapes_mesh* sphere = par_shapes_create_subdivided_sphere(subdivisions);
+	par_shapes_translate(sphere, position.x, position.y, position.z);
+
+	uint my_id = 0;
+	uint my_indices = 0;
+
+	// buffer points
+	glGenBuffers(1, &my_id);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere->npoints * 3, sphere->points, GL_STATIC_DRAW);
+
+	// buffer index
+	glGenBuffers(1, &my_indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * sphere->ntriangles * 3, sphere->triangles, GL_STATIC_DRAW);
+
+
+	//Draw
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glDrawElements(GL_TRIANGLES, sphere->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
 
 void ModuleSceneIntro::createGrid()
 {
