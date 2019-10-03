@@ -4,14 +4,18 @@
 #include "par_shapes.h"
 #include "glmath.h"
 #include "Color.h"
-
+#include <list>
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLibFwd.h"
 
 #define MAX_SNAKE 2
 
-
+//struct Spherestruct {
+//	par_shapes_mesh* sphere;
+//	uint id =0;
+//	uint indice=0;
+//};
 
 class ModuleSceneIntro : public Module
 {
@@ -27,13 +31,16 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createCube(const vec3 &position, Color color = { 255,255,255,255 });
-	void createSphere(const vec3& position, int subdivisions, Color color = { 255,255,255,255 });
 	void createGrid();
-
+	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 public:
-	
+	std::list<par_shapes_mesh*> sphere_list;
+	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
+	par_shapes_mesh* sphere;
 
+	uint ids = 0;
+	uint indiceS = 0;
 private:
 	int max_grid = 100;
 	float sunX = 2;
@@ -42,6 +49,8 @@ private:
 	float sunW = 150;
 	int separator = 2;
 
+	uint my_idk = 0;
+	uint my_indicesk = 0;
 
 	
 
