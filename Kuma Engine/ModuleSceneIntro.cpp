@@ -89,12 +89,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glDrawElements(GL_TRIANGLES, (*mesh_iter).num_index * 3, GL_UNSIGNED_SHORT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		
 	}
-	
 
-
-	
 
 	glColor3f(255, 255, 255);
 	return UPDATE_CONTINUE;
@@ -131,11 +127,7 @@ void ModuleSceneIntro::createCube(const vec3 &position, Color color)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
 
-	
-
 	mesh_list.push_back(mesh);
-
-	
 }
 
 

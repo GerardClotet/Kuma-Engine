@@ -176,6 +176,7 @@
       <Filter>tools\gpudetect</Filter>
     </ClCompile>
     <ClCompile Include="par_shapes.cpp" />
+    <ClCompile Include="ModuleImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -462,6 +463,7 @@
       <Filter>tools\gpudetect</Filter>
     </ClInclude>
     <ClInclude Include="par_shapes.h" />
+    <ClInclude Include="ModuleImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
