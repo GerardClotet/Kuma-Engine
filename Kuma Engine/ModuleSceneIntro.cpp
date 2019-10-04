@@ -52,7 +52,7 @@ bool ModuleSceneIntro::Start()
 	//createCube(vec3(5, 0, 0), { 255,0,255,255 });
 	//createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
-	App->importer->LoadGeometry("../fbx/Handgun_fbx_7.4_binary.fbx");
+	App->importer->LoadGeometry("../fbx/warrior.FBX");
 	return true;
 }
 

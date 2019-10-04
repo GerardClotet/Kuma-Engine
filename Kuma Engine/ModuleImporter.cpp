@@ -43,7 +43,6 @@ void ModuleImporter::LoadGeometry(const char* path)
 					else
 					{
 						memcpy(&mesh.index[i * 3], (*new_mesh)->mFaces[i].mIndices, 3 * sizeof(uint));
-						LOG("passa x aki");
 					}
 				}
 			}
@@ -57,7 +56,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
 			App->scene_intro->mesh_list.push_back(mesh);
-
+			LOG(" meshnumindex %u", mesh.num_index);
 		
 		}
 
