@@ -53,7 +53,7 @@ public:
 	uint ids = 0;
 	uint indiceS = 0;
 private:
-	int max_grid = 100;
+	int max_grid = 75;
 	float sunX = 2;
 	float sunZ = 150;
 	float sunQ = 2;

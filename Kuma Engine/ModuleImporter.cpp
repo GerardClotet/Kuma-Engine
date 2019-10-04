@@ -8,7 +8,9 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-ModuleImporter::ModuleImporter(Application* app, bool start_enabled) :Module(app, start_enabled)
+
+
+ModuleImporter::ModuleImporter(Application* app, bool start_enabled) :Module(app, start_enabled)
 {
 }
 
@@ -44,7 +46,8 @@ void ModuleImporter::LoadGeometry(const char* path)
 					{
 						memcpy(&mesh.index[i * 3], (*new_mesh)->mFaces[i].mIndices, 3 * sizeof(uint));
 					}
-				}
+				}
+
 			}
 			// buffer points
 			glGenBuffers(1, &mesh.id_vertex);
