@@ -14,7 +14,7 @@
 #include "ModuleUI.h"
 #include "ModuleHardware.h"
 #include "Parson/parson.h"
-
+#include "ModuleImporter.h"
 #include "PerfTimer.h"
 #include "Timer.h"
 class Application
@@ -27,6 +27,7 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* ui;
 	ModuleHardware* hardware;
+	ModuleImporter* importer;
 private:
 
 	Timer		ms_timer;

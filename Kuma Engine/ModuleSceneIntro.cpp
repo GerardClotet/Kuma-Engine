@@ -5,7 +5,7 @@
 #include "RandomHelper.h"
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
-
+#include "ModuleImporter.h"
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -52,7 +52,7 @@ bool ModuleSceneIntro::Start()
 	createCube(vec3(5, 0, 0), { 255,0,255,255 });
 	createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
-
+	App->importer->LoadGeometry("../fbx/glass_cube.fbx");
 	return true;
 }
 
