@@ -79,15 +79,23 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw
 	createGrid();
 
-	std::list<Meshes>::iterator mesh_iter = mesh_list.begin();
+	std::list<Mesh_Container>::iterator mesh_iter = mesh_cont_list.begin();
 
-	for (mesh_iter; mesh_iter != mesh_list.end(); ++mesh_iter)
+	for (mesh_iter; mesh_iter != mesh_cont_list.end(); ++mesh_iter)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_NORMAL_ARRAY);
+
 		glBindBuffer(GL_ARRAY_BUFFER, (*mesh_iter).id_vertex);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*mesh_iter).id_index);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+		glBindBuffer(GL_ARRAY_BUFFER, (*mesh_iter).id_normals);
+		glNormalPointer(GL_FLOAT, 0, NULL);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*mesh_iter).id_index);
 		glDrawElements(GL_TRIANGLES, (*mesh_iter).num_index * 3, GL_UNSIGNED_SHORT, NULL);
+
+		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 

@@ -23,19 +23,22 @@ void ModuleImporter::LoadGeometry(const char* path)
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		uint i = 0;
-	
+
 		for (aiMesh* (*new_mesh) = scene->mMeshes; i <= scene->mNumMeshes; ++i)
 		{
-			Meshes mesh;
+			(*new_mesh)->mNormals;
+			
+
+			Mesh_Container mesh;
 			mesh.num_vertex = (*new_mesh)->mNumVertices;
 			mesh.vertex = new float[mesh.num_vertex * 3];
 			memcpy(mesh.vertex, (*new_mesh)->mVertices, sizeof(float) * mesh.num_vertex * 3);
 			LOG("New mesh with %d vertices", mesh.num_vertex);
-
+			//Loading faces
 			if ((*new_mesh)->HasFaces())
 			{
 				mesh.num_index = (*new_mesh)->mNumFaces * 3;
-				mesh.index = new uint16_t[mesh.num_index]; // assume each face is a triangle
+				mesh.index = new uint[mesh.num_index]; // assume each face is a triangle
 				for (uint i = 0; i < (*new_mesh)->mNumFaces; ++i)
 				{
 					if ((*new_mesh)->mFaces[i].mNumIndices != 3)
@@ -46,6 +49,14 @@ void ModuleImporter::LoadGeometry(const char* path)
 					}
 				}
 			}
+
+			//Loading Normals
+			if ((*new_mesh)->HasNormals())
+			{
+				mesh.num_index = (*new_mesh)->mNumVertices;
+				mesh.normals = new float[mesh.num_index * 3];
+				memcpy(mesh.normals, (*new_mesh)->mNormals, sizeof(float) * mesh.num_normals * 3);
+			}
 			// buffer points
 			glGenBuffers(1, &mesh.id_vertex);
 			glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
@@ -55,7 +66,12 @@ void ModuleImporter::LoadGeometry(const char* path)
 			glGenBuffers(1, &mesh.id_index);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
-			App->scene_intro->mesh_list.push_back(mesh);
+
+			glGenBuffers(1,& mesh.id_normals);
+			glBindBuffer(GL_ARRAY_BUFFER, mesh.id_normals);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * mesh.num_normals, mesh.normals, GL_STATIC_DRAW);
+
+			App->scene_intro->mesh_cont_list.push_back(mesh);
 			LOG(" meshnumindex %u", mesh.num_index);
 		
 		}

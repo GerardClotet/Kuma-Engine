@@ -4,6 +4,7 @@
 #include "par_shapes.h"
 #include "glmath.h"
 #include "Color.h"
+#include "ModuleImporter.h"
 #include <list>
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
@@ -28,6 +29,11 @@ struct Meshes //It stores all mesh data
 	uint id_index = 0;
 	uint num_index = 0;
 	PAR_SHAPES_T* index = nullptr;
+
+	//normals
+	uint id_normals = 0;
+	uint num_normals = 0;
+	float* normals = nullptr;
 };
 
 class ModuleSceneIntro : public Module
@@ -48,6 +54,7 @@ public:
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 public:
 	std::list<Meshes> mesh_list;
+	std::list<Mesh_Container> mesh_cont_list;
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
 	uint ids = 0;

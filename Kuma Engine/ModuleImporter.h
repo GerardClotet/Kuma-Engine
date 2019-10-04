@@ -8,15 +8,37 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+//struct Meshes //It stores all mesh data
+//{
+//	//vertex
+//	uint id_vertex = 0;
+//	uint num_vertex = 0;
+//	float* vertex = nullptr;
+//
+//	//indices
+//	uint id_index = 0;
+//	uint num_index = 0;
+//	uint* index = nullptr;
+//
+//	//normals
+//	uint id_normals = 0;
+//	uint num_normals = 0;
+//	float* normals = nullptr;
+//};
 
 struct Mesh_Container
 {
 	uint id_index = 0; // index in VRAM
 	uint num_index = 0;
-	uint* index = nullptr;
+	uint* index = NULL;
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
-	float* vertex = nullptr;
+	float* vertex = NULL;
+
+	//normals
+	uint id_normals = 0;
+	uint num_normals = 0;
+	float* normals = NULL;
 };
 class ModuleImporter : public Module
 {
