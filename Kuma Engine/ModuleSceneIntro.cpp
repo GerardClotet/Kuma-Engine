@@ -47,12 +47,12 @@ bool ModuleSceneIntro::Start()
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indicesk);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * sphere->ntriangles * 3, sphere->triangles, GL_STATIC_DRAW);
 
-	createSphere(vec3(-1, 2, -2), 5, { 255,0,0,0 });
-	createCube(vec3(0, 0, 0), { 0,255,255,255 });
-	createCube(vec3(5, 0, 0), { 255,0,255,255 });
-	createCube(vec3(10, 0, 0), { 255,255,0,255 });
+	//createSphere(vec3(-1, 2, -2), 5, { 255,0,0,0 });
+	//createCube(vec3(0, 0, 0), { 0,255,255,255 });
+	//createCube(vec3(5, 0, 0), { 255,0,255,255 });
+	//createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
-	App->importer->LoadGeometry("../fbx/glass_cube.fbx");
+	App->importer->LoadGeometry("../fbx/Handgun_fbx_7.4_binary.fbx");
 	return true;
 }
 

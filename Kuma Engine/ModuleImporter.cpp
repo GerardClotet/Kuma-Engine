@@ -18,6 +18,7 @@ ModuleImporter::~ModuleImporter()
 
 void ModuleImporter::LoadGeometry(const char* path)
 {
+
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -34,15 +35,30 @@ void ModuleImporter::LoadGeometry(const char* path)
 			if ((*new_mesh)->HasFaces())
 			{
 				mesh.num_index = (*new_mesh)->mNumFaces * 3;
-				mesh.index = new Uint16[mesh.num_index]; // assume each face is a triangle
+				mesh.index = new uint16_t[mesh.num_index]; // assume each face is a triangle
 				for (uint i = 0; i < (*new_mesh)->mNumFaces; ++i)
 				{
 					if ((*new_mesh)->mFaces[i].mNumIndices != 3)
 						LOG("WARNING, geometry face with != 3 indices!");
 					else
+					{
 						memcpy(&mesh.index[i * 3], (*new_mesh)->mFaces[i].mIndices, 3 * sizeof(uint));
+						LOG("passa x aki");
+					}
 				}
 			}
+			// buffer points
+			glGenBuffers(1, &mesh.id_vertex);
+			glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
+
+			// buffer index
+			glGenBuffers(1, &mesh.id_index);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
+			App->scene_intro->mesh_list.push_back(mesh);
+
+		
 		}
 
 	
