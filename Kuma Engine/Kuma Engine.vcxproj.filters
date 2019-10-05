@@ -179,6 +179,7 @@
     <ClCompile Include="ModuleImporter.cpp">
       <Filter>modules</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -567,6 +568,7 @@
     <ClInclude Include="Assimp\include\version.h">
       <Filter>tools\Assimp</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
