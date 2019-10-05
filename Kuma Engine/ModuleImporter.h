@@ -9,15 +9,41 @@
 #include "Assimp/include/cfileio.h"
 
 
-struct Mesh_Container
-{
-	uint id_index = 0; // index in VRAM
+//----------------- Mesh -----------------//
+class Mesh {
+public:
+	Mesh() {};
+	~Mesh() {};
+
+	void CreateMesh();
+	void Render();
+
+public:
+	uint id_index = 0;
 	uint num_index = 0;
 	uint* index = nullptr;
-	uint id_vertex = 0; // unique vertex in VRAM
+
+	uint id_vertex = 0;
 	uint num_vertex = 0;
 	float* vertex = nullptr;
+
 };
+
+//----------------- FBX -----------------//
+
+class FBX {
+public:
+	FBX() {};
+	~FBX() {};
+public:
+	std::list<Mesh*> mesh_list;
+
+};
+
+
+
+
+
 class ModuleImporter : public Module
 {
 public:
@@ -27,11 +53,15 @@ public:
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
+	update_status PostUpdate(float dt);
 	bool CleanUp();
 
 	aiLogStream stream;
+	
 
-
+private:
+	std::list<FBX*> fbx_list;
+	
 };
 
 

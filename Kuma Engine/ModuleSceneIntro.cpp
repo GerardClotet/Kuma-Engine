@@ -34,25 +34,8 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-	//sphere = par_shapes_create_subdivided_sphere(5);
-	//par_shapes_translate(sphere, -1, 1, -1);
-
-	//// buffer points
-	//glGenBuffers(1, &my_idk);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_idk);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere->npoints * 3, sphere->points, GL_STATIC_DRAW);
-
-	//// buffer index
-	//glGenBuffers(1, &my_indicesk);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indicesk);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * sphere->ntriangles * 3, sphere->triangles, GL_STATIC_DRAW);
-
-	//createSphere(vec3(-1, 2, -2), 5, { 255,0,0,0 });
-	//createCube(vec3(0, 0, 0), { 0,255,255,255 });
-	//createCube(vec3(5, 0, 0), { 255,0,255,255 });
-	//createCube(vec3(10, 0, 0), { 255,255,0,255 });
 	
-	App->importer->LoadGeometry("../fbx/warrior.FBX");
+	
 	return true;
 }
 
@@ -79,17 +62,17 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw
 	createGrid();
 
-	std::list<Meshes>::iterator mesh_iter = mesh_list.begin();
+	/*std::list<Meshes>::iterator mesh_iter = mesh_list.begin();
 
 	for (mesh_iter; mesh_iter != mesh_list.end(); ++mesh_iter)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, (*mesh_iter).id_vertex);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*mesh_iter).id_index);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		glDrawElements(GL_TRIANGLES, (*mesh_iter).num_index * 3, GL_UNSIGNED_SHORT, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*mesh_iter).id_index);
+		glDrawElements(GL_TRIANGLES, (*mesh_iter).num_index * 3, GL_UNSIGNED_INT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);
-	}
+	}*/
 
 
 	glColor3f(255, 255, 255);
@@ -104,30 +87,30 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::createCube(const vec3 &position, Color color)
 {
-	glColor3f(color.r, color.g, color.b);
+	//glColor3f(color.r, color.g, color.b);
 
-	Meshes mesh;
-	par_shapes_mesh* cube;
-	cube = par_shapes_create_cube();
+	//Meshes mesh;
+	//par_shapes_mesh* cube;
+	//cube = par_shapes_create_cube();
 
-	mesh.num_index = cube->ntriangles;
-	mesh.index = cube->triangles;
-	mesh.num_vertex = cube->npoints;
-	mesh.vertex = cube->points;
+	//mesh.num_index = cube->ntriangles;
+	//mesh.index = cube->triangles;
+	//mesh.num_vertex = cube->npoints;
+	//mesh.vertex = cube->points;
 
-	par_shapes_translate(cube, position.x, position.y, position.z);
+	//par_shapes_translate(cube, position.x, position.y, position.z);
 
-	// buffer points
-	glGenBuffers(1, &mesh.id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
+	//// buffer points
+	//glGenBuffers(1, &mesh.id_vertex);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
 
-	// buffer index
-	glGenBuffers(1, &mesh.id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
+	//// buffer index
+	//glGenBuffers(1, &mesh.id_index);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
 
-	mesh_list.push_back(mesh);
+	//mesh_list.push_back(mesh);
 }
 
 
@@ -159,31 +142,31 @@ void ModuleSceneIntro::createGrid()
 
 void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions,  Color color)
 {
-	glColor3f(color.r, color.g, color.b);
+	//glColor3f(color.r, color.g, color.b);
 
-	Meshes mesh;
-	par_shapes_mesh* sphere;
-	sphere = par_shapes_create_subdivided_sphere(subdivisions);
+	//Meshes mesh;
+	//par_shapes_mesh* sphere;
+	//sphere = par_shapes_create_subdivided_sphere(subdivisions);
 
 
-	mesh.num_index = sphere->ntriangles;
-	mesh.index = sphere->triangles;
-	mesh.num_vertex = sphere->npoints;
-	mesh.vertex = sphere->points;
+	//mesh.num_index = sphere->ntriangles;
+	//mesh.index = sphere->triangles;
+	//mesh.num_vertex = sphere->npoints;
+	//mesh.vertex = sphere->points;
 
-	par_shapes_translate(sphere, position.x, position.y, position.z);
+	//par_shapes_translate(sphere, position.x, position.y, position.z);
 
-	// buffer points
-	glGenBuffers(1, &mesh.id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
+	//// buffer points
+	//glGenBuffers(1, &mesh.id_vertex);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
 
-	// buffer index
-	glGenBuffers(1, &mesh.id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
+	//// buffer index
+	//glGenBuffers(1, &mesh.id_index);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
 
-	mesh_list.push_back(mesh);
+	//mesh_list.push_back(mesh);
 }
 
 

@@ -17,18 +17,18 @@
 //	uint indice=0;
 //};
 
-struct Meshes //It stores all mesh data
-{
-	//vertex
-	uint id_vertex = 0;
-	uint num_vertex = 0;
-	float* vertex = nullptr;
-
-	//indices
-	uint id_index = 0;
-	uint num_index = 0;
-	PAR_SHAPES_T* index = nullptr;
-};
+//struct Meshes //It stores all mesh data
+//{
+//	//vertex
+//	uint id_vertex = 0;
+//	uint num_vertex = 0;
+//	float* vertex = nullptr;
+//
+//	//indices
+//	uint id_index = 0;
+//	uint num_index = 0;
+//	PAR_SHAPES_T* index = nullptr;
+//};
 
 class ModuleSceneIntro : public Module
 {
@@ -47,7 +47,6 @@ public:
 	void createGrid();
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 public:
-	std::list<Meshes> mesh_list;
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
 	uint ids = 0;
