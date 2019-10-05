@@ -35,15 +35,17 @@ void PanelConfig::DisplayConfig()
 		if (ImGui::MenuItem("Load"))
 		{
 			std::string file = SelectFile();
-			JSON_Object* config = App->LoadJSONFile(file);
+			
+				JSON_Object* config = App->LoadJSONFile(file);
 
-			std::list<Module*>::iterator item = App->list_modules.begin();
-			while (item != App->list_modules.end())
-			{
-				(*item)->LoadConfig(config);
-				++item;
-			}
-			App->LoadConfig(config);
+				std::list<Module*>::iterator item = App->list_modules.begin();
+				while (item != App->list_modules.end())
+				{
+					(*item)->LoadConfig(config);
+					++item;
+				}
+				App->LoadConfig(config);
+			
 		}
 		if (ImGui::MenuItem("Save"))
 		{

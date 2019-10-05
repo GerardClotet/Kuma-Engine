@@ -7,6 +7,8 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+class FBX;
+
 class Mesh {
 public:
 	Mesh() {};
@@ -14,6 +16,7 @@ public:
 
 	void CreateMesh();
 	void Render();
+	void createCube(const vec3 &position, Color color = { 255,255,255,255 });
 
 public:
 	uint id_index = 0;
@@ -23,6 +26,13 @@ public:
 	uint id_vertex = 0;
 	uint num_vertex = 0;
 	float* vertex = nullptr;
+
+	uint num_normal = 0;
+	float* normal = nullptr;
+
+	uint num_uvs = 0;
+	uint id_uvs = 0;
+	float* uvs = nullptr;
 
 };
 

@@ -10,25 +10,7 @@
 #include "Assimp/include/cfileio.h"
 
 class Mesh;
-//----------------- Mesh Class -----------------//
-//class Mesh {
-//public:
-//	Mesh() {};
-//	~Mesh() {};
-//
-//	void CreateMesh();
-//	void Render();
-//
-//public:
-//	uint id_index = 0;
-//	uint num_index = 0;
-//	uint* index = nullptr;
-//
-//	uint id_vertex = 0;
-//	uint num_vertex = 0;
-//	float* vertex = nullptr;
-//
-//};
+
 
 //----------------- FBX Class -----------------//
 

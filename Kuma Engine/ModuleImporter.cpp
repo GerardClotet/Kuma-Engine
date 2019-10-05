@@ -69,6 +69,7 @@ bool ModuleImporter::CleanUp()
 {
 	// detach log stream
 	aiDetachAllLogStreams();
+
 	return true;
 }
 
@@ -91,6 +92,21 @@ void ModuleImporter::LoadGeometry(const char* path)
 			memcpy(mesh->vertex, new_mesh->mVertices, sizeof(float) * mesh->num_vertex * 3);
 			LOG("New mesh with %d vertices", mesh->num_vertex);
 
+			//copy normals
+			if (new_mesh->HasNormals())
+			{
+				mesh->num_normal = new_mesh->mNumVertices;
+				mesh->normal = new float[mesh->num_normal * 3];
+				memcpy(mesh->normal, new_mesh->mVertices, sizeof(float) * mesh->num_normal * 3);
+				LOG("New mesh with %d normals", mesh->num_normal);
+			}
+
+
+
+			//copy uvs
+
+
+			//copy faces
 			if (new_mesh->HasFaces())
 			{
 				mesh->num_index = new_mesh->mNumFaces * 3;
@@ -107,6 +123,8 @@ void ModuleImporter::LoadGeometry(const char* path)
 				}
 
 			}
+
+
 			fbx->mesh_list.push_back(mesh); //pushback of the meshes
 		
 		}

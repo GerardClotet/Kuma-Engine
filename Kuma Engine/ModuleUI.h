@@ -39,6 +39,8 @@ public:
 	bool console_window			= false;
 	bool config_default			= false;
 	bool about_window			= false;
+	bool show_normals			= true;
+	bool show_vertex			= true;
 
 	void AddFPS(float fps, float ms);
 	

@@ -74,8 +74,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}*/
 
-
-	glColor3f(255, 255, 255);
+	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }
 
