@@ -35,6 +35,9 @@ public:
 	uint id_uvs = 0;
 	float* uvs = nullptr;
 
+
+	bool has_normals = false;
+	bool has_uvs = false;
 };
 
 #endif // !MESH_H

@@ -23,7 +23,10 @@ void Mesh::CreateMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
 
-	LOG("Created mesh with vertex id: %i , index id: %i and normal id: %i ", id_vertex, id_index, id_normal);
+	glGenBuffers(1, &id_uvs);
+	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
+	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal,id_uvs);
 }
 
 void Mesh::Render()
@@ -34,19 +37,33 @@ void Mesh::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+	//Read and Draw normals buffers
+	if (has_normals)
+	{
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+		glNormalPointer(GL_FLOAT, 3, NULL);
+	}
+
+
+	//Read and Draw UVS buffers
+	if (has_uvs)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	}
+	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
 
-	//Read and Draw normals buffers
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glNormalPointer(GL_FLOAT, 3, NULL);
-	glDisableClientState(GL_NORMAL_ARRAY);
+	
 
-	glUnlockArraysEXT();
 
 
 

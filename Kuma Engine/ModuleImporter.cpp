@@ -95,6 +95,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			//copy normals
 			if (new_mesh->HasNormals())
 			{
+				mesh->has_normals = true;
 				mesh->num_normal = new_mesh->mNumVertices;
 				mesh->normal = new float[mesh->num_normal * 3];
 				memcpy(mesh->normal, new_mesh->mVertices, sizeof(float) * mesh->num_normal * 3);
@@ -110,8 +111,9 @@ void ModuleImporter::LoadGeometry(const char* path)
 				{
 					if (new_mesh->HasTextureCoords(i))
 					{
-						mesh->num_uvs = (*new_mesh->mNumUVComponents);
-						mesh->uvs = new float[mesh->num_uvs * 2];
+						mesh->has_uvs = true;
+						mesh->num_uvs = new_mesh->mNumVertices;
+						mesh->uvs = new float[mesh->num_uvs * 2]; // 2 coords x,y each vertex
 						memcpy(mesh->uvs, new_mesh->mTextureCoords[i], sizeof(float*) * mesh->num_uvs * 2);
 						LOG("New mesh with %d uvs", mesh->num_uvs);
 
