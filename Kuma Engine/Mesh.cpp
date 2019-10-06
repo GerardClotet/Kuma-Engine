@@ -70,57 +70,59 @@ void Mesh::Render()
 	//draw normals
 	if (App->ui->show_normals)
 	{
-
+		glLineWidth(2.5f);
 		glBegin(GL_LINES);
+
+		glColor3f(0.0f, 255.0f, 255.0f);
 
 		for (int i = 0; i < num_normal * 3; i += 3)
 		{
+			vec3 normalVec = normalize({ normal[i], normal[i + 1], normal[i + 2] });
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
-			glVertex3f(vertex[i] + normal[i], vertex[i + 1] + normal[i + 1], vertex[i + 2] + normal[i + 2]);
-
+			glVertex3f(vertex[i] + normalVec.x, vertex[i + 1] + normalVec.y, vertex[i + 2] + normalVec.z);
 		}
-
+		glColor3f(255.0f, 255.0f, 255.0f);
 		glEnd();
 	}
 
 	//draw vertex
 	if (App->ui->show_vertex)
 	{
+		glPointSize(2.5f);
 		glBegin(GL_POINTS);
-
+		glColor3f(255.0f, 0.0f, 0.0f);
 		for (int i = 0; i < num_vertex * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
 		}
 
-
+		glColor3f(255.0f, 255.0f, 255.0f);
 		glEnd();
 	}
 
 	//draw face normal
 	if (App->ui->show_face_normal)
 	{
-		std::list<geo_debug> m_debug = App->importer->GetDebugInfo();
-		std::list<geo_debug>::const_iterator deb = m_debug.begin();
+		std::list<debug_mesh> mesh_debug = App->importer->GetDebugInfo();
+		std::list<debug_mesh>::iterator deb = mesh_debug.begin();
 
-		while (deb != m_debug.end())
+		while (deb != mesh_debug.end())
 		{
-			//Face normals
+			//Check if face normals is activated
 			if (App->ui->show_face_normal) {
-
+				glPointSize(2.5f);
 				glBegin(GL_LINES);
 
-				glColor3f(255.0f, 0.0f, 255.0f); //Red
+				glColor3f(255.0f, 0.0f, 255.0f); 
 
-				for (int i = 0; i < deb->tri_normal.size(); i++) {
-
-					glVertex3f(deb->tri_center[i].x, deb->tri_center[i].y, deb->tri_center[i].z);
-					glVertex3f(deb->tri_center[i].x + deb->tri_normal[i].x, deb->tri_center[i].y + deb->tri_normal[i].y,
-						deb->tri_center[i].z + deb->tri_normal[i].z);
-
+				for (int i = 0; i < deb->normals_tri.size(); i++) 
+				{
+					//Draw the normals
+					glVertex3f(deb->centers_tri[i].x, deb->centers_tri[i].y, deb->centers_tri[i].z);
+					glVertex3f(deb->centers_tri[i].x + deb->normals_tri[i].x, deb->centers_tri[i].y + deb->normals_tri[i].y,
+								deb->centers_tri[i].z + deb->normals_tri[i].z);
 				}
-				glColor3f(255.0f, 255.0f, 255.0f); //White
-
+				glColor3f(255.0f, 255.0f, 255.0f); 
 				glEnd();
 			}
 

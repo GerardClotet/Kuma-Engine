@@ -26,10 +26,10 @@ public:
 
 
 
-struct geo_debug {
+struct debug_mesh {
 
-	std::vector<float3> tri_center;
-	std::vector<float3> tri_normal;
+	std::vector<float3> centers_tri; //list of triangle centers
+	std::vector<float3> normals_tri; //list of triangle normals
 
 };
 
@@ -49,7 +49,7 @@ public:
 	aiLogStream stream;
 
 	void SaveDebugData(Mesh* mesh);
-	std::list<geo_debug> GetDebugInfo();
+	std::list<debug_mesh> GetDebugInfo();
 
 private:
 	std::list<FBX*> fbx_list;
@@ -58,7 +58,7 @@ private:
 	bool dropped_file_done = false;
 
 
-	std::list<geo_debug> m_debug;
+	std::list<debug_mesh> mesh_debug;
 	
 //private:
 //	void ImportVertex(Mesh*, aiMesh*);
