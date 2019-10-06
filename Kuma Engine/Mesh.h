@@ -35,6 +35,10 @@ public:
 	uint id_uvs = 0;
 	float* uvs = nullptr;
 
+	uint num_color = 0;
+	uint id_color = 0;
+	float* color = nullptr;
+
 };
 
 #endif // !MESH_H

@@ -67,6 +67,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		(*item_mesh)->Render();
 	}
 
+
 	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }

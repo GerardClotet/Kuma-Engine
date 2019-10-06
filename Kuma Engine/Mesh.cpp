@@ -54,8 +54,6 @@ void Mesh::Render()
 	if (App->ui->show_normals)
 	{
 
-			
-
 		glBegin(GL_LINES);
 		
 		for (int i = 0; i < num_normal * 3; i+=3)
