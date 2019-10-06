@@ -18,24 +18,44 @@ void Mesh::CreateMesh()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_index, index, GL_STATIC_DRAW);
 
-	LOG("Created mesh with vertex id: %i and index id: %i", id_vertex, id_index);
+	//IndexNormal
+	glGenBuffers(1, &id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
 
+	LOG("Created mesh with vertex id: %i , index id: %i and normal id: %i ", id_vertex, id_index, id_normal);
 }
 
 void Mesh::Render()
 {
 	//Read buffers and draw the shapes
-
 	glEnableClientState(GL_VERTEX_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
+
+	//Read and Draw normals buffers
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glNormalPointer(GL_FLOAT, 3, NULL);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glUnlockArraysEXT();
+
+
 
 	//draw normals
 	if (App->ui->show_normals)
 	{
+
+			
+
 		glBegin(GL_LINES);
 		
 		for (int i = 0; i < num_normal * 3; i+=3)

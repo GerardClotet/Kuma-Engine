@@ -27,6 +27,7 @@ public:
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
+	uint id_normal = 0;
 	uint num_normal = 0;
 	float* normal = nullptr;
 

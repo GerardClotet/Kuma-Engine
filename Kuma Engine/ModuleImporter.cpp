@@ -104,8 +104,21 @@ void ModuleImporter::LoadGeometry(const char* path)
 
 
 			//copy uvs
+			if (new_mesh->GetNumUVChannels()>0)
+			{
+				for (int i = 0; i < new_mesh->GetNumUVChannels(); ++i)
+				{
+					if (new_mesh->HasTextureCoords(i))
+					{
+						mesh->num_uvs = (*new_mesh->mNumUVComponents);
+						mesh->uvs = new float[mesh->num_uvs * 2];
+						memcpy(mesh->uvs, new_mesh->mTextureCoords[i], sizeof(float*) * mesh->num_uvs * 2);
+						LOG("New mesh with %d uvs", mesh->num_uvs);
 
-
+					}
+				}
+			}
+			
 			//copy faces
 			if (new_mesh->HasFaces())
 			{
