@@ -35,6 +35,9 @@ public:
 	uint id_uvs = 0;
 	float* uvs = nullptr;
 
+
+	bool has_normals = false;
+	bool has_uvs = false;
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;

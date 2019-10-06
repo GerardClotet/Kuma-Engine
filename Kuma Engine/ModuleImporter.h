@@ -47,6 +47,7 @@ public:
 	bool CleanUp();
 
 	aiLogStream stream;
+
 	void SaveDebugData(Mesh* mesh);
 	std::list<geo_debug> GetDebugInfo();
 
@@ -59,6 +60,14 @@ private:
 
 	std::list<geo_debug> m_debug;
 	
+//private:
+//	void ImportVertex(Mesh*, aiMesh*);
+//
+//	void ImportNormals(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportUVS(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportVertexColors(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportFaces(Mesh*mesh, aiMesh*new_mesh);
+
 };
 
 

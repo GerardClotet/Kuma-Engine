@@ -127,6 +127,11 @@ update_status ModuleInput::PreUpdate(float dt)
 			quit = true;
 			break;
 
+			case SDL_DROPFILE:
+				App->importer->LoadGeometry(e.drop.file);
+				SDL_free(e.drop.file);
+				break;
+
 			case SDL_WINDOWEVENT:
 			{
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
@@ -134,6 +139,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			}
 		}
 	}
+
 
 	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		return UPDATE_STOP;
