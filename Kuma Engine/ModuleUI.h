@@ -41,6 +41,7 @@ public:
 	bool about_window			= false;
 	bool show_normals			= false;
 	bool show_vertex			= true;
+	bool show_face_normal		= true;
 
 	void AddFPS(float fps, float ms);
 	

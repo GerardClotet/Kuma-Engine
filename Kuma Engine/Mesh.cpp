@@ -38,7 +38,7 @@ void Mesh::Render()
 	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-	
+
 
 	//Read and Draw normals buffers
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -55,8 +55,8 @@ void Mesh::Render()
 	{
 
 		glBegin(GL_LINES);
-		
-		for (int i = 0; i < num_normal * 3; i+=3)
+
+		for (int i = 0; i < num_normal * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
 			glVertex3f(vertex[i] + normal[i], vertex[i + 1] + normal[i + 1], vertex[i + 2] + normal[i + 2]);
@@ -74,10 +74,42 @@ void Mesh::Render()
 		for (int i = 0; i < num_vertex * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
-		}		
+		}
 
 
 		glEnd();
+	}
+
+	//draw face normal
+	if (App->ui->show_face_normal)
+	{
+		std::list<geo_debug> m_debug = App->importer->GetDebugInfo();
+		std::list<geo_debug>::const_iterator deb = m_debug.begin();
+
+		while (deb != m_debug.end())
+		{
+			//Face normals
+			if (App->ui->show_face_normal) {
+
+				glBegin(GL_LINES);
+
+				glColor3f(255.0f, 0.0f, 255.0f); //Red
+
+				for (int i = 0; i < deb->tri_normal.size(); i++) {
+
+					glVertex3f(deb->tri_center[i].x, deb->tri_center[i].y, deb->tri_center[i].z);
+					glVertex3f(deb->tri_center[i].x + deb->tri_normal[i].x, deb->tri_center[i].y + deb->tri_normal[i].y,
+						deb->tri_center[i].z + deb->tri_normal[i].z);
+
+				}
+				glColor3f(255.0f, 255.0f, 255.0f); //White
+
+				glEnd();
+			}
+
+			deb++;
+		}
+
 	}
 
 }

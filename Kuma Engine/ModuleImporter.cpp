@@ -99,6 +99,7 @@ bool ModuleImporter::CleanUp()
 
 
 
+
 void ModuleImporter::LoadGeometry(const char* path)
 {
 	//Load all the shapes of the FBX loaded file  
@@ -175,6 +176,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 
 			}
 
+			SaveDebugData(mesh);
 
 			fbx->mesh_list_fbx.push_back(mesh); //pushback of the meshes
 		
@@ -187,3 +189,47 @@ void ModuleImporter::LoadGeometry(const char* path)
 }
 
 
+
+void ModuleImporter::SaveDebugData(Mesh * mesh)
+{
+	geo_debug deb;
+	for (int i = 0; i < mesh->num_index; i++)
+	{
+		//Triangle points
+		uint index_01 = mesh->index[i] * 3;
+		uint index_02 = mesh->index[i + 1] * 3;
+		uint index_03 = mesh->index[i + 2] * 3;
+
+		if (!mesh->vertex[index_01 + 1])
+		{
+			LOG("gGGGGGGGGG");
+		}
+		float3 p1 = { mesh->vertex[index_01], mesh->vertex[index_01 + 1], mesh->vertex[index_01 + 2] };
+		float3 p2 = { mesh->vertex[index_02], mesh->vertex[index_02 + 1], mesh->vertex[index_02 + 2] };
+		float3 p3 = { mesh->vertex[index_03], mesh->vertex[index_03 + 1], mesh->vertex[index_03 + 2] };
+
+		//Calculate face center
+		float C1 = (p1.x + p2.x + p3.x) / 3;
+		float C2 = (p1.y + p2.y + p3.y) / 3;
+		float C3 = (p1.z + p2.z + p3.z) / 3;
+
+		//Calculate Face Normal
+		float3 U = { p2 - p1 };
+		float3 V = { p3 - p1 };
+
+		float Nx = U.y*V.z - U.z*V.y;
+		float Ny = U.z*V.x - U.x*V.z;
+		float Nz = U.x*V.y - U.y*V.x;
+
+		deb.tri_center.push_back({ C1, C2, C3 });
+		deb.tri_normal.push_back({ Nx, Ny, Nz });
+
+		i += 2;
+	}
+	m_debug.push_back(deb);
+}
+
+std::list<geo_debug> ModuleImporter::GetDebugInfo()
+{
+	return m_debug;
+}

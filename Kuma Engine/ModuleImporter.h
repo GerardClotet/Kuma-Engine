@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Mesh.h"
+#include <vector>
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -25,6 +26,12 @@ public:
 
 
 
+struct geo_debug {
+
+	std::vector<float3> tri_center;
+	std::vector<float3> tri_normal;
+
+};
 
 
 class ModuleImporter : public Module
@@ -40,13 +47,17 @@ public:
 	bool CleanUp();
 
 	aiLogStream stream;
-	
+	void SaveDebugData(Mesh* mesh);
+	std::list<geo_debug> GetDebugInfo();
 
 private:
 	std::list<FBX*> fbx_list;
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;
+
+
+	std::list<geo_debug> m_debug;
 	
 };
 
