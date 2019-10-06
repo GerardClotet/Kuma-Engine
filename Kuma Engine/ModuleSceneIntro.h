@@ -4,6 +4,7 @@
 #include "par_shapes.h"
 #include "glmath.h"
 #include "Color.h"
+#include "Mesh.h"
 #include <list>
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
@@ -46,7 +47,7 @@ private:
 
 	uint my_idk = 0;
 	uint my_indicesk = 0;
-
+	Mesh* meshItem = new Mesh();
 	
 
 	

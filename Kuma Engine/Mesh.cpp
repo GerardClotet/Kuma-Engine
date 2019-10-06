@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Mesh.h"
 #include "ModuleUI.h"
+#include "ModuleSceneIntro.h"
 #include "par_shapes.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
@@ -29,7 +30,7 @@ void Mesh::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, index);
+	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	//draw normals
@@ -65,27 +66,27 @@ void Mesh::Render()
 
 void Mesh::createCube(const vec3 & position, Color color)
 {
-	FBX* aux_fbx = new FBX();
-	Mesh* aux_mesh = new Mesh();
+	glColor3f(color.r, color.g, color.b);
+	Mesh* mesh = new Mesh();
 	par_shapes_mesh* cube;
 	cube = par_shapes_create_cube();
 
-	aux_mesh->num_index = cube->ntriangles;
-	aux_mesh->index = (uint*)cube->triangles;
-	aux_mesh->num_vertex = cube->npoints;
-	aux_mesh->vertex = cube->points;
+	mesh->num_index = cube->ntriangles;
+	mesh->index = (uint*)cube->triangles;
+	mesh->num_vertex = cube->npoints;
+	mesh->vertex = cube->points;
 
 	par_shapes_translate(cube, position.x, position.y, position.z);
 
 	// buffer points
-	glGenBuffers(1, &id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertex * 3, vertex, GL_STATIC_DRAW);
+	glGenBuffers(1, &mesh->id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
 
 	// buffer index
-	glGenBuffers(1, &id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * num_index * 3, index, GL_STATIC_DRAW);
+	glGenBuffers(1, &mesh->id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
 
-	aux_fbx->mesh_list_fbx.push_back(aux_mesh);
+	App->scene_intro->mesh_list.push_back(mesh);
 }
