@@ -128,7 +128,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
-				App->importer->DragFile(e.drop.file);
+				App->importer->LoadGeometry(e.drop.file);
 				SDL_free(e.drop.file);
 				break;
 

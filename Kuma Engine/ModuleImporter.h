@@ -41,7 +41,6 @@ public:
 
 	aiLogStream stream;
 	
-	void DragFile(const char* path);
 private:
 	std::list<FBX*> fbx_list;
 	std::string dropped_file_dir;
