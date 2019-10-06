@@ -44,6 +44,9 @@ public:
 
 private:
 	std::list<FBX*> fbx_list;
+	std::string dropped_file_dir;
+	SDL_Event event;
+	bool dropped_file_done = false;
 	
 };
 

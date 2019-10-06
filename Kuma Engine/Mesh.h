@@ -38,6 +38,10 @@ public:
 
 	bool has_normals = false;
 	bool has_uvs = false;
+	uint num_color = 0;
+	uint id_color = 0;
+	float* color = nullptr;
+
 };
 
 #endif // !MESH_H
