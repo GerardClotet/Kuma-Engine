@@ -11,24 +11,7 @@
 
 #define MAX_SNAKE 2
 
-//struct Spherestruct {
-//	par_shapes_mesh* sphere;
-//	uint id =0;
-//	uint indice=0;
-//};
-
-//struct Meshes //It stores all mesh data
-//{
-//	//vertex
-//	uint id_vertex = 0;
-//	uint num_vertex = 0;
-//	float* vertex = nullptr;
-//
-//	//indices
-//	uint id_index = 0;
-//	uint num_index = 0;
-//	PAR_SHAPES_T* index = nullptr;
-//};
+class Mesh;
 
 class ModuleSceneIntro : public Module
 {
@@ -51,6 +34,7 @@ public:
 	SDL_Window* window;
 	uint ids = 0;
 	uint indiceS = 0;
+	std::list<Mesh*> mesh_list;
 private:
 	int max_grid = 75;
 	float sunX = 2;

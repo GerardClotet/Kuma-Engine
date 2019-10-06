@@ -35,7 +35,7 @@ bool ModuleImporter::Start()
 	//Iterate the fbx list and call the Create function to create different meshes for a specific fbx
 	for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
 	{
-		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list.begin(); item_mesh != (*item_fbx)->mesh_list.end(); ++item_mesh)
+		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
 		{
 			(*item_mesh)->CreateMesh();
 		}
@@ -55,7 +55,7 @@ update_status ModuleImporter::PostUpdate(float dt)
 	//Once all meshes are created, call the render function to draw all the shapes
 	for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
 	{
-		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list.begin(); item_mesh != (*item_fbx)->mesh_list.end(); ++item_mesh)
+		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
 		{
 			(*item_mesh)->Render();
 		}
@@ -125,7 +125,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			}
 
 
-			fbx->mesh_list.push_back(mesh); //pushback of the meshes
+			fbx->mesh_list_fbx.push_back(mesh); //pushback of the meshes
 		
 		}
 		fbx_list.push_back(fbx); //pushback of the mesh list. Every FBX contains a lot of meshes

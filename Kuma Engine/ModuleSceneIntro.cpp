@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "Mesh.h"
 #include <random>
 #include "RandomHelper.h"
 #include <gl/GL.h>
@@ -35,7 +36,7 @@ bool ModuleSceneIntro::Init()
 bool ModuleSceneIntro::Start()
 {
 	
-	
+	createCube({ 100,100,100 }, { 30.0f,100.0f,86.0f });
 	return true;
 }
 
@@ -73,6 +74,10 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		glDrawElements(GL_TRIANGLES, (*mesh_iter).num_index * 3, GL_UNSIGNED_INT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}*/
+	for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
+	{
+		(*item_mesh)->Render();
+	}
 
 	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
@@ -86,30 +91,29 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::createCube(const vec3 &position, Color color)
 {
-	//glColor3f(color.r, color.g, color.b);
+	glColor3f(color.r, color.g, color.b);
+	Mesh* mesh = new Mesh();
+	par_shapes_mesh* cube;
+	cube = par_shapes_create_cube();
 
-	//Meshes mesh;
-	//par_shapes_mesh* cube;
-	//cube = par_shapes_create_cube();
+	mesh->num_index = cube->ntriangles;
+	mesh->index = (uint*)cube->triangles;
+	mesh->num_vertex = cube->npoints;
+	mesh->vertex = cube->points;
 
-	//mesh.num_index = cube->ntriangles;
-	//mesh.index = cube->triangles;
-	//mesh.num_vertex = cube->npoints;
-	//mesh.vertex = cube->points;
+	par_shapes_translate(cube, position.x, position.y, position.z);
 
-	//par_shapes_translate(cube, position.x, position.y, position.z);
+	// buffer points
+	glGenBuffers(1, &mesh->id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
 
-	//// buffer points
-	//glGenBuffers(1, &mesh.id_vertex);
-	//glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
+	// buffer index
+	glGenBuffers(1, &mesh->id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
 
-	//// buffer index
-	//glGenBuffers(1, &mesh.id_index);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
-
-	//mesh_list.push_back(mesh);
+	mesh_list.push_back(mesh);
 }
 
 

@@ -19,7 +19,7 @@ public:
 	FBX() {};
 	~FBX() {};
 public:
-	std::list<Mesh*> mesh_list;
+	std::list<Mesh*> mesh_list_fbx;
 
 };
 

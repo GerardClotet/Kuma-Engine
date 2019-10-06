@@ -29,7 +29,7 @@ void Mesh::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, index);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	//draw normals
@@ -87,5 +87,5 @@ void Mesh::createCube(const vec3 & position, Color color)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * num_index * 3, index, GL_STATIC_DRAW);
 
-	aux_fbx->mesh_list.push_back(aux_mesh);
+	aux_fbx->mesh_list_fbx.push_back(aux_mesh);
 }
