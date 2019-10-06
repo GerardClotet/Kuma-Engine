@@ -61,6 +61,35 @@ update_status ModuleCamera3D::Update(float dt)
 	Reference += newPos;
 
 	// Mouse motion ----------------
+	
+	/*if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
+	{
+		float speedX = 5.0f * dt;
+		float speedY = 10.0f * dt;
+		int dx = -App->input->GetMouseXMotion();
+		int dy = -App->input->GetMouseYMotion();
+		LOG("mouse motion X: %i", dx);
+		LOG("mouse motion Y: %i", dy);
+
+		if (dx != 0)
+		{
+			if (dx > 0)
+				newPos += X * speedX * dx;
+			else if (dx < 0)
+				newPos += X * speedX * dx;
+		}
+
+		if (dy != 0)
+		{
+			if (dy > 0)
+				newPos -= Y * speedY * dx;
+			else if (dy < 0)
+				newPos -= Y * speedY * dx;
+		}
+
+		Position += newPos;
+		Reference += newPos;
+	}*/
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
