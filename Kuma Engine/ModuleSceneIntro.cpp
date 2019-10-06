@@ -62,10 +62,10 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw
 	createGrid();
 
-	for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
+	/*for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
 	{
 		(*item_mesh)->Render();
-	}
+	}*/
 
 
 	glColor3f(255.0f, 255.0f, 255.0f);

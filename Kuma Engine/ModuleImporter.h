@@ -41,13 +41,21 @@ public:
 
 	aiLogStream stream;
 	
-
+	void DragFile(const char* path);
 private:
 	std::list<FBX*> fbx_list;
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;
 	
+//private:
+//	void ImportVertex(Mesh*, aiMesh*);
+//
+//	void ImportNormals(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportUVS(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportVertexColors(Mesh*mesh, aiMesh*new_mesh);
+//	void ImportFaces(Mesh*mesh, aiMesh*new_mesh);
+
 };
 
 
