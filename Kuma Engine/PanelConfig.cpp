@@ -359,6 +359,18 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		App->ui->HelpMarker("Polygon mode refers to wireframe mode");
 
+		ImGui::Separator();
+		if (ImGui::Checkbox("VERTEX POINTS", &App->ui->show_vertex)) {}
+
+		ImGui::Separator();
+		if (ImGui::Checkbox("VERTEX NORMALS", &App->ui->show_normals)) {}
+
+		ImGui::Separator();
+		if (ImGui::Checkbox("FACE NORMALS", &App->ui->show_face_normal)) {}
+
+		
+		
+
 	}
 	ImGui::End();
 }
