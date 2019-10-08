@@ -31,8 +31,7 @@ bool ModuleImporter::Init()
 bool ModuleImporter::Start()
 {
 	//LoadGeometry("../fbx/Intergalactic_Spaceship-(FBX 7.4 binary).FBX");
-	Mesh mesh;
-	mesh.createCube({ 0,0,0 }, { 30.0f,100.0f,86.0f });
+	CreateCube({ 0,0,0 }, { 0,0,0.0f  });
 
 
 
@@ -141,6 +140,8 @@ bool ModuleImporter::CleanUp()
 
 void ModuleImporter::CreateCube(const vec3& position, Color color)
 {
+	FBX* fbx = new FBX();
+
 	glColor3f(color.r, color.g, color.b);
 	Mesh* mesh = new Mesh();
 	par_shapes_mesh* cube;
@@ -156,9 +157,7 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 	mesh->index = new uint[cube->ntriangles * 3];
 	mesh->normal = new float[(cube->npoints * 3)];
 
-	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
-	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
-	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
+	
 
 	mesh->num_index = cube->ntriangles;
 	mesh->num_vertex = cube->npoints;
@@ -167,29 +166,19 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 	mesh->num_uvs = cube->npoints;
 	mesh->uvs = cube->tcoords;
 
-	//// buffer points
-	//glGenBuffers(1, &mesh->id_vertex);
-	//glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
 
-	//// buffer index
-	//glGenBuffers(1, &mesh->id_index);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
+	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
+	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
+	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
 
-	////IndexNormal
-	//glGenBuffers(1, &mesh->id_normal);
-	//glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normal * 3, mesh->normal, GL_STATIC_DRAW);
-
-	//glGenBuffers(1, &mesh->id_uvs);
-	//glBindBuffer(GL_ARRAY_BUFFER,mesh->id_uvs);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_uvs * 2, mesh->uvs, GL_STATIC_DRAW);
-	////LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
 
 	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
 	mesh->CreateMesh();
-	App->importer->mesh_primitive_list.push_back(mesh);
+	mesh->has_normals = true;
+	mesh->has_uvs = true;
+	fbx->mesh_list_fbx.push_back(mesh);
+	fbx_list.push_back(fbx);
+	//App->importer->mesh_primitive_list.push_back(mesh);
 }
 
 

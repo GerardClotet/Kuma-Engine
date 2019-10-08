@@ -33,18 +33,17 @@ void Mesh::Render()
 {
 	//Read buffers and draw the shapes
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+	
 	//Read and Draw normals buffers
 	if (has_normals)
 	{
-		glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 		glNormalPointer(GL_FLOAT, 3, NULL);
-		glDisableClientState(GL_NORMAL_ARRAY);
 
 	}
 
@@ -52,15 +51,16 @@ void Mesh::Render()
 	//Read and Draw UVS buffers
 	if (has_uvs)
 	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	}
 	
 
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
@@ -140,58 +140,58 @@ void Mesh::Render()
 
 }
 
-void Mesh::createCube(const vec3 & position, Color color)
-{
-	glColor3f(color.r, color.g, color.b);
-	Mesh* mesh = new Mesh();
-	par_shapes_mesh* cube;
-	cube = par_shapes_create_cube();
-
-	par_shapes_unweld(cube, true);
-	par_shapes_compute_normals(cube);
-	par_shapes_translate(cube, position.x, position.y, position.z);
-
-
-	mesh->num_index = cube->ntriangles;
-	mesh->num_vertex = cube->npoints;
-
-	mesh->vertex = new float [ (cube->npoints *3)];
-	mesh->index = new uint[cube->ntriangles * 3];
-	mesh->normal = new float[(cube->npoints * 3)];
-
-	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
-	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
-	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
-
-
-	mesh->num_normal = cube->npoints;
-	mesh->normal = cube->normals;
-	
-	
-	mesh->num_uvs = cube->npoints;
-	mesh->uvs = cube->tcoords;
-
-	// buffer points
-	glGenBuffers(1, &mesh->id_vertex);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
-
-	// buffer index
-	glGenBuffers(1, &mesh->id_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
-
-	//IndexNormal
-	glGenBuffers(1, &mesh->id_normal);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normal * 3, mesh->normal, GL_STATIC_DRAW);
-
-	glGenBuffers(1, &mesh->id_uvs);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_uvs);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_uvs * 2, mesh->uvs, GL_STATIC_DRAW);
-	//LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
-
-	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
-	//mesh->CreateMesh();
-	App->importer->mesh_primitive_list.push_back(mesh);
-}
+//void Mesh::createCube(const vec3 & position, Color color)
+//{
+//	glColor3f(color.r, color.g, color.b);
+//	Mesh* mesh = new Mesh();
+//	par_shapes_mesh* cube;
+//	cube = par_shapes_create_cube();
+//
+//	par_shapes_unweld(cube, true);
+//	par_shapes_compute_normals(cube);
+//	par_shapes_translate(cube, position.x, position.y, position.z);
+//
+//
+//	mesh->num_index = cube->ntriangles;
+//	mesh->num_vertex = cube->npoints;
+//
+//	mesh->vertex = new float [ (cube->npoints *3)];
+//	mesh->index = new uint[cube->ntriangles * 3];
+//	mesh->normal = new float[(cube->npoints * 3)];
+//
+//	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
+//	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
+//	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
+//
+//
+//	mesh->num_normal = cube->npoints;
+//	mesh->normal = cube->normals;
+//	
+//	
+//	mesh->num_uvs = cube->npoints;
+//	mesh->uvs = cube->tcoords;
+//
+//	// buffer points
+//	glGenBuffers(1, &mesh->id_vertex);
+//	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
+//
+//	// buffer index
+//	glGenBuffers(1, &mesh->id_index);
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
+//
+//	//IndexNormal
+//	glGenBuffers(1, &mesh->id_normal);
+//	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normal * 3, mesh->normal, GL_STATIC_DRAW);
+//
+//	glGenBuffers(1, &mesh->id_uvs);
+//	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_uvs);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_uvs * 2, mesh->uvs, GL_STATIC_DRAW);
+//	//LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
+//
+//	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
+//	//mesh->CreateMesh();
+//	App->importer->mesh_primitive_list.push_back(mesh);
+//}
