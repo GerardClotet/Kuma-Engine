@@ -364,6 +364,9 @@ void PanelConfig::DisplayConfig()
 
 			else if (!GL_Wireframe)
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);*/
+
+			if (!GL_Fill && !GL_Wireframe)
+				GL_Fill = true;
 		}
 		ImGui::SameLine();
 		App->ui->HelpMarker("Polygon mode refers to wireframe mode");

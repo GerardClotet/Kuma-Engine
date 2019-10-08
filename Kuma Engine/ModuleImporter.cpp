@@ -30,8 +30,9 @@ bool ModuleImporter::Init()
 
 bool ModuleImporter::Start()
 {
-	//LoadGeometry("../fbx/Intergalactic_Spaceship-(FBX 7.4 binary).FBX");
-	CreateCube({ 0,0,0 }, { 0,0,0.0f  });
+	LoadGeometry("../fbx/warrior.FBX");
+
+	CreateCube({ 5,0,-5 }, { 0,0,0.0f  });
 
 
 
@@ -47,40 +48,7 @@ update_status ModuleImporter::Update(float dt)
 update_status ModuleImporter::PostUpdate(float dt)
 {
 
-	for (std::list<Mesh*>::iterator item_mesh = mesh_primitive_list.begin(); item_mesh != mesh_primitive_list.end(); ++item_mesh) //need to use a single for al meshes
-	{
-
-		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)& wire_color);
-			glLineWidth(1.0f);
-
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
-
-			(*item_mesh)->Render();
-
-
-		}
-		else if (App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
-			(*item_mesh)->Render();
-
-		}
-		if (App->ui->config_p->Getwireframe())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)& wire_color);
-			glLineWidth(1.0f);
-			(*item_mesh)->Render();
-
-		}
-	}
+	
 	
 
 		//Once all meshes are created, call the render function to draw all the shapes
@@ -142,15 +110,15 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 {
 	FBX* fbx = new FBX();
 
-	glColor3f(color.r, color.g, color.b);
 	Mesh* mesh = new Mesh();
 	par_shapes_mesh* cube;
-	cube = par_shapes_create_cube();
+	cube = par_shapes_create_subdivided_sphere(2);
 	par_shapes_translate(cube, position.x, position.y, position.z);
+	glColor3f(color.r, color.g, color.b);
 
 	par_shapes_unweld(cube, true);
 	par_shapes_compute_normals(cube);
-
+	
 
 
 	mesh->vertex = new float[(cube->npoints * 3)];
@@ -166,13 +134,14 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 	mesh->num_uvs = cube->npoints;
 	mesh->uvs = cube->tcoords;
 
-
 	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
-	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
+	memcpy(mesh->index, cube->triangles, sizeof(uint) * cube->ntriangles * 3);
 	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
 
 
 	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
+	mesh->gl_Short = true;
+
 	mesh->CreateMesh();
 	mesh->has_normals = true;
 	mesh->has_uvs = true;
@@ -230,7 +199,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 				mesh->uvs = new float[mesh->num_uvs * 2];
 				for (uint i = 0; i < new_mesh->mNumVertices; ++i) {
 
-					//There are two for each vertex
+					//there are two for each vertex
 					memcpy(&mesh->uvs[i], &new_mesh->mTextureCoords[0][i].x, sizeof(float));
 					memcpy(&mesh->uvs[i], &new_mesh->mTextureCoords[0][i].y, sizeof(float));
 				}
@@ -272,6 +241,8 @@ void ModuleImporter::LoadGeometry(const char* path)
 
 			}
 
+
+			mesh->gl_Int = true;
 			SaveDebugData(mesh);
 
 			mesh->CreateMesh();
