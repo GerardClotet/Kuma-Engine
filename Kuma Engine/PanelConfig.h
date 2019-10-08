@@ -24,6 +24,8 @@ public:
 	update_status Draw();
 	void DisplayConfig();
 	void AddInputToBuffer(const char* input);
+	bool Getwireframe();
+	bool GetFill();
 
 private:
 	bool configuration_window = false;
@@ -52,8 +54,8 @@ private:
 	bool GL_Lightning = true;
 	bool GL_Color_material = true;
 	bool GL_Texture_2D = true;
-	bool GL_Wireframe = false;
-
+	bool GL_Wireframe = true;
+	bool GL_Fill = true;
 };
 
 

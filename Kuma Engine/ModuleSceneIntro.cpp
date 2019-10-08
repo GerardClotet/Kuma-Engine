@@ -112,7 +112,7 @@ void ModuleSceneIntro::createGrid()
 {
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
-
+	glColor4fv((float*)& ImVec4(1,1,1,1));
 	for (int i = -max_grid; i <= max_grid; i++)
 	{
 

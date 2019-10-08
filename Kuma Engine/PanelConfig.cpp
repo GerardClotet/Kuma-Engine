@@ -350,15 +350,19 @@ void PanelConfig::DisplayConfig()
 		ImGui::Separator();
 		if (ImGui::Checkbox("GL_POLYGON_MODE", &GL_Wireframe))
 		{
-			if (GL_Wireframe)
+			/*if (GL_Wireframe)
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 			else if (!GL_Wireframe)
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);*/
 		}
 		ImGui::SameLine();
 		App->ui->HelpMarker("Polygon mode refers to wireframe mode");
-
+		if (ImGui::Checkbox("GL_FILL", &GL_Fill))
+		{
+			if (!GL_Wireframe) GL_Wireframe = true;
+			LOG("GL wireframe %s", GL_Fill ? "ON" : "OFF");
+		}
 		ImGui::Separator();
 		if (ImGui::Checkbox("VERTEX POINTS", &App->ui->show_vertex)) {}
 
@@ -379,6 +383,16 @@ void PanelConfig::AddInputToBuffer(const char * input)
 {
 	input_buf.append(input);
 	scrollToBottom = true;
+}
+
+bool PanelConfig::Getwireframe()
+{
+	return GL_Wireframe;
+}
+
+bool PanelConfig::GetFill()
+{
+	return GL_Fill;
 }
 
 std::string PanelConfig::SelectFile()

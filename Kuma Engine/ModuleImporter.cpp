@@ -5,7 +5,7 @@
 #include "par_shapes.h"
 #include "ModuleSceneIntro.h"
 #include "Mesh.h"
-
+#include "PanelConfig.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -30,7 +30,7 @@ bool ModuleImporter::Init()
 
 bool ModuleImporter::Start()
 {
-	//LoadGeometry("../fbx/warrior.FBX");
+	LoadGeometry("../fbx/Intergalactic_Spaceship-(FBX 7.4 binary).FBX");
 
 	//Iterate the fbx list and call the Create function to create different meshes for a specific fbx
 	//for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
@@ -57,7 +57,40 @@ update_status ModuleImporter::PostUpdate(float dt)
 	{
 		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
 		{
-			(*item_mesh)->Render();
+
+		
+			
+			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)&fill_color);
+				glLineWidth(1.0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+
+				(*item_mesh)->Render();
+
+
+			}
+			else if (App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+				(*item_mesh)->Render();
+
+			}
+			if (App->ui->config_p->Getwireframe())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)& fill_color);
+				glLineWidth(1.0f);
+				(*item_mesh)->Render();
+				(*item_mesh)->Render();
+
+			}
 		}
 	}
 	return UPDATE_CONTINUE;
@@ -116,6 +149,8 @@ void ModuleImporter::LoadGeometry(const char* path)
 	//			}
 			//copy uvs
 			if (new_mesh->HasTextureCoords(0)) {
+							mesh->has_uvs = true;
+
 				mesh->num_uvs = new_mesh->mNumVertices;
 				mesh->uvs = new float[mesh->num_uvs * 2];
 				for (uint i = 0; i < new_mesh->mNumVertices; ++i) {

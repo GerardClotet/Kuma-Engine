@@ -3,7 +3,6 @@
 #include "ModuleUI.h"
 #include "ModuleSceneIntro.h"
 #include "par_shapes.h"
-
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 void Mesh::CreateMesh()
@@ -36,13 +35,16 @@ void Mesh::Render()
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 	//Read and Draw normals buffers
 	if (has_normals)
 	{
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 		glNormalPointer(GL_FLOAT, 3, NULL);
+		glDisableClientState(GL_NORMAL_ARRAY);
+
 	}
 
 
@@ -52,19 +54,18 @@ void Mesh::Render()
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	}
 	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
 	
 
-
+	
 
 
 	//draw normals
@@ -130,6 +131,11 @@ void Mesh::Render()
 		}
 
 	}
+
+	//if (App->ui->config_p->Getwireframe())
+	//{
+	//	glPolygonMode(GL_FRONT)
+	//}
 
 }
 

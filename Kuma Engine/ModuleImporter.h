@@ -50,13 +50,13 @@ public:
 
 	void SaveDebugData(Mesh* mesh);
 	std::list<debug_mesh> GetDebugInfo();
-
+	ImVec4 fill_color = ImVec4(0.7, 0.0f, 1.f, 1.0f);
 private:
 	std::list<FBX*> fbx_list;
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;
-
+	
 
 	std::list<debug_mesh> mesh_debug;
 	
