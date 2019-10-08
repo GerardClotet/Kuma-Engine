@@ -372,8 +372,12 @@ void PanelConfig::DisplayConfig()
 		ImGui::Separator();
 		if (ImGui::Checkbox("FACE NORMALS", &App->ui->show_face_normal)) {}
 
+//		ImGui::ColorEdit4()
+		ImGui::Separator();
 		
-		
+		ImGui::ColorEdit4("Wire Color", (float*)& App->importer->wire_color);
+		ImGui::ColorEdit4("Fill Color", (float*)& App->importer->fill_color);
+
 
 	}
 	ImGui::End();

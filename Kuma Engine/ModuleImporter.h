@@ -45,14 +45,17 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
-
+	void CreateCube(const vec3& position, Color color);
 	aiLogStream stream;
 
 	void SaveDebugData(Mesh* mesh);
 	std::list<debug_mesh> GetDebugInfo();
-	ImVec4 fill_color = ImVec4(0.7, 0.0f, 1.f, 1.0f);
-private:
+	ImVec4 wire_color = ImVec4(0.7, 0.0f, 1.f, 1.0f);
+	ImVec4 fill_color = ImVec4(1.0f, 1.0f, 1.f, 1.0f);
+
 	std::list<FBX*> fbx_list;
+	std::list<Mesh*> mesh_primitive_list;
+private:
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;

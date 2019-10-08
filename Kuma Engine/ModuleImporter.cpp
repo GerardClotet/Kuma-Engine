@@ -30,16 +30,11 @@ bool ModuleImporter::Init()
 
 bool ModuleImporter::Start()
 {
-	LoadGeometry("../fbx/Intergalactic_Spaceship-(FBX 7.4 binary).FBX");
+	//LoadGeometry("../fbx/Intergalactic_Spaceship-(FBX 7.4 binary).FBX");
+	Mesh mesh;
+	mesh.createCube({ 0,0,0 }, { 30.0f,100.0f,86.0f });
 
-	//Iterate the fbx list and call the Create function to create different meshes for a specific fbx
-	//for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
-	//{
-	//	for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
-	//	{
-	//		(*item_mesh)->CreateMesh();
-	//	}
-	//}
+
 
 	return true;
 }
@@ -52,7 +47,44 @@ update_status ModuleImporter::Update(float dt)
 
 update_status ModuleImporter::PostUpdate(float dt)
 {
-	//Once all meshes are created, call the render function to draw all the shapes
+
+	for (std::list<Mesh*>::iterator item_mesh = mesh_primitive_list.begin(); item_mesh != mesh_primitive_list.end(); ++item_mesh) //need to use a single for al meshes
+	{
+
+		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)& wire_color);
+			glLineWidth(1.0f);
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+
+			(*item_mesh)->Render();
+
+
+		}
+		else if (App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+			(*item_mesh)->Render();
+
+		}
+		if (App->ui->config_p->Getwireframe())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)& wire_color);
+			glLineWidth(1.0f);
+			(*item_mesh)->Render();
+
+		}
+	}
+	
+
+		//Once all meshes are created, call the render function to draw all the shapes
 	for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
 	{
 		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
@@ -64,11 +96,11 @@ update_status ModuleImporter::PostUpdate(float dt)
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)&fill_color);
+				glColor4fv((float*)&wire_color);
 				glLineWidth(1.0f);
 
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+				glColor4fv((float*)& fill_color);
 
 				(*item_mesh)->Render();
 
@@ -77,7 +109,7 @@ update_status ModuleImporter::PostUpdate(float dt)
 			else if (App->ui->config_p->GetFill())
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+				glColor4fv((float*)& fill_color);
 				(*item_mesh)->Render();
 
 			}
@@ -85,14 +117,15 @@ update_status ModuleImporter::PostUpdate(float dt)
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)& fill_color);
+				glColor4fv((float*)& wire_color);
 				glLineWidth(1.0f);
-				(*item_mesh)->Render();
 				(*item_mesh)->Render();
 
 			}
 		}
 	}
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -104,6 +137,59 @@ bool ModuleImporter::CleanUp()
 	aiDetachAllLogStreams();
 
 	return true;
+}
+
+void ModuleImporter::CreateCube(const vec3& position, Color color)
+{
+	glColor3f(color.r, color.g, color.b);
+	Mesh* mesh = new Mesh();
+	par_shapes_mesh* cube;
+	cube = par_shapes_create_cube();
+	par_shapes_translate(cube, position.x, position.y, position.z);
+
+	par_shapes_unweld(cube, true);
+	par_shapes_compute_normals(cube);
+
+
+
+	mesh->vertex = new float[(cube->npoints * 3)];
+	mesh->index = new uint[cube->ntriangles * 3];
+	mesh->normal = new float[(cube->npoints * 3)];
+
+	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
+	memcpy(mesh->index, cube->triangles, sizeof(float) * cube->ntriangles * 3);
+	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
+
+	mesh->num_index = cube->ntriangles;
+	mesh->num_vertex = cube->npoints;
+	mesh->num_normal = cube->npoints;
+	mesh->normal = cube->normals;
+	mesh->num_uvs = cube->npoints;
+	mesh->uvs = cube->tcoords;
+
+	//// buffer points
+	//glGenBuffers(1, &mesh->id_vertex);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
+
+	//// buffer index
+	//glGenBuffers(1, &mesh->id_index);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
+
+	////IndexNormal
+	//glGenBuffers(1, &mesh->id_normal);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normal * 3, mesh->normal, GL_STATIC_DRAW);
+
+	//glGenBuffers(1, &mesh->id_uvs);
+	//glBindBuffer(GL_ARRAY_BUFFER,mesh->id_uvs);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_uvs * 2, mesh->uvs, GL_STATIC_DRAW);
+	////LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
+
+	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
+	mesh->CreateMesh();
+	App->importer->mesh_primitive_list.push_back(mesh);
 }
 
 

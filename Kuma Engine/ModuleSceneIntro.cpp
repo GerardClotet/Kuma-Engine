@@ -7,6 +7,8 @@
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
 #include "ModuleImporter.h"
+#include "ModuleUI.h"
+#include "PanelConfig.h"
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -35,7 +37,9 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-	meshItem->createCube({ 100,100,100 }, { 30.0f,100.0f,86.0f });
+////	meshItem->createCube({ 100,100,100 }, { 30.0f,100.0f,86.0f });
+//	Mesh meshStart;
+//	meshStart.createCube({ 3,1,6 }, { 30.0f,100.0f,86.0f });
 	return true;
 }
 
@@ -67,6 +71,43 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		(*item_mesh)->Render();
 	}*/
 
+	for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
+	{
+
+
+
+		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)& App->importer->wire_color);
+			glLineWidth(1.0f);
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+
+			(*item_mesh)->Render();
+
+
+		}
+		else if (App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
+			(*item_mesh)->Render();
+
+		}
+		if (App->ui->config_p->Getwireframe())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)& App->importer->wire_color);
+			glLineWidth(1.0f);
+			(*item_mesh)->Render();
+
+		}
+	}
+
 
 	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
@@ -78,32 +119,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 }
 
 
-void ModuleSceneIntro::createCube(const vec3 &position, Color color)
-{
-	//glColor3f(color.r, color.g, color.b);
-	//Mesh* mesh = new Mesh();
-	//par_shapes_mesh* cube;
-	//cube = par_shapes_create_cube();
 
-	//mesh->num_index = cube->ntriangles;
-	//mesh->index = (uint*)cube->triangles;
-	//mesh->num_vertex = cube->npoints;
-	//mesh->vertex = cube->points;
-
-	//par_shapes_translate(cube, position.x, position.y, position.z);
-
-	//// buffer points
-	//glGenBuffers(1, &mesh->id_vertex);
-	//glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertex * 3, mesh->vertex, GL_STATIC_DRAW);
-
-	//// buffer index
-	//glGenBuffers(1, &mesh->id_index);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh->num_index * 3, mesh->index, GL_STATIC_DRAW);
-
-	//mesh_list.push_back(mesh);
-}
 
 
 
