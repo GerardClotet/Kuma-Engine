@@ -170,6 +170,7 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Resizable", &resizable))
 			App->window->Set_Resizable(resizable);
+
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Restart to apply");
 
