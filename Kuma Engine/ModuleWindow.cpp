@@ -259,7 +259,5 @@ void ModuleWindow::SaveConfig(JSON_Object*& config, std::string path)
 	json_object_dotset_boolean(config, "Configuration.Window.FullDesktop", full_desktop);
 	json_object_dotset_boolean(config, "Configuration.Window.Resizable", resizable);
 
-	//TODO:// WE NEED TO PUT MORE THINGS HERE
-	json_serialize_to_file(App->value, path.c_str());
 
 }

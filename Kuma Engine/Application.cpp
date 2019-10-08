@@ -258,8 +258,11 @@ void Application::LoadConfig(JSON_Object *& config)
 void Application::SaveConfig(JSON_Object *& config, std::string path)
 {
 	json_object_dotset_string(config, "Application.Name", app_name.c_str());
+}
 
-	json_serialize_to_file(value, path.c_str());
+void Application::SaveConfigFinish(std::string path)
+{
+	json_serialize_to_file_pretty(save_value, path.c_str());
 }
 
 bool Application::SaveConfigAllModules()

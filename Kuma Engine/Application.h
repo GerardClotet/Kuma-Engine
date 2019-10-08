@@ -66,6 +66,7 @@ public:
 	bool SaveConfigAllModules();
 	void LoadConfig(JSON_Object*& config);
 	void SaveConfig(JSON_Object*& config, std::string path);
+	void SaveConfigFinish(std::string path);
 	void OpenWebsite(const std::string &link);
 	JSON_Object* LoadJSONFile(const std::string &path);
 	void Log(const char* fmt,...);
@@ -92,6 +93,8 @@ public:
 
 	std::list<const char*> log_saves;
 	JSON_Value* value;
+	JSON_Value* save_value;
+	JSON_Object* save_object;
 };
 
 extern Application* App;
