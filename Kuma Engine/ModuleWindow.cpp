@@ -40,7 +40,7 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true||resizable)
+		if(WIN_RESIZABLE == true || resizable)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
@@ -195,6 +195,7 @@ void ModuleWindow::Set_FullScreen(bool set)
 
 void ModuleWindow::Set_Resizable(bool set)
 {
+	resizable = set;
 	SDL_SetWindowResizable(window, (SDL_bool)set);
 }
 
@@ -258,7 +259,5 @@ void ModuleWindow::SaveConfig(JSON_Object*& config, std::string path)
 	json_object_dotset_boolean(config, "Configuration.Window.FullDesktop", full_desktop);
 	json_object_dotset_boolean(config, "Configuration.Window.Resizable", resizable);
 
-	//TODO:// WE NEED TO PUT MORE THINGS HERE
-	json_serialize_to_file(App->value, path.c_str());
 
 }

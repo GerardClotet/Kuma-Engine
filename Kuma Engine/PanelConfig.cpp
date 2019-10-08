@@ -35,7 +35,8 @@ void PanelConfig::DisplayConfig()
 		if (ImGui::MenuItem("Load"))
 		{
 			std::string file = SelectFile();
-			
+			if (file.length()!=0)
+			{
 				JSON_Object* config = App->LoadJSONFile(file);
 
 				std::list<Module*>::iterator item = App->list_modules.begin();
@@ -45,19 +46,22 @@ void PanelConfig::DisplayConfig()
 					++item;
 				}
 				App->LoadConfig(config);
+			}
 			
 		}
 		if (ImGui::MenuItem("Save"))
 		{
 			std::string file = SelectFile();
-			JSON_Object* config = App->LoadJSONFile(file);
+			App->save_value = json_parse_file(file.data());
+			App->save_object = json_object(App->save_value);
 			std::list<Module*>::iterator item = App->list_modules.begin();
 			while (item != App->list_modules.end())
 			{
-				(*item)->SaveConfig(config, file);
+				(*item)->SaveConfig(App->save_object, file);
 				++item;
 			}
-			App->SaveConfig(config, file);
+			App->SaveConfig(App->save_object, file);
+			App->SaveConfigFinish(file);
 		}
 		ImGui::EndMenu();
 	}
@@ -170,6 +174,7 @@ void PanelConfig::DisplayConfig()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Resizable", &resizable))
 			App->window->Set_Resizable(resizable);
+
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Restart to apply");
 
@@ -437,6 +442,7 @@ std::string PanelConfig::SelectFile()
 		case FNERR_SUBCLASSFAILURE: LOG("FNERR_SUBCLASSFAILURE\n"); break;
 		default: LOG("You cancelled.\n");
 		}
+		
 	}
 
 	return filename;
