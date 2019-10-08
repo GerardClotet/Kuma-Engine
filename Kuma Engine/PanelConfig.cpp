@@ -24,7 +24,7 @@ void PanelConfig::DisplayConfig()
 		
 		if (ImGui::MenuItem("Set Defaults"))
 		{
-			JSON_Object* config_default = App->LoadJSONFile("Configuration/config.json");
+			JSON_Object* config_default = App->LoadJSONFile("config.json");
 			std::list<Module*>::iterator item = App->list_modules.begin();
 			while (item != App->list_modules.end())
 			{
@@ -52,16 +52,20 @@ void PanelConfig::DisplayConfig()
 		if (ImGui::MenuItem("Save"))
 		{
 			std::string file = SelectFile();
-			App->save_value = json_parse_file(file.data());
-			App->save_object = json_object(App->save_value);
-			std::list<Module*>::iterator item = App->list_modules.begin();
-			while (item != App->list_modules.end())
+
+			if (file.length() != 0)
 			{
-				(*item)->SaveConfig(App->save_object, file);
-				++item;
+				App->save_value = json_parse_file(file.data());
+				App->save_object = json_object(App->save_value);
+				std::list<Module*>::iterator item = App->list_modules.begin();
+				while (item != App->list_modules.end())
+				{
+					(*item)->SaveConfig(App->save_object, file);
+					++item;
+				}
+				App->SaveConfig(App->save_object, file);
+				App->SaveConfigFinish(file);
 			}
-			App->SaveConfig(App->save_object, file);
-			App->SaveConfigFinish(file);
 		}
 		ImGui::EndMenu();
 	}
