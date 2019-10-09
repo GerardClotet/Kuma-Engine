@@ -30,7 +30,7 @@ bool ModuleImporter::Init()
 
 bool ModuleImporter::Start()
 {
-	LoadGeometry("../fbx/warrior.FBX");
+	//LoadGeometry("../fbx/warrior.FBX");
 
 	CreateCube({ 5,0,-5 }, { 0,0,0.0f  });
 

@@ -333,12 +333,12 @@ void PanelConfig::DisplayConfig()
 
 		ImGui::Separator();
 
-		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &GL_Lightning))
+		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &GL_Color_material))
 		{
-			if (GL_Lightning)
+			if (GL_Color_material)
 				glEnable(GL_COLOR_MATERIAL), LOG("Enabled ColorMaterial");
 
-			else if (!GL_Lightning)
+			else if (!GL_Color_material)
 				glDisable(GL_COLOR_MATERIAL), LOG("Disabled ColorMaterial");
 		}
 
