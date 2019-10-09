@@ -18,6 +18,8 @@ public:
 private:
 	uint my_id = 0;
 	uint my_indices = 0;
+	uint id_normal = 0;
+	float* normal = nullptr;
 
 };
 
