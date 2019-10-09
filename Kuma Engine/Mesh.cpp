@@ -83,7 +83,7 @@ void Mesh::Render()
 
 		glColor4fv((float*)& App->importer->vertex_normal_color);
 
-		for (int i = 0; i < num_normal * 3; i += 3)
+		for (int i = 0; i < num_normal * 3; i+=3)
 		{
 			vec3 normalVec = normalize({ normal[i], normal[i + 1], normal[i + 2] });
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
