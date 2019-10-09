@@ -52,6 +52,9 @@ public:
 	std::list<debug_mesh> GetDebugInfo();
 	ImVec4 wire_color = ImVec4(0.7, 0.0f, 1.f, 1.0f);
 	ImVec4 fill_color = ImVec4(1.0f, 1.0f, 1.f, 1.0f);
+	ImVec4 face_normal_color = ImVec4(1.0f, 0.0f, 1.0f, 1.0f);
+	ImVec4 vertex_normal_color = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
+	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
 	std::list<FBX*> fbx_list;
 	std::list<Mesh*> mesh_primitive_list;

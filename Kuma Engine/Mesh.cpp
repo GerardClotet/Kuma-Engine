@@ -81,7 +81,7 @@ void Mesh::Render()
 		glLineWidth(2.5f);
 		glBegin(GL_LINES);
 
-		glColor3f(0.0f, 255.0f, 255.0f);
+		glColor4fv((float*)& App->importer->vertex_normal_color);
 
 		for (int i = 0; i < num_normal * 3; i += 3)
 		{
@@ -100,7 +100,7 @@ void Mesh::Render()
 	{
 		glPointSize(2.5f);
 		glBegin(GL_POINTS);
-		glColor3f(255.0f, 0.0f, 0.0f);
+		glColor4fv((float*)& App->importer->vertex_color);
 		for (int i = 0; i < num_vertex * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
@@ -123,7 +123,7 @@ void Mesh::Render()
 				glPointSize(2.5f);
 				glBegin(GL_LINES);
 
-				glColor3f(255.0f, 0.0f, 255.0f); 
+				glColor4fv((float*)& App->importer->face_normal_color);
 
 				for (int i = 0; i < deb->normals_tri.size(); i++) 
 				{

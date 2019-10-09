@@ -389,6 +389,9 @@ void PanelConfig::DisplayConfig()
 		
 		ImGui::ColorEdit4("Wire Color", (float*)& App->importer->wire_color);
 		ImGui::ColorEdit4("Fill Color", (float*)& App->importer->fill_color);
+		ImGui::ColorEdit4("Vertex Color", (float*)& App->importer->vertex_color);
+		ImGui::ColorEdit4("Face normal Color", (float*)& App->importer->face_normal_color);
+		ImGui::ColorEdit4("Vertex normal Color", (float*)& App->importer->vertex_normal_color);
 
 
 	}
