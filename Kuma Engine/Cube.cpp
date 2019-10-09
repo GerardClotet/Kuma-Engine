@@ -70,4 +70,55 @@ void Cube::Render()
 		}
 	}
 
+	//draw face normal
+	if (App->ui->show_face_normal)
+	{
+		CreateFaceNormals();
+	}
+
+}
+
+void Cube::CreateFaceNormals()
+{
+		glPointSize(2.5f);
+		glBegin(GL_LINES);
+
+		glColor4fv((float*)& App->importer->face_normal_color);
+
+		for (int i = 0; i < cube_mesh->ntriangles*3; i++)
+		{
+			//Triangle points using indices and vertices
+			uint index_01 = cube_mesh->triangles[i] * 3;
+			uint index_02 = cube_mesh->triangles[i + 1] * 3;
+			uint index_03 = cube_mesh->triangles[i + 2] * 3;
+
+			//Calculate the points of the triangle by using the vertex array and indices to find the exact vertex
+			float3 p1 = { cube_mesh->points[index_01], cube_mesh->points[index_01 + 1], cube_mesh->points[index_01 + 2] };
+			float3 p2 = { cube_mesh->points[index_02], cube_mesh->points[index_02 + 1], cube_mesh->points[index_02 + 2] };
+			float3 p3 = { cube_mesh->points[index_03], cube_mesh->points[index_03 + 1], cube_mesh->points[index_03 + 2] };
+
+			//Calculate the center of the triangle C=(ax+bx+cx)/3
+			float C1 = (p1.x + p2.x + p3.x) / 3;
+			float C2 = (p1.y + p2.y + p3.y) / 3;
+			float C3 = (p1.z + p2.z + p3.z) / 3;
+
+			//Calculate two vectors by using the three points to calculate the cross product to get the normal
+			float3 V = { p2 - p1 };
+			float3 W = { p3 - p1 };
+
+			//Cross product to get the normal(cross product gives a perpendicular vectorto the two given)
+			float Nx = V.y*W.z - V.z*W.y;
+			float Ny = V.z*W.x - V.x*W.z;
+			float Nz = V.x*W.y - V.y*W.x;
+
+			//Normalize vector
+			vec3 normalizedVec = normalize({ Nx,Ny,Nz });
+
+
+			glVertex3f(C1, C2, C3);
+			glVertex3f(C1 + normalizedVec.x, C2 + normalizedVec.y, C3 + normalizedVec.z);
+
+			i += 2;
+		}
+		glEnd();
 }

@@ -21,6 +21,9 @@ private:
 	uint id_normal = 0;
 	float* normal = nullptr;
 
+private:
+	void CreateFaceNormals();
+
 };
 
 #endif // !CUBE_H
