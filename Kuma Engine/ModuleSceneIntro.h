@@ -32,7 +32,8 @@ public:
 public:
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
-	uint ids = 0;
+	uint my_id = 1;
+
 	uint indiceS = 0;
 	std::list<Mesh*> mesh_list;
 private:
@@ -48,7 +49,43 @@ private:
 	uint my_indicesk = 0;
 	Mesh* meshItem = new Mesh();
 	
-
-	
+	float vertices[36 * 3] = {
+		0.0f,0.0f,0.0f,
+		1.f,1.f,0.f,
+		1.f,1.f,0.f,
+		1,1,0.f,
+		1,0,0,
+		0,0,0,//6
+		0,0,1,
+		1,0,1,
+		1,1,1,//9
+		1,1,1,
+		0,1,1,
+		0,0,1,//12
+		1,1,0,
+		0,1,0,
+		0,1,1,//15
+		0,1,1,
+		1,1,1,
+		1,1,0,//18
+		1,0,0,
+		1,0,1,
+		0,0,1,//21
+		1,0,0,
+		0,0,1,
+		0,0,0,//24
+		1,1,0,
+		1,1,1,
+		1,0,1,//27
+		1,0,1,
+		1,0,0,
+		1,1,0,//30
+		0,1,0,
+		0,0,0,
+		0,0,1,//33
+		0,0,1,
+		0,1,1,
+		0,1,0//36
+	};
 	
 };

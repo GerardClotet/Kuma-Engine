@@ -63,7 +63,7 @@ void Mesh::Render()
 		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
 
 	else if(gl_Short)	
-		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
+		glDrawElements(GL_TRIANGLES, num_index *3, GL_UNSIGNED_SHORT, NULL);
 
 
 

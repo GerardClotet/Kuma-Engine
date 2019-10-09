@@ -112,7 +112,7 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 
 	Mesh* mesh = new Mesh();
 	par_shapes_mesh* cube;
-	cube = par_shapes_create_subdivided_sphere(2);
+	cube = par_shapes_create_cube();
 	par_shapes_translate(cube, position.x, position.y, position.z);
 	glColor3f(color.r, color.g, color.b);
 
@@ -122,8 +122,8 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 
 
 	mesh->vertex = new float[(cube->npoints * 3)];
-	mesh->index = new uint[cube->ntriangles * 3];
-	mesh->normal = new float[(cube->npoints * 3)];
+	mesh->index = new uint[cube->ntriangles*3];
+	mesh->normal = new float[(cube->npoints *3)];
 
 	
 
@@ -134,9 +134,9 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 	mesh->num_uvs = cube->npoints;
 	mesh->uvs = cube->tcoords;
 
-	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints * 3);
-	memcpy(mesh->index, cube->triangles, sizeof(uint) * cube->ntriangles * 3);
-	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints * 3);
+	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints *3);
+	memcpy(mesh->index, cube->triangles, sizeof(uint) * cube->ntriangles*3 );
+	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints*3 );
 
 
 	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);

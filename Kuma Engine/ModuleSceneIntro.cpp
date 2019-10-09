@@ -1,4 +1,4 @@
-#include "Globals.h"
+﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Mesh.h"
@@ -40,6 +40,11 @@ bool ModuleSceneIntro::Start()
 ////	meshItem->createCube({ 100,100,100 }, { 30.0f,100.0f,86.0f });
 //	Mesh meshStart;
 //	meshStart.createCube({ 3,1,6 }, { 30.0f,100.0f,86.0f });
+	glGenBuffers(1, (GLuint*) & (my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
+
+
 	return true;
 }
 
@@ -47,6 +52,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	
 	
 
 	return true;
@@ -71,42 +77,15 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 		(*item_mesh)->Render();
 	}*/
 
-	for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
-	{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+//	glTexCoord2f(vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	// � draw other buffers
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-
-
-		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)& App->importer->wire_color);
-			glLineWidth(1.0f);
-
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
-
-			(*item_mesh)->Render();
-
-
-		}
-		else if (App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& ImVec4(1, 1, 1, 1));
-			(*item_mesh)->Render();
-
-		}
-		if (App->ui->config_p->Getwireframe())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)& App->importer->wire_color);
-			glLineWidth(1.0f);
-			(*item_mesh)->Render();
-
-		}
-	}
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 
 	glColor3f(255.0f, 255.0f, 255.0f);
