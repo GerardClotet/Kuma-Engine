@@ -16,7 +16,6 @@ public:
 
 	void CreateMesh();
 	void Render();
-	//void createCube(const vec3 &position, Color color = { 255,255,255,255 });
 	bool gl_Short = false;
 	bool gl_Int = false;
 public:

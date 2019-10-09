@@ -11,7 +11,7 @@
 #include "Assimp/include/cfileio.h"
 
 class Mesh;
-
+class Cube;
 
 //----------------- FBX Class -----------------//
 
@@ -57,7 +57,7 @@ public:
 	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
 	std::list<FBX*> fbx_list;
-	std::list<Mesh*> mesh_primitive_list;
+	std::list<Cube*> mesh_cube_list;
 private:
 	std::string dropped_file_dir;
 	SDL_Event event;

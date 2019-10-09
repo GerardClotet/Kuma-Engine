@@ -37,9 +37,7 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-////	meshItem->createCube({ 100,100,100 }, { 30.0f,100.0f,86.0f });
-//	Mesh meshStart;
-//	meshStart.createCube({ 3,1,6 }, { 30.0f,100.0f,86.0f });
+
 	glGenBuffers(1, (GLuint*) & (my_id));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
@@ -72,10 +70,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	//Draw
 	createGrid();
 
-	/*for (std::list<Mesh*>::iterator item_mesh = mesh_list.begin(); item_mesh != mesh_list.end(); ++item_mesh)
-	{
-		(*item_mesh)->Render();
-	}*/
+
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -83,7 +78,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	// � draw other buffers
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 

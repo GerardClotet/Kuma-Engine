@@ -109,6 +109,7 @@
     <ClInclude Include="Assimp\include\vector3.h" />
     <ClInclude Include="Assimp\include\version.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="gpudetect\DeviceId.h" />
@@ -211,6 +212,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="gpudetect\DeviceId.cpp" />
     <ClCompile Include="ImGui\examples\imgui_impl_opengl3.cpp" />

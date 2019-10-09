@@ -5,6 +5,7 @@
 #include "par_shapes.h"
 #include "ModuleSceneIntro.h"
 #include "Mesh.h"
+#include "Cube.h"
 #include "PanelConfig.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
@@ -30,9 +31,9 @@ bool ModuleImporter::Init()
 
 bool ModuleImporter::Start()
 {
-	//LoadGeometry("../fbx/warrior.FBX");
+	
 
-	CreateCube({ 5,0,-5 }, { 0,0,0.0f  });
+	CreateCube({ 5,0,-5 }, { 0,0,0.0f});
 
 
 
@@ -48,17 +49,12 @@ update_status ModuleImporter::Update(float dt)
 update_status ModuleImporter::PostUpdate(float dt)
 {
 
-	
-	
-
 		//Once all meshes are created, call the render function to draw all the shapes
 	for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
 	{
 		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
 		{
 
-		
-			
 			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -93,6 +89,13 @@ update_status ModuleImporter::PostUpdate(float dt)
 	}
 
 
+	//Cube Render
+	for (auto item_mesh = mesh_cube_list.begin(); item_mesh != mesh_cube_list.end(); ++item_mesh)
+	{
+		(*item_mesh)->Render();
+	}
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -108,46 +111,13 @@ bool ModuleImporter::CleanUp()
 
 void ModuleImporter::CreateCube(const vec3& position, Color color)
 {
-	FBX* fbx = new FBX();
+	Cube* cube = new Cube();
+	cube->cube_mesh = par_shapes_create_cube();
 
-	Mesh* mesh = new Mesh();
-	par_shapes_mesh* cube;
-	cube = par_shapes_create_cube();
-	par_shapes_translate(cube, position.x, position.y, position.z);
-	glColor3f(color.r, color.g, color.b);
+	par_shapes_translate(cube->cube_mesh, position.x, position.y, position.z);
 
-	par_shapes_unweld(cube, true);
-	par_shapes_compute_normals(cube);
-	
-
-
-	mesh->vertex = new float[(cube->npoints * 3)];
-	mesh->index = new uint[cube->ntriangles*3];
-	mesh->normal = new float[(cube->npoints *3)];
-
-	
-
-	mesh->num_index = cube->ntriangles;
-	mesh->num_vertex = cube->npoints;
-	mesh->num_normal = cube->npoints;
-	mesh->normal = cube->normals;
-	mesh->num_uvs = cube->npoints;
-	mesh->uvs = cube->tcoords;
-
-	memcpy(mesh->vertex, cube->points, sizeof(float) * cube->npoints *3);
-	memcpy(mesh->index, cube->triangles, sizeof(uint) * cube->ntriangles*3 );
-	memcpy(mesh->normal, cube->normals, sizeof(float) * cube->npoints*3 );
-
-
-	//App->importer->fbx_list->mesh_list_fbx.push_back(mesh);
-	mesh->gl_Short = true;
-
-	mesh->CreateMesh();
-	mesh->has_normals = true;
-	mesh->has_uvs = true;
-	fbx->mesh_list_fbx.push_back(mesh);
-	fbx_list.push_back(fbx);
-	//App->importer->mesh_primitive_list.push_back(mesh);
+	cube->CreateMesh();
+	mesh_cube_list.push_back(cube);
 }
 
 
