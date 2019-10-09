@@ -92,7 +92,36 @@ update_status ModuleImporter::PostUpdate(float dt)
 	//Cube Render
 	for (auto item_mesh = mesh_cube_list.begin(); item_mesh != mesh_cube_list.end(); ++item_mesh)
 	{
-		(*item_mesh)->Render();
+		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)&wire_color);
+			glLineWidth(1.0f);
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& fill_color);
+
+			(*item_mesh)->Render();
+
+
+		}
+		else if (App->ui->config_p->GetFill())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glColor4fv((float*)& fill_color);
+			(*item_mesh)->Render();
+
+		}
+		if (App->ui->config_p->Getwireframe())
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glPolygonOffset(1.0f, 0.375f); //test
+			glColor4fv((float*)& wire_color);
+			glLineWidth(1.0f);
+			(*item_mesh)->Render();
+
+		}
 	}
 
 
