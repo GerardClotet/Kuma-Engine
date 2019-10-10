@@ -11,7 +11,8 @@
 #include "MathGeoLib/include/MathGeoLibFwd.h"
 
 #define MAX_SNAKE 2
-
+#define CHECKERS_WIDTH 100	
+#define CHECKERS_HEIGHT 100
 class Mesh;
 
 class ModuleSceneIntro : public Module
@@ -29,13 +30,20 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createGrid();
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
+
+
+
+	
+
+	
 public:
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
-	uint my_id = 1;
-
+	uint my_id;
+	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;
 	uint indiceS = 0;
 	std::list<Mesh*> mesh_list;
+	uint ImageName;
 private:
 	int max_grid = 75;
 	float sunX = 2;
@@ -49,43 +57,5 @@ private:
 	uint my_indicesk = 0;
 	Mesh* meshItem = new Mesh();
 	
-	float vertices[36 * 3] = {
-		0.0f,0.0f,0.0f,
-		1.f,1.f,0.f,
-		1.f,1.f,0.f,
-		1,1,0.f,
-		1,0,0,
-		0,0,0,//6
-		0,0,1,
-		1,0,1,
-		1,1,1,//9
-		1,1,1,
-		0,1,1,
-		0,0,1,//12
-		1,1,0,
-		0,1,0,
-		0,1,1,//15
-		0,1,1,
-		1,1,1,
-		1,1,0,//18
-		1,0,0,
-		1,0,1,
-		0,0,1,//21
-		1,0,0,
-		0,0,1,
-		0,0,0,//24
-		1,1,0,
-		1,1,1,
-		1,0,1,//27
-		1,0,1,
-		1,0,0,
-		1,1,0,//30
-		0,1,0,
-		0,0,0,
-		0,0,1,//33
-		0,0,1,
-		0,1,1,
-		0,1,0//36
-	};
-	
+
 };

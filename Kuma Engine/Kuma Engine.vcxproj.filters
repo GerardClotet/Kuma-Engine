@@ -571,6 +571,30 @@
     </ClInclude>
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="DevIL Windows SDK\include\IL\devil_cpp_wrapper.hpp">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\devil_internal_exports.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\il.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\il_wrap.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\ilu.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\ilu_region.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\ilut.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL Windows SDK\include\IL\ilut_config.h">
+      <Filter>tools\Devil</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -614,6 +638,9 @@
     </Filter>
     <Filter Include="tools\Assimp">
       <UniqueIdentifier>{7bb43308-b3a8-4926-b06a-03ffd60e67f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\Devil">
+      <UniqueIdentifier>{57986629-8568-4c3b-82b0-3db655281dbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

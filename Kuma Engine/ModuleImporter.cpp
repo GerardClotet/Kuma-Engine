@@ -33,7 +33,7 @@ bool ModuleImporter::Start()
 {
 	
 
-	CreateCube({ 5,0,-5 }, { 0,0,0.0f});
+	//CreateCube({ 5,0,-5 }, { 0,0,0.0f});
 
 
 

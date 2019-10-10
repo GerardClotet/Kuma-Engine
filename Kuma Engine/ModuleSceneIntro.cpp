@@ -38,9 +38,37 @@ bool ModuleSceneIntro::Init()
 bool ModuleSceneIntro::Start()
 {
 
-	glGenBuffers(1, (GLuint*) & (my_id));
+	/*glGenBuffers(1, (GLuint*) & (my_id));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);*/
+
+
+
+
+	//v = CreateCubeVertices(vertex_num, 1);
+
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+	checkImage;
+	LOG("");
+	
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &(GLuint)ImageName);
+	glBindTexture(GL_TEXTURE_2D, (GLuint)ImageName);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 
 
 	return true;
@@ -67,22 +95,152 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-	//Draw
+
+	
+
+	//cube
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ImageName);
+
+	glBegin(GL_TRIANGLES);
+
+
+
+	//front face
+	glVertex3f(0.0f, 0.0f, 0.0f);//v2
+	glTexCoord2f(0.5, 0.33f);
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	glTexCoord2f(.25, 0.0f);
+	glVertex3f(1.0f,1.0f,0.0f); //v0
+	glTexCoord2f(0.25, 0.33f);
+
+
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
+
+	glTexCoord2f(.25, 0.0f);
+
+	glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	glTexCoord2f(0.5, .33f);
+	glVertex3f(0.0f, 0.0f, 0.0f); //v2
+	glTexCoord2f(.5, 0.0f);
+
+	//back face
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(.25, 1.0f);
+
+	glVertex3f(1.0f, 0.0f, 1.0f); //v4
+	glTexCoord2f(.25, 0.66f);
+
+	glVertex3f(1.0f, 1.0f, 1.0f); //v5
+	glTexCoord2f(.5, 0.66f);
+
+	glVertex3f(1.0f, 1.0f, 1.0f); //v5
+	glTexCoord2f(.5, 0.66f);
+
+
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+
+	glTexCoord2f(.5, 1.0f);
+
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(.25, 1.0f);
+
+
+	//top face
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
+	//glTexCoord2f(.5, 0.33f);
+	glTexCoord2f(.25, 0.33f);
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	//glTexCoord2f(.25, 0.33f);
+	glTexCoord2f(.25, 0.66f);
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	glTexCoord2f(.5, 0.33f);
+//	glTexCoord2f(.25, 0.66f);
+
+
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	//glTexCoord2f(.25, 0.66f);
+	glTexCoord2f(.5, 0.66f);
+	glVertex3f(1.0f, 1.0f, 1.0f); //v5
+//	glTexCoord2f(.5, 0.66f);
+	glTexCoord2f(.5, 0.33f);
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
+	glTexCoord2f(.25, 0.66f);
+//	glTexCoord2f(.5, 0.33f);
+
+	//bottom face
+
+	glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	//glTexCoord2f(.75, 0.33f);
+	glTexCoord2f(.75, 0.66f);
+	glVertex3f(1.0f, 0.0f, 1.0f); //v4
+	//glTexCoord2f(.75, 0.66f);
+	glTexCoord2f(1, 0.66f);
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(.75, 0.33f);
+	//glTexCoord2f(1, 0.66f);
+
+	glVertex3f(1.0f, 0.0f, 0.0f); //v3
+	glTexCoord2f(1, 0.66f);
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(1, 0.33f);
+	glVertex3f(0.0f, 0.0f, 0.0f); //v2
+	glTexCoord2f(.75, 0.33f);
+
+	//right face
+	glVertex3f(1.0f, 1.0f, 0.0f); //v0
+	glTexCoord2f(.5, 0.66f);
+
+	glVertex3f(1.0f, 1.0f, 1.0f);//v5
+	glTexCoord2f(.75, 0.66f);
+
+	glVertex3f(1.0f, 0.0f, 1.0f);//v4
+	glTexCoord2f(.5, 0.33f);
+
+
+
+	glVertex3f(1.0f, 0.0f, 1.0f);//v4
+	glTexCoord2f(.75, 0.33f);
+
+	glVertex3f(1.0f, 0.0f, 0.0f);//v3
+	glTexCoord2f(.5, 0.33f);
+
+	glVertex3f(1.0f, 1.0f, 0.0f);//v0
+	glTexCoord2f(.75, 0.66f);
+
+
+
+	
+	//left face
+
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	glTexCoord2f(.0, 0.33f);
+
+	glVertex3f(0.0f, 0.0f, 0.0f); //v2
+	glTexCoord2f(0, 0.66f);
+
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(.25, 0.33f);
+
+
+	glVertex3f(0.0f, 0.0f, 1.0f); //v7
+	glTexCoord2f(0, 0.66f);
+
+	glVertex3f(0.0f, 1.0f, 1.0f); //v6
+	glTexCoord2f(.25, 0.66f);
+
+	glVertex3f(0.0f, 1.0f, 0.0f); //v1
+	glTexCoord2f(.25, 0.33f);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisable(GL_TEXTURE_2D);
+
+	glEnd();
+
+
+		//Draw
 	createGrid();
-
-
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-//	glTexCoord2f(vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	// � draw other buffers
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-
 	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }
@@ -150,6 +308,11 @@ void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions,  Col
 
 	//mesh_list.push_back(mesh);
 }
+
+
+
+
+
 
 
 
