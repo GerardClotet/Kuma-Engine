@@ -2,16 +2,16 @@
 #define MESH_H
 
 #include "Globals.h"
+//#include "ModuleTexture.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
-
 #define CHECKERS_HEIGHT 100
 #define CHECKERS_WIDTH 100
 
 class FBX;
-
+class TexData;
 class Mesh {
 public:
 	Mesh() {};
@@ -48,6 +48,9 @@ public:
 
 	uint imageId;
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+
+public:
+	TexData* texture;
 };
 
 #endif // !MESH_H

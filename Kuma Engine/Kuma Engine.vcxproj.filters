@@ -179,10 +179,14 @@
     <ClCompile Include="ModuleImporter.cpp">
       <Filter>modules</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="ModuleTexture.cpp">
       <Filter>modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,8 +576,6 @@
     <ClInclude Include="Assimp\include\version.h">
       <Filter>tools\Assimp</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp">
       <Filter>tools\Devil</Filter>
     </ClInclude>
@@ -600,6 +602,12 @@
     </ClInclude>
     <ClInclude Include="ModuleTexture.h">
       <Filter>modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -647,6 +655,9 @@
     </Filter>
     <Filter Include="tools\Devil">
       <UniqueIdentifier>{57986629-8568-4c3b-82b0-3db655281dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{677e9053-bf98-4354-8521-a98ec184025b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

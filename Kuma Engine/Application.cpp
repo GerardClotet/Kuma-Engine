@@ -15,6 +15,7 @@ Application::Application()
 	ui = new ModuleEditor(this);
 	hardware = new ModuleHardware(this);
 	importer = new ModuleImporter(this);
+	texture = new ModuleTexture(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -25,7 +26,7 @@ Application::Application()
 	AddModule(input);
 
 	AddModule(importer);
-
+	AddModule(texture);
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(ui);

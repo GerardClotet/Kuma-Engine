@@ -10,12 +10,9 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-#include "DevIL/include/IL/ilu.h"
-#include "DevIL/include/IL/ilut.h"
 
-#pragma comment(lib,"Devil/libx86/DevIL.lib")
-#pragma comment(lib,"Devil/libx86/ILU.lib")
-#pragma comment(lib,"Devil/libx86/ILUT.lib")
+
+
 
 class Mesh;
 class Cube;

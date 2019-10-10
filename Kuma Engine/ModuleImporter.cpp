@@ -182,48 +182,35 @@ void ModuleImporter::LoadGeometry(const char* path)
 				LOG("New mesh with %d normals", mesh->num_normal);
 			}
 
-	//for (int i = 0; i < new_mesh->GetNumUVChannels(); ++i)
-	//			{
-	//				if (new_mesh->HasTextureCoords(i))
-	//				{
-	//					
-	//					mesh->has_uvs = true;
-	//					mesh->num_uvs = new_mesh->mNumVertices;
-	//					mesh->uvs = new float[mesh->num_uvs * 2]; // 2 coords x,y each vertex
-	//					memcpy(mesh->uvs, new_mesh->mTextureCoords[i], sizeof(float*) * mesh->num_uvs * 2);
-	//					LOG("New mesh with %d uvs", mesh->num_uvs);
-	//				}
-	//			}
+
 			//copy uvs
 			for (int k = 0; k < new_mesh->GetNumUVChannels(); ++k)
 			{
 				if (new_mesh->HasTextureCoords(k)) {
-					mesh->has_uvs = true;
 
 					mesh->num_uvs = new_mesh->mNumVertices;
 					mesh->uvs = new float[mesh->num_uvs * 2];
 					uint j = 0;
 					for (uint i = 0; i < new_mesh->mNumVertices; ++i) {
-
+						mesh->has_uvs = true;
 						//there are two for each vertex
 						memcpy(&mesh->uvs[j], &new_mesh->mTextureCoords[k][i].x, sizeof(float));
 						memcpy(&mesh->uvs[j + 1], &new_mesh->mTextureCoords[k][i].y, sizeof(float));
 						j += 2;
 					}
 
-					//iluFlipImage(); //here?
 				}
 			}
 			//copy color
-			if (new_mesh->HasVertexColors(0))
+			if (new_mesh->HasVertexColors(0)) //need to put a var
 			{
 				mesh->num_color = new_mesh->mNumVertices;
 				mesh->color = new float[mesh->num_color * 4];
 				uint j = 0;
-				for (uint i = 0; i < new_mesh->mNumVertices; ++i) //PROBABLY THIS IS WRONG, MAYBE IT NEEDS TO DO i+=4
+				for (uint i = 0; i < new_mesh->mNumVertices; ++i) 
 				{
 					memcpy(&mesh->color[j], &new_mesh->mColors[0][i].r, sizeof(float));
-					memcpy(&mesh->color[j + 1], &new_mesh->mColors[0][i].g, sizeof(float));
+					memcpy(&mesh->color[j + 1], &new_mesh->mColors[0][i].g, sizeof(float)); //row var needed
 					memcpy(&mesh->color[j + 2], &new_mesh->mColors[0][i].b, sizeof(float));
 					memcpy(&mesh->color[j + 3], &new_mesh->mColors[0][i].a, sizeof(float));
 					j += 4;
