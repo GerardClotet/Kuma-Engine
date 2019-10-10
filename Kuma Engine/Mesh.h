@@ -7,6 +7,9 @@
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+#define CHECKERS_HEIGHT 100
+#define CHECKERS_WIDTH 100
+
 class FBX;
 
 class Mesh {
@@ -42,6 +45,9 @@ public:
 	uint id_color = 0;
 	float* color = nullptr;
 
+
+	uint imageId;
+	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 };
 
 #endif // !MESH_H

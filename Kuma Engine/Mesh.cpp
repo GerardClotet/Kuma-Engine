@@ -8,6 +8,10 @@
 
 void Mesh::CreateMesh()
 {
+
+
+	
+
 	//Vertex buffer
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
@@ -27,6 +31,31 @@ void Mesh::CreateMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
 	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal,id_uvs);
+
+
+	//testing
+	
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &imageId);
+	glBindTexture(GL_TEXTURE_2D, imageId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	
 }
 
 void Mesh::Render()
@@ -35,7 +64,7 @@ void Mesh::Render()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
+	glEnable(GL_TEXTURE_2D);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	
@@ -51,9 +80,13 @@ void Mesh::Render()
 	//Read and Draw UVS buffers
 	if (has_uvs)
 	{
+	
+		glBindTexture(GL_TEXTURE_2D, imageId);
+
+		//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
+		
 	}
 	
 
@@ -66,11 +99,12 @@ void Mesh::Render()
 		glDrawElements(GL_TRIANGLES, num_index *3, GL_UNSIGNED_SHORT, NULL);
 
 
+//	glDisableClientState(GL_TEXTURE_2D);
 
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	//glGetTextureImage()
 
 	
 

@@ -181,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="ModuleTexture.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -571,29 +574,32 @@
     </ClInclude>
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="DevIL Windows SDK\include\IL\devil_cpp_wrapper.hpp">
+    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\devil_internal_exports.h">
+    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\il.h">
+    <ClInclude Include="DevIL\include\IL\il.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\il_wrap.h">
+    <ClInclude Include="DevIL\include\IL\il_wrap.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\ilu.h">
+    <ClInclude Include="DevIL\include\IL\ilu.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\ilu_region.h">
+    <ClInclude Include="DevIL\include\IL\ilu_region.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\ilut.h">
+    <ClInclude Include="DevIL\include\IL\ilut.h">
       <Filter>tools\Devil</Filter>
     </ClInclude>
-    <ClInclude Include="DevIL Windows SDK\include\IL\ilut_config.h">
+    <ClInclude Include="DevIL\include\IL\ilut_config.h">
       <Filter>tools\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTexture.h">
+      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
