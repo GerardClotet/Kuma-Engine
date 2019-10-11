@@ -95,11 +95,12 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
+	createDirtyCube();
 
 	//Draw
 	createGrid();
 
-	createDirtyCube();
+
 
 
 
