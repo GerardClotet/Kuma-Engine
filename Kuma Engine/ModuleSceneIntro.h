@@ -29,6 +29,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createGrid();
+	void createDirtyCube();
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 
 
