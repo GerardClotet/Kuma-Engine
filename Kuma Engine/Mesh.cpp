@@ -32,7 +32,7 @@ void Mesh::CreateMesh()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
 	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal,id_uvs);
 
-	texture = App->texture->LoadTexture("../fbx/Lenna.png");
+	texture = App->texture->LoadTexture("../fbx/Intergalactic Spaceship_color_4.jpg");
 }
 
 void Mesh::Render()
@@ -50,7 +50,7 @@ void Mesh::Render()
 	if (has_normals)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-		glNormalPointer(GL_FLOAT, 3, NULL);
+		glNormalPointer(GL_FLOAT, 0, NULL);
 
 	}
 
