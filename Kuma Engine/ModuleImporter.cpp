@@ -147,9 +147,11 @@ void ModuleImporter::CreateCube(const vec3& position, Color color)
 
 	par_shapes_unweld(cube->cube_mesh, true);
 	par_shapes_compute_normals(cube->cube_mesh);
-
+	
 	cube->CreateMesh();
+	
 	mesh_cube_list.push_back(cube);
+
 }
 
 

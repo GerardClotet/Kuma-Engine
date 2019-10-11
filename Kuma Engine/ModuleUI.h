@@ -58,6 +58,8 @@ private:
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
+	void GameObjectScreen();
+	void ComponentsScreen();
 
 private:
 	bool activeWindow = true;

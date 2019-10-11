@@ -132,6 +132,20 @@ update_status ModuleEditor::PostUpdate(float dt)
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			GameObjectScreen();
+			ImGui::EndMenu();
+
+		}
+
+		if (ImGui::BeginMenu("Components"))
+		{
+			ComponentsScreen();
+			ImGui::EndMenu();
+
+		}
+
 		if (ImGui::BeginMenu("Help"))
 		{
 			HelpScreen();
@@ -321,6 +335,73 @@ void ModuleEditor::FileScreen()
 	//TODO:/ WE NEED TO PUT HERE THE DIFFERENT OPTIONS OF THE MENU, AS OPEN, SAVE, QUIT...
 	ImGui::SameLine();
 	ImGui::TextDisabled("ESC");
+
+}
+
+void ModuleEditor::GameObjectScreen()
+{
+	if (ImGui::MenuItem("Create Empty"))
+	{
+
+	}
+	
+	if (ImGui::BeginMenu("3D Objects"))
+	{
+
+		if (ImGui::MenuItem("Cube"))
+		{
+			App->importer->CreateCube({ 10,10,10 }, { 1.0f,0.0f,1.0f,1.0f });
+		}
+
+		if (ImGui::MenuItem("Sphere"))
+		{
+		}
+
+		if (ImGui::MenuItem("Capsule"))
+		{
+		}
+
+		if (ImGui::MenuItem("Cylinder"))
+		{
+		}
+
+		if (ImGui::MenuItem("Plane"))
+		{
+		}
+
+		ImGui::EndMenu();
+
+	}
+
+	if (ImGui::BeginMenu("Effects"))
+	{
+		if (ImGui::MenuItem("Particle System"))
+		{
+		}
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Lights"))
+	{
+
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Audio"))
+	{
+
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("UI"))
+	{
+
+		ImGui::EndMenu();
+	}
+}
+
+void ModuleEditor::ComponentsScreen()
+{
 
 }
 

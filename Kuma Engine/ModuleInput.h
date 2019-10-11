@@ -63,6 +63,7 @@ private:
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
+	int mouse_z;
 	int mouse_wheel;
 	int mouse_x_motion;
 	int mouse_y_motion;
