@@ -5,6 +5,9 @@
 #include "Globals.h"
 #include <string>
 
+class Components;
+enum class GO_COMPONENT;
+
  enum class OBJECT_TYPE {
 	NONE,
 	CUBE,
