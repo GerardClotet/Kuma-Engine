@@ -5,7 +5,9 @@
 #include "glmath.h"
 #include "Color.h"
 #include "Mesh.h"
+#include "GameObject.h"
 #include <list>
+#include <string>
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLibFwd.h"
@@ -13,8 +15,10 @@
 #define MAX_SNAKE 2
 #define CHECKERS_WIDTH 100	
 #define CHECKERS_HEIGHT 100
+
 class Mesh;
 class GameObject;
+
 
 class ModuleSceneIntro : public Module
 {
@@ -33,9 +37,8 @@ public:
 	void createDirtyCube();
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 
-
 	//AddGameObject
-	GameObject* AddGameObject(std::string type);
+	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
 	
 
 	

@@ -9,7 +9,8 @@
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
 #include "PanelConfig.h"
-#include "GameObject.h"
+
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -236,9 +237,9 @@ void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions,  Col
 	//mesh_list.push_back(mesh);
 }
 
-GameObject * ModuleSceneIntro::AddGameObject(std::string type)
+GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
 {
-	GameObject* goItem = new GameObject(type);
+	GameObject* goItem = new GameObject(name, type);
 	gameObject_list.push_back(goItem);
 	return goItem;
 }

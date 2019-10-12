@@ -1,10 +1,23 @@
 #include "GameObject.h"
+#include "ModuleUI.h"
+#include "ModuleSceneIntro.h"
 
-GameObject::GameObject(std::string name)
+GameObject::GameObject(std::string name, OBJECT_TYPE type)
 {
-	LOG("%s", name);
+	this->name = name;
+	this->type = type;
+
+	if (type == OBJECT_TYPE::CUBE)
+	{
+		
+	}
 }
 
 GameObject::~GameObject()
 {
+}
+
+bool GameObject::Update()
+{
+	return true;
 }
