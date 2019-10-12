@@ -1,5 +1,7 @@
 #include "PanelAbout.h"
 #include "ModuleUI.h"
+#include "ModuleHardware.h"
+#include "ImGui/imgui.h"
 
 update_status PanelAbout::Draw()
 {

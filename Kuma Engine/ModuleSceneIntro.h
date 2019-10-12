@@ -5,7 +5,6 @@
 #include "glmath.h"
 #include "Color.h"
 #include "Mesh.h"
-
 #include <list>
 #include <vector>
 #include <string>
@@ -19,6 +18,7 @@
 
 
 class GameObject;
+struct SDL_Window;
 enum class OBJECT_TYPE;
 
 class ModuleSceneIntro : public Module

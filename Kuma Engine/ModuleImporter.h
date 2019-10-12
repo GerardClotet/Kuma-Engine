@@ -9,13 +9,15 @@
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
-#include "MathGeoLib/include/Math/float3.h"
 #include "ImGui/imgui.h"
-
+#include "MathGeoLib/include/MathGeoLib.h"
 
 
 class Mesh;
 class Cube;
+class vec3;
+struct Color;
+
 
 //----------------- FBX Class -----------------//
 

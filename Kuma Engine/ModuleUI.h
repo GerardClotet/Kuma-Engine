@@ -3,10 +3,7 @@
 #include "Module.h"
 //#include "Globals.h"
 
-#include "ImGui/imgui.h"
-#include "ImGui/imconfig.h"
-#include "ImGui/examples/imgui_impl_opengl3.h"
-#include "ImGui/examples/imgui_impl_sdl.h"
+
 #include "ModuleSceneIntro.h"
 #include <list>
 #include <vector>

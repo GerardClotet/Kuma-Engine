@@ -1,7 +1,14 @@
 #include "Application.h"
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleHardware.h"
+#include "ModuleImporter.h"
+#include "ModuleTexture.h"
+
 #include "Parson/parson.h"
 #include "p2Defs.h"
-#include "mmgr/mmgr.h"
 #include "ModuleUI.h"
 
 

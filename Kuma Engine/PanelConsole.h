@@ -4,8 +4,9 @@
 #include "Panel.h"
 #include <vector>
 #include "Module.h"
-#include "ImGui/imgui.h"
 #include "Application.h"
+#include "ImGui/imgui.h"
+
 class PanelConsole : public Panel
 {
 public:

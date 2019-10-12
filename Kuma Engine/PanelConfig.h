@@ -11,6 +11,9 @@
 #include <vector>
 #include <windows.h>
 #include "Module.h"
+#include "ModuleWindow.h"
+#include "ImGui/imgui.h"
+
 
 class PanelConfig : public Panel
 {

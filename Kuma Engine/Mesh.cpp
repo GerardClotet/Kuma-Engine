@@ -2,6 +2,8 @@
 #include "Mesh.h"
 #include "ModuleUI.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleTexture.h"
+#include "ModuleImporter.h"
 #include "par_shapes.h"
 #include "PanelConfig.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")

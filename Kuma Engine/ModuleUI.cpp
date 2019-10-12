@@ -6,6 +6,11 @@
 #include "PanelConfig.h"
 #include "PanelConsole.h"
 #include "PanelAbout.h"
+#include "ModuleRenderer3D.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imconfig.h"
+#include "ImGui/examples/imgui_impl_opengl3.h"
+#include "ImGui/examples/imgui_impl_sdl.h"
 #include <list>
 #include "GameObject.h"
 

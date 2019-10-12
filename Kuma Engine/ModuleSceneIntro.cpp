@@ -7,6 +7,7 @@
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
+#include "ModuleCamera3D.h"
 #include "PanelConfig.h"
 
 

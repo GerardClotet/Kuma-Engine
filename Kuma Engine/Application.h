@@ -6,33 +6,33 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-
-#include "ModuleHardware.h"
-#include "ModuleImporter.h"
-#include "ModuleTexture.h"
 #include "Parson/parson.h"
 #include "PerfTimer.h"
 #include "Timer.h"
 
+
+class ModuleWindow;
+class ModuleInput;
+class ModuleSceneIntro;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModuleHardware;
 class ModuleEditor;
+class ModuleImporter;
+class ModuleTexture;
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
+	ModuleWindow* window = nullptr;
+	ModuleInput* input = nullptr;
 	ModuleSceneIntro* scene_intro = nullptr;
-	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
+	ModuleRenderer3D* renderer3D = nullptr;
+	ModuleCamera3D* camera = nullptr;
 	ModuleEditor* ui = nullptr;
-	ModuleHardware* hardware;
-	ModuleImporter* importer;
-	ModuleTexture* texture;
+	ModuleHardware* hardware = nullptr;
+	ModuleImporter* importer = nullptr;
+	ModuleTexture* texture = nullptr;
 private:
 
 	Timer		ms_timer;

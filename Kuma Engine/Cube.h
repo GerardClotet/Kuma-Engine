@@ -2,6 +2,7 @@
 #define CUBE_H
 
 #include "Globals.h"
+#include "par_shapes.h"
 
 class Cube {
 

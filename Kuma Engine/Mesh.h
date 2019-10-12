@@ -11,7 +11,7 @@
 #define CHECKERS_WIDTH 100
 
 class FBX;
-class TexData;
+struct TexData;
 class Mesh {
 public:
 	Mesh() {};

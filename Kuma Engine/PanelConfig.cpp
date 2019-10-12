@@ -1,12 +1,13 @@
 #include "PanelConfig.h"
-#include "ImGui/imgui.h"
-
+#include "mmgr/mmgr.h"
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
 #include "ModuleUI.h"
+#include "ModuleInput.h"
+#include "ModuleHardware.h"
+#include "ModuleImporter.h"
 
 update_status PanelConfig::Draw()
 {

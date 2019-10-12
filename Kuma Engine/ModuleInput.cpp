@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleImporter.h"
+#include "ModuleTexture.h"
+#include "ModuleRenderer3D.h"
 
 #include "ImGui/Impl/imgui_impl_sdl.h"
 
