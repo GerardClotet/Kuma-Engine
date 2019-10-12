@@ -189,6 +189,12 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Component_Mesh.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Components.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -611,6 +617,12 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Components.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Component_Mesh.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
