@@ -62,6 +62,11 @@ public:
 
 	std::list<FBX*> fbx_list;
 	std::list<Cube*> mesh_cube_list;
+
+public:
+	TexData* texture;
+	Mesh* meshItem = new Mesh();
+
 private:
 	std::string dropped_file_dir;
 	SDL_Event event;

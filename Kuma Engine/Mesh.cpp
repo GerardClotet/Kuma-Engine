@@ -26,9 +26,8 @@ void Mesh::CreateMesh()
 	glGenBuffers(1, &id_uvs);
 	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
-	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal,id_uvs);
+	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
 
-	texture = App->texture->LoadTexture("../fbx/Intergalactic Spaceship_color_4.jpg");
 }
 
 void Mesh::Render()
@@ -55,8 +54,8 @@ void Mesh::Render()
 	if (has_uvs)
 	{
 	
-		if(texture != nullptr)
-		glBindTexture(GL_TEXTURE_2D, texture->id);
+		if (texture != nullptr)
+			glBindTexture(GL_TEXTURE_2D, texture->id);
 
 		//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);

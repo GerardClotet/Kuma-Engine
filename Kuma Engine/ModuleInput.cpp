@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleImporter.h"
 
 #include "ImGui/Impl/imgui_impl_sdl.h"
 
@@ -165,7 +166,13 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 	}
 	else if (extension == "PNG" || extension == "png" || extension == "jpg")
 	{
-		App->texture->LoadTexture(file_decider.c_str());
+		for (std::list<FBX*>::iterator item_fbx = App->importer->fbx_list.begin(); item_fbx != App->importer->fbx_list.end(); ++item_fbx)
+		{
+			for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
+			{
+				(*item_mesh)->texture = App->texture->LoadTexture(file_decider.c_str());
+			}
+		}
 	}
 
 	

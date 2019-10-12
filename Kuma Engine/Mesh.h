@@ -50,7 +50,7 @@ public:
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 
 public:
-	TexData* texture;
+	TexData* texture = nullptr;
 };
 
 #endif // !MESH_H

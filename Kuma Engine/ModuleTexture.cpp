@@ -43,7 +43,9 @@ bool ModuleTexture::Init()
 		ret = false;
 
 
-	ilutRenderer(ILUT_OPENGL);	devIl_init = ilGetError();
+	ilutRenderer(ILUT_OPENGL);
+
+	devIl_init = ilGetError();
 	if (devIl_init != IL_NO_ERROR)
 		ret = false;
 
