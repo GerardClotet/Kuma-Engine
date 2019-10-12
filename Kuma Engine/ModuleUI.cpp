@@ -350,7 +350,7 @@ void ModuleEditor::GameObjectScreen()
 
 		if (ImGui::MenuItem("Cube"))
 		{
-			App->importer->CreateCube({ 10,10,10 }, { 1.0f,0.0f,1.0f,1.0f });
+			App->scene_intro->AddGameObject("hola");
 		}
 
 		if (ImGui::MenuItem("Sphere"))

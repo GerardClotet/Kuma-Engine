@@ -188,6 +188,7 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -609,6 +610,7 @@
     <ClInclude Include="Cube.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

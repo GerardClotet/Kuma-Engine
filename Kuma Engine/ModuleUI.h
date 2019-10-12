@@ -17,6 +17,7 @@ class Panel;
 class PanelConfig;
 class PanelConsole;
 class PanelAbout;
+class GameObject;
 
 class ModuleEditor : public Module
 {

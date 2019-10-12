@@ -9,6 +9,7 @@
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
 #include "PanelConfig.h"
+#include "GameObject.h"
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -34,15 +35,6 @@ bool ModuleSceneIntro::Init()
 
 bool ModuleSceneIntro::Start()
 {
-
-	/*glGenBuffers(1, (GLuint*) & (my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, vertices, GL_STATIC_DRAW);*/
-
-
-
-
-	//v = CreateCubeVertices(vertex_num, 1);
 
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
@@ -242,6 +234,13 @@ void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions,  Col
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
 
 	//mesh_list.push_back(mesh);
+}
+
+GameObject * ModuleSceneIntro::AddGameObject(std::string type)
+{
+	GameObject* goItem = new GameObject(type);
+	gameObject_list.push_back(goItem);
+	return goItem;
 }
 
 

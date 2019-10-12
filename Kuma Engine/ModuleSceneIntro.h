@@ -14,6 +14,7 @@
 #define CHECKERS_WIDTH 100	
 #define CHECKERS_HEIGHT 100
 class Mesh;
+class GameObject;
 
 class ModuleSceneIntro : public Module
 {
@@ -33,7 +34,8 @@ public:
 	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 
 
-
+	//AddGameObject
+	GameObject* AddGameObject(std::string type);
 	
 
 	
@@ -44,6 +46,7 @@ public:
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;
 	uint indiceS = 0;
 	std::list<Mesh*> mesh_list;
+	std::vector<GameObject*> gameObject_list;
 	uint ImageName;
 private:
 	int max_grid = 75;
