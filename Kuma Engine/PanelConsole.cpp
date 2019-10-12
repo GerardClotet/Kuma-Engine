@@ -2,6 +2,7 @@
 #include "ImGui/imgui.h"
 #include "Panel.h"
 #include "Application.h"
+#include "ModuleUI.h"
 update_status PanelConsole::Draw()
 {
 	if (App->ui->console_window)DisplayConsole();

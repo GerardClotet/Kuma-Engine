@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Cube.h"
 #include "PanelConfig.h"
+#include "ModuleUI.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 

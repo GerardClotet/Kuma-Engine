@@ -11,22 +11,25 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-#include "ModuleUI.h"
+
 #include "ModuleHardware.h"
 #include "ModuleImporter.h"
 #include "ModuleTexture.h"
 #include "Parson/parson.h"
 #include "PerfTimer.h"
 #include "Timer.h"
+
+class ModuleEditor;
+
 class Application
 {
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleSceneIntro* scene_intro;
+	ModuleSceneIntro* scene_intro = nullptr;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModuleEditor* ui;
+	ModuleEditor* ui = nullptr;
 	ModuleHardware* hardware;
 	ModuleImporter* importer;
 	ModuleTexture* texture;

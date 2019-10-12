@@ -1,7 +1,6 @@
 ﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
-#include "Mesh.h"
 #include <random>
 #include "RandomHelper.h"
 #include <gl/GL.h>
@@ -10,6 +9,8 @@
 #include "ModuleUI.h"
 #include "PanelConfig.h"
 
+
+#include "GameObject.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

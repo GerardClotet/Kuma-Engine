@@ -5,8 +5,9 @@
 #include "glmath.h"
 #include "Color.h"
 #include "Mesh.h"
-#include "GameObject.h"
+
 #include <list>
+#include <vector>
 #include <string>
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
@@ -16,9 +17,9 @@
 #define CHECKERS_WIDTH 100	
 #define CHECKERS_HEIGHT 100
 
-class Mesh;
-class GameObject;
 
+class GameObject;
+enum class OBJECT_TYPE;
 
 class ModuleSceneIntro : public Module
 {

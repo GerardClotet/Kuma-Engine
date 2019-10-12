@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "ModuleUI.h"
+
 #include "ModuleSceneIntro.h"
 
 GameObject::GameObject(std::string name, OBJECT_TYPE type)

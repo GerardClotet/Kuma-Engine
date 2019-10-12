@@ -2,6 +2,7 @@
 #include "Parson/parson.h"
 #include "p2Defs.h"
 #include "mmgr/mmgr.h"
+#include "ModuleUI.h"
 
 
 Application::Application()

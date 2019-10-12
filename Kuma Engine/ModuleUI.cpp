@@ -7,6 +7,8 @@
 #include "PanelConsole.h"
 #include "PanelAbout.h"
 #include <list>
+#include "GameObject.h"
+
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);

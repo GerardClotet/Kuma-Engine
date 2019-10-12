@@ -8,7 +8,6 @@
 #include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
 #include "ModuleSceneIntro.h"
-#include "GameObject.h"
 #include <list>
 #include <vector>
 #include "Panel.h"
@@ -18,7 +17,7 @@ class Panel;
 class PanelConfig;
 class PanelConsole;
 class PanelAbout;
-enum OBJECT_TYPE;
+
 
 
 class ModuleEditor : public Module

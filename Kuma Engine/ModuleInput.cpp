@@ -5,6 +5,7 @@
 
 #include "ImGui/Impl/imgui_impl_sdl.h"
 
+#include "ModuleUI.h"
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)

@@ -6,7 +6,7 @@
 #include "ModuleRenderer3D.h"
 #include "mmgr///mmgr.h"
 #include "ModuleWindow.h"
-
+#include "ModuleUI.h"
 
 update_status PanelConfig::Draw()
 {

@@ -3,8 +3,9 @@
 
 #include "Application.h"
 #include "Globals.h"
+#include <string>
 
-enum OBJECT_TYPE {
+ enum class OBJECT_TYPE {
 	NONE,
 	CUBE,
 	SPHERE,
@@ -23,7 +24,7 @@ public:
 
 public:
 	std::string name;
-	OBJECT_TYPE type = NONE;
+	OBJECT_TYPE type = OBJECT_TYPE::NONE;
 
 };
 
