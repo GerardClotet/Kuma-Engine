@@ -8,10 +8,6 @@
 
 void Mesh::CreateMesh()
 {
-
-
-	
-
 	//Vertex buffer
 	glGenBuffers(1, &id_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);

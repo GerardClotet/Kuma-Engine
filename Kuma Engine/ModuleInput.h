@@ -59,6 +59,9 @@ public:
 	}
 
 private:
+	void ExtensionFileDecider(const char* file);
+
+private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
@@ -67,5 +70,5 @@ private:
 	int mouse_wheel;
 	int mouse_x_motion;
 	int mouse_y_motion;
-	//int mouse_z_motion;
+
 };

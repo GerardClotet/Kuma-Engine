@@ -128,7 +128,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
-				App->importer->LoadGeometry(e.drop.file);
+				ExtensionFileDecider(e.drop.file);
 				SDL_free(e.drop.file);
 				break;
 
@@ -153,4 +153,20 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void ModuleInput::ExtensionFileDecider(const char* file)
+{
+	std::string file_decider = file;
+	std::string extension = file_decider.substr(file_decider.find_last_of(".") + 1);
+	if (extension == "FBX" || extension == "fbx")
+	{
+		App->importer->LoadGeometry(file_decider.c_str());
+	}
+	else if (extension == "PNG" || extension == "png" || extension == "jpg")
+	{
+		App->texture->LoadTexture(file_decider.c_str());
+	}
+
+	
 }

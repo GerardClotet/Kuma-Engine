@@ -29,9 +29,6 @@ bool ModuleSceneIntro::Init()
 	RandomintGenerator(5, 6);
 	
 
-	
-
-
 	return ret;
 }
 
