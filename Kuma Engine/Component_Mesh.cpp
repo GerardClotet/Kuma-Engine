@@ -39,55 +39,60 @@ Component_Mesh::~Component_Mesh()
 }
 bool Component_Mesh::Update()
 {
-	//Read buffers and draw the shapes
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//glEnable(GL_TEXTURE_2D);
+	////Read buffers and draw the shapes
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_NORMAL_ARRAY);
+	////glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	////glEnable(GL_TEXTURE_2D);
 
+	//glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	////Read and Draw normals buffers
+	//if (has_normals)
+	//{
+	//	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	//	glNormalPointer(GL_FLOAT, 0, NULL);
+
+	//}
+
+
+	////Read and Draw UVS buffers
+	//if (has_uvs)
+	//{
+
+	//	if (texture != nullptr)
+	//		glBindTexture(GL_TEXTURE_2D, texture->id);
+
+	//	//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
+	//	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+	//	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	//}
+
+
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+
+	//if (gl_Int)
+	//	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+
+	//else if (gl_Short)
+	//	glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
+
+
+	////	glDisableClientState(GL_TEXTURE_2D);
+
+	//	//glBindTexture(GL_TEXTURE_2D, 0);
+	////glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glDisableClientState(GL_NORMAL_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	//Read and Draw normals buffers
-	if (has_normals)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-		glNormalPointer(GL_FLOAT, 0, NULL);
-
-	}
-
-
-	//Read and Draw UVS buffers
-	if (has_uvs)
-	{
-
-		if (texture != nullptr)
-			glBindTexture(GL_TEXTURE_2D, texture->id);
-
-		//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-	}
-
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-
-	if (gl_Int)
-		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
-
-	else if (gl_Short)
-		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
-
-
-	//	glDisableClientState(GL_TEXTURE_2D);
-
-		//glBindTexture(GL_TEXTURE_2D, 0);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
+	glDrawElements(GL_TRIANGLES, num_index*3, GL_UNSIGNED_SHORT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
-
-
 
 
 	//draw normals
@@ -202,21 +207,22 @@ void Component_Mesh::CreateMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*num_vertex * 3, vertex, GL_STATIC_DRAW);
 
+
 	//Cube Vertex definition
-	id_vertex = 0;
-	glGenBuffers(1, (GLuint*) &(id_vertex));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vertex);
+	id_index = 0;
+	glGenBuffers(1, (GLuint*) &(id_index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_index * 3, index, GL_STATIC_DRAW);
 
 	//IndexNormal
 	id_normal = 0;
-	glGenBuffers(1, &id_normal);
+	glGenBuffers(1, (GLuint*)&id_normal);
 	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
 
 	//UVs
 	id_uvs = 0;
-	glGenBuffers(1, &id_uvs);
+	glGenBuffers(1, (GLuint*) &id_uvs);
 	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
 
