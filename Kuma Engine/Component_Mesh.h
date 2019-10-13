@@ -4,20 +4,25 @@
 
 
 #include "Components.h"
+#include "par_shapes.h"
+
+enum class OBJECT_TYPE;
+struct TexData;
 
 class Component_Mesh : public Components
 {
 public:
-	Component_Mesh();
+	Component_Mesh(OBJECT_TYPE type);
 	 ~Component_Mesh();
 
-	bool Update();
-	bool Enable();
-	bool Disable();
-
+	virtual bool Update();
+	virtual bool Enable();
+	virtual bool Disable();
+	void GenerateCube();
+	void CreateMesh();
 
 public:
-
+	par_shapes_mesh_s* par_mesh = nullptr;
 
 	uint id_index = 0;
 	uint num_index = 0;
@@ -41,6 +46,12 @@ public:
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
+
+	TexData* texture = nullptr;
+
+public:
+	bool gl_Short = false;
+	bool gl_Int = false;
 };
 #endif // !MESH_COMPONENT_H
 

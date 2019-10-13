@@ -87,7 +87,11 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-	createDirtyCube();
+	//createDirtyCube();
+	for (std::vector<GameObject*>::iterator item_obj = gameObject_list.begin(); item_obj != gameObject_list.end(); ++item_obj)
+	{
+		(*item_obj)->Update();
+	}
 
 	//Draw
 	createGrid();

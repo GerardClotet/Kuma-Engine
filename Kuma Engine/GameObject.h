@@ -14,7 +14,8 @@ enum class GO_COMPONENT;
 	SPHERE,
 	CYLINDRE,
 	CAPSULE,
-	PLANE
+	PLANE,
+	IMPORTER
 
 };
 

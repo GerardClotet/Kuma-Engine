@@ -10,42 +10,22 @@ GameObject::GameObject(std::string name, OBJECT_TYPE type)
 
 	if (type == OBJECT_TYPE::CUBE)
 	{
-		
+		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
+		components.push_back(AddComponent(GO_COMPONENT::MESH));
 	}
 }
 
-//Components* GameObject::createComponents(COMP_TYPE type)
-//{
-//	switch (type)
-//	{
-//	case MESH:
-//
-//		break;
-//
-//	case NONE:
-//
-//		return nullptr;
-//		break;
-//	case TRANSFORM:
-//		break;
-//
-//	case MATERIAL:
-//		break;
-//	default:
-//		break;
-//	}
-//	switch(type)
-//	return nullptr;
-//}
+
 
 Components* GameObject::AddComponent(GO_COMPONENT type)
 {
-
+	Components* component = nullptr;
 	switch (type)
 	{
 	case GO_COMPONENT::NONE:
 		break;
 	case GO_COMPONENT::MESH:
+		component = new Component_Mesh(this->type);
 		break;
 	case GO_COMPONENT::TRANSFORM:
 		break;
@@ -53,7 +33,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 		break;
 			
 	}
-	return nullptr;
+	return component;
 }
 
 GameObject::~GameObject()
@@ -62,5 +42,9 @@ GameObject::~GameObject()
 
 bool GameObject::Update()
 {
+	for (std::vector<Components*>::iterator item_comp = components.begin(); item_comp != components.end(); ++item_comp)
+	{
+		(*item_comp)->Update();
+	}
 	return true;
 }
