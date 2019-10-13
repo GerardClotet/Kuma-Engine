@@ -19,6 +19,7 @@
 
 class GameObject;
 struct SDL_Window;
+struct aiMesh;
 enum class OBJECT_TYPE;
 
 class ModuleSceneIntro : public Module
@@ -40,6 +41,7 @@ public:
 
 	//AddGameObject
 	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
+	GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);
 	
 	GameObject* GameObjParent();
 	

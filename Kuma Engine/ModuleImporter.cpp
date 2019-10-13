@@ -8,6 +8,7 @@
 #include "Cube.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
+#include "GameObject.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -51,79 +52,79 @@ update_status ModuleImporter::PostUpdate(float dt)
 {
 
 		//Once all meshes are created, call the render function to draw all the shapes
-	for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
-	{
-		for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
-		{
+	//for (std::list<FBX*>::iterator item_fbx = fbx_list.begin(); item_fbx != fbx_list.end(); ++item_fbx)
+	//{
+	//	for (std::list<Mesh*>::iterator item_mesh = (*item_fbx)->mesh_list_fbx.begin(); item_mesh != (*item_fbx)->mesh_list_fbx.end(); ++item_mesh)
+	//	{
 
-			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)&wire_color);
-				glLineWidth(1.0f);
+	//		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+	//		{
+	//			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//			glPolygonOffset(1.0f, 0.375f); //test
+	//			glColor4fv((float*)&wire_color);
+	//			glLineWidth(1.0f);
 
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& fill_color);
+	//			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//			glColor4fv((float*)& fill_color);
 
-				(*item_mesh)->Render();
-
-
-			}
-			else if (App->ui->config_p->GetFill())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& fill_color);
-				(*item_mesh)->Render();
-
-			}
-			if (App->ui->config_p->Getwireframe())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)& wire_color);
-				glLineWidth(1.0f);
-				(*item_mesh)->Render();
-
-			}
-		}
-	}
+	//			(*item_mesh)->Render();
 
 
-	//Cube Render
-	for (auto item_mesh = mesh_cube_list.begin(); item_mesh != mesh_cube_list.end(); ++item_mesh)
-	{
-		if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)&wire_color);
-			glLineWidth(1.0f);
+	//		}
+	//		else if (App->ui->config_p->GetFill())
+	//		{
+	//			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//			glColor4fv((float*)& fill_color);
+	//			(*item_mesh)->Render();
 
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& fill_color);
+	//		}
+	//		if (App->ui->config_p->Getwireframe())
+	//		{
+	//			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//			glPolygonOffset(1.0f, 0.375f); //test
+	//			glColor4fv((float*)& wire_color);
+	//			glLineWidth(1.0f);
+	//			(*item_mesh)->Render();
 
-			(*item_mesh)->Render();
+	//		}
+	//	}
+	//}
 
 
-		}
-		else if (App->ui->config_p->GetFill())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glColor4fv((float*)& fill_color);
-			(*item_mesh)->Render();
+	////Cube Render
+	//for (auto item_mesh = mesh_cube_list.begin(); item_mesh != mesh_cube_list.end(); ++item_mesh)
+	//{
+	//	if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+	//	{
+	//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//		glPolygonOffset(1.0f, 0.375f); //test
+	//		glColor4fv((float*)&wire_color);
+	//		glLineWidth(1.0f);
 
-		}
-		if (App->ui->config_p->Getwireframe())
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			glPolygonOffset(1.0f, 0.375f); //test
-			glColor4fv((float*)& wire_color);
-			glLineWidth(1.0f);
-			(*item_mesh)->Render();
+	//		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//		glColor4fv((float*)& fill_color);
 
-		}
-	}
+	//		(*item_mesh)->Render();
+
+
+	//	}
+	//	else if (App->ui->config_p->GetFill())
+	//	{
+	//		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//		glColor4fv((float*)& fill_color);
+	//		(*item_mesh)->Render();
+
+	//	}
+	//	if (App->ui->config_p->Getwireframe())
+	//	{
+	//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//		glPolygonOffset(1.0f, 0.375f); //test
+	//		glColor4fv((float*)& wire_color);
+	//		glLineWidth(1.0f);
+	//		(*item_mesh)->Render();
+
+	//	}
+	//}
 
 
 	return UPDATE_CONTINUE;
@@ -167,90 +168,92 @@ void ModuleImporter::LoadGeometry(const char* path)
 	{
 		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			Mesh* mesh = new Mesh();
 			aiMesh* new_mesh = scene->mMeshes[i];
 
-			mesh->num_vertex = new_mesh->mNumVertices;
-			mesh->vertex = new float[mesh->num_vertex * 3];
-			memcpy(mesh->vertex, new_mesh->mVertices, sizeof(float) * mesh->num_vertex * 3);
-			LOG("New mesh with %d vertices", mesh->num_vertex);
-
-			//copy normals
-			if (new_mesh->HasNormals())
-			{
-				mesh->has_normals = true;
-				mesh->num_normal = new_mesh->mNumVertices;
-				mesh->normal = new float[mesh->num_normal * 3];
-				memcpy(mesh->normal, new_mesh->mVertices, sizeof(float) * mesh->num_normal * 3);
-				LOG("New mesh with %d normals", mesh->num_normal);
-			}
 
 
-			//copy uvs
-			for (int k = 0; k < new_mesh->GetNumUVChannels(); ++k)
-			{
-				if (new_mesh->HasTextureCoords(k)) {
+			//mesh->num_vertex = new_mesh->mNumVertices;
+			//mesh->vertex = new float[mesh->num_vertex * 3];
+			//memcpy(mesh->vertex, new_mesh->mVertices, sizeof(float) * mesh->num_vertex * 3);
+			//LOG("New mesh with %d vertices", mesh->num_vertex);
 
-					mesh->num_uvs = new_mesh->mNumVertices;
-					mesh->uvs = new float[mesh->num_uvs * 2];
-					uint j = 0;
-					for (uint i = 0; i < new_mesh->mNumVertices; ++i) {
-						mesh->has_uvs = true;
-						//there are two for each vertex
-						memcpy(&mesh->uvs[j], &new_mesh->mTextureCoords[k][i].x, sizeof(float));
-						memcpy(&mesh->uvs[j + 1], &new_mesh->mTextureCoords[k][i].y, sizeof(float));
-						j += 2;
-					}
-
-				}
-			}
-			//copy color
-			if (new_mesh->HasVertexColors(0)) //need to put a var
-			{
-				mesh->num_color = new_mesh->mNumVertices;
-				mesh->color = new float[mesh->num_color * 4];
-				uint j = 0;
-				for (uint i = 0; i < new_mesh->mNumVertices; ++i) 
-				{
-					memcpy(&mesh->color[j], &new_mesh->mColors[0][i].r, sizeof(float));
-					memcpy(&mesh->color[j + 1], &new_mesh->mColors[0][i].g, sizeof(float)); //row var needed
-					memcpy(&mesh->color[j + 2], &new_mesh->mColors[0][i].b, sizeof(float));
-					memcpy(&mesh->color[j + 3], &new_mesh->mColors[0][i].a, sizeof(float));
-					j += 4;
-				}
-			}
+			////copy normals
+			//if (new_mesh->HasNormals())
+			//{
+			//	mesh->has_normals = true;
+			//	mesh->num_normal = new_mesh->mNumVertices;
+			//	mesh->normal = new float[mesh->num_normal * 3];
+			//	memcpy(mesh->normal, new_mesh->mVertices, sizeof(float) * mesh->num_normal * 3);
+			//	LOG("New mesh with %d normals", mesh->num_normal);
+			//}
 
 
+			////copy uvs
+			//for (int k = 0; k < new_mesh->GetNumUVChannels(); ++k)
+			//{
+			//	if (new_mesh->HasTextureCoords(k)) {
 
-			//copy faces
-			if (new_mesh->HasFaces())
-			{
-				mesh->num_index = new_mesh->mNumFaces * 3;
-				mesh->index = new uint[mesh->num_index]; // assume each face is a triangle
+			//		mesh->num_uvs = new_mesh->mNumVertices;
+			//		mesh->uvs = new float[mesh->num_uvs * 2];
+			//		uint j = 0;
+			//		for (uint i = 0; i < new_mesh->mNumVertices; ++i) {
+			//			mesh->has_uvs = true;
+			//			//there are two for each vertex
+			//			memcpy(&mesh->uvs[j], &new_mesh->mTextureCoords[k][i].x, sizeof(float));
+			//			memcpy(&mesh->uvs[j + 1], &new_mesh->mTextureCoords[k][i].y, sizeof(float));
+			//			j += 2;
+			//		}
 
-				for (uint j = 0; j < new_mesh->mNumFaces; ++j)
-				{
-					if (new_mesh->mFaces[j].mNumIndices != 3) {
-						LOG("WARNING, geometry face with != 3 indices!");
-					}
-					else {
-						memcpy(&mesh->index[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
-					}
-				}
+			//	}
+			//}
+			////copy color
+			//if (new_mesh->HasVertexColors(0)) //need to put a var
+			//{
+			//	mesh->num_color = new_mesh->mNumVertices;
+			//	mesh->color = new float[mesh->num_color * 4];
+			//	uint j = 0;
+			//	for (uint i = 0; i < new_mesh->mNumVertices; ++i) 
+			//	{
+			//		memcpy(&mesh->color[j], &new_mesh->mColors[0][i].r, sizeof(float));
+			//		memcpy(&mesh->color[j + 1], &new_mesh->mColors[0][i].g, sizeof(float)); //row var needed
+			//		memcpy(&mesh->color[j + 2], &new_mesh->mColors[0][i].b, sizeof(float));
+			//		memcpy(&mesh->color[j + 3], &new_mesh->mColors[0][i].a, sizeof(float));
+			//		j += 4;
+			//	}
+			//}
 
-			}
 
 
-			mesh->gl_Int = true;
-			SaveDebugData(mesh);
+			////copy faces
+			//if (new_mesh->HasFaces())
+			//{
+			//	mesh->num_index = new_mesh->mNumFaces * 3;
+			//	mesh->index = new uint[mesh->num_index]; // assume each face is a triangle
 
-			mesh->CreateMesh();
+			//	for (uint j = 0; j < new_mesh->mNumFaces; ++j)
+			//	{
+			//		if (new_mesh->mFaces[j].mNumIndices != 3) {
+			//			LOG("WARNING, geometry face with != 3 indices!");
+			//		}
+			//		else {
+			//			memcpy(&mesh->index[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
+			//		}
+			//	}
 
-			fbx->mesh_list_fbx.push_back(mesh); //pushback of the meshes
+			//}
+
+
+			//mesh->gl_Int = true;
+			//SaveDebugData(mesh);
+
+			//mesh->CreateMesh();
+			App->scene_intro->AddGameObject("prove", OBJECT_TYPE::IMPORTER, new_mesh);
+
+			//fbx->mesh_list_fbx.push_back(mesh); //pushback of the meshes
 		
 		}
 
-		fbx_list.push_back(fbx); //pushback of the mesh list. Every FBX contains a lot of meshes
+		//fbx_list.push_back(fbx); //pushback of the mesh list. Every FBX contains a lot of meshes
 
 		aiReleaseImport(scene);
 	}

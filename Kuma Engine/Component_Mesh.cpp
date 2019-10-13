@@ -35,6 +35,11 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 	}
 }
 
+Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh)
+{
+	GenerateImported(mesh);
+}
+
 Component_Mesh::~Component_Mesh()
 {
 
@@ -103,7 +108,13 @@ bool Component_Mesh::Update()
 
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glDrawElements(GL_TRIANGLES, num_index*3, GL_UNSIGNED_SHORT, NULL);
+	
+	if (gl_Int)
+		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_INT, NULL);
+
+	else if (gl_Short)
+		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
+
 	glDisableClientState(GL_NORMAL_ARRAY);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -235,6 +246,81 @@ void Component_Mesh::GenerateSphere()
 	gl_Short = true;
 	has_normals = true;
 	CreateMesh();
+}
+
+void Component_Mesh::GenerateImported(aiMesh* new_mesh)
+{
+	num_vertex = new_mesh->mNumVertices;
+	vertex = new float[num_vertex * 3];
+	memcpy(vertex, new_mesh->mVertices, sizeof(float) * num_vertex * 3);
+	LOG("New mesh with %d vertices", num_vertex);
+
+	//copy normals
+	if (new_mesh->HasNormals())
+	{
+		has_normals = true;
+		num_normal = new_mesh->mNumVertices;
+		normal = new float[num_normal * 3];
+		memcpy(normal, new_mesh->mVertices, sizeof(float) * num_normal * 3);
+		LOG("New mesh with %d normals", num_normal);
+	}
+
+
+	//copy uvs
+	for (int k = 0; k < new_mesh->GetNumUVChannels(); ++k)
+	{
+		if (new_mesh->HasTextureCoords(k)) {
+
+			num_uvs = new_mesh->mNumVertices;
+			uvs = new float[num_uvs * 2];
+			uint j = 0;
+			for (uint i = 0; i < new_mesh->mNumVertices; ++i) {
+				has_uvs = true;
+				//there are two for each vertex
+				memcpy(&uvs[j], &new_mesh->mTextureCoords[k][i].x, sizeof(float));
+				memcpy(&uvs[j + 1], &new_mesh->mTextureCoords[k][i].y, sizeof(float));
+				j += 2;
+			}
+
+		}
+	}
+	//copy color
+	if (new_mesh->HasVertexColors(0)) //need to put a var
+	{
+		num_color = new_mesh->mNumVertices;
+		color = new float[num_color * 4];
+		uint j = 0;
+		for (uint i = 0; i < new_mesh->mNumVertices; ++i)
+		{
+			memcpy(&color[j], &new_mesh->mColors[0][i].r, sizeof(float));
+			memcpy(&color[j + 1], &new_mesh->mColors[0][i].g, sizeof(float)); //row var needed
+			memcpy(&color[j + 2], &new_mesh->mColors[0][i].b, sizeof(float));
+			memcpy(&color[j + 3], &new_mesh->mColors[0][i].a, sizeof(float));
+			j += 4;
+		}
+	}
+
+
+
+	//copy faces
+	if (new_mesh->HasFaces())
+	{
+		num_index = new_mesh->mNumFaces * 3;
+		index = new uint[num_index]; // assume each face is a triangle
+
+		for (uint j = 0; j < new_mesh->mNumFaces; ++j)
+		{
+			if (new_mesh->mFaces[j].mNumIndices != 3) {
+				LOG("WARNING, geometry face with != 3 indices!");
+			}
+			else {
+				memcpy(&index[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
+			}
+		}
+
+	}
+
+	gl_Int = true;
 }
 
 

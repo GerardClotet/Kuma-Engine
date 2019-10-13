@@ -252,6 +252,13 @@ GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
 	return goItem;
 }
 
+GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
+{
+	GameObject* goItem = new GameObject(name, type, mesh);
+	gameObject_list.push_back(goItem);
+	return goItem;
+}
+
 GameObject* ModuleSceneIntro::GameObjParent()
 {
 	GameObject* game_object_parent;

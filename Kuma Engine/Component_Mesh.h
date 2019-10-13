@@ -8,11 +8,13 @@
 
 enum class OBJECT_TYPE;
 struct TexData;
+struct aiMesh;
 
 class Component_Mesh : public Components
 {
 public:
 	Component_Mesh(OBJECT_TYPE type);
+	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh);
 	 ~Component_Mesh();
 
 	virtual bool Update();
@@ -20,6 +22,7 @@ public:
 	virtual bool Disable();
 	void GenerateCube();
 	void GenerateSphere();
+	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 
 public:

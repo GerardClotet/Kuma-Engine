@@ -17,6 +17,7 @@ class Mesh;
 class Cube;
 class vec3;
 struct Color;
+enum class OBJECT_TYPE;
 
 
 //----------------- FBX Class -----------------//
