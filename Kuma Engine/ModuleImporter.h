@@ -20,19 +20,6 @@ struct Color;
 enum class OBJECT_TYPE;
 
 
-//----------------- FBX Class -----------------//
-
-class FBX {
-public:
-	FBX() {};
-	~FBX() {};
-public:
-	std::list<Mesh*> mesh_list_fbx;
-
-};
-
-
-
 struct debug_mesh {
 
 	std::vector<float3> centers_tri; //list of triangle centers
@@ -52,7 +39,6 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
-	void CreateCube(const vec3& position, Color color);
 	aiLogStream stream;
 
 	void SaveDebugData(Mesh* mesh);
@@ -63,12 +49,9 @@ public:
 	ImVec4 vertex_normal_color = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
 	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
-	std::list<FBX*> fbx_list;
-	std::list<Cube*> mesh_cube_list;
 
 public:
 	TexData* texture;
-	Mesh* meshItem = new Mesh();
 
 private:
 	std::string dropped_file_dir;
@@ -77,14 +60,6 @@ private:
 	
 
 	std::list<debug_mesh> mesh_debug;
-	
-//private:
-//	void ImportVertex(Mesh*, aiMesh*);
-//
-//	void ImportNormals(Mesh*mesh, aiMesh*new_mesh);
-//	void ImportUVS(Mesh*mesh, aiMesh*new_mesh);
-//	void ImportVertexColors(Mesh*mesh, aiMesh*new_mesh);
-//	void ImportFaces(Mesh*mesh, aiMesh*new_mesh);
 
 };
 

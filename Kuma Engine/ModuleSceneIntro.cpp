@@ -32,9 +32,6 @@ bool ModuleSceneIntro::Init()
 	RandomFloatGenerator();
 	RandomintGenerator(5, 6);
 	
-	go_root = GameObjParent();
-
-
 	return ret;
 }
 
@@ -216,34 +213,7 @@ void ModuleSceneIntro::createDirtyCube()
 	
 }
 
-void ModuleSceneIntro::createSphere(const vec3& position, int subdivisions,  Color color)
-{
-	//glColor3f(color.r, color.g, color.b);
 
-	//Meshes mesh;
-	//par_shapes_mesh* sphere;
-	//sphere = par_shapes_create_subdivided_sphere(subdivisions);
-
-
-	//mesh.num_index = sphere->ntriangles;
-	//mesh.index = sphere->triangles;
-	//mesh.num_vertex = sphere->npoints;
-	//mesh.vertex = sphere->points;
-
-	//par_shapes_translate(sphere, position.x, position.y, position.z);
-
-	//// buffer points
-	//glGenBuffers(1, &mesh.id_vertex);
-	//glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertex);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.num_vertex * 3, mesh.vertex, GL_STATIC_DRAW);
-
-	//// buffer index
-	//glGenBuffers(1, &mesh.id_index);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_index);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_index * 3, mesh.index, GL_STATIC_DRAW);
-
-	//mesh_list.push_back(mesh);
-}
 
 GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
 {
@@ -258,14 +228,6 @@ GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type,
 	gameObject_list.push_back(goItem);
 	return goItem;
 }
-
-GameObject* ModuleSceneIntro::GameObjParent()
-{
-	GameObject* game_object_parent;
-	game_object_parent = new GameObject();
-	return game_object_parent;
-}
-
 
 
 
