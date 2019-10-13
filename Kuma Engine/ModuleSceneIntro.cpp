@@ -32,6 +32,8 @@ bool ModuleSceneIntro::Init()
 	RandomFloatGenerator();
 	RandomintGenerator(5, 6);
 	
+	go_root = GameObjParent();
+
 
 	return ret;
 }
@@ -248,6 +250,13 @@ GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
 	GameObject* goItem = new GameObject(name, type);
 	gameObject_list.push_back(goItem);
 	return goItem;
+}
+
+GameObject* ModuleSceneIntro::GameObjParent()
+{
+	GameObject* game_object_parent;
+	game_object_parent = new GameObject();
+	return game_object_parent;
 }
 
 

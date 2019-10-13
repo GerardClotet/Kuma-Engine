@@ -41,10 +41,11 @@ public:
 	//AddGameObject
 	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
 	
-
+	GameObject* GameObjParent();
 	
 public:
 	//std::list<Spherestruct*> sphere_struct_list;
+	GameObject* go_root;
 	SDL_Window* window;
 	uint my_id;
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;

@@ -5,16 +5,22 @@
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
+GameObject::GameObject()
+{
+	LOG("Game Object root");
+}
+
 GameObject::GameObject(std::string name, OBJECT_TYPE type)
 {
 	this->name = name;
 	this->type = type;
 
-	if (type == OBJECT_TYPE::CUBE)
+	if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE)
 	{
 		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
 		components.push_back(AddComponent(GO_COMPONENT::MESH));
 	}
+
 }
 
 
@@ -88,4 +94,10 @@ bool GameObject::Update()
 		
 	}
 	return true;
+}
+
+GameObject* GameObject::AddGameObject(std::string name, OBJECT_TYPE type)
+{
+	GameObject* game_object_child = new GameObject(name, type);
+	go_root
 }

@@ -362,6 +362,8 @@ void ModuleEditor::GameObjectScreen()
 
 		if (ImGui::MenuItem("Sphere"))
 		{
+			App->scene_intro->AddGameObject("sphere", OBJECT_TYPE::SPHERE);
+
 		}
 
 		if (ImGui::MenuItem("Capsule"))

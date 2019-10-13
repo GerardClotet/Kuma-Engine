@@ -19,6 +19,7 @@ public:
 	virtual bool Enable();
 	virtual bool Disable();
 	void GenerateCube();
+	void GenerateSphere();
 	void CreateMesh();
 
 public:

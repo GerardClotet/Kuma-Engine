@@ -23,10 +23,12 @@ class GameObject {
 
 
 public:
-
+	GameObject();
 	GameObject(std::string name, OBJECT_TYPE type);
 	~GameObject();
 	bool Update();
+
+	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
 
 public:
 	std::string name;
@@ -37,7 +39,7 @@ public:
 	GameObject* parent = nullptr; // to the scene invisible game object containing all gameobjects
 
 	std::vector<Components*> components;
-
+	std::vector<GameObject*> game_object_childs;
 };
 
 
