@@ -20,14 +20,6 @@ struct Color;
 enum class OBJECT_TYPE;
 
 
-struct debug_mesh {
-
-	std::vector<float3> centers_tri; //list of triangle centers
-	std::vector<float3> normals_tri; //list of triangle normals
-
-};
-
-
 class ModuleImporter : public Module
 {
 public:
@@ -40,9 +32,6 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	aiLogStream stream;
-
-	void SaveDebugData(Mesh* mesh);
-	std::list<debug_mesh> GetDebugInfo();
 	ImVec4 wire_color = ImVec4(0.7, 0.0f, 1.f, 1.0f);
 	ImVec4 fill_color = ImVec4(1.0f, 1.0f, 1.f, 1.0f);
 	ImVec4 face_normal_color = ImVec4(1.0f, 0.0f, 1.0f, 1.0f);
@@ -58,8 +47,6 @@ private:
 	SDL_Event event;
 	bool dropped_file_done = false;
 	
-
-	std::list<debug_mesh> mesh_debug;
 
 };
 

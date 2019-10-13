@@ -5,10 +5,20 @@
 
 #include "Components.h"
 #include "par_shapes.h"
+#include <vector>
+#include <list>
+#include "MathGeoLib/include/MathGeoLib.h"
 
 enum class OBJECT_TYPE;
 struct TexData;
 struct aiMesh;
+
+struct debug_mesh {
+
+	std::vector<float3> centers_tri; //list of triangle centers
+	std::vector<float3> normals_tri; //list of triangle normals
+
+};
 
 class Component_Mesh : public Components
 {
@@ -24,7 +34,7 @@ public:
 	void GenerateSphere();
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
-
+	std::list<debug_mesh> GetDebugInfo();
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
@@ -56,6 +66,9 @@ public:
 public:
 	bool gl_Short = false;
 	bool gl_Int = false;
+
+private:
+	std::list<debug_mesh> mesh_debug;
 };
 #endif // !MESH_COMPONENT_H
 
