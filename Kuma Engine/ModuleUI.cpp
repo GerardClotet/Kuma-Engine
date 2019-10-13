@@ -366,12 +366,15 @@ void ModuleEditor::GameObjectScreen()
 
 		}
 
-		if (ImGui::MenuItem("Capsule"))
+		if (ImGui::MenuItem("CONE"))
 		{
+
+			App->scene_intro->AddGameObject("cone", OBJECT_TYPE::CONE);
 		}
 
 		if (ImGui::MenuItem("Cylinder"))
 		{
+			App->scene_intro->AddGameObject("cylinder", OBJECT_TYPE::CYLINDER);
 		}
 
 		if (ImGui::MenuItem("Plane"))

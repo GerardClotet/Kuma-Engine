@@ -20,6 +20,9 @@ public:
 	virtual bool Disable();
 	void GenerateCube();
 	void GenerateSphere();
+	void GenerateCone();
+	void GenerateCylinder();
+	void GenerateDodecaedron();
 	void CreateMesh();
 
 public:

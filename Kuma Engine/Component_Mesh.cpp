@@ -21,9 +21,11 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 	case OBJECT_TYPE::SPHERE:
 		GenerateSphere();
 		break;
-	case OBJECT_TYPE::CYLINDRE:
+	case OBJECT_TYPE::CYLINDER:
+		GenerateCylinder();
 		break;
-	case OBJECT_TYPE::CAPSULE:
+	case OBJECT_TYPE::CONE:
+		GenerateCone();
 		break;
 	case OBJECT_TYPE::PLANE:
 		break;
@@ -34,6 +36,7 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 		break;
 	}
 }
+
 
 Component_Mesh::~Component_Mesh()
 {
@@ -217,6 +220,79 @@ void Component_Mesh::GenerateSphere()
 {
 	par_mesh = par_shapes_create_subdivided_sphere(3);
 	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_unweld(par_mesh, true);
+	par_shapes_compute_normals(par_mesh);
+
+	num_vertex = par_mesh->npoints;
+	vertex = par_mesh->points;
+
+	num_index = par_mesh->ntriangles;
+	index = (uint*)par_mesh->triangles;
+
+	num_normal = par_mesh->npoints;
+	normal = par_mesh->normals;
+
+	num_uvs = par_mesh->npoints;
+	uvs = new float[num_uvs * 2];
+
+	gl_Short = true;
+	has_normals = true;
+	CreateMesh();
+}
+
+void Component_Mesh::GenerateCone()
+{
+	par_mesh = par_shapes_create_cone(10,10);
+	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_unweld(par_mesh, true);
+	par_shapes_compute_normals(par_mesh);
+
+	num_vertex = par_mesh->npoints;
+	vertex = par_mesh->points;
+
+	num_index = par_mesh->ntriangles;
+	index = (uint*)par_mesh->triangles;
+
+	num_normal = par_mesh->npoints;
+	normal = par_mesh->normals;
+
+	num_uvs = par_mesh->npoints;
+	uvs = new float[num_uvs * 2];
+
+	gl_Short = true;
+	has_normals = true;
+	CreateMesh();
+
+}
+
+void Component_Mesh::GenerateCylinder()
+{
+	par_mesh = par_shapes_create_cylinder(100,10);
+	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_unweld(par_mesh, true);
+	par_shapes_compute_normals(par_mesh);
+
+	num_vertex = par_mesh->npoints;
+	vertex = par_mesh->points;
+
+	num_index = par_mesh->ntriangles;
+	index = (uint*)par_mesh->triangles;
+
+	num_normal = par_mesh->npoints;
+	normal = par_mesh->normals;
+
+	num_uvs = par_mesh->npoints;
+	uvs = new float[num_uvs * 2];
+
+	gl_Short = true;
+	has_normals = true;
+	CreateMesh();
+}
+
+void Component_Mesh::GenerateDodecaedron()
+{
+	par_mesh = par_shapes_create_dodecahedron();
+	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
 	par_shapes_unweld(par_mesh, true);
 	par_shapes_compute_normals(par_mesh);
 
