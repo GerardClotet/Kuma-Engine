@@ -10,6 +10,7 @@
 
 Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 {
+	comp_type = GO_COMPONENT::MESH;
 	switch (type)
 	{
 	case OBJECT_TYPE::NONE:
@@ -88,10 +89,22 @@ bool Component_Mesh::Update()
 	//glDisableClientState(GL_VERTEX_ARRAY);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_NORMAL_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+
+
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
 	glDrawElements(GL_TRIANGLES, num_index*3, GL_UNSIGNED_SHORT, NULL);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 
@@ -195,6 +208,7 @@ void Component_Mesh::GenerateCube()
 	uvs = new float[num_uvs * 2];
 
 	gl_Short = true;
+	has_normals = true;
 	CreateMesh();
 }
 
