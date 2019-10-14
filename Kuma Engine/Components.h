@@ -2,9 +2,12 @@
 #ifndef _COMPONENTS_H__
 #define _COMPONENTS_H__
 
+#include <string>
+
 class GameObject;
 class Component_Material;
 struct TexData;
+
 
 typedef unsigned int uint;
 
@@ -25,6 +28,8 @@ public:
 	virtual bool Update();
 	virtual bool Enable();
 	virtual bool Disable();
+
+	virtual void ReadTexture(std::string file);
 
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;

@@ -23,6 +23,9 @@ bool Components::Disable()
 {
 	return enabled = false;
 }
+void Components::ReadTexture(std::string file)
+{
+}
 //#include "Globals.h"
 //#include "Components.h"
 //
