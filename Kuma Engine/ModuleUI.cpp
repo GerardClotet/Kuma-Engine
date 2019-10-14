@@ -366,7 +366,7 @@ void ModuleEditor::GameObjectScreen()
 
 		}
 
-		if (ImGui::MenuItem("CONE"))
+		if (ImGui::MenuItem("Cone"))
 		{
 
 			App->scene_intro->AddGameObject("cone", OBJECT_TYPE::CONE);
@@ -377,10 +377,20 @@ void ModuleEditor::GameObjectScreen()
 			App->scene_intro->AddGameObject("cylinder", OBJECT_TYPE::CYLINDER);
 		}
 
+		if (ImGui::MenuItem("Dodecahedron"))
+		{
+			App->scene_intro->AddGameObject("dodecahedron", OBJECT_TYPE::DODECAHEDRON);
+		}
 		if (ImGui::MenuItem("Plane"))
 		{
-		}
+			App->scene_intro->AddGameObject("plane", OBJECT_TYPE::PLANE);
 
+		}
+		if (ImGui::MenuItem("Torus"))
+		{
+			App->scene_intro->AddGameObject("torus", OBJECT_TYPE::TORUS);
+
+		}
 		ImGui::EndMenu();
 
 	}

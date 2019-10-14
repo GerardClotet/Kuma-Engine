@@ -34,7 +34,9 @@ public:
 	void GenerateSphere();
 	void GenerateCone();
 	void GenerateCylinder();
-	void GenerateDodecaedron();
+	void GenerateDodecahedron();
+	void GeneratePlane();
+	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();

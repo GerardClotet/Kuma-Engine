@@ -17,7 +17,8 @@ struct aiMesh;
 	CONE,
 	PLANE,
 	IMPORTER,
-	DODECAEDHRON
+	DODECAHEDRON,
+	TORUS
 
 };
 

@@ -29,10 +29,17 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 		GenerateCone();
 		break;
 	case OBJECT_TYPE::PLANE:
+		GeneratePlane();
 		break;
 	case OBJECT_TYPE::IMPORTER:
 		//gl_int=true;
 		break;
+	case OBJECT_TYPE::DODECAHEDRON:
+		GenerateDodecahedron();
+		break;
+
+	case OBJECT_TYPE::TORUS:
+		GenerateTorus();
 	default:
 		break;
 	}
@@ -387,10 +394,58 @@ void Component_Mesh::GenerateCylinder()
 	CreateMesh();
 }
 
-void Component_Mesh::GenerateDodecaedron()
+void Component_Mesh::GenerateDodecahedron()
 {
 	par_mesh = par_shapes_create_dodecahedron();
 	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
+	par_shapes_unweld(par_mesh, true);
+	par_shapes_compute_normals(par_mesh);
+
+	num_vertex = par_mesh->npoints;
+	vertex = par_mesh->points;
+
+	num_index = par_mesh->ntriangles;
+	index = (uint*)par_mesh->triangles;
+
+	num_normal = par_mesh->npoints;
+	normal = par_mesh->normals;
+
+	num_uvs = par_mesh->npoints;
+	uvs = new float[num_uvs * 2];
+
+	gl_Short = true;
+	has_normals = true;
+	CreateMesh();
+
+}
+
+void Component_Mesh::GeneratePlane()
+{
+	par_mesh = par_shapes_create_plane(10,1);
+	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
+	par_shapes_unweld(par_mesh, true);
+	par_shapes_compute_normals(par_mesh);
+
+	num_vertex = par_mesh->npoints;
+	vertex = par_mesh->points;
+
+	num_index = par_mesh->ntriangles;
+	index = (uint*)par_mesh->triangles;
+
+	num_normal = par_mesh->npoints;
+	normal = par_mesh->normals;
+
+	num_uvs = par_mesh->npoints;
+	uvs = new float[num_uvs * 2];
+
+	gl_Short = true;
+	has_normals = true;
+	CreateMesh();
+}
+void Component_Mesh::GenerateTorus()
+{
+	par_mesh = par_shapes_create_torus(10, 10,1); //slices & stacks need to be more than 3 to create a torus radius bewteen 0.1 && 1
+	//par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
 	par_shapes_unweld(par_mesh, true);
 	par_shapes_compute_normals(par_mesh);
 
