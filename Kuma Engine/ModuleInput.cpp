@@ -188,7 +188,7 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 				{
 					if ((*item_com)->comp_type == GO_COMPONENT::MATERIAL)
 					{
-						
+						(*item_com)->texture = App->texture->LoadTexture(file_decider.c_str());
 					}
 				}
 			}

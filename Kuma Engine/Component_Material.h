@@ -3,7 +3,7 @@
 
 #include "Components.h"
 
-struct TexData;
+
 
 class Component_Material :public Components 
 {
@@ -16,8 +16,7 @@ public:
 	bool Enable();
 	bool Disable();
 
-public:
-	TexData* texture = nullptr;
+	
 };
 
 

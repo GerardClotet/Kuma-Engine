@@ -4,6 +4,7 @@
 
 class GameObject;
 class Component_Material;
+struct TexData;
 
 typedef unsigned int uint;
 
@@ -28,7 +29,7 @@ public:
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;
 	GameObject* my_GameObject = nullptr;
-
+	TexData* texture = nullptr;
 	bool enabled = true;
 };
 #endif // !_COMPONENTS_H__

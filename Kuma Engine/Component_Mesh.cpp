@@ -1,10 +1,9 @@
 #include "Component_Mesh.h"
-#include "glew-2.1.0/include/GL/glew.h"
 #include "GameObject.h"
 #include "Application.h"
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
-#include "ModuleTexture.h"
+
 #include "Cube.h"
 
 
