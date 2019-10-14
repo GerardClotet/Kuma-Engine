@@ -31,6 +31,11 @@ public:
 	bool Disable();
 	void GenerateCube();
 	void GenerateSphere();
+	void GenerateCone();
+	void GenerateCylinder();
+	void GenerateDodecahedron();
+	void GeneratePlane();
+	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();

@@ -16,11 +16,11 @@ GameObject::GameObject(std::string name, OBJECT_TYPE type)
 	this->name = name;
 	this->type = type;
 
-	if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE)
-	{
+	//if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE || type == OBJECT_TYPE::CONE || type == OBJECT_TYPE::CYLINDER || type ==  OBJECT_TYPE::DODECAHEDRON)
+	//{
 		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
 		components.push_back(AddComponent(GO_COMPONENT::MESH));
-	}
+	//}
 
 }
 
@@ -121,5 +121,4 @@ bool GameObject::Update()
 	}
 	return true;
 }
-
 
