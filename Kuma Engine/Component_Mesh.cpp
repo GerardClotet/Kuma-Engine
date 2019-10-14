@@ -71,16 +71,16 @@ bool Component_Mesh::Update()
 
 
 	//Read and Draw UVS buffers
-	if (has_uvs)
-	{
-		if (texture != nullptr)
-			glBindTexture(GL_TEXTURE_2D, texture->id);
+	//if (has_uvs)
+	//{
+	//	if (texture != nullptr)
+	//		glBindTexture(GL_TEXTURE_2D, texture->id);
 
-		//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	//	//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
+	//	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+	//	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	}
+	//}
 
 
 

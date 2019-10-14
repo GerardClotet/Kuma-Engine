@@ -10,7 +10,6 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 
 enum class OBJECT_TYPE;
-struct TexData;
 struct aiMesh;
 
 struct debug_mesh {
@@ -27,9 +26,9 @@ public:
 	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh);
 	 ~Component_Mesh();
 
-	virtual bool Update();
-	virtual bool Enable();
-	virtual bool Disable();
+	bool Update();
+	bool Enable();
+	bool Disable();
 	void GenerateCube();
 	void GenerateSphere();
 	void GenerateImported(aiMesh* mesh);
@@ -61,8 +60,6 @@ public:
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
-
-	TexData* texture = nullptr;
 
 public:
 	bool gl_Short = false;

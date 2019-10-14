@@ -188,7 +188,6 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-
     <ClCompile Include="GameObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -196,7 +195,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Components.cpp">
-
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Component_Material.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -620,14 +621,16 @@
     <ClInclude Include="Cube.h">
       <Filter>Objects</Filter>
     </ClInclude>
-
     <ClInclude Include="GameObject.h">
-    <Filter>Objects</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Components.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Component_Mesh.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Component_Material.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
