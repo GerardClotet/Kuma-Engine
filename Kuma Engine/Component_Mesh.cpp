@@ -1,15 +1,18 @@
 #include "Component_Mesh.h"
 #include "GameObject.h"
+#include "Component_Material.h"
 #include "Application.h"
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
+#include "ModuleTexture.h"
 
 #include "Cube.h"
 
 
-Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
+Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()
 {
 	this->type = type;
+	this->gameObject_Item = obj;
 	comp_type = GO_COMPONENT::MESH;
 	switch (type)
 	{
@@ -44,10 +47,11 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 	}
 }
 
-Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh)
+Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh, GameObject* obj)
 {
 	comp_type = GO_COMPONENT::MESH;
 	this->type = type;
+	this->gameObject_Item = obj;
 	GenerateImported(mesh);
 }
 
@@ -60,8 +64,8 @@ bool Component_Mesh::Update()
 	//Read buffers and draw the shapes
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	//glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 
@@ -79,16 +83,20 @@ bool Component_Mesh::Update()
 
 
 	//Read and Draw UVS buffers
-	//if (has_uvs)
-	//{
-	//	if (texture != nullptr)
-	//		glBindTexture(GL_TEXTURE_2D, texture->id);
+	if (has_uvs)
+	{
+		if (gameObject_Item->material && gameObject_Item->material->setTexture)
+		{
+			text = gameObject_Item->material->GetTexture();
+		}
+		if (text != nullptr)
+			glBindTexture(GL_TEXTURE_2D, text->id);
 
-	//	//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
-	//	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
-	//	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		//glGenerateMipmap(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	//}
+	}
 
 
 
@@ -100,10 +108,10 @@ bool Component_Mesh::Update()
 		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
 
 
-	//	glDisableClientState(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_2D);
 
-		//glBindTexture(GL_TEXTURE_2D, 0);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -235,6 +243,7 @@ void Component_Mesh::GenerateCube()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 
 	CreateMesh();
 }
@@ -260,6 +269,7 @@ void Component_Mesh::GenerateSphere()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	
 	CreateMesh();
 }
@@ -365,6 +375,7 @@ void Component_Mesh::GenerateCone()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	CreateMesh();
 
 }
@@ -390,6 +401,7 @@ void Component_Mesh::GenerateCylinder()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	CreateMesh();
 }
 
@@ -414,6 +426,7 @@ void Component_Mesh::GenerateDodecahedron()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	CreateMesh();
 
 }
@@ -439,6 +452,7 @@ void Component_Mesh::GeneratePlane()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	CreateMesh();
 }
 void Component_Mesh::GenerateTorus()
@@ -462,6 +476,7 @@ void Component_Mesh::GenerateTorus()
 
 	gl_Short = true;
 	has_normals = true;
+	has_uvs = true;
 	CreateMesh();
 }
 

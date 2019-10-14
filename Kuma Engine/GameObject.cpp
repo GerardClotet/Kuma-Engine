@@ -45,19 +45,18 @@ GameObject::GameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
 
 Components* GameObject::AddComponent(GO_COMPONENT type)
 {
-	Components* component = nullptr;
 	switch (type)
 	{
 	case GO_COMPONENT::NONE:
 		break;
 	case GO_COMPONENT::MESH:
-		component = new Component_Mesh(this->type);
+		component = new Component_Mesh(this->type, this);
 		break;
 	case GO_COMPONENT::TRANSFORM:
 		break;
 	case GO_COMPONENT::MATERIAL:
-		component = new Component_Material();
-		components.push_back(component);
+		material = new Component_Material(this);
+		components.push_back(material);
 		break;
 			
 	}
@@ -66,9 +65,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
 {
-	Components* component = nullptr;
-
-	component = new Component_Mesh(this->type, mesh);
+	component = new Component_Mesh(this->type, mesh, this);
 		
 	return component;
 }

@@ -42,6 +42,7 @@ public:
 
 	GameObject* parent = nullptr; // to the scene invisible game object containing all gameobjects
 	Component_Material* material = nullptr;
+	Components* component = nullptr;
 
 	std::vector<Components*> components;
 	std::vector<GameObject*> game_object_childs;

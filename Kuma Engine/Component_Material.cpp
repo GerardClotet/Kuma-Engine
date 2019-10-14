@@ -5,8 +5,9 @@
 
 
 
-Component_Material::Component_Material()
+Component_Material::Component_Material(GameObject* obj)
 {
+	this->gameObject_Item = obj;
 	comp_type = GO_COMPONENT::MATERIAL;
 }
 
@@ -16,15 +17,6 @@ Component_Material::~Component_Material()
 
 bool Component_Material::Update()
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
-
-	if (texture != nullptr)
-		glBindTexture(GL_TEXTURE_2D, texture->id);
-
-	glDisableClientState(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	return true;
 }
 
@@ -36,4 +28,16 @@ bool Component_Material::Enable()
 bool Component_Material::Disable()
 {
 	return true;
+}
+
+void Component_Material::ReadTexture(std::string file)
+{
+	this->texture = App->texture->LoadTexture(file.c_str());
+	setTexture = true;
+}
+
+TexData * Component_Material::GetTexture()
+{
+	if (this->texture != nullptr)
+		return this->texture;
 }

@@ -29,13 +29,13 @@ public:
 	virtual bool Enable();
 	virtual bool Disable();
 
-	virtual void ReadTexture(std::string file);
 
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;
 	GameObject* my_GameObject = nullptr;
-	TexData* texture = nullptr;
+	/*TexData* texture = nullptr;*/
 	bool enabled = true;
+	bool setTexture = false;
 };
 #endif // !_COMPONENTS_H__
 

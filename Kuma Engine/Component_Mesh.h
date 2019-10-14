@@ -10,7 +10,9 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 
 enum class OBJECT_TYPE;
+class GameObject;
 struct aiMesh;
+struct TexData;
 
 struct debug_mesh {
 
@@ -22,8 +24,8 @@ struct debug_mesh {
 class Component_Mesh : public Components
 {
 public:
-	Component_Mesh(OBJECT_TYPE type);
-	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh);
+	Component_Mesh(OBJECT_TYPE type, GameObject* obj);
+	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh, GameObject* obj);
 	 ~Component_Mesh();
 
 	bool Update();
@@ -70,9 +72,13 @@ public:
 	bool gl_Short = false;
 	bool gl_Int = false;
 
+public:
+	GameObject* gameObject_Item = nullptr;
+
 private:
 	std::list<debug_mesh> mesh_debug;
 	OBJECT_TYPE type;
+	TexData* text = nullptr;
 };
 #endif // !MESH_COMPONENT_H
 
