@@ -3,6 +3,7 @@
 #define _COMPONENTS_H__
 
 class GameObject;
+class Component_Material;
 
 typedef unsigned int uint;
 

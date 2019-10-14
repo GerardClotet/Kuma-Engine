@@ -2,6 +2,7 @@
 
 Component_Material::Component_Material()
 {
+	comp_type = GO_COMPONENT::MATERIAL;
 }
 
 Component_Material::~Component_Material()

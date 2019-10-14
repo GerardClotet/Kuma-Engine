@@ -2,6 +2,7 @@
 #include "ModuleSceneIntro.h"
 #include "Components.h"
 #include "Component_Mesh.h"
+#include "Component_Material.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
@@ -55,6 +56,8 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 	case GO_COMPONENT::TRANSFORM:
 		break;
 	case GO_COMPONENT::MATERIAL:
+		component = new Component_Material();
+		components.push_back(component);
 		break;
 			
 	}
