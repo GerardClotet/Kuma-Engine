@@ -23,6 +23,7 @@ bool Components::Disable()
 {
 	return enabled = false;
 }
+
 //#include "Globals.h"
 //#include "Components.h"
 //

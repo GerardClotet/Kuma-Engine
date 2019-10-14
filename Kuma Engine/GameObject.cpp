@@ -2,6 +2,7 @@
 #include "ModuleSceneIntro.h"
 #include "Components.h"
 #include "Component_Mesh.h"
+#include "Component_Material.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
@@ -51,18 +52,20 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,std::string name)
 
 Components* GameObject::AddComponent(GO_COMPONENT type)
 {
-	Components* component = nullptr;
 	switch (type)
 	{
 	case GO_COMPONENT::NONE:
 		break;
 	case GO_COMPONENT::MESH:
-		component = new Component_Mesh(this->type);
+		component = new Component_Mesh(this->type, this);
 		components.push_back(component);
+
 		break;
 	case GO_COMPONENT::TRANSFORM:
 		break;
 	case GO_COMPONENT::MATERIAL:
+		material = new Component_Material(this);
+		components.push_back(material);
 		break;
 			
 	}

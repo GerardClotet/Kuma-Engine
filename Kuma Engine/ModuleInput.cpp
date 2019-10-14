@@ -4,6 +4,9 @@
 #include "ModuleImporter.h"
 #include "ModuleTexture.h"
 #include "ModuleRenderer3D.h"
+#include "GameObject.h"
+#include "Component_Material.h"
+#include "ModuleSceneIntro.h"
 
 #include "ImGui/Impl/imgui_impl_sdl.h"
 
@@ -176,6 +179,21 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 				(*item_mesh)->texture = App->texture->LoadTexture(file_decider.c_str());
 			}
 		}*/
+		for (std::vector<GameObject*>::iterator item = App->scene_intro->gameObject_list.begin(); item != App->scene_intro->gameObject_list.end(); ++item)
+		{
+			if ((*item)->name == "prove")
+			{
+				(*item)->AddComponent(GO_COMPONENT::MATERIAL);
+				for (std::vector<Components*>::iterator item_com = (*item)->components.begin(); item_com != (*item)->components.end(); ++item_com)
+				{
+					if ((*item_com)->comp_type == GO_COMPONENT::MATERIAL)
+					{
+						//(*item)->material->texture = App->texture->LoadTexture(file_decider.c_str());
+						(*item)->material->ReadTexture(file_decider.c_str());
+					}
+				}
+			}
+		}
 	}
 
 	

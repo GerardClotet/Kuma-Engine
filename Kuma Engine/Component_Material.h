@@ -5,19 +5,25 @@
 
 struct TexData;
 
+class GameObject;
+
 class Component_Material :public Components 
 {
 public:
-	Component_Material();
+	Component_Material(GameObject* obj);
 	~Component_Material();
 
 
 	bool Update();
 	bool Enable();
 	bool Disable();
+	void ReadTexture(std::string file);
+	TexData* GetTexture();
+
+	TexData* texture = nullptr;
 
 public:
-	TexData* texture = nullptr;
+	GameObject* gameObject_Item = nullptr;
 };
 
 
