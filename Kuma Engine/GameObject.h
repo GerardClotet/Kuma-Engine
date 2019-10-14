@@ -7,6 +7,7 @@
 
 class Components;
 enum class GO_COMPONENT;
+struct aiMesh;
 
  enum class OBJECT_TYPE {
 	NONE,
@@ -26,16 +27,16 @@ class GameObject {
 public:
 	GameObject();
 	GameObject(std::string name, OBJECT_TYPE type);
+	GameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);
 	~GameObject();
 	bool Update();
-
-	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
 
 public:
 	std::string name;
 	OBJECT_TYPE type = OBJECT_TYPE::NONE;
 
 	Components* AddComponent(GO_COMPONENT type);
+	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh);
 
 	GameObject* parent = nullptr; // to the scene invisible game object containing all gameobjects
 

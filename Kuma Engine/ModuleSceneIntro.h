@@ -19,6 +19,7 @@
 
 class GameObject;
 struct SDL_Window;
+struct aiMesh;
 enum class OBJECT_TYPE;
 
 class ModuleSceneIntro : public Module
@@ -36,16 +37,14 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createGrid();
 	void createDirtyCube();
-	void createSphere(const vec3& position, int subdivisions,  Color color = { 255,255,255,255 });
 
 	//AddGameObject
 	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
+	GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);
 	
-	GameObject* GameObjParent();
 	
 public:
 	//std::list<Spherestruct*> sphere_struct_list;
-	GameObject* go_root;
 	SDL_Window* window;
 	uint my_id;
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;

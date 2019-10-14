@@ -5,6 +5,7 @@
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
+
 GameObject::GameObject()
 {
 	LOG("Game Object root");
@@ -22,6 +23,22 @@ GameObject::GameObject(std::string name, OBJECT_TYPE type)
 	}
 
 }
+
+GameObject::GameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
+{
+	this->name = name;
+	this->type = type;
+
+	if (type == OBJECT_TYPE::IMPORTER)
+	{
+		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
+		components.push_back(AddComponent(GO_COMPONENT::MESH, mesh));
+	}
+
+}
+
+
+
 
 
 
@@ -41,6 +58,15 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 		break;
 			
 	}
+	return component;
+}
+
+Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
+{
+	Components* component = nullptr;
+
+	component = new Component_Mesh(this->type, mesh);
+		
 	return component;
 }
 

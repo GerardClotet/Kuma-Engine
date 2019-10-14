@@ -123,31 +123,31 @@ void Mesh::Render()
 	//draw face normal
 	if (App->ui->show_face_normal)
 	{
-		std::list<debug_mesh> mesh_debug = App->importer->GetDebugInfo();
-		std::list<debug_mesh>::iterator deb = mesh_debug.begin();
+		//std::list<debug_mesh> mesh_debug = App->importer->GetDebugInfo();
+		//std::list<debug_mesh>::iterator deb = mesh_debug.begin();
 
-		while (deb != mesh_debug.end())
-		{
-			//Check if face normals is activated
-			if (App->ui->show_face_normal) {
-				glPointSize(2.5f);
-				glBegin(GL_LINES);
+		//while (deb != mesh_debug.end())
+		//{
+		//	//Check if face normals is activated
+		//	if (App->ui->show_face_normal) {
+		//		glPointSize(2.5f);
+		//		glBegin(GL_LINES);
 
-				glColor4fv((float*)& App->importer->face_normal_color);
+		//		glColor4fv((float*)& App->importer->face_normal_color);
 
-				for (int i = 0; i < deb->normals_tri.size(); i++) 
-				{
-					//Draw the normals
-					glVertex3f(deb->centers_tri[i].x, deb->centers_tri[i].y, deb->centers_tri[i].z);
-					glVertex3f(deb->centers_tri[i].x + deb->normals_tri[i].x, deb->centers_tri[i].y + deb->normals_tri[i].y,
-								deb->centers_tri[i].z + deb->normals_tri[i].z);
-				}
-				glColor3f(255.0f, 255.0f, 255.0f); 
-				glEnd();
-			}
+		//		for (int i = 0; i < deb->normals_tri.size(); i++) 
+		//		{
+		//			//Draw the normals
+		//			glVertex3f(deb->centers_tri[i].x, deb->centers_tri[i].y, deb->centers_tri[i].z);
+		//			glVertex3f(deb->centers_tri[i].x + deb->normals_tri[i].x, deb->centers_tri[i].y + deb->normals_tri[i].y,
+		//						deb->centers_tri[i].z + deb->normals_tri[i].z);
+		//		}
+		//		glColor3f(255.0f, 255.0f, 255.0f); 
+		//		glEnd();
+		//	}
 
-			deb++;
-		}
+		//	deb++;
+		//}
 
 	}
 
