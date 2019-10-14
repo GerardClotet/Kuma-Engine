@@ -76,7 +76,7 @@ Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
 {
 	Components* component = nullptr;
 
-	component = new Component_Mesh(this->type, mesh);
+	component = new Component_Mesh(this->type, mesh,this);
 	components.push_back(component);
 	return component;
 }

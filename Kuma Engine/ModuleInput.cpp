@@ -179,21 +179,21 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 				(*item_mesh)->texture = App->texture->LoadTexture(file_decider.c_str());
 			}
 		}*/
-		for (std::vector<GameObject*>::iterator item = App->scene_intro->gameObject_list.begin(); item != App->scene_intro->gameObject_list.end(); ++item)
-		{
-			if ((*item)->name == "prove")
-			{
-				(*item)->AddComponent(GO_COMPONENT::MATERIAL);
-				for (std::vector<Components*>::iterator item_com = (*item)->components.begin(); item_com != (*item)->components.end(); ++item_com)
-				{
-					if ((*item_com)->comp_type == GO_COMPONENT::MATERIAL)
-					{
-						//(*item)->material->texture = App->texture->LoadTexture(file_decider.c_str());
-						(*item)->material->ReadTexture(file_decider.c_str());
-					}
-				}
-			}
-		}
+		//for (std::vector<GameObject*>::iterator item = App->scene_intro->gameObject_list.begin(); item != App->scene_intro->gameObject_list.end(); ++item)
+		//{
+		//	if ((*item)->name == "prove")
+		//	{
+		//		(*item)->AddComponent(GO_COMPONENT::MATERIAL);
+		//		for (std::vector<Components*>::iterator item_com = (*item)->components.begin(); item_com != (*item)->components.end(); ++item_com)
+		//		{
+		//			if ((*item_com)->comp_type == GO_COMPONENT::MATERIAL)
+		//			{
+		//				//(*item)->material->texture = App->texture->LoadTexture(file_decider.c_str());
+		//				(*item)->material->ReadTexture(file_decider.c_str());
+		//			}
+		//		}
+		//	}
+		//}
 	}
 
 	
