@@ -12,12 +12,12 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
-
 class Mesh;
 class Cube;
 class vec3;
 struct Color;
 enum class OBJECT_TYPE;
+enum class GO_COMPONENT;
 
 
 class ModuleImporter : public Module
@@ -26,6 +26,7 @@ public:
 	ModuleImporter(Application* app, bool start_enabled = true);
 	~ModuleImporter();
 	void LoadGeometry(const char* path);
+	void LoadNode(const aiScene* importfile, aiNode* file_node, const char* name);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
@@ -41,7 +42,6 @@ public:
 
 public:
 	TexData* texture;
-
 private:
 	std::string dropped_file_dir;
 	SDL_Event event;

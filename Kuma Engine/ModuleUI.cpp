@@ -13,7 +13,7 @@
 #include "ImGui/examples/imgui_impl_sdl.h"
 #include <list>
 #include "GameObject.h"
-
+#include "Components.h"
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -347,6 +347,10 @@ void ModuleEditor::FileScreen()
 
 void ModuleEditor::GameObjectScreen()
 {
+	if (ImGui::MenuItem("Inspector"))
+	{
+		inspector_window = (inspector_window == false) ? true : false;
+	}
 	if (ImGui::MenuItem("Create Empty"))
 	{
 
@@ -357,38 +361,53 @@ void ModuleEditor::GameObjectScreen()
 
 		if (ImGui::MenuItem("Cube"))
 		{
-			App->scene_intro->AddGameObject("cube", OBJECT_TYPE::CUBE);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CUBE, "cube");
+			go->AddComponent(GO_COMPONENT::MESH);
 		}
 
 		if (ImGui::MenuItem("Sphere"))
 		{
-			App->scene_intro->AddGameObject("sphere", OBJECT_TYPE::SPHERE);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::SPHERE, "sphere");
+			go->AddComponent(GO_COMPONENT::MESH);
+			
 
 		}
 
 		if (ImGui::MenuItem("Cone"))
 		{
 
-			App->scene_intro->AddGameObject("cone", OBJECT_TYPE::CONE);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CONE, "cone");
+			go->AddComponent(GO_COMPONENT::MESH);
 		}
 
 		if (ImGui::MenuItem("Cylinder"))
 		{
-			App->scene_intro->AddGameObject("cylinder", OBJECT_TYPE::CYLINDER);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CYLINDER, "cylinder");
+			go->AddComponent(GO_COMPONENT::MESH);
 		}
 
 		if (ImGui::MenuItem("Dodecahedron"))
 		{
-			App->scene_intro->AddGameObject("dodecahedron", OBJECT_TYPE::DODECAHEDRON);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::DODECAHEDRON, "dodecahedron");
+			go->AddComponent(GO_COMPONENT::MESH);
 		}
 		if (ImGui::MenuItem("Plane"))
 		{
-			App->scene_intro->AddGameObject("plane", OBJECT_TYPE::PLANE);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::PLANE, "plane");
+			go->AddComponent(GO_COMPONENT::MESH);
 
 		}
 		if (ImGui::MenuItem("Torus"))
 		{
-			App->scene_intro->AddGameObject("torus", OBJECT_TYPE::TORUS);
+			GameObject* go = nullptr;
+			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::TORUS, "torus");
+			go->AddComponent(GO_COMPONENT::MESH);
 
 		}
 		ImGui::EndMenu();

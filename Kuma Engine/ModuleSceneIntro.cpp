@@ -38,6 +38,8 @@ bool ModuleSceneIntro::Init()
 bool ModuleSceneIntro::Start()
 {
 
+	root = new GameObject(nullptr,OBJECT_TYPE::NONE, "root"); //empty gameobject containig  all game objects
+
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
@@ -79,7 +81,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	
-	
+	UpdateGameObject(root);
 
 	return UPDATE_CONTINUE;
 }
@@ -87,10 +89,10 @@ update_status ModuleSceneIntro::Update(float dt)
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	//createDirtyCube();
-	for (std::vector<GameObject*>::iterator item_obj = gameObject_list.begin(); item_obj != gameObject_list.end(); ++item_obj)
-	{
-		(*item_obj)->Update();
-	}
+	//for (std::vector<GameObject*>::iterator item_obj = gameObject_list.begin(); item_obj != gameObject_list.end(); ++item_obj)
+	//{
+	//	(*item_obj)->Update();
+	//}
 
 	//Draw
 	createGrid();
@@ -215,18 +217,38 @@ void ModuleSceneIntro::createDirtyCube()
 
 
 
-GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
+//GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
+//{
+//	GameObject* goItem = new GameObject(name, type);
+//	gameObject_list.push_back(goItem);
+//	return goItem;
+//}
+//
+//GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
+//{
+//	GameObject* goItem = new GameObject(name, type, mesh);
+//	gameObject_list.push_back(goItem);
+//	return goItem;
+//}
+
+GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE type,std::string name)
 {
-	GameObject* goItem = new GameObject(name, type);
-	gameObject_list.push_back(goItem);
-	return goItem;
+	if(parent == nullptr)
+		parent = root;
+
+	GameObject* game_obj = new GameObject(parent,type,name);
+	return game_obj;
 }
 
-GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
+void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 {
-	GameObject* goItem = new GameObject(name, type, mesh);
-	gameObject_list.push_back(goItem);
-	return goItem;
+
+	parent->Update();
+	std::vector<GameObject*>::iterator iter = parent->game_object_childs.begin();
+	for (iter; iter != parent->game_object_childs.end(); ++iter)
+	{
+		UpdateGameObject((*iter));
+	}
 }
 
 

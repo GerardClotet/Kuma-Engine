@@ -39,10 +39,15 @@ public:
 	void createDirtyCube();
 
 	//AddGameObject
-	GameObject* AddGameObject(std::string name, OBJECT_TYPE type);
-	GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);
+	//GameObject* AddGameObject(std::string name, OBJECT_TYPE type); // not using
+	//GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh); //not using anymore
+	//
 	
-	
+	GameObject* CreateGameObject(GameObject* parent,OBJECT_TYPE type,std::string name);
+	void UpdateGameObject(GameObject* parent);
+
+	GameObject* root = nullptr; //emptygame objects containing all game obects
+
 public:
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
@@ -50,7 +55,7 @@ public:
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;
 	uint indiceS = 0;
 	std::list<Mesh*> mesh_list;
-	std::vector<GameObject*> gameObject_list;
+	//std::vector<GameObject*> gameObject_list; //not using anyumoe
 	uint ImageName;
 private:
 	int max_grid = 75;

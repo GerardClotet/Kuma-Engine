@@ -200,6 +200,9 @@
     <ClCompile Include="Component_Material.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="PanelInspector.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -632,6 +635,9 @@
     </ClInclude>
     <ClInclude Include="Component_Material.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInspector.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

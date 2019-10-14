@@ -11,31 +11,38 @@ GameObject::GameObject()
 	LOG("Game Object root");
 }
 
-GameObject::GameObject(std::string name, OBJECT_TYPE type)
+GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,std::string name)
 {
 	this->name = name;
 	this->type = type;
-
-	//if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE || type == OBJECT_TYPE::CONE || type == OBJECT_TYPE::CYLINDER || type ==  OBJECT_TYPE::DODECAHEDRON)
-	//{
-		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
-		components.push_back(AddComponent(GO_COMPONENT::MESH));
-	//}
-
+	Set_GO_Parent(parent);
 }
 
-GameObject::GameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
-{
-	this->name = name;
-	this->type = type;
-
-	if (type == OBJECT_TYPE::IMPORTER)
-	{
-		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
-		components.push_back(AddComponent(GO_COMPONENT::MESH, mesh));
-	}
-
-}
+//GameObject::GameObject(std::string name, OBJECT_TYPE type)
+//{
+//	this->name = name;
+//	this->type = type;
+//
+//	//if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE || type == OBJECT_TYPE::CONE || type == OBJECT_TYPE::CYLINDER || type ==  OBJECT_TYPE::DODECAHEDRON)
+//	//{
+//		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
+//		components.push_back(AddComponent(GO_COMPONENT::MESH));
+//	//}
+//
+//}
+//
+//GameObject::GameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
+//{
+//	this->name = name;
+//	this->type = type;
+//
+//	if (type == OBJECT_TYPE::IMPORTER)
+//	{
+//		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
+//		components.push_back(AddComponent(GO_COMPONENT::MESH, mesh));
+//	}
+//
+//}
 
 
 
@@ -51,6 +58,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 		break;
 	case GO_COMPONENT::MESH:
 		component = new Component_Mesh(this->type);
+		components.push_back(component);
 		break;
 	case GO_COMPONENT::TRANSFORM:
 		break;
@@ -66,7 +74,7 @@ Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
 	Components* component = nullptr;
 
 	component = new Component_Mesh(this->type, mesh);
-		
+	components.push_back(component);
 	return component;
 }
 
@@ -120,5 +128,16 @@ bool GameObject::Update()
 		
 	}
 	return true;
+}
+
+void GameObject::Set_GO_Parent(GameObject* go_parent)
+{
+	//if(parent != nullptr)
+	if (parent == go_parent)
+		return;
+
+
+	parent = go_parent;
+	go_parent->game_object_childs.push_back(this);
 }
 
