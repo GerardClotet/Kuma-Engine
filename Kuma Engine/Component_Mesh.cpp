@@ -48,7 +48,7 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh)
 {
 	comp_type = GO_COMPONENT::MESH;
-
+	this->type = type;
 	GenerateImported(mesh);
 }
 
@@ -480,8 +480,15 @@ void Component_Mesh::CreateMesh()
 	id_index = 0;
 	glGenBuffers(1, (GLuint*) &(id_index));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_index * 3, index, GL_STATIC_DRAW);
+	if (type == OBJECT_TYPE::IMPORTER)
+	{
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_index, index, GL_STATIC_DRAW);
+	}
 
+	else
+	{
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_index * 3, index, GL_STATIC_DRAW);
+	}
 	//IndexNormal
 	id_normal = 0;
 	glGenBuffers(1, (GLuint*)&id_normal);
