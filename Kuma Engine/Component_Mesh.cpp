@@ -10,6 +10,7 @@
 
 Component_Mesh::Component_Mesh(OBJECT_TYPE type) : Components()
 {
+	this->type = type;
 	comp_type = GO_COMPONENT::MESH;
 	switch (type)
 	{
@@ -189,6 +190,7 @@ bool Component_Mesh::Update()
 		}
 
 	}
+
 	return true;
 }
 
@@ -225,6 +227,7 @@ void Component_Mesh::GenerateCube()
 
 	gl_Short = true;
 	has_normals = true;
+
 	CreateMesh();
 }
 
@@ -249,6 +252,7 @@ void Component_Mesh::GenerateSphere()
 
 	gl_Short = true;
 	has_normals = true;
+	
 	CreateMesh();
 }
 
@@ -327,6 +331,44 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 	gl_Int = true;
 
 
+	CreateFaceNormals();
+
+	CreateMesh();
+}
+
+
+void Component_Mesh::CreateMesh()
+{
+	//Cube Vertex
+	id_vertex = 0;
+	glGenBuffers(1, (GLuint*) &(id_vertex));
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*num_vertex * 3, vertex, GL_STATIC_DRAW);
+
+
+	//Cube Vertex definition
+	id_index = 0;
+	glGenBuffers(1, (GLuint*) &(id_index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_index * 3, index, GL_STATIC_DRAW);
+
+	//IndexNormal
+	id_normal = 0;
+	glGenBuffers(1, (GLuint*)&id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
+
+	//UVs
+	id_uvs = 0;
+	glGenBuffers(1, (GLuint*) &id_uvs);
+	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
+
+	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
+}
+
+void Component_Mesh::CreateFaceNormals()
+{
 	debug_mesh debItem;
 	for (int i = 0; i < num_index; i++)
 	{
@@ -365,40 +407,6 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 		i += 2;
 	}
 	mesh_debug.push_back(debItem);
-
-
-	CreateMesh();
-}
-
-
-void Component_Mesh::CreateMesh()
-{
-	//Cube Vertex
-	id_vertex = 0;
-	glGenBuffers(1, (GLuint*) &(id_vertex));
-	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*num_vertex * 3, vertex, GL_STATIC_DRAW);
-
-
-	//Cube Vertex definition
-	id_index = 0;
-	glGenBuffers(1, (GLuint*) &(id_index));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*num_index * 3, index, GL_STATIC_DRAW);
-
-	//IndexNormal
-	id_normal = 0;
-	glGenBuffers(1, (GLuint*)&id_normal);
-	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
-
-	//UVs
-	id_uvs = 0;
-	glGenBuffers(1, (GLuint*) &id_uvs);
-	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
-
-	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
 }
 
 std::list<debug_mesh> Component_Mesh::GetDebugInfo()

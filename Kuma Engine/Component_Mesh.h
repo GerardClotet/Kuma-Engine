@@ -34,6 +34,7 @@ public:
 	void GenerateSphere();
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
+	void CreateFaceNormals();
 	std::list<debug_mesh> GetDebugInfo();
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
@@ -69,6 +70,7 @@ public:
 
 private:
 	std::list<debug_mesh> mesh_debug;
+	OBJECT_TYPE type;
 };
 #endif // !MESH_COMPONENT_H
 
