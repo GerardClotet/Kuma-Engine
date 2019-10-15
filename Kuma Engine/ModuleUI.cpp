@@ -7,6 +7,7 @@
 #include "PanelConsole.h"
 #include "PanelAbout.h"
 #include "PanelInspector.h"
+#include "PanelHierarchy.h"
 #include "ModuleRenderer3D.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imconfig.h"
@@ -44,10 +45,11 @@ bool ModuleEditor::Start()
 	ImGui::StyleColorsEdited();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
-	panel_list.push_back(config_p =		new PanelConfig("Configuration"));
-	panel_list.push_back(console_p =	new PanelConsole("Console"));
-	panel_list.push_back(about_p =		new PanelAbout("About"));
-	panel_list.push_back(inspector_p =	new PanelInspector("Inspector"));
+	panel_list.push_back(config_p		= new PanelConfig("Configuration"));
+	panel_list.push_back(console_p		= new PanelConsole("Console"));
+	panel_list.push_back(about_p		= new PanelAbout("About"));
+	panel_list.push_back(inspector_p	= new PanelInspector("Inspector"));
+	panel_list.push_back(hierarchy_p	= new PanelHierarchy("Hierarchy"));
 	console_window = true;
 
 
@@ -327,8 +329,8 @@ void ModuleEditor::ViewScreen()
 		console_window = (console_window == false) ? true : false;
 
 	}
-	ImGui::SameLine();
-	ImGui::TextDisabled("1");
+	/*ImGui::SameLine();
+	ImGui::TextDisabled("1");*/
 
 
 	if (ImGui::MenuItem("Configuration"))
@@ -336,8 +338,13 @@ void ModuleEditor::ViewScreen()
 		configuration_window = (configuration_window == false) ? true : false;
 		//this is the configuration
 	}
-	ImGui::SameLine();
-	ImGui::TextDisabled("4");
+	//ImGui::SameLine();
+	//ImGui::TextDisabled("4");
+
+	if (ImGui::MenuItem("Hierarchy"))
+	{
+		hierarchy_window = (hierarchy_window == false) ? true : false;
+	}
 }
 
 void ModuleEditor::FileScreen()

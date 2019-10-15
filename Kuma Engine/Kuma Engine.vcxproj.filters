@@ -203,6 +203,9 @@
     <ClCompile Include="PanelInspector.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="PanelHierarchy.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -637,6 +640,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="PanelInspector.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelHierarchy.h">
       <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>

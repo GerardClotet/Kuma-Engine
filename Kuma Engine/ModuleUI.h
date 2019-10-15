@@ -15,6 +15,7 @@ class PanelConfig;
 class PanelConsole;
 class PanelAbout;
 class PanelInspector;
+class PanelHierarchy;
 
 
 class ModuleEditor : public Module
@@ -39,6 +40,7 @@ public:
 	bool config_default			= false;
 	bool about_window			= false;
 	bool inspector_window		= false;
+	bool hierarchy_window		= false;
 	bool show_normals			= false;
 	bool show_vertex			= false;
 	bool show_face_normal		= false;
@@ -72,5 +74,7 @@ public:
 	PanelConfig* config_p		= nullptr;
 	PanelAbout* about_p			= nullptr;
 	PanelInspector* inspector_p = nullptr;
+	PanelHierarchy* hierarchy_p = nullptr;
+
 	std::list<Panel*> panel_list;
 };

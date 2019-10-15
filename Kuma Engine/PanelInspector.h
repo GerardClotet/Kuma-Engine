@@ -9,7 +9,6 @@
 #include "ImGui/imgui.h"
 class GameObject;
 class PanelInspector : public Panel
-
 {
 public:
 
