@@ -377,14 +377,6 @@ void PanelConfig::DisplayConfig()
 			if (!GL_Wireframe) GL_Wireframe = true;
 			LOG("GL wireframe %s", GL_Fill ? "ON" : "OFF");
 		}
-		ImGui::Separator();
-		if (ImGui::Checkbox("VERTEX POINTS", &App->ui->show_vertex)) {}
-
-		ImGui::Separator();
-		if (ImGui::Checkbox("VERTEX NORMALS", &App->ui->show_normals)) {}
-
-		ImGui::Separator();
-		if (ImGui::Checkbox("FACE NORMALS", &App->ui->show_face_normal)) {}
 
 //		ImGui::ColorEdit4()
 		ImGui::Separator();

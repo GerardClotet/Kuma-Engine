@@ -32,7 +32,8 @@ bool Component_Material::Disable()
 
 void Component_Material::ReadTexture(std::string file)
 {
-	this->texture = App->texture->LoadTexture(file.c_str());
+	file_path = file;
+	this->texture = App->texture->LoadTexture(file_path.c_str());
 	setTexture = true;
 }
 
