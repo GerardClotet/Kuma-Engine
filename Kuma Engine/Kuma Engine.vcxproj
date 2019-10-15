@@ -213,7 +213,7 @@
     <ClInclude Include="PanelAbout.h" />
     <ClInclude Include="PanelConfig.h" />
     <ClInclude Include="PanelConsole.h" />
-    <ClInclude Include="PanelInspector.h" />
+    <ClInclude Include="PanelHierarchy.h" />
     <ClInclude Include="Parson\parson.h" />
     <ClInclude Include="par_shapes.h" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
@@ -288,7 +288,7 @@
     <ClCompile Include="PanelAbout.cpp" />
     <ClCompile Include="PanelConfig.cpp" />
     <ClCompile Include="PanelConsole.cpp" />
-    <ClCompile Include="PanelInspector.cpp" />
+    <ClCompile Include="PanelHierarchy.cpp" />
     <ClCompile Include="Parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="PerfTimer.cpp" />

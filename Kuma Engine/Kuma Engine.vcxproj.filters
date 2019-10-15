@@ -200,7 +200,7 @@
     <ClCompile Include="Component_Material.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="PanelInspector.cpp">
+    <ClCompile Include="PanelHierarchy.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -636,7 +636,7 @@
     <ClInclude Include="Component_Material.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="PanelInspector.h">
+    <ClInclude Include="PanelHierarchy.h">
       <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>

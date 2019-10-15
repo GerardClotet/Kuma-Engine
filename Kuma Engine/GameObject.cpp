@@ -12,7 +12,7 @@ GameObject::GameObject()
 	LOG("Game Object root");
 }
 
-GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,std::string name)
+GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,const char* name)
 {
 	this->name = name;
 	this->type = type;

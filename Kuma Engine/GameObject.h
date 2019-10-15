@@ -28,14 +28,14 @@ class GameObject {
 
 public:
 	GameObject();
-	GameObject(GameObject* parent,OBJECT_TYPE type,std::string name);
+	GameObject(GameObject* parent,OBJECT_TYPE type,const char* name);
 	/*GameObject(std::string name, OBJECT_TYPE type);
 	GameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);*/
 	~GameObject();
 	bool Update();
 	void Set_GO_Parent(GameObject* parent);
 public:
-	std::string name;
+	const char* name;
 	OBJECT_TYPE type = OBJECT_TYPE::NONE;
 
 	Components* AddComponent(GO_COMPONENT type);

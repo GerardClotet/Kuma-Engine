@@ -43,7 +43,7 @@ public:
 	//GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh); //not using anymore
 	//
 	
-	GameObject* CreateGameObject(GameObject* parent,OBJECT_TYPE type,std::string name);
+	GameObject* CreateGameObject(GameObject* parent,OBJECT_TYPE type,const char* name);
 	void UpdateGameObject(GameObject* parent);
 
 	GameObject* root = nullptr; //emptygame objects containing all game obects

@@ -6,6 +6,7 @@
 #include "PanelConfig.h"
 #include "PanelConsole.h"
 #include "PanelAbout.h"
+#include "PanelHierarchy.h"
 #include "ModuleRenderer3D.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imconfig.h"
@@ -45,6 +46,7 @@ bool ModuleEditor::Start()
 	panel_list.push_back(config_p =new PanelConfig("Configuration"));
 	panel_list.push_back(console_p =new PanelConsole("Console"));
 	panel_list.push_back(about_p = new PanelAbout("About"));
+	panel_list.push_back(hierarchy_p = new PanelHierarchy("Hierarchy"));
 	console_window = true;
 
 
@@ -333,8 +335,13 @@ void ModuleEditor::ViewScreen()
 		configuration_window = (configuration_window == false) ? true : false;
 		//this is the configuration
 	}
-	ImGui::SameLine();
-	ImGui::TextDisabled("4");
+	//ImGui::SameLine();
+		//ImGui::TextDisabled("4");
+
+	if (ImGui::MenuItem("Hierarchy"))
+	{
+		hierarchy_window = (hierarchy_window == false) ? true : false;
+	}
 }
 
 void ModuleEditor::FileScreen()

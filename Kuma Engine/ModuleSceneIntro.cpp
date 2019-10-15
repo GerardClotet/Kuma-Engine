@@ -231,7 +231,7 @@ void ModuleSceneIntro::createDirtyCube()
 //	return goItem;
 //}
 
-GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE type,std::string name)
+GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE type,const char*name)
 {
 	if(parent == nullptr)
 		parent = root;
