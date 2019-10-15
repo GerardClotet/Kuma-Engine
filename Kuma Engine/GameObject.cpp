@@ -57,8 +57,8 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 	case GO_COMPONENT::NONE:
 		break;
 	case GO_COMPONENT::MESH:
-		component = new Component_Mesh(this->type, this);
-		components.push_back(component);
+		mesh = new Component_Mesh(this->type, this);
+		components.push_back(mesh);
 
 		break;
 	case GO_COMPONENT::TRANSFORM:

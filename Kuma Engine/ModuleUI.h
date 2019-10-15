@@ -14,6 +14,7 @@ class Panel;
 class PanelConfig;
 class PanelConsole;
 class PanelAbout;
+class PanelInspector;
 class PanelHierarchy;
 
 
@@ -72,6 +73,8 @@ public:
 	PanelConsole* console_p		= nullptr;
 	PanelConfig* config_p		= nullptr;
 	PanelAbout* about_p			= nullptr;
+	PanelInspector* inspector_p = nullptr;
 	PanelHierarchy* hierarchy_p = nullptr;
+
 	std::list<Panel*> panel_list;
 };
