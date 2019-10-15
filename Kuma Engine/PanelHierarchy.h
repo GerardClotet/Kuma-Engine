@@ -15,14 +15,14 @@ class PanelHierarchy : public Panel
 public:
 	PanelHierarchy() {};
 
-	PanelHierarchy(const char* name) : Panel(name) { App->saveLog("Inspector Panel Created"); }
+	PanelHierarchy(const char* name) : Panel(name) { App->saveLog("Hierarchy Panel Created"); }
 	~PanelHierarchy() {};
 
 	update_status Draw();
 
 
 	void DisplayHierarchy();
-	void RecursiveTreeNode(const GameObject* parent);
+	void RecursiveTreeNode(GameObject* parent);
 
 };
 

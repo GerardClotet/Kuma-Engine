@@ -47,7 +47,7 @@ public:
 	void UpdateGameObject(GameObject* parent);
 
 	GameObject* root = nullptr; //emptygame objects containing all game obects
-	const GameObject* selected_game_obj = nullptr;
+	GameObject* selected_game_obj = nullptr;
 
 public:
 	//std::list<Spherestruct*> sphere_struct_list;

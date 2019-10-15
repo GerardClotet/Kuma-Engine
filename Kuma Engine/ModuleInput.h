@@ -12,6 +12,8 @@ enum KEY_STATE
 	KEY_UP
 };
 
+enum class GO_COMPONENT;
+
 class ModuleInput : public Module
 {
 public:

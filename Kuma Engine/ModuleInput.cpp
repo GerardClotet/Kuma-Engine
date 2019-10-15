@@ -189,6 +189,10 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 		//}
 		if (App->scene_intro->selected_game_obj != nullptr)
 		{
+			if (App->scene_intro->selected_game_obj->material == nullptr)
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			}
 			App->scene_intro->selected_game_obj->material->ReadTexture(file_decider.c_str());
 		}
 	}

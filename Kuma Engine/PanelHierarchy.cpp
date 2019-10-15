@@ -25,7 +25,7 @@ void PanelHierarchy::DisplayHierarchy()
 
 }
 
-void PanelHierarchy::RecursiveTreeNode(const GameObject* parent)
+void PanelHierarchy::RecursiveTreeNode(GameObject* parent)
 {
 
 	ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
@@ -41,7 +41,7 @@ void PanelHierarchy::RecursiveTreeNode(const GameObject* parent)
 		std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin(); //const_iterator just for reading
 		while (iter != parent->game_object_childs.end())
 		{
-			App->scene_intro->selected_game_obj = (*iter);
+			//App->scene_intro->selected_game_obj = (*iter);
 			RecursiveTreeNode((*iter));
 
 			++iter;
