@@ -35,47 +35,47 @@ void Cube::Render()
 
 
 
-	//draw vertex
-	if (App->ui->show_vertex)
-	{
-		glPointSize(2.5f);
-		glBegin(GL_POINTS);
-		glColor4fv((float*)& App->importer->vertex_color);
-		for (int i = 0; i < cube_mesh->npoints * 3; i += 3)
-		{
-			glVertex3f(cube_mesh->points[i], cube_mesh->points[i + 1], cube_mesh->points[i + 2]);
-		}
+	////draw vertex
+	//if (App->ui->show_vertex)
+	//{
+	//	glPointSize(2.5f);
+	//	glBegin(GL_POINTS);
+	//	glColor4fv((float*)& App->importer->vertex_color);
+	//	for (int i = 0; i < cube_mesh->npoints * 3; i += 3)
+	//	{
+	//		glVertex3f(cube_mesh->points[i], cube_mesh->points[i + 1], cube_mesh->points[i + 2]);
+	//	}
 
-		glColor3f(255.0f, 255.0f, 255.0f);
-		glEnd();
-	}
+	//	glColor3f(255.0f, 255.0f, 255.0f);
+	//	glEnd();
+	//}
 
-	//draw normals
-	if (App->ui->show_normals)
-	{
-		glLineWidth(2.5f);
-		glColor4fv((float*)& App->importer->vertex_normal_color);
+	////draw normals
+	//if (App->ui->show_normals)
+	//{
+	//	glLineWidth(2.5f);
+	//	glColor4fv((float*)& App->importer->vertex_normal_color);
 
-		
-		memcpy(cube_mesh->normals, cube_mesh->normals, sizeof(float) * cube_mesh->npoints * 3);
+	//	
+	//	memcpy(cube_mesh->normals, cube_mesh->normals, sizeof(float) * cube_mesh->npoints * 3);
 
-		for (int i = 0; i < cube_mesh->npoints * 3; i += 3)
-		{
-			glBegin(GL_LINES);
-			
-			vec3 normalVec = normalize({ cube_mesh->normals[i],cube_mesh->normals[i+1], cube_mesh->normals[i+2] });
-			glVertex3f(cube_mesh->points[i], cube_mesh->points[i + 1], cube_mesh->points[i + 2]);
-			glVertex3f(cube_mesh->points[i] + normalVec.x, cube_mesh->points[i + 1] + normalVec.y, cube_mesh->points[i + 2] + normalVec.z);
-	
-			glEnd();
-		}
-	}
+	//	for (int i = 0; i < cube_mesh->npoints * 3; i += 3)
+	//	{
+	//		glBegin(GL_LINES);
+	//		
+	//		vec3 normalVec = normalize({ cube_mesh->normals[i],cube_mesh->normals[i+1], cube_mesh->normals[i+2] });
+	//		glVertex3f(cube_mesh->points[i], cube_mesh->points[i + 1], cube_mesh->points[i + 2]);
+	//		glVertex3f(cube_mesh->points[i] + normalVec.x, cube_mesh->points[i + 1] + normalVec.y, cube_mesh->points[i + 2] + normalVec.z);
+	//
+	//		glEnd();
+	//	}
+	//}
 
-	//draw face normal
-	if (App->ui->show_face_normal)
-	{
-		CreateFaceNormals();
-	}
+	////draw face normal
+	//if (App->ui->show_face_normal)
+	//{
+	//	CreateFaceNormals();
+	//}
 
 }
 

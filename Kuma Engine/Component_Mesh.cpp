@@ -142,7 +142,7 @@ bool Component_Mesh::Update()
 
 
 	//draw normals
-	if (App->ui->show_normals)
+	if (show_normals)
 	{
 		glLineWidth(2.5f);
 		glBegin(GL_LINES);
@@ -160,9 +160,8 @@ bool Component_Mesh::Update()
 	}
 
 
-
 	//draw vertex
-	if (App->ui->show_vertex)
+	if (show_vertex)
 	{
 		glPointSize(2.5f);
 		glBegin(GL_POINTS);
@@ -177,7 +176,7 @@ bool Component_Mesh::Update()
 	}
 
 	//draw face normal
-	if (App->ui->show_face_normal)
+	if (show_face_normal)
 	{
 		std::list<debug_mesh> mesh_debug = GetDebugInfo();
 		std::list<debug_mesh>::iterator deb = mesh_debug.begin();
@@ -185,7 +184,7 @@ bool Component_Mesh::Update()
 		while (deb != mesh_debug.end())
 		{
 			//Check if face normals is activated
-			if (App->ui->show_face_normal) {
+			if (show_face_normal) {
 				glPointSize(2.5f);
 				glBegin(GL_LINES);
 

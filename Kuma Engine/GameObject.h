@@ -3,6 +3,7 @@
 
 #include "Application.h"
 #include "Globals.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 #include <string>
 
 class Components;
@@ -10,6 +11,7 @@ class Component_Material;
 class Component_Mesh;
 enum class GO_COMPONENT;
 struct aiMesh;
+
 
  enum class OBJECT_TYPE {
 	NONE,
@@ -38,6 +40,9 @@ public:
 public:
 	const char* name;
 	OBJECT_TYPE type = OBJECT_TYPE::NONE;
+	float3 game_object_pos		= { 0.0f, 0.0f, 0.0f };
+	float3 game_object_rot		= { 0.0f, 0.0f, 0.0f };
+	float3 game_object_scale	= { 0.0f, 0.0f, 0.0f };
 
 	Components* AddComponent(GO_COMPONENT type);
 	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh);

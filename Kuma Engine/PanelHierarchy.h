@@ -24,7 +24,6 @@ public:
 	void DisplayHierarchy();
 	void RecursiveTreeNode(const GameObject* parent);
 
-	const GameObject* selected_game_obj;
 };
 
 #endif // !_PANEL_HIERARCHY_H__

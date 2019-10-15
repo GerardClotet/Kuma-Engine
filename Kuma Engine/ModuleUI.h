@@ -24,6 +24,7 @@ public:
 	ModuleEditor(Application* app, bool start_enabled = true);
 	~ModuleEditor();
 	bool Start();
+	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	static void HelpMarker(const char* desc);
@@ -41,9 +42,7 @@ public:
 	bool about_window			= false;
 	bool inspector_window		= false;
 	bool hierarchy_window		= false;
-	bool show_normals			= false;
-	bool show_vertex			= false;
-	bool show_face_normal		= false;
+
 	
 	void AddFPS(float fps, float ms);
 	

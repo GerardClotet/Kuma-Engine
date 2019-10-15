@@ -1,5 +1,7 @@
 #include "PanelInspector.h"
 #include "GameObject.h"
+#include "Component_Mesh.h"
+#include "Component_Material.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleUI.h"
 
@@ -16,31 +18,44 @@ void PanelInspector::DisplayInspector()
 
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		static float vec4a[4] = { 0.00f, 0.00f, 0.00f, 0.00f };
-		ImGui::InputFloat3("Position",vec4a);
+		if (App->scene_intro->selected_game_obj != nullptr)
+		{
+			static float pos[3] = { App->scene_intro->selected_game_obj->game_object_pos.x, 
+									App->scene_intro->selected_game_obj->game_object_pos.y, 
+									App->scene_intro->selected_game_obj->game_object_pos.z };
+			ImGui::InputFloat3("Position", pos);
 
-		static float vec4b[4] = { 1.00f, 1.00f, 1.00f, 0.00f };
-		ImGui::InputFloat3("Rotation", vec4b);
 
-		static float vec4c[4] = { 1.00f, 1.00f, 1.00f, 0.00f };
-		ImGui::InputFloat3("Scale", vec4c);
+			static float rot[3] = { App->scene_intro->selected_game_obj->game_object_rot.x,
+									App->scene_intro->selected_game_obj->game_object_rot.y,
+									App->scene_intro->selected_game_obj->game_object_rot.z };
+			ImGui::InputFloat3("Rotation", rot);
+
+			static float scale[3] = { App->scene_intro->selected_game_obj->game_object_scale.x,
+									App->scene_intro->selected_game_obj->game_object_scale.y,
+									App->scene_intro->selected_game_obj->game_object_scale.z };
+			ImGui::InputFloat3("Scale", scale);
+		}
 	}
 
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
-		ImGui::Text("Mesh information");
-		ImGui::Separator();
-		ImGui::Text("%i num_vertex"); //REPLACE THIS %i WITH THE REAL NUMBERS WITH THE SELECTED GO
-		ImGui::Text("%i num_index");
-		ImGui::Text("%i num_normals");
-		ImGui::Text("%i num_UVs");
+		if (App->scene_intro->selected_game_obj != nullptr)
+		{
+			ImGui::Text("Mesh information");
+			ImGui::Separator();
+			ImGui::Text("%i num_vertex", App->scene_intro->selected_game_obj->mesh->num_vertex); //REPLACE THIS %i WITH THE REAL NUMBERS WITH THE SELECTED GO
+			ImGui::Text("%i num_index", App->scene_intro->selected_game_obj->mesh->num_index);
+			ImGui::Text("%i num_normals", App->scene_intro->selected_game_obj->mesh->num_normal);
+			ImGui::Text("%i num_UVs", App->scene_intro->selected_game_obj->mesh->num_uvs);
 
-		ImGui::Spacing();
-		ImGui::Spacing();
+			ImGui::Spacing();
+			ImGui::Spacing();
 
-		if (ImGui::Checkbox("VERTEX POINTS", &App->ui->show_vertex)) {}
-		if (ImGui::Checkbox("VERTEX NORMALS", &App->ui->show_normals)) {}
-		if (ImGui::Checkbox("FACE NORMALS", &App->ui->show_face_normal)) {}
+			if (ImGui::Checkbox("VERTEX POINTS", &App->scene_intro->selected_game_obj->mesh->show_vertex)) {}
+			if (ImGui::Checkbox("VERTEX NORMALS", &App->scene_intro->selected_game_obj->mesh->show_normals)) {}
+			if (ImGui::Checkbox("FACE NORMALS", &App->scene_intro->selected_game_obj->mesh->show_face_normal)) {}
+		}
 	}
 
 	if (ImGui::CollapsingHeader("Texture"))

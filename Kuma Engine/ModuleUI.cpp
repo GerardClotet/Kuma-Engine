@@ -56,14 +56,7 @@ bool ModuleEditor::Start()
 	
 
 
-	std::list<const char*>::iterator item = App->log_saves.begin();
-
-	for (item; item != App->log_saves.end(); ++item)
-	{
-		const char* logs = (*item);
-
-		LOG("%s", logs);
-	}
+	
 
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
 	LOG("Renderer: %s", glGetString(GL_RENDERER));
@@ -74,27 +67,17 @@ bool ModuleEditor::Start()
 
 }
 
-bool ModuleEditor::CleanUp()
+update_status ModuleEditor::Update(float dt)
 {
-	LOG("Unloading UI module");
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-	std::list<Panel*>::iterator item = panel_list.begin();
-	while (item != panel_list.end())
+	std::list<const char*>::iterator item = App->log_saves.begin();
+
+	for (item; item != App->log_saves.end(); ++item)
 	{
-		//panel_list.erase(item);
-		/*panel_list.remove(*item);*/
-		++item;
+		const char* logs = (*item);
+
+		LOG("%s", logs);
 	}
-	panel_list.clear();
-	console_p->Clear();
-	//panel_list.clear();
-	panel_list.clear();
-	console_p = nullptr;
-	config_p = nullptr;
-	about_p = nullptr;
-	return true;
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)
@@ -188,6 +171,30 @@ update_status ModuleEditor::PostUpdate(float dt)
 	
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	return ret;
+}
+
+
+bool ModuleEditor::CleanUp()
+{
+	LOG("Unloading UI module");
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+	std::list<Panel*>::iterator item = panel_list.begin();
+	while (item != panel_list.end())
+	{
+		//panel_list.erase(item);
+		/*panel_list.remove(*item);*/
+		++item;
+	}
+	panel_list.clear();
+	console_p->Clear();
+	//panel_list.clear();
+	panel_list.clear();
+	console_p = nullptr;
+	config_p = nullptr;
+	about_p = nullptr;
+	return true;
 }
 
 

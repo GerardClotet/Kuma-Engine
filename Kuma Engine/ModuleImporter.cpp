@@ -84,11 +84,12 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node,const
 	for (uint i = 0; i < file_node->mNumMeshes; i++)
 	{
 		GameObject* go = nullptr;
-		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER,name);
+		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER, name);
 		aiMesh* mesh;
 
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh);
+		go->AddComponent(GO_COMPONENT::MATERIAL);
 		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)

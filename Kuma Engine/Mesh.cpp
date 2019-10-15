@@ -85,44 +85,44 @@ void Mesh::Render()
 	
 
 
-	//draw normals
-	if (App->ui->show_normals)
-	{
-		glLineWidth(2.5f);
-		glBegin(GL_LINES);
+	////draw normals
+	//if (App->ui->show_normals)
+	//{
+	//	glLineWidth(2.5f);
+	//	glBegin(GL_LINES);
 
-		glColor4fv((float*)& App->importer->vertex_normal_color);
+	//	glColor4fv((float*)& App->importer->vertex_normal_color);
 
-		for (int i = 0; i < num_normal * 3; i+=3)
-		{
-			vec3 normalVec = normalize({ normal[i], normal[i + 1], normal[i + 2] });
-			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
-			glVertex3f(vertex[i] + normalVec.x, vertex[i + 1] + normalVec.y, vertex[i + 2] + normalVec.z);
-		}
-		glColor3f(255.0f, 255.0f, 255.0f);
-		glEnd();
-	}
+	//	for (int i = 0; i < num_normal * 3; i+=3)
+	//	{
+	//		vec3 normalVec = normalize({ normal[i], normal[i + 1], normal[i + 2] });
+	//		glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
+	//		glVertex3f(vertex[i] + normalVec.x, vertex[i + 1] + normalVec.y, vertex[i + 2] + normalVec.z);
+	//	}
+	//	glColor3f(255.0f, 255.0f, 255.0f);
+	//	glEnd();
+	//}
 
 
 
-	//draw vertex
-	if (App->ui->show_vertex)
-	{
-		glPointSize(2.5f);
-		glBegin(GL_POINTS);
-		glColor4fv((float*)& App->importer->vertex_color);
-		for (int i = 0; i < num_vertex * 3; i += 3)
-		{
-			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
-		}
+	////draw vertex
+	//if (App->ui->show_vertex)
+	//{
+	//	glPointSize(2.5f);
+	//	glBegin(GL_POINTS);
+	//	glColor4fv((float*)& App->importer->vertex_color);
+	//	for (int i = 0; i < num_vertex * 3; i += 3)
+	//	{
+	//		glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
+	//	}
 
-		glColor3f(255.0f, 255.0f, 255.0f);
-		glEnd();
-	}
+	//	glColor3f(255.0f, 255.0f, 255.0f);
+	//	glEnd();
+	//}
 
-	//draw face normal
-	if (App->ui->show_face_normal)
-	{
+	////draw face normal
+	//if (App->ui->show_face_normal)
+	//{
 		//std::list<debug_mesh> mesh_debug = App->importer->GetDebugInfo();
 		//std::list<debug_mesh>::iterator deb = mesh_debug.begin();
 
@@ -156,5 +156,5 @@ void Mesh::Render()
 	//	glPolygonMode(GL_FRONT)
 	//}
 
-}
+//}
 
