@@ -71,6 +71,9 @@ public:
 public:
 	bool gl_Short = false;
 	bool gl_Int = false;
+	bool show_vertex = false;
+	bool show_normals = false;
+	bool show_face_normal = false;
 
 public:
 	GameObject* gameObject_Item = nullptr;

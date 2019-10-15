@@ -36,9 +36,6 @@ public:
 	/*TexData* texture = nullptr;*/
 	bool enabled			= true;
 	bool setTexture			= false;
-	bool show_vertex		= false;
-	bool show_normals		= false;
-	bool show_face_normal	= false;
 };
 #endif // !_COMPONENTS_H__
 
