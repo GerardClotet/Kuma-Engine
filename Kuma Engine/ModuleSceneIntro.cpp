@@ -88,18 +88,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-	//createDirtyCube();
-	//for (std::vector<GameObject*>::iterator item_obj = gameObject_list.begin(); item_obj != gameObject_list.end(); ++item_obj)
-	//{
-	//	(*item_obj)->Update();
-	//}
-
-	//Draw
 	createGrid();
-
-
-
-
 
 	glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;

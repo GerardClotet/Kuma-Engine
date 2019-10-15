@@ -472,7 +472,8 @@ void Component_Mesh::GenerateTorus()
 	normal = par_mesh->normals;
 
 	num_uvs = par_mesh->npoints;
-	uvs = new float[num_uvs * 2];
+	uvs = par_mesh->tcoords;
+	
 
 	gl_Short = true;
 	has_normals = true;

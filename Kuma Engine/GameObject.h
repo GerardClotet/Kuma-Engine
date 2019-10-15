@@ -7,6 +7,7 @@
 
 class Components;
 class Component_Material;
+class Component_Mesh;
 enum class GO_COMPONENT;
 struct aiMesh;
 
@@ -41,9 +42,10 @@ public:
 	Components* AddComponent(GO_COMPONENT type);
 	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh);
 
-	GameObject* parent = nullptr; // to the scene invisible game object containing all gameobjects
-	Component_Material* material = nullptr;
-	Components* component = nullptr;
+	GameObject* parent				= nullptr; // to the scene invisible game object containing all gameobjects
+	Component_Material* material	= nullptr;
+	Component_Mesh* mesh			= nullptr;
+	Components* component			= nullptr;
 
 	std::vector<Components*> components;
 	std::vector<GameObject*> game_object_childs;

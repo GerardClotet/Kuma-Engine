@@ -54,7 +54,6 @@ public:
 	uint my_id;
 	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;
 	uint indiceS = 0;
-	std::list<Mesh*> mesh_list;
 	//std::vector<GameObject*> gameObject_list; //not using anyumoe
 	uint ImageName;
 private:
@@ -64,11 +63,5 @@ private:
 	float sunQ = 2;
 	float sunW = 150;
 	int separator = 2;
-	bool firstBuffer = true;
-
-	uint my_idk = 0;
-	uint my_indicesk = 0;
-	Mesh* meshItem = new Mesh();
-	
 
 };

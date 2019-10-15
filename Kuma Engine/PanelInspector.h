@@ -11,9 +11,10 @@ class GameObject;
 class PanelInspector : public Panel
 
 {
-	PanelInspector() {};
+public:
 
-	PanelInspector(const char* name) : Panel(name) { App->saveLog("Inspector Panel Created"); }
+	PanelInspector() {};
+	PanelInspector(const char* name) : Panel(name) { App->saveLog("Inspector Panel Created"); };
 	~PanelInspector() {};
 
 	update_status Draw();
