@@ -381,7 +381,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CUBE, "cube");
 			go->AddComponent(GO_COMPONENT::MESH);
-			LOG("Created Cube");
+			LOG("----Created Cube----");
 		}
 
 		if (ImGui::MenuItem("Sphere"))
@@ -389,7 +389,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::SPHERE, "sphere");
 			go->AddComponent(GO_COMPONENT::MESH);
-			
+			LOG("----Created Sphere----");
 
 		}
 
@@ -399,6 +399,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CONE, "cone");
 			go->AddComponent(GO_COMPONENT::MESH);
+			LOG("----Created Cone----");
 		}
 
 		if (ImGui::MenuItem("Cylinder"))
@@ -406,6 +407,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CYLINDER, "cylinder");
 			go->AddComponent(GO_COMPONENT::MESH);
+			LOG("----Created Cylinder----");
 		}
 
 		if (ImGui::MenuItem("Dodecahedron"))
@@ -413,12 +415,14 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::DODECAHEDRON, "dodecahedron");
 			go->AddComponent(GO_COMPONENT::MESH);
+			LOG("----Created Dodecahedron----");
 		}
 		if (ImGui::MenuItem("Plane"))
 		{
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::PLANE, "plane");
 			go->AddComponent(GO_COMPONENT::MESH);
+			LOG("----Created Plane----");
 
 		}
 		if (ImGui::MenuItem("Torus"))
@@ -426,7 +430,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::TORUS, "torus");
 			go->AddComponent(GO_COMPONENT::MESH);
-
+			LOG("----Created Torus----");
 		}
 		ImGui::EndMenu();
 

@@ -201,8 +201,8 @@ void ModuleCamera3D::ZoomCamera()
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 
-		if (App->input->GetMouseYMotion() < 5) newPos -= Z * mouse_speed;
-		if (App->input->GetMouseYMotion() > -5) newPos += Z * mouse_speed;
+		if (App->input->GetMouseYMotion() < 2) newPos -= Z * zoom_speed;
+		if (App->input->GetMouseYMotion() > -2) newPos += Z * zoom_speed;
 		
 
 	}

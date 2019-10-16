@@ -243,6 +243,10 @@ void Component_Mesh::GenerateCube()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+	LOG("New Cube mesh with %d vertices", num_vertex);
+	LOG("New Cube mesh with %d index", num_index);
+	LOG("New Cube mesh with %d normals", num_normal);
+	LOG("New Cube mesh with %d UVs", num_uvs);
 
 	CreateMesh();
 }
@@ -269,6 +273,11 @@ void Component_Mesh::GenerateSphere()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Sphere mesh with %d vertices", num_vertex);
+	LOG("New Sphere mesh with %d index", num_index);
+	LOG("New Sphere mesh with %d normals", num_normal);
+	LOG("New Sphere mesh with %d UVs", num_uvs);
 	
 	CreateMesh();
 }
@@ -278,7 +287,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 	num_vertex = new_mesh->mNumVertices;
 	vertex = new float[num_vertex * 3];
 	memcpy(vertex, new_mesh->mVertices, sizeof(float) * num_vertex * 3);
-	LOG("New mesh with %d vertices", num_vertex);
+	LOG("New FBX mesh with %d vertices", num_vertex);
 
 	//copy normals
 	if (new_mesh->HasNormals())
@@ -287,7 +296,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 		num_normal = new_mesh->mNumVertices;
 		normal = new float[new_mesh->mNumVertices * 3];
 		memcpy(normal, new_mesh->mNormals, sizeof(aiVector3D) * num_vertex);
-		LOG("New mesh with %d normals", num_normal);
+		LOG("New FBX mesh with %d normals", num_normal);
 	}
 
 
@@ -306,7 +315,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 				memcpy(&uvs[j + 1], &new_mesh->mTextureCoords[k][i].y, sizeof(float));
 				j += 2;
 			}
-
+			LOG("New FBX mesh with %d UVs", num_uvs);
 		}
 	}
 	//copy color
@@ -323,6 +332,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 			memcpy(&color[j + 3], &new_mesh->mColors[0][i].a, sizeof(float));
 			j += 4;
 		}
+		LOG("New FBX mesh with %d colors", num_color);
 	}
 
 
@@ -342,7 +352,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 				memcpy(&index[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
 			}
 		}
-
+		LOG("New FBX mesh with %d index", num_index);
 	}
 
 	gl_Int = true;
@@ -375,6 +385,12 @@ void Component_Mesh::GenerateCone()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Cone mesh with %d vertices", num_vertex);
+	LOG("New Cone mesh with %d index", num_index);
+	LOG("New Cone mesh with %d normals", num_normal);
+	LOG("New Cone mesh with %d UVs", num_uvs);
+
 	CreateMesh();
 
 }
@@ -401,6 +417,12 @@ void Component_Mesh::GenerateCylinder()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Cylinder mesh with %d vertices", num_vertex);
+	LOG("New Cylinder mesh with %d index", num_index);
+	LOG("New Cylinder mesh with %d normals", num_normal);
+	LOG("New Cylinder mesh with %d UVs", num_uvs);
+
 	CreateMesh();
 }
 
@@ -426,6 +448,12 @@ void Component_Mesh::GenerateDodecahedron()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Dodecahedron mesh with %d vertices", num_vertex);
+	LOG("New Dodecahedron mesh with %d index", num_index);
+	LOG("New Dodecahedron mesh with %d normals", num_normal);
+	LOG("New Dodecahedron mesh with %d UVs", num_uvs);
+
 	CreateMesh();
 
 }
@@ -452,6 +480,12 @@ void Component_Mesh::GeneratePlane()
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Plane mesh with %d vertices", num_vertex);
+	LOG("New Plane mesh with %d index", num_index);
+	LOG("New Plane mesh with %d normals", num_normal);
+	LOG("New Plane mesh with %d UVs", num_uvs);
+
 	CreateMesh();
 }
 void Component_Mesh::GenerateTorus()
@@ -472,11 +506,16 @@ void Component_Mesh::GenerateTorus()
 
 	num_uvs = par_mesh->npoints;
 	uvs = par_mesh->tcoords;
-	
 
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
+
+	LOG("New Torus mesh with %d vertices", num_vertex);
+	LOG("New Torus mesh with %d index", num_index);
+	LOG("New Torus mesh with %d normals", num_normal);
+	LOG("New Torus mesh with %d UVs", num_uvs);
+
 	CreateMesh();
 }
 
