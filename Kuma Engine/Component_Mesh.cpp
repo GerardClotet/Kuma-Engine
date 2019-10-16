@@ -515,7 +515,7 @@ void Component_Mesh::CreateMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
 
-	LOG("Created mesh with vertex id: %i , index id: %i, normal id: %i  and uvs id: %i", id_vertex, id_index, id_normal, id_uvs);
+	
 }
 
 void Component_Mesh::CreateFaceNormals()

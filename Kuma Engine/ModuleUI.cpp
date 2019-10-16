@@ -55,7 +55,14 @@ bool ModuleEditor::Start()
 
 	
 
+	std::list<const char*>::iterator item = App->log_saves.begin();
 
+	for (item; item != App->log_saves.end(); ++item)
+	{
+		const char* logs = (*item);
+
+		LOG("%s", logs);
+	}
 	
 
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
@@ -69,14 +76,7 @@ bool ModuleEditor::Start()
 
 update_status ModuleEditor::Update(float dt)
 {
-	std::list<const char*>::iterator item = App->log_saves.begin();
-
-	for (item; item != App->log_saves.end(); ++item)
-	{
-		const char* logs = (*item);
-
-		LOG("%s", logs);
-	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -381,6 +381,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CUBE, "cube");
 			go->AddComponent(GO_COMPONENT::MESH);
+			LOG("Created Cube");
 		}
 
 		if (ImGui::MenuItem("Sphere"))

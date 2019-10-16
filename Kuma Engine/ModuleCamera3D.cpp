@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
+#include "ModuleSceneIntro.h"
+#include "GameObject.h"
+
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -52,8 +55,16 @@ update_status ModuleCamera3D::Update(float dt)
 		zoom_speed = camera_zoom_speed * dt * 2.0f;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (App->scene_intro->selected_game_obj != nullptr)
+		{
+			vec3 spot = { App->scene_intro->selected_game_obj->game_object_pos.x,
+							App->scene_intro->selected_game_obj->game_object_pos.y,
+							App->scene_intro->selected_game_obj->game_object_pos.z };
+			LookAt(spot);
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	
