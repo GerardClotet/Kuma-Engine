@@ -57,7 +57,12 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh, GameObject* obj)
 
 Component_Mesh::~Component_Mesh()
 {
-
+	gameObject_Item = nullptr;
+	index = nullptr;
+	vertex = nullptr;
+	normal = nullptr;
+	uvs = nullptr;
+	color = nullptr;
 }
 bool Component_Mesh::Update()
 {

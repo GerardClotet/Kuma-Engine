@@ -6,18 +6,19 @@
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
+#include <string_view>
 
 GameObject::GameObject()
 {
 	LOG("Game Object root");
 }
 
-GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,const char* nom)
+GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,const char* name)
 {
-	
-	name = nom;
 	this->type = type;
-	Set_GO_Parent(parent);
+	Set_Parent_and_Name(parent,name);
+
+
 	LOG("game object name %s", this->name);
 }
 
@@ -83,6 +84,25 @@ Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
 
 GameObject::~GameObject()
 {
+	parent = nullptr;
+
+	std::vector<Components*>::iterator item = components.begin();
+	while (item != components.end())
+	{
+		delete (*item);
+		++item;
+	}
+	components.clear();
+
+	std::vector<GameObject*>::iterator iter = game_object_childs.begin();
+	while (iter != game_object_childs.end())
+	{
+		delete (*iter);
+		++iter;
+	}
+
+	game_object_childs.clear();
+	LOG("gameobject deleted");
 }
 
 bool GameObject::Update()
@@ -133,14 +153,51 @@ bool GameObject::Update()
 	return true;
 }
 
-void GameObject::Set_GO_Parent(GameObject* go_parent)
+void GameObject::Set_Parent_and_Name(GameObject* go_parent,const char* path)
 {
 	//if(parent != nullptr)
 	if (parent == go_parent)
+	{
+		this->name = path;
 		return;
-
+	}
 
 	parent = go_parent;
 	go_parent->game_object_childs.push_back(this);
+
+	CheckName(path);
+}
+
+void GameObject::RemoveGameObject(GameObject* child)
+{
+	//game_object_childs.(child);
+}
+
+void GameObject::CheckName(const char* path)
+{
+	testu = 0;
+	const char* temp_name = path;
+	bool no_name = true;
+	std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin();
+	while (iter != parent->game_object_childs.end())
+	{
+		if ((*iter)->name == temp_name)
+		{
+			no_name = false;
+			++testu;
+			std::string a = path;
+			
+			a = a + "(" + std::to_string((uint)testu) + ")";	
+			new_name = a;		
+			name = new_name.c_str();
+			temp_name = name;
+		}
+
+		++iter;
+
+	}
+
+	if (no_name)
+		this->name = path;
 }
 

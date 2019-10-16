@@ -36,5 +36,6 @@ public:
 
 	//ilLoadImage allows users to transparently load several different image formats uniformly.
 	TexData* tex_data = nullptr;
+	std::vector <TexData*> textures_vec;
 };
 

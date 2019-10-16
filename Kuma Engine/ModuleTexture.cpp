@@ -17,12 +17,19 @@ ModuleTexture::~ModuleTexture()
 bool ModuleTexture::CleanUp()
 {
 
-	/*while (int i = 0 < tex_vec.size())
+	int i = 0;
+	LOG("textures size %i", textures_vec.size());
+	while (i < textures_vec.size())
 	{
-		delete tex_vec[i];
+		delete textures_vec[i];
 		++i;
-	}*/
+
+	}
+	textures_vec.clear();
+
 	LOG("texture module cleaned");
+
+
 	return true;
 }
 bool ModuleTexture::Init()
@@ -92,6 +99,8 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 			tex_data->height = ilGetInteger(IL_IMAGE_HEIGHT);
 			tex_data->offsetX = ilGetInteger(IL_IMAGE_OFFX);
 			tex_data->offsetY = ilGetInteger(IL_IMAGE_OFFY);
+
+			textures_vec.push_back(tex_data);
 		}
 		else LOG("Failure converting image, error: %s", iluErrorString(ilGetError()));
 

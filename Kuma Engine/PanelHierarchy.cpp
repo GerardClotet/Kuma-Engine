@@ -28,7 +28,7 @@ void PanelHierarchy::DisplayHierarchy()
 void PanelHierarchy::RecursiveTreeNode(GameObject* parent)
 {
 
-	ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow;
+	ImGuiTreeNodeFlags base_flags = /*ImGuiTreeNodeFlags_OpenOnArrow |*/ ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAllAvailWidth;
 	
 	
 	if (parent == App->scene_intro->selected_game_obj)
