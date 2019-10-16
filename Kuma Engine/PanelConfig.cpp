@@ -5,6 +5,9 @@
 #include "ModuleInput.h"
 #include "ModuleHardware.h"
 #include "ModuleImporter.h"
+#include "ModuleSceneIntro.h"
+#include "GameObject.h"
+#include "Component_Material.h"
 
 #include "mmgr/mmgr.h"
 
@@ -349,11 +352,17 @@ void PanelConfig::DisplayConfig()
 		ImGui::Separator();
 		if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
 		{
-			if (GL_Texture_2D)
+			if (GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr)
+			{
 				glEnable(GL_TEXTURE_2D), LOG("Enabled Texture 2D");
+				App->scene_intro->selected_game_obj->material->isTextureEnable = true;
+			}
 
 			else if (!GL_Texture_2D)
+			{
 				glDisable(GL_TEXTURE_2D), LOG("Disabled Texture 2D");
+				App->scene_intro->selected_game_obj->material->isTextureEnable = false;
+			}
 
 		}
 

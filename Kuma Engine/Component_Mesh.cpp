@@ -65,7 +65,8 @@ bool Component_Mesh::Update()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
+	if (gameObject_Item->material->isTextureEnable)
+		glEnable(GL_TEXTURE_2D);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
 
@@ -85,6 +86,7 @@ bool Component_Mesh::Update()
 	//Read and Draw UVS buffers
 	if (has_uvs)
 	{
+
 		if (gameObject_Item->material && gameObject_Item->material->setTexture)
 		{
 			text = gameObject_Item->material->GetTexture();
@@ -108,7 +110,7 @@ bool Component_Mesh::Update()
 		glDrawElements(GL_TRIANGLES, num_index * 3, GL_UNSIGNED_SHORT, NULL);
 
 
-	glDisableClientState(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -348,6 +350,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 		{
 			if (new_mesh->mFaces[j].mNumIndices != 3) {
 				LOG("WARNING, geometry face with != 3 indices!");
+				test = true;
 			}
 			else {
 				memcpy(&index[j * 3], new_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
@@ -358,8 +361,8 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 
 	gl_Int = true;
 
-
-	CreateFaceNormals();
+	if (!test)
+		CreateFaceNormals();
 
 	CreateMesh();
 }

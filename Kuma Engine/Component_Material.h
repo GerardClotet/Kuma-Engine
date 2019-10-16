@@ -27,6 +27,8 @@ public:
 	std::string file_path;
 	uint width = 0;
 	uint height = 0;
+
+	bool isTextureEnable = true;
 };
 
 

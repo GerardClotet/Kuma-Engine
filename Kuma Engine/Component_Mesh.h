@@ -76,6 +76,7 @@ public:
 	bool show_vertex = false;
 	bool show_normals = false;
 	bool show_face_normal = false;
+	bool test = false;
 
 public:
 	GameObject* gameObject_Item = nullptr;
