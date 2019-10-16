@@ -170,7 +170,7 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 	{
 		App->importer->LoadGeometry(file_decider.c_str());
 	}
-	else if (extension == "PNG" || extension == "png" || extension == "jpg")
+	else if (extension == "PNG" || extension == "png" || extension == "jpg" || extension == "dds")
 	{
 		if (App->scene_intro->selected_game_obj != nullptr)
 		{

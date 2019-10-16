@@ -39,7 +39,8 @@ public:
 	ImVec4 vertex_normal_color = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
 	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
-
+	void getImportedName(const char* path);
+	const char* test;
 public:
 	TexData* texture;
 private:

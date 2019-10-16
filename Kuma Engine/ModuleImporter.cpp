@@ -64,6 +64,25 @@ bool ModuleImporter::CleanUp()
 	return true;
 }
 
+void ModuleImporter::getImportedName(const char* path)
+{
+	
+
+	LOG("paths %s",path);
+	std::string file= path;
+	LOG("filepath %s", file.c_str());
+	/*std::string a = file.substr(file.find_last_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789_-.Ññ/&")+1);
+	LOG("asap rockly %s", a);*/
+	std::string name = file.substr(file.find_last_of("\\") + 1);
+
+
+	LOG("name %s", name.c_str());
+
+	test = name.c_str();
+
+	
+}
+
 
 void ModuleImporter::LoadGeometry(const char* path)
 {
@@ -84,7 +103,9 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node,const
 	for (uint i = 0; i < file_node->mNumMeshes; i++)
 	{
 		GameObject* go = nullptr;
-		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER, name);
+		getImportedName(name);
+		LOG("test %s", test);
+		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER,test);
 		aiMesh* mesh;
 
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
