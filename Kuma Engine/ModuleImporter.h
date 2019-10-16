@@ -40,7 +40,7 @@ public:
 	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
 	void getImportedName(const char* path);
-	const char* test;
+	std::string imported_name;
 public:
 	TexData* texture;
 private:

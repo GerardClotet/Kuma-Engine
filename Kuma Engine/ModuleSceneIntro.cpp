@@ -225,6 +225,7 @@ GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE ty
 	if(parent == nullptr)
 		parent = root;
 
+	
 	GameObject* game_obj = new GameObject(parent,type,name);
 	return game_obj;
 }

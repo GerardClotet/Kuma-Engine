@@ -71,14 +71,19 @@ void ModuleImporter::getImportedName(const char* path)
 	LOG("paths %s",path);
 	std::string file= path;
 	LOG("filepath %s", file.c_str());
-	/*std::string a = file.substr(file.find_last_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789_-.Ññ/&")+1);
-	LOG("asap rockly %s", a);*/
+	
 	std::string name = file.substr(file.find_last_of("\\") + 1);
 
+	const size_t  extension = name.rfind('.');
 
+	if (std::string::npos != extension)
+	{
+		name.erase(extension);
+
+	}
 	LOG("name %s", name.c_str());
 
-	test = name.c_str();
+	imported_name = name;
 
 	
 }
@@ -104,8 +109,8 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node,const
 	{
 		GameObject* go = nullptr;
 		getImportedName(name);
-		LOG("test %s", test);
-		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER,test);
+		
+		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER,imported_name.c_str());
 		aiMesh* mesh;
 
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
