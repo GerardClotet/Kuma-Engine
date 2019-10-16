@@ -599,6 +599,15 @@ void Component_Mesh::CreateFaceNormals()
 	mesh_debug.push_back(debItem);
 }
 
+void Component_Mesh::TranslateMesh(float pos[3])
+{
+	gameObject_Item->game_object_pos.x = pos[0];
+	gameObject_Item->game_object_pos.y = pos[1];
+	gameObject_Item->game_object_pos.z = pos[2];
+
+	par_shapes_translate(par_mesh, gameObject_Item->game_object_pos.x, gameObject_Item->game_object_pos.y, gameObject_Item->game_object_pos.z);
+}
+
 std::list<debug_mesh> Component_Mesh::GetDebugInfo()
 {
 	return mesh_debug;

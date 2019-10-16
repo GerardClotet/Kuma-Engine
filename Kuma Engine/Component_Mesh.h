@@ -41,6 +41,7 @@ public:
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();
+	void TranslateMesh(float pos[3]);
 	std::list<debug_mesh> GetDebugInfo();
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;

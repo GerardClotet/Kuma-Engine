@@ -24,6 +24,8 @@ void PanelInspector::DisplayInspector()
 									App->scene_intro->selected_game_obj->game_object_pos.y, 
 									App->scene_intro->selected_game_obj->game_object_pos.z };
 			ImGui::InputFloat3("Position", pos);
+			if (pos[0] != App->scene_intro->selected_game_obj->game_object_pos.x)
+				App->scene_intro->selected_game_obj->mesh->TranslateMesh(pos);
 
 
 			static float rot[3] = { App->scene_intro->selected_game_obj->game_object_rot.x,
