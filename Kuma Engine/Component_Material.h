@@ -25,6 +25,8 @@ public:
 public:
 	GameObject* gameObject_Item = nullptr;
 	std::string file_path;
+	uint width = 0;
+	uint height = 0;
 };
 
 

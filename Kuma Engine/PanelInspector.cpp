@@ -44,7 +44,7 @@ void PanelInspector::DisplayInspector()
 		{
 			ImGui::Text("Mesh information");
 			ImGui::Separator();
-			ImGui::Text("%i num_vertex", App->scene_intro->selected_game_obj->mesh->num_vertex); //REPLACE THIS %i WITH THE REAL NUMBERS WITH THE SELECTED GO
+			ImGui::Text("%i num_vertex", App->scene_intro->selected_game_obj->mesh->num_vertex); 
 			ImGui::Text("%i num_index", App->scene_intro->selected_game_obj->mesh->num_index);
 			ImGui::Text("%i num_normals", App->scene_intro->selected_game_obj->mesh->num_normal);
 			ImGui::Text("%i num_UVs", App->scene_intro->selected_game_obj->mesh->num_uvs);
@@ -61,8 +61,8 @@ void PanelInspector::DisplayInspector()
 	if (ImGui::CollapsingHeader("Texture"))
 	{
 		//if setTexture=true of the selected GO, do this
-		ImGui::Text("%i Width %i Height");
-		ImGui::Text("File Path: %s"); //path. We have a variable named "file_path" you can get through the pointer material
+		ImGui::Text("%i Width %i Height", App->scene_intro->selected_game_obj->material->width, App->scene_intro->selected_game_obj->material->height);
+		ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path); 
 
 	}
 

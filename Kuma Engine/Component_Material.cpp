@@ -34,6 +34,8 @@ void Component_Material::ReadTexture(std::string file)
 {
 	file_path = file;
 	this->texture = App->texture->LoadTexture(file_path.c_str());
+	width = this->texture->width;
+	height = this->texture->height;
 	setTexture = true;
 }
 

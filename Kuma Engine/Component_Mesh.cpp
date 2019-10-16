@@ -285,8 +285,8 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 	{
 		has_normals = true;
 		num_normal = new_mesh->mNumVertices;
-		normal = new float[num_normal * 3];
-		memcpy(normal, new_mesh->mVertices, sizeof(float) * num_normal * 3);
+		normal = new float[new_mesh->mNumVertices * 3];
+		memcpy(normal, new_mesh->mNormals, sizeof(aiVector3D) * num_vertex);
 		LOG("New mesh with %d normals", num_normal);
 	}
 
