@@ -41,6 +41,7 @@ public:
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();
+	void CreateVertexFaceNormals();
 	void TranslateMesh(float pos[3]);
 	std::list<debug_mesh> GetDebugInfo();
 public:

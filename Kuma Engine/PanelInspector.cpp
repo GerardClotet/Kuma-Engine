@@ -9,6 +9,8 @@ update_status PanelInspector::Draw()
 {
 	if (App->ui->inspector_window)
 		DisplayInspector();
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -42,7 +44,7 @@ void PanelInspector::DisplayInspector()
 
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
-		if (App->scene_intro->selected_game_obj != nullptr)
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->mesh != nullptr)
 		{
 			ImGui::Text("Mesh information");
 			ImGui::Separator();
@@ -77,7 +79,6 @@ void PanelInspector::DisplayInspector()
 //	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 	ImGui::End();
-	
 }
 
 GameObject* PanelInspector::RecursiveTreeNode(GameObject* parent)
