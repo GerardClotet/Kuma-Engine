@@ -60,11 +60,14 @@ void PanelInspector::DisplayInspector()
 
 	if (ImGui::CollapsingHeader("Texture"))
 	{
-		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material->setTexture)
+		if (App->scene_intro->selected_game_obj != nullptr)
 		{
-			//if setTexture=true of the selected GO, do this
-			ImGui::Text("%i Width %i Height", App->scene_intro->selected_game_obj->material->width, App->scene_intro->selected_game_obj->material->height);
-			ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
+			if (App->scene_intro->selected_game_obj->material != nullptr && App->scene_intro->selected_game_obj->material->setTexture)
+			{
+				//if setTexture=true of the selected GO, do this
+				ImGui::Text("%i Width %i Height", App->scene_intro->selected_game_obj->material->width, App->scene_intro->selected_game_obj->material->height);
+				ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
+			}
 		}
 	}
 
