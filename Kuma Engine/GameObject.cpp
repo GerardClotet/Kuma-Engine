@@ -181,21 +181,34 @@ void GameObject::CheckName(const char* path)
 	std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin();
 	while (iter != parent->game_object_childs.end())
 	{
+		LOG("item anem %s temp naem, %s",  temp_name);
+		
 		if ((*iter)->name == temp_name)
 		{
-			no_name = false;
-			++testu;
-			std::string a = path;
-			
-			a = a + "(" + std::to_string((uint)testu) + ")";	
-			new_name = a;		
-			name = new_name.c_str();
-			temp_name = name;
+			LOG("thisd");
+			if ((*iter) == this)
+			{
+				LOG("hola");
+			}
+
+			else {
+				no_name = false;
+				++testu;
+				std::string a = path;
+
+				a = a + "(" + std::to_string((uint)testu) + ")";
+				new_name = a;
+				temp_name = new_name.c_str();
+				this->name = new_name.c_str();
+			}
 		}
+
 
 		++iter;
 
 	}
+
+
 
 	if (no_name)
 		this->name = path;
