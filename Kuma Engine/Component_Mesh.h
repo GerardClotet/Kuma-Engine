@@ -41,6 +41,7 @@ public:
 	void GenerateImported(aiMesh* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();
+	void CreateVertexFaceNormals();
 	void TranslateMesh(float pos[3]);
 	std::list<debug_mesh> GetDebugInfo();
 public:
@@ -75,6 +76,7 @@ public:
 	bool show_vertex = false;
 	bool show_normals = false;
 	bool show_face_normal = false;
+	bool test = false;
 
 public:
 	GameObject* gameObject_Item = nullptr;

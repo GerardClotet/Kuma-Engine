@@ -76,6 +76,9 @@ bool ModuleEditor::Start()
 
 update_status ModuleEditor::Update(float dt)
 {
+	if (App->scene_intro->selected_game_obj)
+		inspector_window = true;
+	
 	
 	return UPDATE_CONTINUE;
 }
