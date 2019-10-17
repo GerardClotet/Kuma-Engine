@@ -7,6 +7,7 @@
 #include "Application.h"
 
 #include "ImGui/imgui.h"
+struct TexData;
 class GameObject;
 class PanelInspector : public Panel
 {
@@ -20,6 +21,11 @@ public:
 
 
 	void DisplayInspector();
-	GameObject* RecursiveTreeNode(GameObject* parent);
+	TexData* texture;
+
+	/*static  ImVec2 ImRotate(const ImVec2& v, float cos_a, float sin_a);
+	static  inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
+	void ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle);
+*/
 };
 #endif // !_PANEL_INSPECTOR_H_

@@ -2,9 +2,10 @@
 #include "GameObject.h"
 #include "Component_Mesh.h"
 #include "Component_Material.h"
+#include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleTexture.h"
 #include "ModuleUI.h"
-
 update_status PanelInspector::Draw()
 {
 	if (App->ui->inspector_window)
@@ -18,6 +19,14 @@ void PanelInspector::DisplayInspector()
 {
 	ImGui::Begin("Inspector", &App->ui->inspector_window);
 
+	if (App->scene_intro->selected_game_obj != nullptr)
+	{
+		static char go_name[50];
+		if (ImGui::InputText("Name", go_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		{
+			App->scene_intro->selected_game_obj->name = go_name;
+		}
+	}
 	if (ImGui::CollapsingHeader("Transform"))
 	{
 		if (App->scene_intro->selected_game_obj != nullptr)
@@ -52,7 +61,7 @@ void PanelInspector::DisplayInspector()
 			ImGui::Text("%i num_index", App->scene_intro->selected_game_obj->mesh->num_index);
 			ImGui::Text("%i num_normals", App->scene_intro->selected_game_obj->mesh->num_normal);
 			ImGui::Text("%i num_UVs", App->scene_intro->selected_game_obj->mesh->num_uvs);
-
+			
 			ImGui::Spacing();
 			ImGui::Spacing();
 
@@ -71,6 +80,12 @@ void PanelInspector::DisplayInspector()
 				//if setTexture=true of the selected GO, do this
 				ImGui::Text("%i Width %i Height", App->scene_intro->selected_game_obj->material->width, App->scene_intro->selected_game_obj->material->height);
 				ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
+
+				texture = App->scene_intro->selected_game_obj->material->GetTexture();
+				iluFlipImage(); 
+				ImGui::Image((ImTextureID)texture->id, ImVec2(150, 150),ImVec2(-1,1)); 
+				
+				
 			}
 		}
 	}
@@ -81,7 +96,70 @@ void PanelInspector::DisplayInspector()
 	ImGui::End();
 }
 
-GameObject* PanelInspector::RecursiveTreeNode(GameObject* parent)
-{
-	return nullptr;
-}
+
+//static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs)
+//{
+//	return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y);
+//}
+//static inline ImVec2 ImRotate(const ImVec2& v, float cos_a, float sin_a)
+//{
+//	return ImVec2(v.x * cos_a - v.y * sin_a, v.x * sin_a + v.y * cos_a);
+//}
+//void ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle)
+//{
+//	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+//
+//	float cos_a = cosf(angle);
+//	float sin_a = sinf(angle);
+//	ImVec2 pos[4] =
+//	{
+//		center + ImRotate(ImVec2(-size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
+//		center + ImRotate(ImVec2(+size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
+//		center + ImRotate(ImVec2(+size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a),
+//		center + ImRotate(ImVec2(-size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a)
+//	};
+//	ImVec2 uvs[4] =
+//	{
+//		ImVec2(0.0f, 0.0f),
+//		ImVec2(1.0f, 0.0f),
+//		ImVec2(1.0f, 1.0f),
+//		ImVec2(0.0f, 1.0f)
+//	};
+//
+//	draw_list->AddImageQuad(tex_id, pos[0], pos[1], pos[2], pos[3], uvs[0], uvs[1], uvs[2], uvs[3], IM_COL32_WHITE);
+//}
+
+//ImVec2 PanelInspector::ImRotate(const ImVec2& v, float cos_a, float sin_a)
+//{
+//	return ImVec2(v.x * cos_a - v.y * sin_a, v.x * sin_a + v.y * cos_a);
+//}
+//
+// inline ImVec2 PanelInspector::operator+(const ImVec2& lhs, const ImVec2& rhs)
+//{
+//	return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y);
+//}
+//
+//void PanelInspector::ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle)
+//{
+//	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+//
+//	float cos_a = cosf(angle);
+//	float sin_a = sinf(angle);
+//	ImVec2 pos[4] =
+//	{
+//	ImRotate(ImVec2(-size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
+//	 ImRotate(ImVec2(+size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
+//	 ImRotate(ImVec2(+size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a),
+//	ImRotate(ImVec2(-size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a)
+//	};
+//	ImVec2 uvs[4] =
+//	{
+//		ImVec2(0.0f, 0.0f),
+//		ImVec2(1.0f, 0.0f),
+//		ImVec2(1.0f, 1.0f),
+//		ImVec2(0.0f, 1.0f)
+//	};
+//
+//	draw_list->AddImageQuad(tex_id, pos[0], pos[1], pos[2], pos[3], uvs[0], uvs[1], uvs[2], uvs[3], IM_COL32_WHITE);
+//}
+
