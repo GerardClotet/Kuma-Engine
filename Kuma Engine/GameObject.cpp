@@ -16,9 +16,10 @@ GameObject::GameObject()
 GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,const char* name)
 {
 	this->type = type;
+	this->name = name;
 	Set_Parent_and_Name(parent,name);
 
-
+	
 	LOG("game object name %s", this->name);
 }
 
@@ -183,15 +184,18 @@ void GameObject::CheckName(const char* path)
 	{
 		LOG("item anem %s temp naem, %s",  temp_name);
 		
-		if ((*iter)->name == temp_name)
+	/*	std::string alpha = (*iter)->name;
+		alpha.compare(this->name);*/
+		
+
+		if (strcmp((*iter)->name, temp_name)==0)
 		{
 			LOG("thisd");
 			if ((*iter) == this)
-			{
-				LOG("hola");
-			}
+				return;
+			
 
-			else {
+			
 				no_name = false;
 				++testu;
 				std::string a = path;
@@ -200,7 +204,7 @@ void GameObject::CheckName(const char* path)
 				new_name = a;
 				temp_name = new_name.c_str();
 				this->name = new_name.c_str();
-			}
+			
 		}
 
 

@@ -70,7 +70,7 @@ bool Component_Mesh::Update()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (gameObject_Item->material->isTextureEnable)
+	if (gameObject_Item->material != nullptr &&gameObject_Item->material->isTextureEnable )
 		glEnable(GL_TEXTURE_2D);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
@@ -660,7 +660,7 @@ void Component_Mesh::TranslateMesh(float pos[3])
 	gameObject_Item->game_object_pos.y = pos[1];
 	gameObject_Item->game_object_pos.z = pos[2];
 
-	par_shapes_translate(par_mesh, gameObject_Item->game_object_pos.x, gameObject_Item->game_object_pos.y, gameObject_Item->game_object_pos.z);
+	//par_shapes_translate(par_mesh, gameObject_Item->game_object_pos.x, gameObject_Item->game_object_pos.y, gameObject_Item->game_object_pos.z);
 }
 
 std::list<debug_mesh> Component_Mesh::GetDebugInfo()
