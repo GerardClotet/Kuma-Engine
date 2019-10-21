@@ -32,6 +32,20 @@ bool ModuleTexture::CleanUp()
 
 	return true;
 }
+void ModuleTexture::RemoveTexture(TexData* texture)
+{
+
+	std::vector<TexData*>::iterator iter = textures_vec.begin();
+	while (iter != textures_vec.end())
+	{
+		if ((*iter) == texture)
+		{
+			textures_vec.erase(iter);
+			delete texture;
+			return;
+		}
+	}
+}
 bool ModuleTexture::Init()
 {
 	bool ret = true;

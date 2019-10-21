@@ -37,13 +37,13 @@ public:
 	bool Update();
 	void Set_Parent_and_Name(GameObject* parent, const char* path);
 	void RemoveGameObject(GameObject* child);
-
+	bool CleanUp();
 	void CheckName(const char* name);
 public:
 	const char* name;
 	std::string new_name;
 	char c;
-	double testu;
+	double name_counter;
 	char buf[4096];
 	OBJECT_TYPE type = OBJECT_TYPE::NONE;
 	float3 game_object_pos		= { 0.0f, 0.0f, 0.0f };

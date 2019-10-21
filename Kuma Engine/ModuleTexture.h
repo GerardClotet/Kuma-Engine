@@ -31,7 +31,7 @@ public:
 
 	bool Init();
 	bool CleanUp();
-
+	void RemoveTexture(TexData* texture);
 	TexData* LoadTexture(const char* path);
 
 	//ilLoadImage allows users to transparently load several different image formats uniformly.

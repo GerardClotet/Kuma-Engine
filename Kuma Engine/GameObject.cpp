@@ -85,25 +85,9 @@ Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
 
 GameObject::~GameObject()
 {
-	parent = nullptr;
+//	LOG("deleted %s",name);
+	
 
-	std::vector<Components*>::iterator item = components.begin();
-	while (item != components.end())
-	{
-		delete (*item);
-		++item;
-	}
-	components.clear();
-
-	std::vector<GameObject*>::iterator iter = game_object_childs.begin();
-	while (iter != game_object_childs.end())
-	{
-		delete (*iter);
-		++iter;
-	}
-
-	game_object_childs.clear();
-	LOG("gameobject deleted");
 }
 
 bool GameObject::Update()
@@ -171,36 +155,71 @@ void GameObject::Set_Parent_and_Name(GameObject* go_parent,const char* path)
 
 void GameObject::RemoveGameObject(GameObject* child)
 {
+	std::vector<GameObject*>::iterator iter = App->scene_intro->root->game_object_childs.begin();
+
+	while (iter != App->scene_intro->root->game_object_childs.end())
+	{
+		if ((*iter) == child)
+		{
+			(*iter)->CleanUp();
+			LOG("deleted component");
+			//delete (*iter);
+			App->scene_intro->root->game_object_childs.erase(iter);
+			App->scene_intro->selected_game_obj == nullptr;
+			App->ui->inspector_window = false;
+			return;
+		}
+		++iter;
+	}
 	//game_object_childs.(child);
+}
+
+bool GameObject::CleanUp()
+{
+	LOG("---Cleaning %s---", name);
+	parent = nullptr;
+	//name = nullptr;
+	std::vector<Components*>::iterator item = components.begin();
+	while (item != components.end())
+	{
+		LOG("deleted compoennt %s", (*item)->name);
+		delete (*item);
+		++item;
+	}
+	components.clear();
+
+	//std::vector<GameObject*>::iterator iter = game_object_childs.begin();
+	//while (iter != game_object_childs.end())
+	//{
+	//	delete (*iter);
+	//	++iter;
+	//}
+
+	game_object_childs.clear();
+	LOG("gameobject deleted");
+	return true;
 }
 
 void GameObject::CheckName(const char* path)
 {
-	testu = 0;
+	name_counter = 0;
 	const char* temp_name = path;
 	bool no_name = true;
 	std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin();
 	while (iter != parent->game_object_childs.end())
 	{
-		LOG("item anem %s temp naem, %s",  temp_name);
-		
-	/*	std::string alpha = (*iter)->name;
-		alpha.compare(this->name);*/
-		
-
 		if (strcmp((*iter)->name, temp_name)==0)
 		{
-			LOG("thisd");
 			if ((*iter) == this)
 				return;
 			
 
 			
 				no_name = false;
-				++testu;
+				++name_counter;
 				std::string a = path;
 
-				a = a + "(" + std::to_string((uint)testu) + ")";
+				a = a + "(" + std::to_string((uint)name_counter) + ")";
 				new_name = a;
 				temp_name = new_name.c_str();
 				this->name = new_name.c_str();

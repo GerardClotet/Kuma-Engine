@@ -36,36 +36,10 @@ public:
 	/*TexData* texture = nullptr;*/
 	bool enabled			= true;
 	bool setTexture			= false;
+	const char* name		= nullptr;	
 };
 #endif // !_COMPONENTS_H__
 
 
 
-//#ifndef _COMPONETS_H__
-//#define _COMPONENTS_H__
-//#include <string>
-////enum COMP_TYPE
-////{
-////
-////	NONE,
-////	MESH,
-////	TRANSFORM,
-////	MATERIAL,
-////
-////}type;
-//
-//class Component
-//{
-//public:
-//	Component();
-//	Component(std::string name);
-//	~Component();
-//
-//	//COMP_TYPE type = COMP_TYPE::NONE;
-//	virtual void Update();
-//	//virtual bool Enable() {};
-//	//virtual bool Disable() {};
-//
-//};
-//
-//#endif
+

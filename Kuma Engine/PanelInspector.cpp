@@ -26,7 +26,14 @@ void PanelInspector::DisplayInspector()
 		{
 			App->scene_intro->selected_game_obj->name = go_name;
 		}
+
+		if (ImGui::Button("delete", ImVec2(90, 20)))
+		{
+			App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
+			
+		}
 	}
+	
 	if (ImGui::CollapsingHeader("Transform"))
 	{
 		if (App->scene_intro->selected_game_obj != nullptr)
@@ -82,8 +89,7 @@ void PanelInspector::DisplayInspector()
 				ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
 
 				texture = App->scene_intro->selected_game_obj->material->GetTexture();
-				iluFlipImage(); 
-				ImGui::Image((ImTextureID)texture->id, ImVec2(150, 150),ImVec2(-1,1)); 
+				ImGui::Image((ImTextureID)texture->id, ImVec2(texture->width, texture->height),ImVec2(0,1),ImVec2(1,0)); 
 				
 				
 			}

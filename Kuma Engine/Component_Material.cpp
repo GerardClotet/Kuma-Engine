@@ -7,12 +7,15 @@
 
 Component_Material::Component_Material(GameObject* obj)
 {
+	name = "material";
 	this->gameObject_Item = obj;
 	comp_type = GO_COMPONENT::MATERIAL;
 }
 
 Component_Material::~Component_Material()
 {
+	App->texture->RemoveTexture(texture);
+	texture = nullptr;
 }
 
 bool Component_Material::Update()
