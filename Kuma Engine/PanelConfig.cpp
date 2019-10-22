@@ -349,7 +349,7 @@ void PanelConfig::DisplayConfig()
 
 
 
-		ImGui::Separator();
+		/*ImGui::Separator();
 		if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
 		{
 			if (GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material != nullptr)
@@ -365,7 +365,7 @@ void PanelConfig::DisplayConfig()
 				App->scene_intro->selected_game_obj->material->isTextureEnable = false;
 			}
 
-		}
+		}*/
 
 
 		ImGui::Separator();

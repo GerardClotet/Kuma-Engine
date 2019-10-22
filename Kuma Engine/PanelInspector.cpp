@@ -89,10 +89,26 @@ void PanelInspector::DisplayInspector()
 				ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
 
 				texture = App->scene_intro->selected_game_obj->material->GetTexture();
-				ImGui::Image((ImTextureID)texture->id, ImVec2(texture->width, texture->height),ImVec2(0,1),ImVec2(1,0)); 
+				ImGui::Image((ImTextureID)texture->id, ImVec2(200, 200),ImVec2(0,1),ImVec2(1,0)); 
 				
 				
 			}
+		}
+		if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
+		{
+			if (GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material != nullptr)
+			{
+				glEnable(GL_TEXTURE_2D), LOG("Enabled Texture 2D");
+				App->scene_intro->selected_game_obj->material->isTextureEnable = true;
+			}
+
+			else if (!GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material != nullptr)
+			{
+				glDisable(GL_TEXTURE_2D), LOG("Disabled Texture 2D");
+
+				App->scene_intro->selected_game_obj->material->isTextureEnable = false;
+			}
+
 		}
 	}
 

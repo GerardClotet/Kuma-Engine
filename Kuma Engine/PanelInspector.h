@@ -23,6 +23,9 @@ public:
 	void DisplayInspector();
 	TexData* texture;
 
+public:
+	bool GL_Texture_2D = true;
+
 	/*static  ImVec2 ImRotate(const ImVec2& v, float cos_a, float sin_a);
 	static  inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
 	void ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle);
