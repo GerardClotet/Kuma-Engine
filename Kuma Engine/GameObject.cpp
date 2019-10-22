@@ -165,7 +165,7 @@ void GameObject::RemoveGameObject(GameObject* child)
 			LOG("deleted component");
 			//delete (*iter);
 			App->scene_intro->root->game_object_childs.erase(iter);
-			App->scene_intro->selected_game_obj == nullptr;
+			App->scene_intro->selected_game_obj = nullptr;
 			App->ui->inspector_window = false;
 			return;
 		}
