@@ -232,12 +232,13 @@ GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE ty
 
 void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 {
-
 	parent->Update();
 	std::vector<GameObject*>::iterator iter = parent->game_object_childs.begin();
 	for (iter; iter != parent->game_object_childs.end(); ++iter)
 	{
-		UpdateGameObject((*iter));
+
+		if ((*iter)->show)
+			UpdateGameObject((*iter));
 	}
 }
 

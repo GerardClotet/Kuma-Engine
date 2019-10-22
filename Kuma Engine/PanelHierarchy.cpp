@@ -34,22 +34,22 @@ void PanelHierarchy::RecursiveTreeNode(GameObject* parent)
 	if (parent == App->scene_intro->selected_game_obj)
 		base_flags = ImGuiTreeNodeFlags_Selected;
 
-	if( parent->name != nullptr && ImGui::TreeNodeEx(parent, base_flags,parent->name))
-	 {
+	if (parent->name != nullptr && ImGui::TreeNodeEx(parent, base_flags, parent->name))
+	{
 		if (ImGui::IsItemClicked())
 			App->scene_intro->selected_game_obj = parent;
-		
 
 		std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin(); //const_iterator just for reading
 		while (iter != parent->game_object_childs.end())
 		{
 			//App->scene_intro->selected_game_obj = (*iter);
 			RecursiveTreeNode((*iter));
-
 			++iter;
 		}
 		ImGui::TreePop();
-	 }
+
+		
+	}
 
 	
 }

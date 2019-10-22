@@ -32,6 +32,12 @@ void PanelInspector::DisplayInspector()
 			App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
 			
 		}
+
+		ImGui::SameLine();
+		if (ImGui::Checkbox("hide", &App->scene_intro->selected_game_obj->show))
+		{
+			LOG("ERGRG");
+		}
 	}
 	
 	if (ImGui::CollapsingHeader("Transform"))
