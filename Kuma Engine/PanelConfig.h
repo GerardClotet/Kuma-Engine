@@ -56,7 +56,7 @@ private:
 	bool GL_Cull_face = true;
 	bool GL_Lightning = true;
 	bool GL_Color_material = true;
-	bool GL_Texture_2D = true;
+
 	bool GL_Wireframe = true;
 	bool GL_Fill = true;
 };
