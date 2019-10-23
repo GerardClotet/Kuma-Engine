@@ -157,7 +157,7 @@ bool Component_Mesh::Update()
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
 		}
 
-		glColor3f(255.0f, 255.0f, 255.0f);
+		
 		glEnd();
 	}
 
@@ -215,16 +215,22 @@ void Component_Mesh::GenerateCube()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
+
 
 	num_uvs = par_mesh->npoints;
 	uvs = new float[num_uvs * 2];
+
 	gl_Short = true;
 	has_normals = true;
 	has_uvs = true;
@@ -247,13 +253,18 @@ void Component_Mesh::GenerateSphere()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
+
 
 	num_uvs = par_mesh->npoints;
 	uvs = new float[num_uvs * 2];
@@ -363,13 +374,18 @@ void Component_Mesh::GenerateCone()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
+
 
 	num_uvs = par_mesh->npoints;
 	uvs = new float[num_uvs * 2];
@@ -397,13 +413,18 @@ void Component_Mesh::GenerateCylinder()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
+
 
 	num_uvs = par_mesh->npoints;
 	uvs = new float[num_uvs * 2];
@@ -431,13 +452,18 @@ void Component_Mesh::GenerateDodecahedron()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
+
 
 	num_uvs = par_mesh->npoints;
 	uvs = new float[num_uvs * 2];
@@ -465,16 +491,23 @@ void Component_Mesh::GeneratePlane()
 	par_shapes_compute_normals(par_mesh);
 
 	num_vertex = par_mesh->npoints;
-	vertex = par_mesh->points;
+	num_index = par_mesh->ntriangles * 3;
 
-	num_index = par_mesh->ntriangles;
-	index = (uint*)par_mesh->triangles;
+	vertex = new float[num_vertex * 3];
+	index = new uint[num_index * 3];
+
+	memcpy(vertex, par_mesh->points, sizeof(float) * num_vertex * 3);
+	memcpy(index, par_mesh->triangles, sizeof(PAR_SHAPES_T) * num_index);
 
 	num_normal = par_mesh->npoints;
-	normal = par_mesh->normals;
+	normal = new float[num_vertex * 3];
+	memcpy(normal, par_mesh->normals, sizeof(float) * num_vertex * 3);
 
-	num_uvs = par_mesh->npoints;
-	uvs = new float[num_uvs * 2];
+
+	if (par_mesh->tcoords != nullptr) {
+		uvs = new float[num_vertex * 3];
+		memcpy(uvs, par_mesh->tcoords, sizeof(float) * num_vertex * 3);
+	}
 
 	gl_Short = true;
 	has_normals = true;
