@@ -37,9 +37,11 @@ bool ModuleEditor::Start()
 	ImGui::CreateContext();
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable;//enable docking   
+	io.ConfigDockingWithShift = false; // dock without shift
+	io.ConfigWindowsResizeFromEdges = true;
+	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 
 	  // Setup Dear ImGui style
 	ImGui::StyleColorsEdited();
@@ -154,14 +156,17 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 
 		ImGui::EndMainMenuBar();
-	}
+	}//end menu bar --> maybe a func for this?
+
+	BackgroundDockSpace();
+
 	for (std::list<Panel*>::iterator item = panel_list.begin(); item != panel_list.end(); ++item)
 	{
 		ret = (*item)->Draw();
 	}
 	//call demo function
 	if (demoWindow)
-		ImGui::ShowDemoWindow();
+		ImGui::ShowDemoWindow();//ImGui::ShowDemoWindow();
 
 		
 
@@ -239,6 +244,33 @@ void ModuleEditor::LoadInputEvent(uint id, uint state)
 	{
 		config_p->AddInputToBuffer(input_event);
 	}
+}
+
+void ModuleEditor::BackgroundDockSpace()
+{
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::SetNextWindowBgAlpha(0.0f);
+
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Invisible Background",0, window_flags);
+	ImGui::PopStyleVar(3);
+
+
+	
+	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+
+	ImGui::End();
 }
 
 void ModuleEditor::ObjectEditor()
