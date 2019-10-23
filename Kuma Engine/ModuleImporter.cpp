@@ -102,6 +102,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			getImportedName(path);
 			GameObject* go_subparent;
 			go_subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, imported_name + " parent");
+			App->scene_intro->selected_game_obj = go_subparent;
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
 		}
 
@@ -150,6 +151,8 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name)
 	mesh = importfile->mMeshes[0];//it has only 1 mesh
 	
 	go->AddComponent(GO_COMPONENT::MESH, mesh);
+	App->scene_intro->selected_game_obj = go;
+
 }
 
 

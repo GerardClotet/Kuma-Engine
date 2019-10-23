@@ -90,7 +90,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	createGrid();
 
-	glColor3f(255.0f, 255.0f, 255.0f);
+	//glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }
 
@@ -223,7 +223,7 @@ void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 	for (iter; iter != parent->game_object_childs.end(); ++iter)
 	{
 
-		if ((*iter)->show)
+		if (!(*iter)->show)
 			UpdateGameObject((*iter));
 	}
 }
