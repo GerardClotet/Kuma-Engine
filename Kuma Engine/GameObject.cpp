@@ -13,14 +13,14 @@ GameObject::GameObject()
 	LOG("Game Object root");
 }
 
-GameObject::GameObject(GameObject* parent,OBJECT_TYPE type,const char* name)
+GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 {
 	this->type = type;
 	this->name = name;
 	Set_Parent_and_Name(parent,name);
 
 	
-	LOG("game object name %s", this->name);
+	LOG("game object name %s", this->name.c_str());
 }
 
 //GameObject::GameObject(std::string name, OBJECT_TYPE type)
@@ -138,7 +138,7 @@ bool GameObject::Update()
 	return true;
 }
 
-void GameObject::Set_Parent_and_Name(GameObject* go_parent,const char* path)
+void GameObject::Set_Parent_and_Name(GameObject* go_parent, std::string path)
 {
 	//if(parent != nullptr)
 	if (parent == go_parent)
@@ -200,15 +200,15 @@ bool GameObject::CleanUp()
 	return true;
 }
 
-void GameObject::CheckName(const char* path)
+void GameObject::CheckName(std::string path)
 {
 	name_counter = 0;
-	const char* temp_name = path;
+	std::string temp_name = path;
 	bool no_name = true;
 	std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin();
 	while (iter != parent->game_object_childs.end())
 	{
-		if (strcmp((*iter)->name, temp_name)==0)
+		if (strcmp((*iter)->name.c_str(), temp_name.c_str())==0)
 		{
 			if ((*iter) == this)
 				return;

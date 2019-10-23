@@ -36,7 +36,7 @@ public:
 	/*TexData* texture = nullptr;*/
 	bool enabled			= true;
 	bool setTexture			= false;
-	const char* name		= nullptr;	
+	std::string name;
 };
 #endif // !_COMPONENTS_H__
 

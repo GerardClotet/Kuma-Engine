@@ -21,8 +21,9 @@ void PanelInspector::DisplayInspector()
 
 	if (App->scene_intro->selected_game_obj != nullptr)
 	{
-		static char go_name[50];
-		if (ImGui::InputText("Name", go_name, 100, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		static char go_name[20];
+		memcpy(go_name, App->scene_intro->selected_game_obj->name.data(), 20);
+		if (ImGui::InputText("Name", go_name, 20, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 		{
 			App->scene_intro->selected_game_obj->name = go_name;
 		}

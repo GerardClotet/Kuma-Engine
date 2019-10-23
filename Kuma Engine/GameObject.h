@@ -30,17 +30,17 @@ class GameObject {
 
 public:
 	GameObject();
-	GameObject(GameObject* parent,OBJECT_TYPE type,const char* name);
+	GameObject(GameObject* parent,OBJECT_TYPE type,std::string name);
 	/*GameObject(std::string name, OBJECT_TYPE type);
 	GameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);*/
 	~GameObject();
 	bool Update();
-	void Set_Parent_and_Name(GameObject* parent, const char* path);
+	void Set_Parent_and_Name(GameObject* parent, std::string path);
 	void RemoveGameObject(GameObject* child);
 	bool CleanUp();
-	void CheckName(const char* name);
+	void CheckName(std::string name);
 public:
-	const char* name;
+	std::string name;
 	std::string new_name;
 	char c;
 	double name_counter;

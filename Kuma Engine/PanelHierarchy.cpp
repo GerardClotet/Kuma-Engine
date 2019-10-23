@@ -34,7 +34,7 @@ void PanelHierarchy::RecursiveTreeNode(GameObject* parent)
 	if (parent == App->scene_intro->selected_game_obj)
 		base_flags = ImGuiTreeNodeFlags_Selected;
 
-	if (parent->name != nullptr && ImGui::TreeNodeEx(parent, base_flags, parent->name))
+	if (parent->name.c_str() != nullptr && ImGui::TreeNodeEx(parent, base_flags, parent->name.c_str()))
 	{
 		if (ImGui::IsItemClicked())
 			App->scene_intro->selected_game_obj = parent;
