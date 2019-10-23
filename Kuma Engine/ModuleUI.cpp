@@ -54,6 +54,9 @@ bool ModuleEditor::Start()
 	panel_list.push_back(inspector_p	= new PanelInspector("Inspector"));
 	panel_list.push_back(hierarchy_p	= new PanelHierarchy("Hierarchy"));
 	console_window = true;
+	hierarchy_window = true;
+	inspector_window = true;
+	
 
 
 	

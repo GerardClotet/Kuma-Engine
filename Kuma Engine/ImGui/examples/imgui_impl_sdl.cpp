@@ -150,6 +150,182 @@ bool ImGui_ImplSDL2_ProcessEvent(const SDL_Event* event)
     return false;
 }
 
+static SDL_Cursor *init_system_cursor(const char *image[])
+{
+    int i, row, col;
+    Uint8 data[4 * 32];
+    Uint8 mask[4 * 32];
+    int hot_x, hot_y;
+
+    i = -1;
+    for (row = 0; row < 32; ++row) {
+        for (col = 0; col < 32; ++col) {
+            if (col % 8) {
+                data[i] <<= 1;
+                mask[i] <<= 1;
+            }
+            else {
+                ++i;
+                data[i] = mask[i] = 0;
+            }
+            switch (image[4 + row][col]) {
+            case 'X':
+                data[i] |= 0x01;
+                mask[i] |= 0x01;
+                break;
+            case '.':
+                mask[i] |= 0x01;
+                break;
+            case ' ':
+                break;
+            }
+        }
+    }
+    SDL_sscanf(image[4 + row], "%d,%d", &hot_x, &hot_y);
+    return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
+}
+
+static const char *arrow_zoom_in[] = {
+    /* width height num_colors chars_per_pixel */
+    "    32    32        3            1",
+    /* colors */
+    "X c #000000",
+    ". c #ffffff",
+    "  c None",
+    /* pixels */
+
+    "               X                ",
+    "             X...X              ",
+    "          X.........X           ",
+    "        X.............X         ",
+    "       X...............X        ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "     X........XXX........X      ",
+    "     X........XXX........X      ",
+    "    X......XXXXXXXXX......X     ",
+    "    X......XXXXXXXXX......X     ",
+    "     X........XXX........X      ",
+    "     X........XXX........X      ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "       X...............X        ",
+    "        X.............X         ",
+    "          X.........X           ",
+    "             X....X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                 XX             ",
+    "                                ",
+
+
+
+    "0,0"
+};
+
+static const char *arrow_zoom_out[] = {
+    /* width height num_colors chars_per_pixel */
+    "    32    32        3            1",
+    /* colors */
+    "X c #000000",
+    ". c #ffffff",
+    "  c None",
+    /* pixels */
+
+    "               X                ",
+    "             X...X              ",
+    "          X.........X           ",
+    "        X.............X         ",
+    "       X...............X        ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "     X...................X      ",
+    "     X...................X      ",
+    "    X......XXXXXXXXX......X     ",
+    "    X......XXXXXXXXX......X     ",
+    "     X...................X      ",
+    "     X...................X      ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "       X...............X        ",
+    "        X.............X         ",
+    "          X.........X           ",
+    "             X....X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                 XX             ",
+    "                                ",
+
+
+
+    "0,0"
+};
+
+static const char *arrow_zoom[] = {
+    /* width height num_colors chars_per_pixel */
+    "    32    32        3            1",
+    /* colors */
+    "X c #000000",
+    ". c #ffffff",
+    "  c None",
+    /* pixels */
+
+    "               X                ",
+    "             X...X              ",
+    "          X.........X           ",
+    "        X.............X         ",
+    "       X...............X        ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "     X...................X      ",
+    "     X...................X      ",
+    "    X.....................X     ",
+    "    X.....................X     ",
+    "     X...................X      ",
+    "     X...................X      ",
+    "      X.................X       ",
+    "      X.................X       ",
+    "       X...............X        ",
+    "        X.............X         ",
+    "          X.........X           ",
+    "             X....X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "               X..X             ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                X..X            ",
+    "                 XX             ",
+    "                                ",
+
+
+
+    "0,0"
+};
+
 static bool ImGui_ImplSDL2_Init(SDL_Window* window, void* sdl_gl_context)
 {
     g_Window = window;
@@ -198,6 +374,9 @@ static bool ImGui_ImplSDL2_Init(SDL_Window* window, void* sdl_gl_context)
     g_MouseCursors[ImGuiMouseCursor_ResizeNESW] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENESW);
     g_MouseCursors[ImGuiMouseCursor_ResizeNWSE] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENWSE);
     g_MouseCursors[ImGuiMouseCursor_Hand] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+    g_MouseCursors[ImGuiMouseCursor_Zoom] = init_system_cursor(arrow_zoom);
+    g_MouseCursors[ImGuiMouseCursor_ZoomIn] = init_system_cursor(arrow_zoom_in);
+    g_MouseCursors[ImGuiMouseCursor_ZoomOut] = init_system_cursor(arrow_zoom_out);
 
     // Our mouse update function expect PlatformHandle to be filled for the main viewport
     ImGuiViewport* main_viewport = ImGui::GetMainViewport();
