@@ -27,17 +27,20 @@ void PanelInspector::DisplayInspector()
 			App->scene_intro->selected_game_obj->name = go_name;
 		}
 
+		if (ImGui::Checkbox("hide", &App->scene_intro->selected_game_obj->show))
+		{
+			LOG("ERGRG");
+		}
+
+		ImGui::SameLine();
 		if (ImGui::Button("delete", ImVec2(90, 20)))
 		{
 			App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
 			
 		}
 
-		ImGui::SameLine();
-		if (ImGui::Checkbox("hide", &App->scene_intro->selected_game_obj->show))
-		{
-			LOG("ERGRG");
-		}
+		
+		
 	}
 	
 	if (ImGui::CollapsingHeader("Transform"))
