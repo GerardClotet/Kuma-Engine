@@ -43,6 +43,7 @@ bool ModuleEditor::Start()
 
 	  // Setup Dear ImGui style
 	ImGui::StyleColorsEdited();
+	
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
 	panel_list.push_back(config_p		= new PanelConfig("Configuration"));
