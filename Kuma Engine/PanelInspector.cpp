@@ -30,13 +30,18 @@ void PanelInspector::DisplayInspector()
 
 		if (ImGui::Checkbox("hide", &App->scene_intro->selected_game_obj->show))
 		{
-			LOG("ERGRG");
+			LOG("hide");
 		}
 
 		ImGui::SameLine();
 		if (ImGui::Button("delete", ImVec2(90, 20)))
 		{
-			App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
+			if (App->scene_intro->selected_game_obj->parent->type == OBJECT_TYPE::SUBPARENT)
+			{
+				App->scene_intro->root->RemoveSubChildGameObject(App->scene_intro->selected_game_obj);
+			}
+
+			else App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
 			
 		}
 

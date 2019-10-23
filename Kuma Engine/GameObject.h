@@ -13,7 +13,8 @@ struct aiMesh;
 
 
  enum class OBJECT_TYPE {
-	NONE,
+	PARENT,
+	SUBPARENT,
 	CUBE,
 	SPHERE,
 	CYLINDER,
@@ -37,6 +38,7 @@ public:
 	bool Update();
 	void Set_Parent_and_Name(GameObject* parent, std::string path);
 	void RemoveGameObject(GameObject* child);
+	void RemoveSubChildGameObject(GameObject* subchild);
 	bool CleanUp();
 	void CheckName(std::string name);
 public:
@@ -48,7 +50,7 @@ public:
 
 	bool show		= true;
 
-	OBJECT_TYPE type = OBJECT_TYPE::NONE;
+	OBJECT_TYPE type = OBJECT_TYPE::PARENT;
 	float3 game_object_pos		= { 0.0f, 0.0f, 0.0f };
 	float3 game_object_rot		= { 0.0f, 0.0f, 0.0f };
 	float3 game_object_scale	= { 0.0f, 0.0f, 0.0f };

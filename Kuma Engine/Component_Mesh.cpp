@@ -17,7 +17,9 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()
 	comp_type = GO_COMPONENT::MESH;
 	switch (type)
 	{
-	case OBJECT_TYPE::NONE:
+	case OBJECT_TYPE::PARENT:
+		break;
+	case OBJECT_TYPE::SUBPARENT:
 		break;
 	case OBJECT_TYPE::CUBE:
 		GenerateCube();

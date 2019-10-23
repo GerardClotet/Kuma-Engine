@@ -38,7 +38,7 @@ bool ModuleSceneIntro::Init()
 bool ModuleSceneIntro::Start()
 {
 
-	root = new GameObject(nullptr,OBJECT_TYPE::NONE, "root"); //empty gameobject containig  all game objects
+	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
 
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {

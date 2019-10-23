@@ -159,6 +159,7 @@ void GameObject::RemoveGameObject(GameObject* child)
 
 	while (iter != App->scene_intro->root->game_object_childs.end())
 	{
+		
 		if ((*iter) == child)
 		{
 			(*iter)->CleanUp();
@@ -174,11 +175,52 @@ void GameObject::RemoveGameObject(GameObject* child)
 	//game_object_childs.(child);
 }
 
+void GameObject::RemoveSubChildGameObject(GameObject* subchild)
+{
+
+	std::vector<GameObject*>::iterator iter = App->scene_intro->root->game_object_childs.begin();
+
+	while (iter != App->scene_intro->root->game_object_childs.end())
+	{
+		if ((*iter)->type == OBJECT_TYPE::SUBPARENT)
+		{
+			std::vector<GameObject*>::iterator it = (*iter)->game_object_childs.begin();
+
+			while (it != (*iter)->game_object_childs.end())
+			{
+
+				if ((*it) == subchild)
+				{
+					(*it)->CleanUp();
+					LOG("deleted component");
+					//delete (*iter);
+					(*iter)->game_object_childs.erase(it);
+					App->scene_intro->selected_game_obj = nullptr;
+					App->ui->inspector_window = false;
+					return;
+				}
+				++it;
+			}
+		}
+
+		++iter;
+	}
+}
+
 bool GameObject::CleanUp()
 {
 	LOG("---Cleaning %s---", name);
 	parent = nullptr;
 	//name = nullptr;
+	std::vector<GameObject*>::iterator it = game_object_childs.begin();
+	while (it != game_object_childs.end())
+	{
+		delete (*it);
+		++it;
+	}
+	game_object_childs.clear();
+	LOG("gameobject childs deleted");
+
 	std::vector<Components*>::iterator item = components.begin();
 	while (item != components.end())
 	{
@@ -188,6 +230,7 @@ bool GameObject::CleanUp()
 	}
 	components.clear();
 
+	
 	//std::vector<GameObject*>::iterator iter = game_object_childs.begin();
 	//while (iter != game_object_childs.end())
 	//{
@@ -195,8 +238,7 @@ bool GameObject::CleanUp()
 	//	++iter;
 	//}
 
-	game_object_childs.clear();
-	LOG("gameobject deleted");
+	
 	return true;
 }
 
