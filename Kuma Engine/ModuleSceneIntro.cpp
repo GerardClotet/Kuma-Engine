@@ -223,7 +223,7 @@ void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 	for (iter; iter != parent->game_object_childs.end(); ++iter)
 	{
 
-		if ((*iter)->show)
+		if (!(*iter)->show)
 			UpdateGameObject((*iter));
 	}
 }

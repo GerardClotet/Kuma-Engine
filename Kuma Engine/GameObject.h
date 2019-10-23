@@ -46,7 +46,7 @@ public:
 	double name_counter;
 	char buf[4096];
 
-	bool show		= true;
+	bool show		= false;
 
 	OBJECT_TYPE type = OBJECT_TYPE::NONE;
 	float3 game_object_pos		= { 0.0f, 0.0f, 0.0f };
