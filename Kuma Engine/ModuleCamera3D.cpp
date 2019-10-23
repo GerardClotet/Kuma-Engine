@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleSceneIntro.h"
 #include "GameObject.h"
+#include "ImGui/imgui.h"
 
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -140,6 +141,8 @@ void ModuleCamera3D::MovementCamera()
 
 	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
+		ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
+
 		if (App->input->GetMouseXMotion() > 4) newPos -= X * mouse_speed;
 		if (App->input->GetMouseXMotion() < -4) newPos += X * mouse_speed;
 
@@ -191,18 +194,35 @@ void ModuleCamera3D::ZoomCamera()
 {
 	if (App->input->GetMouseWheel() > 0)
 	{
+		ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
 		newPos -= Z * zoom_speed;
 	}
 	else if (App->input->GetMouseWheel() < 0)
 	{
+		ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
 		newPos += Z * zoom_speed;
 	}
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
+		
+		if (App->input->GetMouseYMotion() < 0)
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
+			newPos -= Z * zoom_speed;
+		}
+		
 
-		if (App->input->GetMouseYMotion() < 2) newPos -= Z * zoom_speed;
-		if (App->input->GetMouseYMotion() > -2) newPos += Z * zoom_speed;
+		if (App->input->GetMouseYMotion() > 0) 
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
+			newPos += Z * zoom_speed;
+		}
+
+		if (App->input->GetMouseYMotion() == 0)
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Zoom);
+		}
 		
 
 	}
