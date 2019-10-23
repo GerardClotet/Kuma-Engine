@@ -30,7 +30,7 @@ public:
 	static void HelpMarker(const char* desc);
 	void LoadConfig(JSON_Object*& config);
 	void LoadInputEvent(uint id, uint state);
-
+	void BackgroundDockSpace();
 	void ObjectEditor();
 	bool show_another_window	= false;
 	bool demoWindow 			= false;
