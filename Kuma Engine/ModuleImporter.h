@@ -15,10 +15,10 @@
 class Mesh;
 class Cube;
 class vec3;
+class GameObject;
 struct Color;
 enum class OBJECT_TYPE;
 enum class GO_COMPONENT;
-
 
 class ModuleImporter : public Module
 {
@@ -26,7 +26,8 @@ public:
 	ModuleImporter(Application* app, bool start_enabled = true);
 	~ModuleImporter();
 	void LoadGeometry(const char* path);
-	void LoadNode(const aiScene* importfile, aiNode* file_node, const char* name);
+	void LoadNode(const aiScene* importfile, aiNode* file_node, const char* name,GameObject* subparent);
+	void LoadSingleMesh(const aiScene* importfile, const char* name);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);

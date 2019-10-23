@@ -206,25 +206,11 @@ void ModuleSceneIntro::createDirtyCube()
 
 
 
-//GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type)
-//{
-//	GameObject* goItem = new GameObject(name, type);
-//	gameObject_list.push_back(goItem);
-//	return goItem;
-//}
-//
-//GameObject * ModuleSceneIntro::AddGameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
-//{
-//	GameObject* goItem = new GameObject(name, type, mesh);
-//	gameObject_list.push_back(goItem);
-//	return goItem;
-//}
-
 GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 {
 	if(parent == nullptr)
 		parent = root;
-
+	
 	
 	GameObject* game_obj = new GameObject(parent,type,name);
 	return game_obj;

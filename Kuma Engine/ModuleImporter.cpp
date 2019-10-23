@@ -95,35 +95,64 @@ void ModuleImporter::LoadGeometry(const char* path)
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		LoadNode(scene, scene->mRootNode,path);
+		LOG("this imported scene has %d meshes", scene->mNumMeshes);
+		if (scene->mNumMeshes > 1)
+		{
+			//LoadNodeSeveralMesh
+			getImportedName(path);
+			GameObject* go_subparent;
+			go_subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, imported_name + " parent");
+			LoadNode(scene, scene->mRootNode, path,go_subparent);
+		}
 
+		else LoadSingleMesh(scene, path);
 
+		
 		aiReleaseImport(scene);
 	}
 	else LOG("Error loading scene %s", path);
 }
 
-void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node,const char* name)
+
+void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, const char* name, GameObject* subparent)
 {
 	for (uint i = 0; i < file_node->mNumMeshes; i++)
 	{
+		aiString a = file_node->mName;
+		std::string af = a.data;
 		GameObject* go = nullptr;
-		getImportedName(name);
-		
-		go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER,imported_name);
+		//getImportedName(name);
+
+		go = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, af);
 		aiMesh* mesh;
 
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh);
 		go->AddComponent(GO_COMPONENT::MATERIAL);
-		
+
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
 	{
-		LoadNode(importfile, file_node->mChildren[i],name);
+		LoadNode(importfile, file_node->mChildren[i], name,subparent);
 
 	}
 
 }
+
+
+void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name)
+{
+	GameObject* go = nullptr;
+	getImportedName(name);
+
+	go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::IMPORTER, imported_name);
+
+	aiMesh* mesh;
+	mesh = importfile->mMeshes[0];//it has only 1 mesh
+	
+	go->AddComponent(GO_COMPONENT::MESH, mesh);
+	go->AddComponent(GO_COMPONENT::MATERIAL);
+}
+
 
 
