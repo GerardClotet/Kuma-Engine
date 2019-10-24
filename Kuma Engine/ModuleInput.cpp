@@ -172,28 +172,7 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 	}
 	else if (extension == "PNG" || extension == "png" || extension == "jpg" || extension == "dds")
 	{
-		if (App->scene_intro->selected_game_obj != nullptr)
-		{
-			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
-			{
-				std::vector<GameObject*>::iterator it = App->scene_intro->selected_game_obj->game_object_childs.begin();
-				while (it != App->scene_intro->selected_game_obj->game_object_childs.end())
-				{
-					if((*it)->material == nullptr)
-						(*it)->AddComponent(GO_COMPONENT::MATERIAL);
-					
-					(*it)->material->ReadTexture(file_decider.c_str());
-					++it;
-				}
-				return;
-			}
-			else if (App->scene_intro->selected_game_obj->material == nullptr && App->scene_intro->selected_game_obj->mesh != nullptr)
-			{
-				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
-				App->scene_intro->selected_game_obj->material->ReadTexture(file_decider.c_str());
-				return;
-			}
-		}
+		App->importer->LoadImportedMaterials(file_decider);
 	}
 
 	

@@ -63,5 +63,6 @@ private:
 	float sunW = 150;
 	int separator = 2;
 	std::string firstFbx;
+	std::string firstTex;
 
 };

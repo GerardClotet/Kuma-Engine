@@ -10,6 +10,7 @@
 #include "ModuleUI.h"
 #include "GameObject.h"
 #include "Components.h"
+#include "Component_Material.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 
@@ -84,6 +85,32 @@ void ModuleImporter::getImportedName(const char* path)
 	imported_name = name;
 
 	
+}
+
+void ModuleImporter::LoadImportedMaterials(std::string path)
+{
+	if (App->scene_intro->selected_game_obj != nullptr)
+	{
+		if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+		{
+			std::vector<GameObject*>::iterator it = App->scene_intro->selected_game_obj->game_object_childs.begin();
+			while (it != App->scene_intro->selected_game_obj->game_object_childs.end())
+			{
+				if ((*it)->material == nullptr)
+					(*it)->AddComponent(GO_COMPONENT::MATERIAL);
+
+				(*it)->material->ReadTexture(path.c_str());
+				++it;
+			}
+			return;
+		}
+		else if (App->scene_intro->selected_game_obj->material == nullptr && App->scene_intro->selected_game_obj->mesh != nullptr)
+		{
+			App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			App->scene_intro->selected_game_obj->material->ReadTexture(path.c_str());
+			return;
+		}
+	}
 }
 
 

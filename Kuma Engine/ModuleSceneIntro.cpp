@@ -40,6 +40,7 @@ bool ModuleSceneIntro::Start()
 
 	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
 	App->importer->LoadGeometry(firstFbx.c_str());
+	App->importer->LoadImportedMaterials(firstTex);
 
 	return true;
 }
@@ -74,6 +75,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 void ModuleSceneIntro::LoadConfig(JSON_Object *& config)
 {
 	firstFbx = json_object_dotget_string(config, "Importer.File");
+	firstTex = json_object_dotget_string(config, "Importer.Texture");
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
