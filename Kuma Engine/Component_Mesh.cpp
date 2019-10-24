@@ -75,7 +75,7 @@ bool Component_Mesh::Update()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (gameObject_Item->material != nullptr &&gameObject_Item->material->isTextureEnable )
+	if (gameObject_Item->material != nullptr && gameObject_Item->material->isTextureEnable)
 		glEnable(GL_TEXTURE_2D);
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
