@@ -33,6 +33,7 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void LoadConfig(JSON_Object*& config);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createGrid();
 	void createDirtyCube();
@@ -61,5 +62,6 @@ private:
 	float sunQ = 2;
 	float sunW = 150;
 	int separator = 2;
+	std::string firstFbx;
 
 };

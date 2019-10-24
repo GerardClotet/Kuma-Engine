@@ -39,9 +39,7 @@ bool ModuleSceneIntro::Start()
 {
 
 	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
-
-	
-
+	App->importer->LoadGeometry(firstFbx.c_str());
 
 	return true;
 }
@@ -71,6 +69,11 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 	//glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::LoadConfig(JSON_Object *& config)
+{
+	firstFbx = json_object_dotget_string(config, "Importer.File");
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
