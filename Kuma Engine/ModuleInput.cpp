@@ -179,7 +179,7 @@ void ModuleInput::ExtensionFileDecider(const char* file)
 				std::vector<GameObject*>::iterator it = App->scene_intro->selected_game_obj->game_object_childs.begin();
 				while (it != App->scene_intro->selected_game_obj->game_object_childs.end())
 				{
-					if((*it)->material != nullptr)
+					if((*it)->material == nullptr)
 						(*it)->AddComponent(GO_COMPONENT::MATERIAL);
 					
 					(*it)->material->ReadTexture(file_decider.c_str());

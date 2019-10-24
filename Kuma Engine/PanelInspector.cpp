@@ -132,6 +132,9 @@ void PanelInspector::DisplayInspector()
 		{
 			if (ImGui::Checkbox("texture_checker", &App->scene_intro->selected_game_obj->texture_Checker))
 			{
+				if (App->scene_intro->selected_game_obj->material == nullptr)
+					App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+
 				App->scene_intro->selected_game_obj->texture_Checker ? App->scene_intro->selected_game_obj->material->SetDefaultTexture() : App->scene_intro->selected_game_obj->material->QuitDefautTexture();
 			}
 		}
