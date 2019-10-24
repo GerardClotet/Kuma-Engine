@@ -44,6 +44,7 @@ void ModuleTexture::RemoveTexture(TexData* texture)
 			delete texture;
 			return;
 		}
+		iter++;
 	}
 }
 void ModuleTexture::CheckersTexture()
