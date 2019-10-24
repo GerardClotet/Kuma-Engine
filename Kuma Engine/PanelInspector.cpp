@@ -124,8 +124,19 @@ void PanelInspector::DisplayInspector()
 				App->scene_intro->selected_game_obj->material->isTextureEnable = false;
 			}
 
+	
+
+		}
+
+		if (App->scene_intro->selected_game_obj != nullptr)
+		{
+			if (ImGui::Checkbox("texture_checker", &App->scene_intro->selected_game_obj->texture_Checker))
+			{
+				App->scene_intro->selected_game_obj->texture_Checker ? App->scene_intro->selected_game_obj->material->SetDefaultTexture() : App->scene_intro->selected_game_obj->material->QuitDefautTexture();
+			}
 		}
 	}
+
 
 
 //	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;

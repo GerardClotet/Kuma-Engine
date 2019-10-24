@@ -40,6 +40,29 @@ void Component_Material::ReadTexture(std::string file)
 	width = this->texture->width;
 	height = this->texture->height;
 	setTexture = true;
+	current_texture_name = this->texture->name;
+}
+
+void Component_Material::SetDefaultTexture()
+{
+
+	this->texture = App->texture->GetDefaultTex();
+	setTexture = true;
+}
+
+void Component_Material::QuitDefautTexture()
+{
+	std::vector<TexData*>::iterator it = App->texture->textures_vec.begin();
+	while (it < App->texture->textures_vec.end())
+	{	
+
+		if ((*it)->name == current_texture_name)
+		{
+			this->texture = (*it);
+			LOG("changed to imported texture %s", (*it)->name);
+		}
+		++it;
+	}
 }
 
 TexData * Component_Material::GetTexture()
@@ -47,3 +70,4 @@ TexData * Component_Material::GetTexture()
 	if (this->texture != nullptr)
 		return this->texture;
 }
+

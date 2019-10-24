@@ -46,6 +46,37 @@ void ModuleTexture::RemoveTexture(TexData* texture)
 		}
 	}
 }
+void ModuleTexture::CheckersTexture()
+{
+
+	tex_data = new TexData;
+
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			tex_data->checkImage[i][j][0] = (GLubyte)c;
+			tex_data->checkImage[i][j][1] = (GLubyte)c;
+			tex_data->checkImage[i][j][2] = (GLubyte)c;
+			tex_data->checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+	;
+	LOG("");
+
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &(GLuint)tex_data->id);
+	glBindTexture(GL_TEXTURE_2D, (GLuint)tex_data->id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, tex_data->checkImage);
+	tex_data->name = "default texture";
+	textures_vec.push_back(tex_data);
+	
+}
 bool ModuleTexture::Init()
 {
 	bool ret = true;
@@ -74,12 +105,19 @@ bool ModuleTexture::Init()
 	return true;
 }
 
+bool ModuleTexture::Start()
+{
+	CheckersTexture();
+
+	return true;
+}
+
 TexData* ModuleTexture::LoadTexture(const char* path)
 {
 
 	ILuint id;
 		
-
+	
 	ilGenImages(1, &id);
 
 	ilBindImage(id);
@@ -92,6 +130,9 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 		{
+			tex_data->name = path;
+			tex_data->name = tex_data->name.substr(tex_data->name.find_last_of("\\") + 1);
+
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 			glGenTextures(1, &tex_data->id);
@@ -126,6 +167,22 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 
 	return tex_data;
+}
+
+TexData* ModuleTexture::GetDefaultTex()
+{
+
+	std::vector<TexData*>::iterator it = textures_vec.begin();
+	while (it < textures_vec.end())
+	{
+		if ((*it)->img_data == nullptr)
+			return((*it));
+
+
+		++it;
+	}
+	LOG("Default texture missing");
+	return nullptr;
 }
 
 

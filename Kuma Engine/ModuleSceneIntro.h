@@ -13,8 +13,7 @@
 #include "MathGeoLib/include/MathGeoLibFwd.h"
 
 #define MAX_SNAKE 2
-#define CHECKERS_WIDTH 100	
-#define CHECKERS_HEIGHT 100
+
 
 
 class GameObject;
@@ -53,10 +52,8 @@ public:
 	//std::list<Spherestruct*> sphere_struct_list;
 	SDL_Window* window;
 	uint my_id;
-	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];;
 	uint indiceS = 0;
 	//std::vector<GameObject*> gameObject_list; //not using anyumoe
-	uint ImageName;
 private:
 	int max_grid = 75;
 	float sunX = 2;

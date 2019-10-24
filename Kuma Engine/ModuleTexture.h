@@ -10,8 +10,13 @@
 #pragma comment(lib,"Devil/libx86/ILUT.lib")
 
 #include <vector>
+
+#define CHECKERS_WIDTH 100	
+#define CHECKERS_HEIGHT 100
+
 struct TexData
 {	
+	std::string name;
 	int width=0;
 	int height=0;
 	int offsetX=0;
@@ -19,6 +24,7 @@ struct TexData
 	GLuint id=0;
 	GLubyte img=0;
 	unsigned char* img_data=nullptr;
+	byte checkImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 };
 
 class ModuleTexture : public Module 
@@ -28,14 +34,20 @@ public:
 	ModuleTexture(Application* app, bool start_enabled = true);
 	~ModuleTexture();
 
-
+	void CheckersTexture();
 	bool Init();
+	bool Start();
 	bool CleanUp();
 	void RemoveTexture(TexData* texture);
 	TexData* LoadTexture(const char* path);
-
+	TexData* GetDefaultTex();
 	//ilLoadImage allows users to transparently load several different image formats uniformly.
 	TexData* tex_data = nullptr;
 	std::vector <TexData*> textures_vec;
+
+public:
+	uint ImageName;
+	
+
 };
 

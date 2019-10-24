@@ -18,6 +18,8 @@ public:
 	bool Enable();
 	bool Disable();
 	void ReadTexture(std::string file);
+	void SetDefaultTexture();
+	void QuitDefautTexture();
 	TexData* GetTexture();
 
 	TexData* texture = nullptr;
@@ -29,6 +31,11 @@ public:
 	uint height = 0;
 
 	bool isTextureEnable = true;
+
+
+private:
+	TexData* temp_tex_holder = nullptr; //fill this tex in the cases the other texture is active
+	std::string current_texture_name;
 };
 
 
