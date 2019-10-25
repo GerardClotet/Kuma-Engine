@@ -209,7 +209,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 
 bool GameObject::CleanUp()
 {
-	LOG("---Cleaning %s---", name);
+	LOG("---Cleaning %s---", name.c_str());
 	parent = nullptr;
 	//name = nullptr;
 	std::vector<GameObject*>::iterator it = game_object_childs.begin();
@@ -224,7 +224,7 @@ bool GameObject::CleanUp()
 	std::vector<Components*>::iterator item = components.begin();
 	while (item != components.end())
 	{
-		LOG("deleted compoennt %s", (*item)->name);
+		LOG("deleted compoennt %s", (*item)->name.c_str());
 		delete (*item);
 		++item;
 	}
