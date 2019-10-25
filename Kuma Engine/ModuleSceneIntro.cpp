@@ -58,7 +58,11 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	
+	if (ImGui::IsAnyWindowHovered())
+		App->camera->capMouseInput = true;
+	else
+		App->camera->capMouseInput = false;
+
 	UpdateGameObject(root);
 
 	return UPDATE_CONTINUE;

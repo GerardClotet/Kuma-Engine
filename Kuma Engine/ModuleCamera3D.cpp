@@ -67,13 +67,16 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+	if (!capMouseInput)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+	}
 
 	MovementCamera();
 	ZoomCamera();
@@ -138,93 +141,101 @@ float* ModuleCamera3D::GetViewMatrix()
 
 void ModuleCamera3D::MovementCamera()
 {
-
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	if (!capMouseInput)
 	{
-		ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
+		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
 
-		if (App->input->GetMouseXMotion() > 4) newPos -= X * mouse_speed;
-		if (App->input->GetMouseXMotion() < -4) newPos += X * mouse_speed;
+			if (App->input->GetMouseXMotion() > 4) newPos -= X * mouse_speed;
+			if (App->input->GetMouseXMotion() < -4) newPos += X * mouse_speed;
 
-		if (App->input->GetMouseYMotion() < 5) newPos -= Y * mouse_speed;
-		if (App->input->GetMouseYMotion() > -5) newPos += Y * mouse_speed;
+			if (App->input->GetMouseYMotion() < 5) newPos -= Y * mouse_speed;
+			if (App->input->GetMouseYMotion() > -5) newPos += Y * mouse_speed;
 
+		}
 	}
 }
 
 void ModuleCamera3D::RotationCamera()
 {
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	if (!capMouseInput)
 	{
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
-
-		float Sensitivity = 0.25f;
-
-		Position -= Reference;
-
-		if (dx != 0)
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 		{
-			float DeltaX = (float)dx * Sensitivity;
+			int dx = -App->input->GetMouseXMotion();
+			int dy = -App->input->GetMouseYMotion();
 
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-		}
+			float Sensitivity = 0.25f;
 
-		if (dy != 0)
-		{
-			float DeltaY = (float)dy * Sensitivity;
+			Position -= Reference;
 
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
-
-			if (Y.y < 0.0f)
+			if (dx != 0)
 			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
-		}
+				float DeltaX = (float)dx * Sensitivity;
 
-		Position = Reference + Z * length(Position);
+				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			}
+
+			if (dy != 0)
+			{
+				float DeltaY = (float)dy * Sensitivity;
+
+				Y = rotate(Y, DeltaY, X);
+				Z = rotate(Z, DeltaY, X);
+
+				if (Y.y < 0.0f)
+				{
+					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+					Y = cross(Z, X);
+				}
+			}
+
+			Position = Reference + Z * length(Position);
+		}
 	}
 }
 
 void ModuleCamera3D::ZoomCamera()
 {
-	if (App->input->GetMouseWheel() > 0)
+	if (!capMouseInput)
 	{
-		ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
-		newPos -= Z * zoom_speed;
-	}
-	else if (App->input->GetMouseWheel() < 0)
-	{
-		ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
-		newPos += Z * zoom_speed;
-	}
-
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
-	{
-		
-		if (App->input->GetMouseYMotion() < 0)
+		if (App->input->GetMouseWheel() > 0)
 		{
 			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
 			newPos -= Z * zoom_speed;
 		}
-		
-
-		if (App->input->GetMouseYMotion() > 0) 
+		else if (App->input->GetMouseWheel() < 0)
 		{
 			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
 			newPos += Z * zoom_speed;
 		}
 
-		if (App->input->GetMouseYMotion() == 0)
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 		{
-			ImGui::SetMouseCursor(ImGuiMouseCursor_Zoom);
-		}
-		
 
+			if (App->input->GetMouseYMotion() < 0)
+			{
+				ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
+				newPos -= Z * zoom_speed;
+			}
+
+
+			if (App->input->GetMouseYMotion() > 0)
+			{
+				ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
+				newPos += Z * zoom_speed;
+			}
+
+			if (App->input->GetMouseYMotion() == 0)
+			{
+				ImGui::SetMouseCursor(ImGuiMouseCursor_Zoom);
+			}
+
+
+		}
 	}
 }
 

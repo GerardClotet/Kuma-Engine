@@ -30,6 +30,7 @@ public:
 	float camera_speed = 20.0f;
 	float camera_zoom_speed = 60.0f;
 	vec3 X, Y, Z, Position, Reference;
+	bool capMouseInput	= false;
 
 private:
 	
