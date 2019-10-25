@@ -511,11 +511,11 @@ void ModuleEditor::GameObjectScreen()
 
 void ModuleEditor::ComponentsScreen()
 {
-	if (ImGui::MenuItem("Material"))
+	if (ImGui::MenuItem("Mesh"))
 	{
-		if (App->scene_intro->selected_game_obj->material == nullptr)
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->mesh == nullptr)
 		{
-			if (App->scene_intro->selected_game_obj->type==OBJECT_TYPE::SUBPARENT)
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
 			{
 				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
 				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
@@ -523,7 +523,26 @@ void ModuleEditor::ComponentsScreen()
 					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
 				}
 			}
-			
+		}
+	}
+
+	if (ImGui::MenuItem("Material"))
+	{
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material == nullptr)
+		{
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+			{
+				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
+				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
+				{
+					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+				}
+			}
+			/*else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			}*/
+
 		}
 	}
 	

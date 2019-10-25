@@ -52,6 +52,9 @@ void Component_Material::SetDefaultTexture()
 		std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();
 		while (it < gameObject_Item->game_object_childs.end())
 		{
+			if ((*it)->material == nullptr)
+				(*it)->AddComponent(GO_COMPONENT::MATERIAL);
+
 			(*it)->material->texture = App->texture->GetDefaultTex();
 			(*it)->material->setTexture = true;
 			++it;

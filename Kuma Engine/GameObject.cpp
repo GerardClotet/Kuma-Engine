@@ -215,6 +215,15 @@ bool GameObject::CleanUp()
 	std::vector<GameObject*>::iterator it = game_object_childs.begin();
 	while (it != game_object_childs.end())
 	{
+		std::vector<Components*>::iterator item = (*it)->components.begin();
+		while (item != (*it)->components.end())
+		{
+			LOG("deleted compoennt %s", (*item)->name.c_str());
+			delete (*item);
+			++item;
+		}
+		(*it)->components.clear();
+
 		delete (*it);
 		++it;
 	}
