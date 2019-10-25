@@ -515,7 +515,15 @@ void ModuleEditor::ComponentsScreen()
 	{
 		if (App->scene_intro->selected_game_obj->material == nullptr)
 		{
-			App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			if (App->scene_intro->selected_game_obj->type==OBJECT_TYPE::SUBPARENT)
+			{
+				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
+				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
+				{
+					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+				}
+			}
+			
 		}
 	}
 	

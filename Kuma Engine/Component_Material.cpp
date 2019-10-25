@@ -2,7 +2,7 @@
 #include "glew-2.1.0/include/GL/glew.h"
 #include "Application.h"
 #include "ModuleTexture.h"
-
+#include "GameObject.h"
 
 
 Component_Material::Component_Material(GameObject* obj)
@@ -40,13 +40,24 @@ void Component_Material::ReadTexture(std::string file)
 	width = this->texture->width;
 	height = this->texture->height;
 	setTexture = true;
+
 	current_texture_name = this->texture->name;
 }
 
 void Component_Material::SetDefaultTexture()
 {
-
-	this->texture = App->texture->GetDefaultTex();
+	
+	if(gameObject_Item->game_object_childs.size()> 0)
+	{
+		std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();
+		while (it < gameObject_Item->game_object_childs.end())
+		{
+			(*it)->material->texture = App->texture->GetDefaultTex();
+			(*it)->material->setTexture = true;
+			++it;
+		}
+	}
+	else this->texture = App->texture->GetDefaultTex();
 	setTexture = true;
 }
 
@@ -56,10 +67,22 @@ void Component_Material::QuitDefautTexture()
 	while (it < App->texture->textures_vec.end())
 	{	
 
-		if ((*it)->name == current_texture_name)
+		if ((*it)->name == current_texture_name || gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
 		{
 			this->texture = (*it);
 			LOG("changed to imported texture %s", (*it)->name);
+			if (!gameObject_Item->game_object_childs.empty())
+			{
+				std::vector<GameObject*>::iterator item = gameObject_Item->game_object_childs.begin();
+
+				while (item < gameObject_Item->game_object_childs.end())
+				{
+					if ((*it)->name == (*item)->material->current_texture_name);
+						(*item)->material->texture = (*it);
+					
+					++item;
+				}
+			}
 		}
 		++it;
 	}
