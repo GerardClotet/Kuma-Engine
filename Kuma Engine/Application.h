@@ -4,12 +4,12 @@
 #include <list>
 #include <vector>
 #include "Globals.h"
+#include "Memory.h"
 #include "Timer.h"
 #include "Module.h"
 #include "Parson/parson.h"
 #include "PerfTimer.h"
 #include "Timer.h"
-
 
 class ModuleWindow;
 class ModuleInput;
@@ -100,6 +100,10 @@ public:
 	JSON_Value* value;
 	JSON_Value* save_value;
 	JSON_Object* save_object;
+
+
+	std::vector<float> memory;
+
 };
 
 extern Application* App;

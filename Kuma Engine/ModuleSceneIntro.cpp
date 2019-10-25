@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include <random>
-#include "RandomHelper.h"
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
 #include "ModuleImporter.h"
@@ -29,9 +28,9 @@ bool ModuleSceneIntro::Init()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	RandomFloatGenerator();
-	RandomintGenerator(5, 6);
-	
+	//RandomFloatGenerator();
+	//RandomintGenerator(5, 6);
+	//
 	return ret;
 }
 

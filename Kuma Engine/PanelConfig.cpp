@@ -114,36 +114,57 @@ void PanelConfig::DisplayConfig()
 		ImGui::PlotHistogram("##milliseconds", &App->ui->ms_log[0], App->ui->ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
 		sMStats stats = m_getMemoryStatistics();
+
+		App->memory.push_back(m_getMemoryStatistics().totalActualMemory);
+
+		if (App->memory.size() > 100)
+		{
+			App->memory.erase(App->memory.begin());
+		}
+
 		static int speed = 0;
-		static std::vector<float> memory(100);
+
+
+		std::vector<float> mem =  App->memory;
+		
+		
 		if (++speed > 20)
 		{
-			speed = 0;
-			if (memory.size() == 100)
+			speed = 0; 
+			
+			if (mem.size() == 100)
 			{
 				for (uint i = 0; i < 100 - 1; ++i)
 				{
-					memory[i] = memory[i + 1];
+					mem[i] = mem[i + 1];
 				}
 
-				memory[100 - 1] = stats.totalReportedMemory;
+				mem[100 - 1] = stats.totalReportedMemory;
 
 			}
 			else
-				memory.push_back((float)stats.totalReportedMemory);
+				mem.push_back((float)stats.totalReportedMemory);
 		}
-		ImGui::PlotHistogram("##memory", &memory[0], memory.size(), 0, "Mmemory Consumption,", 0.0f, (float)stats.peakReportedMemory, ImVec2(310, 100));
 
-		ImGui::Text("Total Reported Memory: %u", stats.totalReportedMemory);
 
-		ImGui::Text("Total Actual Mem: %u", stats.totalActualMemory);
-		ImGui::Text("Peak Reported Mem: %u", stats.peakReportedMemory);
-		ImGui::Text("Peak Actual Mem: %u", stats.peakActualMemory);
-		ImGui::Text("Accumulated Reported Mem: %u", stats.accumulatedReportedMemory);
-		ImGui::Text("Accumulated Actual Mem: %u", stats.accumulatedActualMemory);
-		ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
-		ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
-		ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
+		sprintf_s(title, 25, "mem %0.1f", mem[mem.size() - 1]);
+
+
+
+
+		ImGui::PlotHistogram("##mem", &(mem[0]), mem.size(), 0, title, 0.0f, stats.peakActualMemory, ImVec2(310, 100));
+
+		
+
+		ImGui::Text("Total Reported Mem: %d", m_getMemoryStatistics().totalReportedMemory);
+		ImGui::Text("Peak Reported Mem: %d", m_getMemoryStatistics().peakReportedMemory);
+		ImGui::Text("Total Actual Mem: %d", m_getMemoryStatistics().totalActualMemory);
+		ImGui::Text("Peak Actual Mem: %d", m_getMemoryStatistics().peakActualMemory);
+		ImGui::Text("Accumulated Reported Mem: %d", m_getMemoryStatistics().accumulatedReportedMemory);
+		ImGui::Text("Accumulated Actual Mem: %d", m_getMemoryStatistics().accumulatedActualMemory);
+		ImGui::Text("Accumulated Alloc Unit Count: %d", m_getMemoryStatistics().accumulatedAllocUnitCount);
+		ImGui::Text("Total Alloc Unit Count: %d", m_getMemoryStatistics().totalAllocUnitCount);
+		ImGui::Text("Peak Alloc Unit Count: %d", m_getMemoryStatistics().peakAllocUnitCount);
 
 	}
 	if (ImGui::CollapsingHeader("Window"))

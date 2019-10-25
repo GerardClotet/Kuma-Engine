@@ -11,6 +11,8 @@
 #include "p2Defs.h"
 #include "ModuleUI.h"
 
+#include "mmgr\nommgr.h"
+#include "mmgr\mmgr.h"
 
 Application::Application()
 {
@@ -41,6 +43,10 @@ Application::Application()
 	AddModule(hardware);
 	// Renderer last!
 	AddModule(renderer3D);
+
+
+	float time = SDL_GetTicks();
+	memory.push_back(m_getMemoryStatistics().totalActualMemory);
 
 	PERF_PEEK(ptimer);
 }
@@ -95,6 +101,9 @@ bool Application::Init()
 	}
 	
 	ms_timer.Start();
+
+
+
 	PERF_START(ptimer);
 
 	return ret;
@@ -191,6 +200,7 @@ update_status Application::Update()
 		ret = UPDATE_STOP;
 
 	FinishUpdate();
+
 	return ret;
 }
 
@@ -208,6 +218,7 @@ bool Application::CleanUp()
 		++item;
 	}
 	list_modules.clear();
+
 	PERF_PEEK(ptimer);
 
 	return ret;
