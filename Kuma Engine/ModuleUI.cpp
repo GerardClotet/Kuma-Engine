@@ -511,6 +511,13 @@ void ModuleEditor::GameObjectScreen()
 
 void ModuleEditor::ComponentsScreen()
 {
+	if (ImGui::MenuItem("Material"))
+	{
+		if (App->scene_intro->selected_game_obj->material == nullptr)
+		{
+			App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+		}
+	}
 	
 }
 
