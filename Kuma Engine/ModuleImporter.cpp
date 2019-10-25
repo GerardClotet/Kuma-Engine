@@ -156,6 +156,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh);
+		go->AddComponent(GO_COMPONENT::TRANSFORM);
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
 	{
