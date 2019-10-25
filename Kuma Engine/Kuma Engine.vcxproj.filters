@@ -209,6 +209,9 @@
     <ClCompile Include="PanelInspector.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Component_Transform.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -650,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="PanelInspector.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Component_Transform.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

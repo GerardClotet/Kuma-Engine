@@ -3,6 +3,7 @@
 #include "Components.h"
 #include "Component_Mesh.h"
 #include "Component_Material.h"
+#include "Component_Transform.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
@@ -66,6 +67,8 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 		break;
 	case GO_COMPONENT::TRANSFORM:
+		transform = new Component_Transform(this);
+		components.push_back(transform);
 		break;
 	case GO_COMPONENT::MATERIAL:
 		material = new Component_Material(this);
@@ -215,6 +218,15 @@ bool GameObject::CleanUp()
 	std::vector<GameObject*>::iterator it = game_object_childs.begin();
 	while (it != game_object_childs.end())
 	{
+		std::vector<Components*>::iterator item = (*it)->components.begin();
+		while (item != (*it)->components.end())
+		{
+			LOG("deleted compoennt %s", (*item)->name.c_str());
+			delete (*item);
+			++item;
+		}
+		(*it)->components.clear();
+
 		delete (*it);
 		++it;
 	}
@@ -277,5 +289,39 @@ void GameObject::CheckName(std::string path)
 
 	if (no_name)
 		this->name = path;
+}
+
+bool GameObject::hasComponent(GO_COMPONENT com)
+{
+	switch (com)
+	{
+	case GO_COMPONENT::NONE:
+		break;
+
+	case GO_COMPONENT::MESH:
+		if (this->mesh != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	case GO_COMPONENT::TRANSFORM:
+		if (this->transform != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	case GO_COMPONENT::MATERIAL:
+		if (this->material != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	default:
+		break;
+	}
+	
 }
 

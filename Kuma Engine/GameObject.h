@@ -8,6 +8,7 @@
 class Components;
 class Component_Material;
 class Component_Mesh;
+class Component_Transform;
 enum class GO_COMPONENT;
 struct aiMesh;
 
@@ -41,6 +42,7 @@ public:
 	void RemoveSubChildGameObject(GameObject* subchild);
 	bool CleanUp();
 	void CheckName(std::string name);
+	bool hasComponent(GO_COMPONENT com);
 public:
 	std::string name;
 	std::string new_name;
@@ -61,6 +63,7 @@ public:
 	GameObject* parent				= nullptr; // to the scene invisible game object containing all gameobjects
 	Component_Material* material	= nullptr;
 	Component_Mesh* mesh			= nullptr;
+	Component_Transform* transform	= nullptr;
 	Components* component			= nullptr;
 
 	std::vector<Components*> components;

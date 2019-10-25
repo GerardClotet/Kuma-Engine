@@ -420,6 +420,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CUBE, "cube");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cube----");
 		}
@@ -429,6 +430,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::SPHERE, "sphere");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Sphere----");
 
@@ -440,6 +442,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CONE, "cone");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cone----");
 		}
@@ -449,6 +452,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CYLINDER, "cylinder");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cylinder----");
 		}
@@ -458,6 +462,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::DODECAHEDRON, "dodecahedron");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Dodecahedron----");
 		}
@@ -466,6 +471,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::PLANE, "plane");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Plane----");
 
@@ -475,6 +481,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::TORUS, "torus");
 			go->AddComponent(GO_COMPONENT::MESH);
+			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Torus----");
 		}
@@ -511,19 +518,65 @@ void ModuleEditor::GameObjectScreen()
 
 void ModuleEditor::ComponentsScreen()
 {
-	if (ImGui::MenuItem("Material"))
+	if (ImGui::MenuItem("Transform"))
 	{
-		if (App->scene_intro->selected_game_obj->material == nullptr)
+		if (App->scene_intro->selected_game_obj != nullptr && !App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
-			if (App->scene_intro->selected_game_obj->type==OBJECT_TYPE::SUBPARENT)
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
 			{
 				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
 				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
 				{
-					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+					if (!(*iter)->hasComponent(GO_COMPONENT::TRANSFORM))
+						(*iter)->AddComponent(GO_COMPONENT::TRANSFORM);
 				}
 			}
-			
+			else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::TRANSFORM);
+			}
+		}
+		
+	}
+	if (ImGui::MenuItem("Mesh"))
+	{
+		if (App->scene_intro->selected_game_obj != nullptr && !App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::MESH))
+		{
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+			{
+				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
+				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
+				{
+					if (!(*iter)->hasComponent(GO_COMPONENT::MESH))
+						(*iter)->AddComponent(GO_COMPONENT::MESH);
+				}
+			}
+			else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MESH);
+			}
+		}
+		
+	}
+
+	if (ImGui::MenuItem("Material"))
+	{
+		if (App->scene_intro->selected_game_obj != nullptr && !App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::MATERIAL))
+		{
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+			{
+				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
+				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
+				{
+					if (!(*iter)->hasComponent(GO_COMPONENT::MATERIAL))
+						(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+				}
+			}
+			else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			}
+
 		}
 	}
 	
