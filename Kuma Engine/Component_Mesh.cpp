@@ -250,7 +250,7 @@ void Component_Mesh::GenerateCube()
 void Component_Mesh::GenerateSphere()
 {
 	par_mesh = par_shapes_create_subdivided_sphere(3);
-	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
 	par_shapes_unweld(par_mesh, true);
 	par_shapes_compute_normals(par_mesh);
 
@@ -371,7 +371,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 void Component_Mesh::GenerateCone()
 {
 	par_mesh = par_shapes_create_cone(10,10);
-	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
 	par_shapes_unweld(par_mesh, true);
 	par_shapes_compute_normals(par_mesh);
 
@@ -410,7 +410,7 @@ void Component_Mesh::GenerateCone()
 void Component_Mesh::GenerateCylinder()
 {
 	par_mesh = par_shapes_create_cylinder(100,10);
-	par_shapes_translate(par_mesh, 1.0f, 1.0f, 1.0f);
+	par_shapes_translate(par_mesh, 0.0f, 0.0f, 0.0f);
 	par_shapes_unweld(par_mesh, true);
 	par_shapes_compute_normals(par_mesh);
 
