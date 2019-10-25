@@ -511,6 +511,26 @@ void ModuleEditor::GameObjectScreen()
 
 void ModuleEditor::ComponentsScreen()
 {
+	if (ImGui::MenuItem("Transform"))
+	{
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->transform == nullptr)
+		{
+			if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+			{
+				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
+				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
+				{
+					if ((*iter)->transform == nullptr)
+						(*iter)->AddComponent(GO_COMPONENT::TRANSFORM);
+				}
+			}
+			else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::TRANSFORM);
+			}
+		}
+		
+	}
 	if (ImGui::MenuItem("Mesh"))
 	{
 		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->mesh == nullptr)
@@ -520,10 +540,16 @@ void ModuleEditor::ComponentsScreen()
 				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
 				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
 				{
-					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+					if ((*iter)->mesh == nullptr)
+						(*iter)->AddComponent(GO_COMPONENT::MESH);
 				}
 			}
+			else
+			{
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MESH);
+			}
 		}
+		
 	}
 
 	if (ImGui::MenuItem("Material"))
@@ -535,13 +561,14 @@ void ModuleEditor::ComponentsScreen()
 				std::vector<GameObject*>::iterator iter = App->scene_intro->selected_game_obj->game_object_childs.begin();
 				for (iter; iter != App->scene_intro->selected_game_obj->game_object_childs.end(); ++iter)
 				{
-					(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
+					if ((*iter)->material == nullptr)
+						(*iter)->AddComponent(GO_COMPONENT::MATERIAL);
 				}
 			}
-			/*else
+			else
 			{
 				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
-			}*/
+			}
 
 		}
 	}
