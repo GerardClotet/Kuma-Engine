@@ -22,7 +22,15 @@ Link to Github Repository:
 - GameObject
 	- Inspector(panel)
 	- Create Empty
+		- Creates an empty game object
 	- 3D objects
+		- Cube
+		- Sphere
+		- Cone
+		- Plane
+		- Cylinder
+		- Dodecahedron
+		- Torus
 	
 - Components
 	- Materials
