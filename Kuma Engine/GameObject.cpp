@@ -291,3 +291,37 @@ void GameObject::CheckName(std::string path)
 		this->name = path;
 }
 
+bool GameObject::hasComponent(GO_COMPONENT com)
+{
+	switch (com)
+	{
+	case GO_COMPONENT::NONE:
+		break;
+
+	case GO_COMPONENT::MESH:
+		if (this->mesh != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	case GO_COMPONENT::TRANSFORM:
+		if (this->transform != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	case GO_COMPONENT::MATERIAL:
+		if (this->material != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
+	default:
+		break;
+	}
+	
+}
+

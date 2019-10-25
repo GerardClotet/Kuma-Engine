@@ -11,7 +11,8 @@ Component_Transform::Component_Transform(GameObject * obj)
 
 Component_Transform::~Component_Transform()
 {
-	//remove transform
+	LOG("deleted transform");
+	gameObject_Item = nullptr;
 }
 
 bool Component_Transform::Update()

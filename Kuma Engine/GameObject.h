@@ -42,6 +42,7 @@ public:
 	void RemoveSubChildGameObject(GameObject* subchild);
 	bool CleanUp();
 	void CheckName(std::string name);
+	bool hasComponent(GO_COMPONENT com);
 public:
 	std::string name;
 	std::string new_name;
