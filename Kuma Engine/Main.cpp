@@ -28,16 +28,22 @@ int main(int argc, char ** argv)
 		switch (state)
 		{
 		case MAIN_CREATION:
-
-			LOG("-------------- Application Creation --------------");
 			App = new Application();
 			App->saveLog("-------------- Application Creation --------------");
+			App->saveLog("Initialized library: gpudetect");
+			App->saveLog("Initialized library: Assimp");
+			App->saveLog("Initialized library: pcg_random");
+			App->saveLog("Initialized library: mmgr");
+			App->saveLog("Initialized library: mathgeolib");
+			App->saveLog("Initialized library: imgui");
+			App->saveLog("Initialized library: par_shapes");
+			App->saveLog("Initialized library: parson");
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
-			LOG("-------------- Application Init --------------");
+			App->saveLog("-------------- Application Init --------------");
 			if (App->Init() == false)
 			{
 				LOG("Application Init exits with ERROR");
