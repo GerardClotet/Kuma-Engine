@@ -21,7 +21,7 @@
 
   "Importer": {
     "File": "..\\fbx\\BakerHouse.fbx",
-    "Texture": "..\\fbx\\Baker_house.png"
+    "Texture": "..\\fbx\\BakerHouse.dds"
   },
 
   "License": {

@@ -104,9 +104,11 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 			}
 			return;
 		}
-		else if (App->scene_intro->selected_game_obj->material == nullptr && App->scene_intro->selected_game_obj->mesh != nullptr)
+		else if (App->scene_intro->selected_game_obj->mesh != nullptr)
 		{
-			App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+			if (App->scene_intro->selected_game_obj->material == nullptr)
+				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
+
 			App->scene_intro->selected_game_obj->material->ReadTexture(path.c_str());
 			return;
 		}
