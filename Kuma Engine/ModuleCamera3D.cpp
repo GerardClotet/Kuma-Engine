@@ -47,15 +47,19 @@ update_status ModuleCamera3D::Update(float dt)
 	// Now we can make this movememnt frame rate independant!
 
 	newPos = { 0,0,0 };
-	speed = 35.0f * dt;
+	speed = key_speed * dt;
 	mouse_speed = camera_speed * dt;
 	zoom_speed = camera_zoom_speed * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
-		speed = 70 * dt;
+		speed = key_speed * dt * 2.0f;
+		mouse_speed = camera_speed * dt * 2.0f;
 		zoom_speed = camera_zoom_speed * dt * 2.0f;
 	}
-
+	
+	
+	
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		if (App->scene_intro->selected_game_obj != nullptr)
