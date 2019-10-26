@@ -21,7 +21,7 @@ public:
 
 
 	void DisplayInspector();
-	TexData* texture;
+	TexData* texture = nullptr;
 
 public:
 	bool GL_Texture_2D = true;

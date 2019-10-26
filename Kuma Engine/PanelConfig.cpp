@@ -169,9 +169,9 @@ void PanelConfig::DisplayConfig()
 	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
-		ImGui::Checkbox("Active", &activeWindow);
-		if (!activeWindow) //needs no te fixed because we are not freeing memory
-			exit(0);
+		//ImGui::Checkbox("Active", &activeWindow);
+		//if (!activeWindow) //needs no te fixed because we are not freeing memory
+		//	exit(0);
 		ImGui::Text("Icon:");
 		ImGui::SameLine();
 

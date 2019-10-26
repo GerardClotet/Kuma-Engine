@@ -40,6 +40,8 @@ void ModuleTexture::RemoveTexture(TexData* texture)
 	{
 		if ((*iter) == texture)
 		{
+			if ((*iter)->name == "default texture")
+				return;
 			textures_vec.erase(iter);
 			delete texture;
 			return;

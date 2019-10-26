@@ -107,7 +107,7 @@ void PanelInspector::DisplayInspector()
 				if(texture != nullptr && App->scene_intro->selected_game_obj->type != OBJECT_TYPE::SUBPARENT)
 					ImGui::Image((ImTextureID)texture->id, ImVec2(200, 200),ImVec2(0,1),ImVec2(1,0)); 
 				
-				if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
+				if ( App->scene_intro->selected_game_obj->type != OBJECT_TYPE::SUBPARENT && ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
 				{
 					if (GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material != nullptr)
 					{
@@ -117,6 +117,7 @@ void PanelInspector::DisplayInspector()
 
 					else if (!GL_Texture_2D && App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->material != nullptr)
 					{
+
 						glDisable(GL_TEXTURE_2D), LOG("Disabled Texture 2D");
 
 						App->scene_intro->selected_game_obj->material->isTextureEnable = false;
@@ -135,7 +136,6 @@ void PanelInspector::DisplayInspector()
 			{
 				if (App->scene_intro->selected_game_obj->material == nullptr)
 					App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
-
 				App->scene_intro->selected_game_obj->texture_Checker ? App->scene_intro->selected_game_obj->material->SetDefaultTexture() : App->scene_intro->selected_game_obj->material->QuitDefautTexture();
 			}
 		}

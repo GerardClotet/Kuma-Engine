@@ -56,6 +56,7 @@ void Component_Material::SetDefaultTexture()
 				(*it)->AddComponent(GO_COMPONENT::MATERIAL);
 
 			(*it)->material->texture = App->texture->GetDefaultTex();
+			(*it)->texture_Checker = true;
 			(*it)->material->setTexture = true;
 			++it;
 		}
@@ -85,6 +86,7 @@ void Component_Material::QuitDefautTexture()
 				{
 					if ((*it)->name == (*item)->material->current_texture_name);
 					{
+						(*item)->texture_Checker = false;
 						(*item)->material->texture = (*it);
 						LOG("texture %s added to gameobject %s ", (*it)->name.c_str(), (*item)->material->current_texture_name.c_str());
 					}
