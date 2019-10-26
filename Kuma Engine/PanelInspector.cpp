@@ -104,7 +104,8 @@ void PanelInspector::DisplayInspector()
 				ImGui::Text("File Path: %s", App->scene_intro->selected_game_obj->material->file_path.c_str());
 
 				texture = App->scene_intro->selected_game_obj->material->GetTexture();
-				ImGui::Image((ImTextureID)texture->id, ImVec2(200, 200),ImVec2(0,1),ImVec2(1,0)); 
+				if(texture != nullptr && App->scene_intro->selected_game_obj->type != OBJECT_TYPE::SUBPARENT)
+					ImGui::Image((ImTextureID)texture->id, ImVec2(200, 200),ImVec2(0,1),ImVec2(1,0)); 
 				
 				if (ImGui::Checkbox("GL_TEXTURE_2D", &GL_Texture_2D))
 				{

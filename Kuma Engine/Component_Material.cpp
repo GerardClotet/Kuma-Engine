@@ -46,7 +46,7 @@ void Component_Material::ReadTexture(std::string file)
 
 void Component_Material::SetDefaultTexture()
 {
-	
+	LOG("set default");
 	if(gameObject_Item->game_object_childs.size()> 0)
 	{
 		std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();
@@ -66,6 +66,8 @@ void Component_Material::SetDefaultTexture()
 
 void Component_Material::QuitDefautTexture()
 {
+	LOG("Quit default");
+
 	std::vector<TexData*>::iterator it = App->texture->textures_vec.begin();
 	while (it < App->texture->textures_vec.end())
 	{	
@@ -73,16 +75,19 @@ void Component_Material::QuitDefautTexture()
 		if ((*it)->name == current_texture_name || gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
 		{
 			this->texture = (*it);
-			LOG("changed to imported texture %s", (*it)->name);
+			LOG("changed to imported texture %s", (*it)->name.c_str());
 			if (!gameObject_Item->game_object_childs.empty())
 			{
+			
 				std::vector<GameObject*>::iterator item = gameObject_Item->game_object_childs.begin();
 
 				while (item < gameObject_Item->game_object_childs.end())
 				{
 					if ((*it)->name == (*item)->material->current_texture_name);
+					{
 						(*item)->material->texture = (*it);
-					
+						LOG("texture %s added to gameobject %s ", (*it)->name.c_str(), (*item)->material->current_texture_name.c_str());
+					}
 					++item;
 				}
 			}
