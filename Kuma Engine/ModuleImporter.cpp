@@ -129,6 +129,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			getImportedName(path);
 			GameObject* go_subparent;
 			go_subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, imported_name + " parent");
+			go_subparent->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go_subparent;
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
 		}
