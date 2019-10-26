@@ -468,12 +468,13 @@ void ModuleEditor::GameObjectScreen()
 		}
 		if (ImGui::MenuItem("Plane"))
 		{
-			GameObject* go = nullptr;
+			/*GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::PLANE, "plane");
 			go->AddComponent(GO_COMPONENT::MESH);
 			go->AddComponent(GO_COMPONENT::TRANSFORM);
 			App->scene_intro->selected_game_obj = go;
-			LOG("----Created Plane----");
+			LOG("----Created Plane----");*/
+			LOG("plane WIP sorry :(");
 
 		}
 		if (ImGui::MenuItem("Torus"))
