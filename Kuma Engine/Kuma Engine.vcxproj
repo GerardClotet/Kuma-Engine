@@ -307,7 +307,6 @@
     <None Include="Assimp\include\quaternion.inl" />
     <None Include="Assimp\include\vector2.inl" />
     <None Include="Assimp\include\vector3.inl" />
-    <None Include="Game\config.json" />
     <None Include="Game\Configuration\config.json" />
     <None Include="Game\Configuration\LoadNewJSON.json" />
     <None Include="Game\imgui.ini" />
