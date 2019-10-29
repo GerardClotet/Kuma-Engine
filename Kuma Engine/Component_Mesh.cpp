@@ -50,12 +50,12 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()
 	}
 }
 
-Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh, GameObject* obj)
+Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh, GameObject* obj, aiNode* node)
 {
 	comp_type = GO_COMPONENT::MESH;
 	this->type = type;
 	this->gameObject_Item = obj;
-	GenerateImported(mesh);
+	GenerateImported(mesh, node);
 }
 
 Component_Mesh::~Component_Mesh()
@@ -286,7 +286,7 @@ void Component_Mesh::GenerateSphere()
 
 }
 
-void Component_Mesh::GenerateImported(aiMesh* new_mesh)
+void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 {
 	num_vertex = new_mesh->mNumVertices;
 	vertex = new float[num_vertex * 3];
@@ -359,6 +359,29 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh)
 		}
 		LOG("New FBX mesh with %d index", num_index);
 	}
+
+
+	aiVector3D translation, scaling;
+	aiQuaternion rotation;
+	node->mTransformation.Decompose(scaling, rotation, translation);
+
+	int max_ = max(scaling.x, scaling.y);
+	max_ = max(max_, scaling.z);
+
+	float3 pos(translation.x, translation.y, translation.z);
+	//float3 scale(scaling.x / max_, scaling.y / max_, scaling.z / max_);
+	float3 scale(scaling.x, scaling.y, scaling.z);
+	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+
+	gameObject_Item->AddComponent(GO_COMPONENT::TRANSFORM, pos, scale, rot);
+	//
+	//
+	//
+	//CREATE A TRANSFORMATION COMPONENT
+	//
+	//
+	//
+
 
 	gl_Int = true;
 

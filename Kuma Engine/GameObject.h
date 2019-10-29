@@ -11,6 +11,7 @@ class Component_Mesh;
 class Component_Transform;
 enum class GO_COMPONENT;
 struct aiMesh;
+struct aiNode;
 
 
  enum class OBJECT_TYPE {
@@ -58,7 +59,8 @@ public:
 	float3 game_object_scale	= { 0.0f, 0.0f, 0.0f };
 
 	Components* AddComponent(GO_COMPONENT type);
-	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh);
+	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh, aiNode* node);
+	Components* AddComponent(GO_COMPONENT type, float3 pos, float3 scale, Quat rot);
 
 	GameObject* parent				= nullptr; // to the scene invisible game object containing all gameobjects
 	Component_Material* material	= nullptr;

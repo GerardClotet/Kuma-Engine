@@ -2,10 +2,13 @@
 #include "Application.h"
 #include "GameObject.h"
 
-Component_Transform::Component_Transform(GameObject * obj)
+Component_Transform::Component_Transform(GameObject * obj, float3 pos, float3 scale, Quat rot)
 {
 	name = "transform";
 	this->gameObject_Item = obj;
+	this->position = pos;
+	this->scale = scale;
+	this->rotation = rot;
 	comp_type = GO_COMPONENT::TRANSFORM;
 }
 

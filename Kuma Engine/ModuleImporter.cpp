@@ -134,7 +134,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
 		}
 
-		else LoadSingleMesh(scene, path);
+		else LoadSingleMesh(scene, path, scene->mRootNode);
 
 		
 		aiReleaseImport(scene);
@@ -154,10 +154,9 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 
 		go = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, af);
 		aiMesh* mesh;
-
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
-		go->AddComponent(GO_COMPONENT::MESH, mesh);
-		go->AddComponent(GO_COMPONENT::TRANSFORM);
+		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
+		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
 	{
@@ -168,7 +167,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 }
 
 
-void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name)
+void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node)
 {
 	GameObject* go = nullptr;
 	getImportedName(name);
@@ -178,7 +177,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name)
 	aiMesh* mesh;
 	mesh = importfile->mMeshes[0];//it has only 1 mesh
 	
-	go->AddComponent(GO_COMPONENT::MESH, mesh);
+	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
 	App->scene_intro->selected_game_obj = go;
 
 }

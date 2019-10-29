@@ -12,6 +12,7 @@
 enum class OBJECT_TYPE;
 class GameObject;
 struct aiMesh;
+struct aiNode;
 struct TexData;
 
 struct debug_mesh {
@@ -25,7 +26,7 @@ class Component_Mesh : public Components
 {
 public:
 	Component_Mesh(OBJECT_TYPE type, GameObject* obj);
-	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh, GameObject* obj);
+	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh, GameObject* obj, aiNode* node);
 	 ~Component_Mesh();
 
 	bool Update();
@@ -38,7 +39,7 @@ public:
 	void GenerateDodecahedron();
 	void GeneratePlane();
 	void GenerateTorus();
-	void GenerateImported(aiMesh* mesh);
+	void GenerateImported(aiMesh* mesh, aiNode* node);
 	void CreateMesh();
 	void CreateFaceNormals();
 	void CreateVertexFaceNormals();
@@ -78,8 +79,7 @@ public:
 	bool show_face_normal = false;
 	bool test = false;
 
-public:
-	GameObject* gameObject_Item = nullptr;
+
 
 private:
 	std::list<debug_mesh> mesh_debug;

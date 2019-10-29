@@ -27,7 +27,7 @@ public:
 	~ModuleImporter();
 	void LoadGeometry(const char* path);
 	void LoadNode(const aiScene* importfile, aiNode* file_node, const char* name,GameObject* subparent);
-	void LoadSingleMesh(const aiScene* importfile, const char* name);
+	void LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);

@@ -37,6 +37,7 @@ public:
 	bool enabled			= true;
 	bool setTexture			= false;
 	std::string name;
+	GameObject* gameObject_Item = nullptr;
 };
 #endif // !_COMPONENTS_H__
 

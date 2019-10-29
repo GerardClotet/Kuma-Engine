@@ -67,8 +67,6 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 		break;
 	case GO_COMPONENT::TRANSFORM:
-		transform = new Component_Transform(this);
-		components.push_back(transform);
 		break;
 	case GO_COMPONENT::MATERIAL:
 		material = new Component_Material(this);
@@ -79,12 +77,22 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 	return component;
 }
 
-Components * GameObject::AddComponent(GO_COMPONENT type, aiMesh * mesh)
+Components* GameObject::AddComponent(GO_COMPONENT type, aiMesh* mesh, aiNode* node)
 {
-	this->mesh = new Component_Mesh(this->type, mesh,this);
+	this->mesh = new Component_Mesh(this->type, mesh, this, node);
 	components.push_back(this->mesh);
 	return component;
 }
+
+Components* GameObject::AddComponent(GO_COMPONENT type, float3 pos, float3 scale, Quat rot)
+{
+	this->transform = new Component_Transform(this, pos, scale, rot);
+	components.push_back(this->transform);
+	return component;
+}
+
+
+
 
 GameObject::~GameObject()
 {
