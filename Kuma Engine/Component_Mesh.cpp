@@ -72,6 +72,9 @@ Component_Mesh::~Component_Mesh()
 bool Component_Mesh::Update()
 {
 	//Read buffers and draw the shapes
+	glPushMatrix();
+	//glMultMatrixf();   we need to pass here our global matrix
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -127,7 +130,7 @@ bool Component_Mesh::Update()
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-
+	glPopMatrix();
 
 	//draw normals
 	if (show_normals)
@@ -705,6 +708,7 @@ void Component_Mesh::CreateVertexFaceNormals()
 
 void Component_Mesh::TranslateMesh(float pos[3])
 {
+	//THE PARENT DON'T HAVE A MESH NORMALLY, SO THIS WILL CRASH BECAUSE THERE'S NO MESH ON IT
 	gameObject_Item->game_object_pos.x = pos[0];
 	gameObject_Item->game_object_pos.y = pos[1];
 	gameObject_Item->game_object_pos.z = pos[2];
