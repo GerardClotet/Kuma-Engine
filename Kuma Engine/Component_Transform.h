@@ -18,6 +18,21 @@ public:
 	bool Enable();
 	bool Disable();
 
+	//POSITION
+	void SetLocalPosition(const float x, const float y, const float z);
+	/*const float3 GetLocalPosition();
+	const float3 GetGlobalPosition();*/
+
+	//SCALE
+	void SetLocalScale(const float x, const float y, const float z);
+
+	//ROTATION
+	void SetLocalRotation(const float x, const float y, const float z, const float angle);
+
+	//MATRIX TRANSFORM
+	void RecalculateTransformMatrix();
+	
+
 private:
 	//position
 	float3 local_position = { 0,0,0 };

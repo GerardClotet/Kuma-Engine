@@ -1,6 +1,7 @@
 #include "Component_Mesh.h"
 #include "GameObject.h"
 #include "Component_Material.h"
+#include "Component_Transform.h"
 #include "Application.h"
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
@@ -73,7 +74,7 @@ bool Component_Mesh::Update()
 {
 	//Read buffers and draw the shapes
 	glPushMatrix();
-	//glMultMatrixf();   we need to pass here our global matrix
+	glMultMatrixf(gameObject_Item->transform->global_transformation.ptr());  // we need to pass here our global matrix
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -368,12 +369,13 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 	aiQuaternion rotation;
 	node->mTransformation.Decompose(scaling, rotation, translation);
 
+	//Get the max value of the three components of the "scaling"
 	int max_ = max(scaling.x, scaling.y);
 	max_ = max(max_, scaling.z);
 
 	float3 pos(translation.x, translation.y, translation.z);
-	//float3 scale(scaling.x / max_, scaling.y / max_, scaling.z / max_);
-	float3 scale(scaling.x, scaling.y, scaling.z);
+	// Divide the scaling by it's max number to set to 1 the scale factor, and keeping the relation
+	float3 scale(scaling.x / max_, scaling.y / max_, scaling.z / max_); 
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
 	gameObject_Item->AddComponent(GO_COMPONENT::TRANSFORM, pos, scale, rot);
