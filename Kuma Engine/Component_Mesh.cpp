@@ -6,7 +6,6 @@
 #include "ModuleUI.h"
 #include "ModuleTexture.h"
 
-#include "Cube.h"
 
 
 Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()

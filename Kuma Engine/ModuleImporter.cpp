@@ -4,8 +4,7 @@
 #include "ModuleImporter.h"
 #include "par_shapes.h"
 #include "ModuleSceneIntro.h"
-#include "Mesh.h"
-#include "Cube.h"
+
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "GameObject.h"
@@ -68,16 +67,25 @@ void ModuleImporter::getImportedName(const char* path)
 	
 
 	LOG("paths %s",path);
-	std::string file= path;
-	LOG("filepath %s", file.c_str());
-	
+	//Get the rout wihtout the name
+	std::string file = path;
+	size_t size_to_erase = file.rfind("\models");
+	if (std::string::npos != size_to_erase)
+		file.erase(size_to_erase);
+
+	LOG("route %s", file.c_str());
+
+	imported_route = file + "textures\\";
+
+	//Get The name
+	file= path;	
 	std::string name = file.substr(file.find_last_of("\\") + 1);
 
-	const size_t  extension = name.rfind('.');
+	size_to_erase = name.rfind('.');
 
-	if (std::string::npos != extension)
+	if (std::string::npos != size_to_erase)
 	{
-		name.erase(extension);
+		name.erase(size_to_erase);
 
 	}
 	LOG("name %s", name.c_str());
@@ -148,14 +156,35 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 	for (uint i = 0; i < file_node->mNumMeshes; i++)
 	{
 		aiString a = file_node->mName;
-		std::string af = a.data;
+		std::string mesh_name = a.data;
 		GameObject* go = nullptr;
 		//getImportedName(name);
 
-		go = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, af);
+		go = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, mesh_name);
 		aiMesh* mesh;
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
+		
+		unsigned int numat = importfile->mNumMaterials;
+		LOG("%i", a);
+		if (importfile->HasMaterials())
+		{
+			//Texture
+			for (uint m = 0; m < importfile->mNumMaterials; ++m) //no sense this here, just testing
+			{
+				aiMaterial* material = importfile->mMaterials[m];
+				aiString texture_path;
+				if (/*material->GetTextureCount(aiTextureType_DIFFUSE)>0 && */material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
+				{
+					LOG("%s", texture_path.C_Str());
+					LoadTextureFromMaterial(imported_route + texture_path.data,go);
+
+				}
+				else LOG("%s texture aiRETURN_FAILURE");
+			}
+			
+		}
+			//for (uint m = 0; m < importfile->mNumMaterials; ++i) //no sense this here, just testing
 		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
@@ -166,6 +195,17 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 
 }
 
+void ModuleImporter::LoadTextureFromMaterial(std::string path, GameObject* game_object)
+{
+	if (game_object->material == nullptr)
+	{
+		game_object->AddComponent(GO_COMPONENT::MATERIAL);
+		LOG("path %s", path.c_str());
+		game_object->material->ReadTexture(path.c_str());
+	}
+	else game_object->material->ReadTexture(path.c_str());
+	
+}
 
 void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node)
 {

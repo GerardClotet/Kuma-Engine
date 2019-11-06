@@ -17,6 +17,7 @@
 struct TexData
 {	
 	std::string name;
+	std::string path;
 	int width=0;
 	int height=0;
 	int offsetX=0;
@@ -44,7 +45,7 @@ public:
 	//ilLoadImage allows users to transparently load several different image formats uniformly.
 	TexData* tex_data = nullptr;
 	std::vector <TexData*> textures_vec;
-
+	TexData* CheckAlreadyLoaded(const char* path);
 public:
 	uint ImageName;
 	

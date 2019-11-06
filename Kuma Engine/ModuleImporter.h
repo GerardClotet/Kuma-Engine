@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "Mesh.h"
 #include <vector>
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -12,14 +11,13 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
-class Mesh;
-class Cube;
+
 class vec3;
 class GameObject;
 struct Color;
 enum class OBJECT_TYPE;
 enum class GO_COMPONENT;
-
+struct TexData;
 class ModuleImporter : public Module
 {
 public:
@@ -42,8 +40,9 @@ public:
 
 	void getImportedName(const char* path);
 	void LoadImportedMaterials(std::string path);
+	void LoadTextureFromMaterial(std::string path,GameObject* game_object);//this could be in the same func as the one above but it's more efficient 
 	std::string imported_name;
-public:
+	std::string imported_route;
 	TexData* texture;
 private:
 	std::string dropped_file_dir;

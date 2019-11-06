@@ -119,8 +119,12 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 {
 
 	ILuint id;
-		
 	
+	TexData* cmp_tex = CheckAlreadyLoaded(path);
+
+	if (cmp_tex != nullptr)
+		return cmp_tex;
+		
 	ilGenImages(1, &id);
 
 	ilBindImage(id);
@@ -133,6 +137,7 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 		{
+			tex_data->path = path;
 			tex_data->name = path;
 			tex_data->name = tex_data->name.substr(tex_data->name.find_last_of("\\") + 1);
 
@@ -185,6 +190,22 @@ TexData* ModuleTexture::GetDefaultTex()
 		++it;
 	}
 	LOG("Default texture missing");
+	return nullptr;
+}
+
+TexData* ModuleTexture::CheckAlreadyLoaded(const char* path)
+{
+
+	std::vector<TexData*>::iterator it = textures_vec.begin();
+	while (it < textures_vec.end())
+	{
+		if (strcmp((*it)->path.c_str(), path) == 0)
+		{
+			LOG("Texture %s alreadyLoaded", path);
+			return (*it);
+		}
+		++it;
+	}
 	return nullptr;
 }
 

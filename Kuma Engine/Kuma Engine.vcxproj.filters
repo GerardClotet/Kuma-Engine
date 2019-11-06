@@ -182,12 +182,6 @@
     <ClCompile Include="ModuleTexture.cpp">
       <Filter>modules</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -626,12 +620,6 @@
     </ClInclude>
     <ClInclude Include="ModuleTexture.h">
       <Filter>modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Objects</Filter>
