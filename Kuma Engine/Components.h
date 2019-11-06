@@ -32,7 +32,7 @@ public:
 
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;
-	GameObject* my_GameObject = nullptr;
+	//GameObject* my_GameObject = nullptr;
 	/*TexData* texture = nullptr;*/
 	bool enabled			= true;
 	bool setTexture			= false;

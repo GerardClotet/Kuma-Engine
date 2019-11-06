@@ -377,14 +377,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
 	gameObject_Item->AddComponent(GO_COMPONENT::TRANSFORM, pos, scale, rot);
-	//
-	//
-	//
-	//CREATE A TRANSFORMATION COMPONENT
-	//
-	//
-	//
-
+	
 
 	gl_Int = true;
 

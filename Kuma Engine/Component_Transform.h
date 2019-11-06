@@ -18,11 +18,21 @@ public:
 	bool Enable();
 	bool Disable();
 
-public:
-	float3 position;
-	float3 scale;
-	Quat rotation;
+private:
+	//position
+	float3 local_position = { 0,0,0 };
+	// sacale
+	float3 local_scale = { 0,0,0 };
+	// rotation
+	Quat local_rotation = { 0,0,0,0 };
 
+	//euler angles
+	float3 euler_rotation = { 0,0,0 };
+
+public:
+
+	float4x4 local_transformation = float4x4::identity;
+	float4x4 global_transformation = float4x4::identity;
 
 };
 

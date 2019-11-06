@@ -51,7 +51,7 @@ void PanelInspector::DisplayInspector()
 	
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		if (App->scene_intro->selected_game_obj != nullptr)
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
 			static float pos[3] = { App->scene_intro->selected_game_obj->game_object_pos.x, 
 									App->scene_intro->selected_game_obj->game_object_pos.y, 
