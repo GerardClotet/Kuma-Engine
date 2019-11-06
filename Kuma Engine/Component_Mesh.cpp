@@ -74,7 +74,7 @@ bool Component_Mesh::Update()
 {
 	//Read buffers and draw the shapes
 	glPushMatrix();
-	glMultMatrixf(gameObject_Item->transform->global_transformation.ptr());  // we need to pass here our global matrix
+	glMultMatrixf(gameObject_Item->transform->global_transformation.Transposed().ptr());  // we need to pass here our global matrix
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);

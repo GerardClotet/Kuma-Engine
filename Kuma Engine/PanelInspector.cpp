@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Component_Mesh.h"
 #include "Component_Material.h"
+#include "Component_Transform.h"
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleTexture.h"
@@ -53,7 +54,8 @@ void PanelInspector::DisplayInspector()
 	{
 		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
-			static float pos[3] = { App->scene_intro->selected_game_obj->game_object_pos.x, 
+			App->scene_intro->selected_game_obj->transform->DisplayInspector();
+			/*static float pos[3] = { App->scene_intro->selected_game_obj->game_object_pos.x, 
 									App->scene_intro->selected_game_obj->game_object_pos.y, 
 									App->scene_intro->selected_game_obj->game_object_pos.z };
 			ImGui::InputFloat3("Position", pos);
@@ -69,7 +71,7 @@ void PanelInspector::DisplayInspector()
 			static float scale[3] = { App->scene_intro->selected_game_obj->game_object_scale.x,
 									App->scene_intro->selected_game_obj->game_object_scale.y,
 									App->scene_intro->selected_game_obj->game_object_scale.z };
-			ImGui::InputFloat3("Scale", scale);
+			ImGui::InputFloat3("Scale", scale);*/
 		}
 	}
 

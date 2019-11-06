@@ -1,6 +1,7 @@
 #include "Component_Transform.h"
 #include "Application.h"
 #include "GameObject.h"
+#include "ImGui/imgui.h"
 
 Component_Transform::Component_Transform(GameObject * obj, float3 pos, float3 scale, Quat rot)
 {
@@ -69,6 +70,16 @@ void Component_Transform::SetLocalPosition(const float x, const float y, const f
 	RecalculateTransformMatrix();
 }
 
+float3& Component_Transform::GetLocalPosition()
+{
+	return local_position;
+}
+
+const float3 Component_Transform::GetGlobalPosition()
+{
+	return float3();
+}
+
 void Component_Transform::SetLocalScale(const float x, const float y, const float z)
 {
 	local_scale.x = x;
@@ -76,6 +87,16 @@ void Component_Transform::SetLocalScale(const float x, const float y, const floa
 	local_scale.z = z;
 
 	RecalculateTransformMatrix();
+}
+
+const float3 Component_Transform::GetLocalScale()
+{
+	return float3();
+}
+
+const float3 Component_Transform::GetGlobalScale()
+{
+	return float3();
 }
 
 void Component_Transform::SetLocalRotation(const float x, const float y, const float z, const float angle)
@@ -93,6 +114,16 @@ void Component_Transform::SetLocalRotation(const float x, const float y, const f
 	euler_rotation.z = RadToDeg(euler_rotation.z);
 
 	RecalculateTransformMatrix();
+}
+
+const Quat Component_Transform::GetLocalRotation()
+{
+	return Quat();
+}
+
+const Quat Component_Transform::GetGlobalRotation()
+{
+	return Quat();
 }
 
 void Component_Transform::RecalculateTransformMatrix()
@@ -129,5 +160,117 @@ void Component_Transform::RecalculateTransformMatrix()
 				(*item)->transform->RecalculateTransformMatrix();
 		}
 	}
+
+}
+
+void Component_Transform::DisplayInspector()
+{
+	ImGui::Text("Position  ");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(1);
+	if (ImGui::DragFloat("X", &local_position.x, 0.5F)) 
+	{
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(2);
+	if (ImGui::DragFloat("Y", &local_position.y, 0.5F)) 
+	{
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(3);
+	if (ImGui::DragFloat("Z", &local_position.z, 0.5F)) 
+	{
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+	ImGui::Spacing();
+
+
+	ImGui::Text("Rotation  ");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(4);
+	if (ImGui::DragFloat("X", &euler_rotation.x, 0.5F)) 
+	{
+		float3 aux_rot = euler_rotation;
+		aux_rot.x = DegToRad(euler_rotation.x);
+		aux_rot.y = DegToRad(euler_rotation.y);
+		aux_rot.z = DegToRad(euler_rotation.z);
+
+		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(5);
+	if (ImGui::DragFloat("Y", &euler_rotation.y, 0.5F))
+	{
+		float3 aux_rot = euler_rotation;
+		aux_rot.x = DegToRad(euler_rotation.x);
+		aux_rot.y = DegToRad(euler_rotation.y);
+		aux_rot.z = DegToRad(euler_rotation.z);
+
+		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(6);
+	if (ImGui::DragFloat("Z", &euler_rotation.z, 0.5F))
+	{
+		float3 aux_rot = euler_rotation;
+		aux_rot.x = DegToRad(euler_rotation.x);
+		aux_rot.y = DegToRad(euler_rotation.y);
+		aux_rot.z = DegToRad(euler_rotation.z);
+
+		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
+	ImGui::Spacing();
+
+	ImGui::Text("Scale     ");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(7);
+	if (ImGui::DragFloat("X", &local_scale.x, 0.5F))
+	{
+		//check if scale is negative
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(8);
+	if (ImGui::DragFloat("Y", &local_scale.y, 0.5F))
+	{
+		//check if scale is negative
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(50);
+	ImGui::PushID(9);
+	if (ImGui::DragFloat("Z", &local_scale.z, 0.5F))
+	{
+		//check if scale is negative
+		RecalculateTransformMatrix();
+	}
+	ImGui::PopID();
+
 
 }

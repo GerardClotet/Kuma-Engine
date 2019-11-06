@@ -20,14 +20,18 @@ public:
 
 	//POSITION
 	void SetLocalPosition(const float x, const float y, const float z);
-	/*const float3 GetLocalPosition();
-	const float3 GetGlobalPosition();*/
+	float3& GetLocalPosition();
+	const float3 GetGlobalPosition();
 
 	//SCALE
 	void SetLocalScale(const float x, const float y, const float z);
+	const float3 GetLocalScale();
+	const float3 GetGlobalScale();
 
 	//ROTATION
 	void SetLocalRotation(const float x, const float y, const float z, const float angle);
+	const Quat GetLocalRotation();
+	const Quat GetGlobalRotation();
 
 	//MATRIX TRANSFORM
 	void RecalculateTransformMatrix();
@@ -48,6 +52,9 @@ public:
 
 	float4x4 local_transformation = float4x4::identity;
 	float4x4 global_transformation = float4x4::identity;
+
+public:
+	void DisplayInspector();
 
 };
 

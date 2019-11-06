@@ -420,7 +420,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CUBE, "cube");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cube----");
 		}
@@ -430,7 +430,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::SPHERE, "sphere");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Sphere----");
 
@@ -442,7 +442,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CONE, "cone");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cone----");
 		}
@@ -452,7 +452,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::CYLINDER, "cylinder");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Cylinder----");
 		}
@@ -462,7 +462,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::DODECAHEDRON, "dodecahedron");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Dodecahedron----");
 		}
@@ -482,7 +482,7 @@ void ModuleEditor::GameObjectScreen()
 			GameObject* go = nullptr;
 			go = App->scene_intro->CreateGameObject(go, OBJECT_TYPE::TORUS, "torus");
 			go->AddComponent(GO_COMPONENT::MESH);
-			go->AddComponent(GO_COMPONENT::TRANSFORM);
+			go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			App->scene_intro->selected_game_obj = go;
 			LOG("----Created Torus----");
 		}
