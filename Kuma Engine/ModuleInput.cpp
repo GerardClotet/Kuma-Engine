@@ -136,6 +136,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
+				//change extensionFIleDecider to App->importer->ManageImportedFile()
 				ExtensionFileDecider(e.drop.file);
 				SDL_free(e.drop.file);
 				break;

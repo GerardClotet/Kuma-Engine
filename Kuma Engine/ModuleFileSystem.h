@@ -48,6 +48,7 @@ public:
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
+	std::string GetFileName(const char* file_name);
 
 
 	// Open for Read/Write
@@ -70,6 +71,7 @@ public:
 
 public: 
 	const FileDropType& SearchExtension(const std::string& extern_path);
+	void ManageImportedFile(const char* in_path);
 
 private:
 

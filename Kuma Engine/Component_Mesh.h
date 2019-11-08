@@ -14,6 +14,7 @@ class GameObject;
 struct aiMesh;
 struct aiNode;
 struct TexData;
+struct meshInfo;
 
 struct debug_mesh {
 
@@ -27,6 +28,7 @@ class Component_Mesh : public Components
 public:
 	Component_Mesh(OBJECT_TYPE type, GameObject* obj);
 	Component_Mesh(OBJECT_TYPE type, aiMesh* mesh, GameObject* obj, aiNode* node);
+	Component_Mesh(OBJECT_TYPE type, meshInfo* mesh, GameObject* obj);
 	 ~Component_Mesh();
 
 	bool Update();
@@ -40,6 +42,7 @@ public:
 	void GeneratePlane();
 	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh, aiNode* node);
+	void LoadMeshFromMeta(meshInfo* mesh);
 	void CreateMesh();
 	void CreateFaceNormals();
 	void CreateVertexFaceNormals();
@@ -85,6 +88,7 @@ private:
 	std::list<debug_mesh> mesh_debug;
 	OBJECT_TYPE type;
 	TexData* text = nullptr;
+	meshInfo* mesh_info = nullptr;
 };
 #endif // !MESH_COMPONENT_H
 

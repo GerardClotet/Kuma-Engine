@@ -18,6 +18,32 @@ struct Color;
 enum class OBJECT_TYPE;
 enum class GO_COMPONENT;
 struct TexData;
+
+struct meshInfo 
+{
+	uint id_index = 0;
+	uint num_index = 0;
+	uint* index = nullptr;
+
+	uint id_vertex = 0;
+	uint num_vertex = 0;
+	float* vertex = nullptr;
+
+	uint id_normal = 0;
+	uint num_normal = 0;
+	float* normal = nullptr;
+
+	uint num_uvs = 0;
+	uint id_uvs = 0;
+	float* uvs = nullptr;
+
+	bool has_normals = false;
+	bool has_uvs = false;
+	uint num_color = 0;
+	uint id_color = 0;
+	float* color = nullptr;
+};
+
 class ModuleImporter : public Module
 {
 public:
@@ -26,6 +52,8 @@ public:
 	void LoadGeometry(const char* path);
 	void LoadNode(const aiScene* importfile, aiNode* file_node, const char* name,GameObject* subparent);
 	void LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node);
+	bool LoadModelFile(const char* model_file);
+	bool LoadTextureFile(const char* texture_file);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);

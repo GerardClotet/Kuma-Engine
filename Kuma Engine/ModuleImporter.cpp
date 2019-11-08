@@ -222,5 +222,29 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 
 }
 
+bool ModuleImporter::LoadModelFile(const char * model_file)
+{
+	//If the fbx wasn't loaded before, call the LoadGeometry and save a .meta
+	//If the fbx was previously loaded, read all meta data in this function.
+	//This function loads the info of the file, saving it to a struct and calling the component constructor,
+	//passing this structure to the constructor
+
+	//meshInfo* mesh_info;
+	//mesh_info->num_vertex = meta_num_vertex... Do you understand it right?
+	//gameObject->AddCOmponent(MESH, mesh_info);
+
+	// To get the file name do: Split with the full path, and then GetFileName with that string
+	// std::string test = LIBRARY_MODEL_FOLDER + file_name + "_meta.kuma";
+	// if(App->fs->Exists(test.c_str()));
+	//TO CREATE A FILE USE App->fs->SaveUnique();
+
+	return true;
+}
+
+bool ModuleImporter::LoadTextureFile(const char * texture_file)
+{
+	return true;
+}
+
 
 

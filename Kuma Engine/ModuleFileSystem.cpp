@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleImporter.h"
 //#include "ModuleResources.h"
 #include "PhysFS/include/physfs.h"
 #include "Assimp/include/cfileio.h"
@@ -223,6 +224,9 @@ void ModuleFileSystem::SplitFilePath(const char * full_path, std::string * path,
 			else
 				extension->clear();
 		}
+
+
+	
 	}
 }
 
@@ -256,6 +260,32 @@ void ModuleFileSystem::NormalizePath(std::string & full_path) const
 			*it = tolower(*it);
 	}
 }
+
+std::string ModuleFileSystem::GetFileName(const char * file_name)
+{
+	std::string name;
+	std::string full_name(file_name);
+	bool reached_dot = false;
+
+	std::string::const_reverse_iterator item = full_name.crbegin();
+	for (; item != full_name.crend(); ++item)
+	{
+		if (!reached_dot) {
+			if (*item == '.')
+				reached_dot = true;
+		}
+		else {
+			if (*item == '/') {
+				break;
+			}
+			else {
+				name = *item + name;
+			}
+		}
+	}
+	return name;
+}
+
 
 unsigned int ModuleFileSystem::Load(const char * path, const char * file, char ** buffer) const
 {
@@ -443,9 +473,50 @@ const FileDropType & ModuleFileSystem::SearchExtension(const std::string & exter
 
 }
 
-// -----------------------------------------------------
-// ASSIMP IO
-// -----------------------------------------------------
+void ModuleFileSystem::ManageImportedFile(const char * first_path)
+{
+	LOG("Imported new file with path %s", first_path);
+
+	std::string last_path;
+	SplitFilePath(first_path, nullptr, &last_path);
+
+	FileDropType f_type = SearchExtension(std::string(first_path));
+
+	std::string aux_path = last_path;
+
+	switch (f_type)
+	{
+	case FileDropType::MODEL3D:
+		last_path = MODELS_FOLDER + last_path;
+		break;
+	case FileDropType::TEXTURE:
+		last_path = TEXTURES_FOLDER + last_path;
+		break;
+	}
+
+	//Copy the file to assets folder if it doesn't exist
+	std::string normalized_path = last_path;
+	NormalizePath(normalized_path);
+	if (!Exists(normalized_path.data()))
+	{
+		CopyFromOutsideFS(first_path, last_path.c_str());
+	}
+
+	switch (f_type)
+	{
+	case FileDropType::MODEL3D:
+		App->importer->LoadModelFile(last_path.c_str());
+		break;
+	case FileDropType::TEXTURE:
+		App->importer->LoadTextureFile(last_path.c_str());
+		break;
+	}
+
+}
+	// -----------------------------------------------------
+	// ASSIMP IO
+	// -----------------------------------------------------
+	
 
 size_t AssimpWrite(aiFile* file, const char* data, size_t size, size_t chunks)
 {

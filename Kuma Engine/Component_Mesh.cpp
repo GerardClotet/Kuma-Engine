@@ -58,6 +58,17 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, aiMesh * mesh, GameObject* obj,
 	GenerateImported(mesh, node);
 }
 
+Component_Mesh::Component_Mesh(OBJECT_TYPE type, meshInfo * mesh, GameObject * obj)
+{
+	//Constructor for a component mesh that has been load previously
+	comp_type = GO_COMPONENT::MESH;
+	this->type = type;
+	this->gameObject_Item = obj;
+
+	//LoadMeshFromMeta. This will be the function that will load the info and store it to the local variables
+	//LoadMeshFromMeta(meshInfo* mesh);
+}
+
 Component_Mesh::~Component_Mesh()
 {
 	LOG("deleted mesh");
@@ -385,7 +396,15 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 	if (!test)
 		CreateFaceNormals();
 
+	//DO THE SAVE UNIQUE OF THE MESH VARIABLES(lo que està en el pdf)
+
+
 	CreateMesh();
+}
+
+void Component_Mesh::LoadMeshFromMeta(meshInfo * mesh)
+{
+	//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
 }
 
 void Component_Mesh::GenerateCone()
