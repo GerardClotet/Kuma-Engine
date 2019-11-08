@@ -38,8 +38,8 @@ bool ModuleSceneIntro::Start()
 {
 
 	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
-	/*App->importer->LoadGeometry(firstFbx.c_str());
-	App->importer->LoadImportedMaterials(firstTex);*/
+	App->importer->LoadGeometry(firstFbx.c_str());
+	App->importer->LoadImportedMaterials(firstTex);
 
 	return true;
 }

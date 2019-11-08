@@ -206,6 +206,9 @@
     <ClCompile Include="Component_Transform.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -644,6 +647,9 @@
     </ClInclude>
     <ClInclude Include="Component_Transform.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

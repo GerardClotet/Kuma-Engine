@@ -6,6 +6,7 @@
 #include "ModuleHardware.h"
 #include "ModuleImporter.h"
 #include "ModuleTexture.h"
+#include "ModuleFileSystem.h"
 
 #include "Parson/parson.h"
 #include "p2Defs.h"
@@ -25,6 +26,7 @@ Application::Application()
 	ui = new ModuleEditor(this);
 	hardware = new ModuleHardware(this);
 	importer = new ModuleImporter(this);
+	fs = new ModuleFileSystem(this, ASSETS_FOLDER);
 	texture = new ModuleTexture(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -41,6 +43,7 @@ Application::Application()
 	AddModule(scene_intro);
 	AddModule(ui);
 	AddModule(hardware);
+	AddModule(fs);
 	// Renderer last!
 	AddModule(renderer3D);
 

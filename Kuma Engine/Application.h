@@ -20,6 +20,7 @@ class ModuleHardware;
 class ModuleEditor;
 class ModuleImporter;
 class ModuleTexture;
+class ModuleFileSystem;
 
 class Application
 {
@@ -33,6 +34,7 @@ public:
 	ModuleHardware* hardware = nullptr;
 	ModuleImporter* importer = nullptr;
 	ModuleTexture* texture = nullptr;
+	ModuleFileSystem* fs = nullptr;
 private:
 
 	Timer		ms_timer;
