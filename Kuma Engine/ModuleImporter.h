@@ -38,6 +38,8 @@ public:
 	ImVec4 vertex_normal_color = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
 	ImVec4 vertex_color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 
+	bool hasBeenLoaded = false;
+
 	void getImportedName(const char* path);
 	void LoadImportedMaterials(std::string path);
 	void LoadTextureFromMaterial(std::string path,GameObject* game_object);//this could be in the same func as the one above but it's more efficient 

@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Component_Material.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleFileSystem.h"
 
 #include "ImGui/Impl/imgui_impl_sdl.h"
 

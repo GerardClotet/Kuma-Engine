@@ -8,8 +8,19 @@ struct SDL_RWops;
 int close_sdl_rwops(SDL_RWops *rw);
 
 struct aiFileIO;
+
+
+
 #include "Bass/include/bass.h"
 //struct BASS_FILEPROCS;
+enum class FileDropType {
+	MODEL3D,
+	TEXTURE,
+	FOLDER,
+	SCRIPT,
+
+	UNKNOWN
+};
 
 class ModuleFileSystem : public Module
 {
@@ -38,6 +49,7 @@ public:
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
 
+
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;
 	unsigned int Load(const char* file, char** buffer) const;
@@ -55,6 +67,9 @@ public:
 	const char* GetBasePath() const;
 	const char* GetWritePath() const;
 	const char* GetReadPaths() const;
+
+public: 
+	const FileDropType& SearchExtension(const std::string& extern_path);
 
 private:
 

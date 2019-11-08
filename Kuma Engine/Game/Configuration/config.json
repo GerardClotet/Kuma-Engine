@@ -20,8 +20,8 @@
   },
 
   "Importer": {
-    "File": "assets\\models\\BakerHouse.fbx",
-    "Texture": "assets\\textures\\BakerHouse.dds"
+    "File": "Assets\\models\\BakerHouse.fbx",
+    "Texture": "Assets\\textures\\BakerHouse.dds"
   },
 
   "License": {

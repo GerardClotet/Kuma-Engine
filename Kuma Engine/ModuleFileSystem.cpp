@@ -424,6 +424,25 @@ const char * ModuleFileSystem::GetReadPaths() const
 	return paths;
 }
 
+const FileDropType & ModuleFileSystem::SearchExtension(const std::string & extern_path)
+{
+	std::string extension;
+	SplitFilePath(extern_path.data(), nullptr, nullptr, &extension);
+
+	FileDropType ext_type = FileDropType::UNKNOWN;
+
+	if (extension == "FBX" || extension == "fbx")
+		ext_type = FileDropType::MODEL3D;
+	else if (extension == "PNG" || extension == "png" || extension == "jpg" || extension == "dds")
+		ext_type = FileDropType::TEXTURE;
+	else
+		LOG("Extension unknown!");
+
+
+	return ext_type;
+
+}
+
 // -----------------------------------------------------
 // ASSIMP IO
 // -----------------------------------------------------

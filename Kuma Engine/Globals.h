@@ -41,8 +41,10 @@ enum update_status
 
 // Configuration -----------
 #define VERSION "0.4-alpha"
-#define ASSETS_FOLDER "/assets/"
+#define ASSETS_FOLDER "/Assets/"
 #define SETTINGS_FOLDER "/Settings/"
+#define MODELS_FOLDER "Assets/models/"
+#define TEXTURES_FOLDER "Assets/textures/"
 #define LIBRARY_FOLDER "/Library/"
 #define LIBRARY_AUDIO_FOLDER "/Library/Audio/"
 #define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
