@@ -43,6 +43,7 @@ public:
 	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh, aiNode* node);
 	void LoadMeshFromMeta(meshInfo* mesh);
+	void SaveMeshToMeta();
 	void CreateMesh();
 	void CreateFaceNormals();
 	void CreateVertexFaceNormals();

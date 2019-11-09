@@ -397,7 +397,7 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 		CreateFaceNormals();
 
 	//DO THE SAVE UNIQUE OF THE MESH VARIABLES(lo que està en el pdf)
-
+	//SaveMeshToMeta();  Here you will do the pdf thing
 
 	CreateMesh();
 }
@@ -405,6 +405,12 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 void Component_Mesh::LoadMeshFromMeta(meshInfo * mesh)
 {
 	//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
+}
+
+void Component_Mesh::SaveMeshToMeta()
+{
+	//gameObject_Item->name;   this is the name of the mesh, i think this will be the file name with "_meta.kuma"
+	//Save all the info to the new file
 }
 
 void Component_Mesh::GenerateCone()

@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleImporter.h"
 #include "par_shapes.h"
+#include "ModuleFileSystem.h"
 #include "ModuleSceneIntro.h"
 
 #include "PanelConfig.h"
@@ -77,19 +78,21 @@ void ModuleImporter::getImportedName(const char* path)
 
 	imported_route = file + "textures\\";
 
-	//Get The name
-	file= path;	
-	std::string name = file.substr(file.find_last_of("\\") + 1);
+	////Get The name
+	//file= path;	
+	//std::string name = file.substr(file.find_last_of("\\") + 1);
 
-	size_to_erase = name.rfind('.');
+	//size_to_erase = name.rfind('.');
 
-	if (std::string::npos != size_to_erase)
-	{
-		name.erase(size_to_erase);
+	//if (std::string::npos != size_to_erase)
+	//{
+	//	name.erase(size_to_erase);
 
-	}
-	LOG("name %s", name.c_str());
-
+	//}
+	//LOG("name %s", name.c_str());
+	std::string name;
+	App->fs->SplitFilePath(path, nullptr, &name);
+	name = App->fs->GetFileName(name.c_str());
 	imported_name = name;
 
 	
@@ -237,6 +240,17 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 	// std::string test = LIBRARY_MODEL_FOLDER + file_name + "_meta.kuma";
 	// if(App->fs->Exists(test.c_str()));
 	//TO CREATE A FILE USE App->fs->SaveUnique();
+	std::string path_meta = App->fs->GetModelMetaPath(model_file);
+	if (App->fs->Exists(path_meta.c_str())) 
+	{
+		//It was previously loaded
+		//Read from the meta
+	}
+	else
+	{
+		//It wasn't loaded before
+		LoadGeometry(model_file);
+	}
 
 	return true;
 }
