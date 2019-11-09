@@ -142,8 +142,14 @@ void ModuleImporter::LoadGeometry(const char* path)
 			GameObject* go_subparent;
 			go_subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, imported_name + " parent");
 			go_subparent->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+			
+			model_info = new modelInfo;
+			/*meshInfo* meshinf = new meshInfo;
+			meshinf->name = "subparent";
+			SaveMeshToMeta(path, meshinf);*/
 			App->scene_intro->selected_game_obj = go_subparent;
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
+			SaveModelToMeta(path, model_info);
 		}
 
 		else LoadSingleMesh(scene, path, scene->mRootNode);
@@ -169,7 +175,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
 		
-		SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
+		SaveMeshToMeta(name, go->mesh->saveMeshinfo()); //save it
 
 
 		unsigned int numat = importfile->mNumMaterials;
@@ -181,7 +187,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 			{
 				aiMaterial* material = importfile->mMaterials[m];
 				aiString texture_path;
-				if (/*material->GetTextureCount(aiTextureType_DIFFUSE)>0 && */material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
+				if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 				{
 					LOG("%s", texture_path.C_Str());
 					LoadTextureFromMaterial(imported_route + texture_path.data,go);
@@ -191,7 +197,6 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 			}
 			
 		}
-			//for (uint m = 0; m < importfile->mNumMaterials; ++i) //no sense this here, just testing
 		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
@@ -227,7 +232,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
 	App->scene_intro->selected_game_obj = go;
 
-	SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
+	SaveMeshToMeta(name, go->mesh->saveMeshinfo()); //save it
 
 
 }
@@ -248,11 +253,11 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 	// if(App->fs->Exists(test.c_str()));
 	//TO CREATE A FILE USE App->fs->SaveUnique();
 	std::string path_meta = App->fs->GetModelMetaPath(model_file);
-	if (App->fs->Exists(path_meta.c_str())) 
+	if (App->fs->Exists(path_meta.c_str())) //encara que hagi estat carregat diu que no existeix pq el subparent no l'ha fet i aqui busca el meta del subparent;
 	{
 		//It was previously loaded
 		//Read from the meta
-		meshInfo* info = LoadtoMeta(path_meta.c_str());
+		meshInfo* info = LoadMeshtoMeta(path_meta.c_str());
 		GameObject* go = nullptr;
 		getImportedName(model_file);
 		
@@ -276,7 +281,7 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 	return true;
 }
 
-void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
+void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 {
 
 	uint ranges[5] = {
@@ -336,16 +341,27 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 	memcpy(cursor, mesh->color, bytes);
 
 
-	std::string temp = App->fs->GetFileName(path);
-	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
-	LOG("tets %s", test.c_str());
-	std::string output;
-	App->fs->SaveUnique(output, data, size, test.c_str());
-	LOG("output %s 1 %s", output, output.c_str());
+	std::string name;
+	if (mesh->name !="subparent") {
+		 name = LIBRARY_MODEL_FOLDER + mesh->name + EXTENSION_META;
+		LOG("tets %s", name.c_str());
 
+	}
+	else
+	{
+		std::string temp = App->fs->GetFileName(path);
+		name = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
+	}
+
+	std::string output;
+	App->fs->SaveUnique(output, data, size, name.c_str());
+	LOG("output %s 1 %s", output, output.c_str());
+	mesh->route = name; //route to meta file
+
+	model_info->meshinfo.push_back(mesh);
 }
 
-meshInfo* ModuleImporter::LoadtoMeta(const char* path)
+meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 {
 
 	meshInfo* mesh = new meshInfo;
@@ -400,6 +416,73 @@ meshInfo* ModuleImporter::LoadtoMeta(const char* path)
 	memcpy(mesh->color, cursor, bytes);
 
 	return mesh;
+}
+
+void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
+{
+	//int m = model->meshinfo.size();
+	//const char* ranges[model->meshinfo.size];
+	//for (int i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	ranges[i] = model->meshinfo[i]->route;
+	//}
+	//std::string size = sizeof(ranges);
+
+	//for (int i = 0; i < model->meshinfo.size; ++i)
+	//{
+	//	size += sizeof(std::string) *std::stoul((model->meshinfo[i]->route)); //?
+	//}
+	//char* data = new char[size.c_str];
+	//char* cursor = data;
+
+	//size_t bytes = sizeof(ranges);
+	//memcpy(cursor, ranges, bytes);
+	//for (int i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	cursor += bytes;
+	//	bytes = sizeof(std::string) * std::stoul(model->meshinfo[i]->route);
+	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
+
+	//}
+
+	//--------------
+
+	//uint ranges[model->meshinfo.size]; //error pq es constant
+	//for (uint i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	ranges[i] = std::stoul(model->meshinfo[i]->route);
+	//}
+	////ranges[model->meshinfo.size] += rang
+	//uint size = sizeof(ranges);
+
+	//for (int i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	size += sizeof(unsigned long) * std::stoul(model->meshinfo[i]->route);
+	//}
+	//
+
+	//char* data = new char[size]; 
+	//char* cursor = data;
+
+	//uint bytes = sizeof(ranges);
+	//memcpy(cursor, ranges, bytes);
+
+
+	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
+	//{
+	//	cursor += bytes;
+	//	bytes = sizeof(unsigned long) *(std::stoul(model->meshinfo[i]->route)); //converts string to unsigned int
+	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
+	//}
+
+
+	//--------------------
+	/*std::string name = App->fs->GetFileName(path);
+	name = LIBRARY_MODEL_FOLDER + name + EXTENSION_META;
+
+	std::string output;
+	App->fs->SaveUnique(output, data, std::stoul(size), name.c_str());*/
+
 }
 
 

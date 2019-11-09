@@ -19,6 +19,7 @@ enum class OBJECT_TYPE;
 enum class GO_COMPONENT;
 struct TexData;
 
+
 struct meshInfo 
 {
 	uint id_index = 0;
@@ -42,6 +43,18 @@ struct meshInfo
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
+
+
+	std::string name;
+	std::string route; //route to _meta.kuma file
+};
+
+struct modelInfo
+{
+	std::vector<meshInfo*> meshinfo;
+	std::string name;
+	int numMeshes = 0;
+	int numMaterials = 0;
 };
 
 class ModuleImporter : public Module
@@ -54,8 +67,11 @@ public:
 	void LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node);
 	bool LoadModelFile(const char* model_file);
 	bool LoadTextureFile(const char* texture_file);
-	void SaveToMeta(const char *path,meshInfo* mesh);
-	meshInfo* LoadtoMeta(const char* path);
+	void SaveMeshToMeta(const char *path,meshInfo* mesh);
+	meshInfo* LoadMeshtoMeta(const char* path);
+	void SaveModelToMeta(const char* path,modelInfo* model);
+
+
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
@@ -76,11 +92,13 @@ public:
 	std::string imported_name;
 	std::string imported_route;
 	TexData* texture;
+
+	int tem;
 private:
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;
-	
+	modelInfo* model_info = nullptr;
 
 };
 

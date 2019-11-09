@@ -42,8 +42,7 @@ public:
 	void GeneratePlane();
 	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh, aiNode* node);
-	void LoadMeshFromMeta(const char* path);
-	//void SaveToMeta(const char* path);
+	
 	void CreateMesh();
 	void CreateFaceNormals();
 	void CreateVertexFaceNormals();
@@ -52,6 +51,7 @@ public:
 
 	meshInfo* saveMeshinfo();
 	void ExtractMeshInfo(meshInfo* info);
+
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
