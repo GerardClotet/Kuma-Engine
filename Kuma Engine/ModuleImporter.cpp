@@ -519,6 +519,38 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	//  SUBSTITUIR EL 10 PER LA SIZE DEL VECTOR
 	//
 	//
+
+	//--------------
+
+	//uint ranges[2]; //error pq es constant
+	//for (uint i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	ranges[i] =(uint)model->meshinfo[i]->route.data();
+	//	
+	//}
+	//LOG("%s", model->meshinfo[0]->route.data());
+	//
+	//uint size = sizeof(ranges);
+
+	//for (int i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	size += sizeof(uint) *(uint)model->meshinfo[i]->route.data();
+	//}
+	//
+
+	//char* data = new char[size]; 
+	//char* cursor = data;
+
+	//uint bytes = sizeof(ranges);
+	//memcpy(cursor, ranges, bytes);
+
+
+	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
+	//{
+	//	cursor += bytes;
+	//	bytes = sizeof(uint) *model->meshinfo[i]->route.capacity(); //converts string to unsigned int
+	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
+	//}
 	uint i = 0;
 	const char* ranges[10];
 	for (i; i < model->meshinfo.size(); ++i) 
