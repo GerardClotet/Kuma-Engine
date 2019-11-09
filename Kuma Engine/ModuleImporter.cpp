@@ -396,14 +396,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 
 	std::string name;
 	if (mesh->name !="subparent") {
-		 name = LIBRARY_MODEL_FOLDER + mesh->name + EXTENSION_META;
+		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META;
 		LOG("tets %s", name.c_str());
 
 	}
 	else
 	{
 		std::string temp = App->fs->GetFileName(path);
-		name = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
+		name = LIBRARY_MESH_FOLDER + temp + EXTENSION_META;
 	}
 
 	std::string output;
@@ -495,68 +495,27 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
-	//int m = model->meshinfo.size();
-	//const char* ranges[model->meshinfo.size];
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	ranges[i] = model->meshinfo[i]->route;
-	//}
-	//std::string size = sizeof(ranges);
+	uint i = 0;
+	const char* ranges[10];
+	for (i; i < model->meshinfo.size(); ++i) 
+	{
+		ranges[i] = model->meshinfo[i]->route.c_str();
+	}
 
-	//for (int i = 0; i < model->meshinfo.size; ++i)
-	//{
-	//	size += sizeof(std::string) *std::stoul((model->meshinfo[i]->route)); //?
-	//}
-	//char* data = new char[size.c_str];
-	//char* cursor = data;
+	uint size = sizeof(ranges);
+		
+	char* data = new char[size]; //Allocate
+	char* cursor = data;
 
-	//size_t bytes = sizeof(ranges);
-	//memcpy(cursor, ranges, bytes);
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	cursor += bytes;
-	//	bytes = sizeof(std::string) * std::stoul(model->meshinfo[i]->route);
-	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
-
-	//}
-
-	//--------------
-
-	//uint ranges[model->meshinfo.size]; //error pq es constant
-	//for (uint i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	ranges[i] = std::stoul(model->meshinfo[i]->route);
-	//}
-	////ranges[model->meshinfo.size] += rang
-	//uint size = sizeof(ranges);
-
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	size += sizeof(unsigned long) * std::stoul(model->meshinfo[i]->route);
-	//}
-	//
-
-	//char* data = new char[size]; 
-	//char* cursor = data;
-
-	//uint bytes = sizeof(ranges);
-	//memcpy(cursor, ranges, bytes);
+	uint bytes = sizeof(ranges); //Store ranges
+	memcpy(cursor, ranges, bytes);
 
 
-	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
-	//{
-	//	cursor += bytes;
-	//	bytes = sizeof(unsigned long) *(std::stoul(model->meshinfo[i]->route)); //converts string to unsigned int
-	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
-	//}
-
-
-	//--------------------
-	/*std::string name = App->fs->GetFileName(path);
-	name = LIBRARY_MODEL_FOLDER + name + EXTENSION_META;
-
+	std::string temp = App->fs->GetFileName(path);
+	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
+	LOG("tets %s", test.c_str());
 	std::string output;
-	App->fs->SaveUnique(output, data, std::stoul(size), name.c_str());*/
+	App->fs->SaveUnique(output, data, size, test.c_str());
 
 }
 
