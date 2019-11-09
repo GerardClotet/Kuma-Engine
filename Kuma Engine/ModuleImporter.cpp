@@ -305,7 +305,7 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_vertex;
+	bytes = sizeof(float) * mesh->num_vertex * 3;
 	memcpy(cursor, mesh->vertex, bytes);
 
 	cursor += bytes;//Store index;
@@ -314,7 +314,7 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 
 	//----
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_normal;
+	bytes = sizeof(float) * mesh->num_normal * 3;
 	memcpy(cursor, mesh->normal, bytes);
 
 
@@ -322,7 +322,7 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 	//---
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_uvs;
+	bytes = sizeof(float) * mesh->num_uvs * 2;
 	memcpy(cursor, mesh->uvs, bytes);
 
 	//--
@@ -332,8 +332,8 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 
 	//----
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_color;
-	memcpy(cursor, mesh->normal, bytes);
+	bytes = sizeof(float) * mesh->num_color * 4;
+	memcpy(cursor, mesh->color, bytes);
 
 
 	std::string temp = App->fs->GetFileName(path);
@@ -372,8 +372,8 @@ meshInfo* ModuleImporter::LoadtoMeta(const char* path)
 	mesh->num_color = ranges[4];
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_vertex;
-	mesh->vertex = new float[mesh->num_vertex];
+	bytes = sizeof(float) * mesh->num_vertex * 3;
+	mesh->vertex = new float[mesh->num_vertex * 3];
 	memcpy(mesh->vertex, cursor, bytes);
 
 	cursor += bytes;
@@ -382,21 +382,21 @@ meshInfo* ModuleImporter::LoadtoMeta(const char* path)
 	memcpy(mesh->index, cursor, bytes);
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_normal;
-	mesh->normal = new float[mesh->num_normal];
+	bytes = sizeof(float) * mesh->num_normal * 3;
+	mesh->normal = new float[mesh->num_normal * 3];
 	memcpy(mesh->normal, cursor, bytes);
 
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_uvs;
-	mesh->uvs = new float[mesh->num_uvs];
+	bytes = sizeof(float) * mesh->num_uvs * 2;
+	mesh->uvs = new float[mesh->num_uvs * 2];
 	memcpy(mesh->uvs, cursor, bytes);
 
 
 
 	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_color;
-	mesh->color = new float[mesh->num_color];
+	bytes = sizeof(float) * mesh->num_color * 4;
+	mesh->color = new float[mesh->num_color * 4];
 	memcpy(mesh->color, cursor, bytes);
 
 	return mesh;
