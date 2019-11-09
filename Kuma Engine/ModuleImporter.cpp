@@ -495,44 +495,23 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
-	//int m = model->meshinfo.size();
-	//const char* ranges[model->meshinfo.size];
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	ranges[i] = model->meshinfo[i]->route;
-	//}
-	//std::string size = sizeof(ranges);
 
-	//for (int i = 0; i < model->meshinfo.size; ++i)
-	//{
-	//	size += sizeof(std::string) *std::stoul((model->meshinfo[i]->route)); //?
-	//}
-	//char* data = new char[size.c_str];
-	//char* cursor = data;
-
-	//size_t bytes = sizeof(ranges);
-	//memcpy(cursor, ranges, bytes);
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	cursor += bytes;
-	//	bytes = sizeof(std::string) * std::stoul(model->meshinfo[i]->route);
-	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
-
-	//}
 
 	//--------------
 
-	//uint ranges[model->meshinfo.size]; //error pq es constant
+	//uint ranges[2]; //error pq es constant
 	//for (uint i = 0; i < model->meshinfo.size(); ++i)
 	//{
-	//	ranges[i] = std::stoul(model->meshinfo[i]->route);
+	//	ranges[i] =(uint)model->meshinfo[i]->route.data();
+	//	
 	//}
-	////ranges[model->meshinfo.size] += rang
+	//LOG("%s", model->meshinfo[0]->route.data());
+	//
 	//uint size = sizeof(ranges);
 
 	//for (int i = 0; i < model->meshinfo.size(); ++i)
 	//{
-	//	size += sizeof(unsigned long) * std::stoul(model->meshinfo[i]->route);
+	//	size += sizeof(uint) *(uint)model->meshinfo[i]->route.data();
 	//}
 	//
 
@@ -546,17 +525,17 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
 	//{
 	//	cursor += bytes;
-	//	bytes = sizeof(unsigned long) *(std::stoul(model->meshinfo[i]->route)); //converts string to unsigned int
+	//	bytes = sizeof(uint) *model->meshinfo[i]->route.capacity(); //converts string to unsigned int
 	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
 	//}
 
 
-	//--------------------
-	/*std::string name = App->fs->GetFileName(path);
-	name = LIBRARY_MODEL_FOLDER + name + EXTENSION_META;
+	////--------------------
+	//std::string name = App->fs->GetFileName(path);
+	//name = LIBRARY_MODEL_FOLDER + name + EXTENSION_META;
 
-	std::string output;
-	App->fs->SaveUnique(output, data, std::stoul(size), name.c_str());*/
+	//std::string output;
+	//App->fs->SaveUnique(output, data, size, name.c_str());
 
 }
 
