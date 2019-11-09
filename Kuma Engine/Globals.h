@@ -42,6 +42,7 @@ enum update_status
 // Configuration -----------
 #define VERSION "0.4-alpha"
 #define EXTENSION_META "_meta.kuma"
+#define EXTENSION_TEXTURE_META "_texture_meta.kuma"
 #define ASSETS_FOLDER "/Assets/"
 #define SETTINGS_FOLDER "/Settings/"
 #define MODELS_FOLDER "Assets/models/"

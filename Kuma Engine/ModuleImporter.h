@@ -72,6 +72,8 @@ public:
 	void SaveModelToMeta(const char* path,modelInfo* model);
 
 
+	
+	void SaveTextureToMeta(const char *path);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
