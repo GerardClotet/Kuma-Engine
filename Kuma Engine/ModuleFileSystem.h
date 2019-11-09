@@ -62,7 +62,7 @@ public:
 	BASS_FILEPROCS* GetBassIO();
 
 	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false) const;
-	bool SaveUnique(std::string& output, const void* buffer, uint size, const char* path, const char* prefix, const char* extension);
+	bool SaveUnique(std::string& output, const void* buffer, uint size, const char* path);
 	bool Remove(const char* file);
 
 	const char* GetBasePath() const;

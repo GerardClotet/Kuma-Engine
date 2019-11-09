@@ -43,3 +43,8 @@ bool Components::Disable()
 //void Component::Update()
 //{
 //}
+
+void Components::SaveToMeta(const char* path)
+{
+
+}

@@ -21,7 +21,6 @@ class ModuleEditor;
 class ModuleImporter;
 class ModuleTexture;
 class ModuleFileSystem;
-
 class Application
 {
 public:

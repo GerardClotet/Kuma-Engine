@@ -91,6 +91,13 @@ Components* GameObject::AddComponent(GO_COMPONENT type, float3 pos, float3 scale
 	return component;
 }
 
+Components* GameObject::AddComponent(GO_COMPONENT type, meshInfo* info)
+{
+	this->mesh = new Component_Mesh(this->type,info,this);
+	components.push_back(this->mesh);
+	return component;
+}
+
 
 
 
@@ -331,5 +338,21 @@ bool GameObject::hasComponent(GO_COMPONENT com)
 		break;
 	}
 	
+}
+
+void GameObject::SaveToMeta(const char* path)
+{
+	std::vector<Components*>::iterator it = components.begin();
+		
+
+	while (it < components.end())
+	{
+
+		if ((*it) != nullptr)
+		{
+			(*it)->SaveToMeta(path);
+		}
+		++it;
+	}
 }
 

@@ -396,12 +396,13 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 	return ret;
 }
 
-bool ModuleFileSystem::SaveUnique(string& name, const void * buffer, uint size, const char * path, const char * prefix, const char * extension)
+bool ModuleFileSystem::SaveUnique(string& name, const void * buffer, uint size, const char * path)
 {
 	char result[250];
 
 	//sprintf_s(result, 250, "%s%s_%llu.%s", path, prefix, App->resources->GenerateNewUID(), extension);
-	NormalizePath(result);
+	sprintf_s(result, 250, "%s", path);
+	//NormalizePath(result);
 	if (Save(result, buffer, size) > 0)
 	{
 		name = result;

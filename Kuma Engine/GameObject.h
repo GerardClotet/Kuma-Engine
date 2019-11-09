@@ -13,7 +13,7 @@ enum class GO_COMPONENT;
 struct aiMesh;
 struct aiNode;
 
-
+struct meshInfo;
  enum class OBJECT_TYPE {
 	PARENT,
 	SUBPARENT,
@@ -44,6 +44,8 @@ public:
 	bool CleanUp();
 	void CheckName(std::string name);
 	bool hasComponent(GO_COMPONENT com);
+
+	void SaveToMeta(const char* path);
 public:
 	std::string name;
 	std::string new_name;
@@ -61,6 +63,7 @@ public:
 	Components* AddComponent(GO_COMPONENT type);
 	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh, aiNode* node);
 	Components* AddComponent(GO_COMPONENT type, float3 pos, float3 scale, Quat rot);
+	Components* AddComponent(GO_COMPONENT type, meshInfo* info);
 
 	GameObject* parent				= nullptr; // to the scene invisible game object containing all gameobjects
 	Component_Material* material	= nullptr;

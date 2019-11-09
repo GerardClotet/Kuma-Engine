@@ -42,13 +42,16 @@ public:
 	void GeneratePlane();
 	void GenerateTorus();
 	void GenerateImported(aiMesh* mesh, aiNode* node);
-	void LoadMeshFromMeta(meshInfo* mesh);
-	void SaveMeshToMeta();
+	void LoadMeshFromMeta(const char* path);
+	//void SaveToMeta(const char* path);
 	void CreateMesh();
 	void CreateFaceNormals();
 	void CreateVertexFaceNormals();
 	void TranslateMesh(float pos[3]);
 	std::list<debug_mesh> GetDebugInfo();
+
+	meshInfo* saveMeshinfo();
+	void ExtractMeshInfo(meshInfo* info);
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
@@ -90,6 +93,16 @@ private:
 	OBJECT_TYPE type;
 	TexData* text = nullptr;
 	meshInfo* mesh_info = nullptr;
+
+	uint size;
+	uint ranges[5] = {
+		num_index,
+		num_normal,
+		num_uvs,
+		num_vertex,
+		num_color
+	};
+	
 };
 #endif // !MESH_COMPONENT_H
 

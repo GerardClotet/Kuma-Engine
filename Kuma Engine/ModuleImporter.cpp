@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "Components.h"
 #include "Component_Material.h"
+#include "Component_Mesh.h"
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 
@@ -168,6 +169,9 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
 		
+		SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
+
+
 		unsigned int numat = importfile->mNumMaterials;
 		LOG("%i", a);
 		if (importfile->HasMaterials())
@@ -223,6 +227,9 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
 	App->scene_intro->selected_game_obj = go;
 
+	SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
+
+
 }
 
 bool ModuleImporter::LoadModelFile(const char * model_file)
@@ -245,6 +252,15 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 	{
 		//It was previously loaded
 		//Read from the meta
+		meshInfo* info = LoadtoMeta(path_meta.c_str());
+		GameObject* go = nullptr;
+		getImportedName(model_file);
+		
+		go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::IMPORTER, imported_name);
+
+		go->AddComponent(GO_COMPONENT::MESH,info);
+		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+
 	}
 	else
 	{
@@ -258,6 +274,132 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 bool ModuleImporter::LoadTextureFile(const char * texture_file)
 {
 	return true;
+}
+
+void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
+{
+
+	uint ranges[5] = {
+		mesh->num_vertex,
+		mesh->num_index ,
+		mesh->num_normal,
+		mesh->num_uvs,
+		mesh->num_color
+	};
+
+	uint size = sizeof(ranges)
+		+ sizeof(uint) * mesh->num_vertex * 3
+		+ sizeof(uint) * mesh->num_index 
+		+ sizeof(uint) * mesh->num_normal * 3
+		+ sizeof(uint) * mesh->num_uvs * 2
+		+ sizeof(uint) * mesh->num_color * 4;
+
+
+
+	char* data = new char[size]; //Allocate
+	char* cursor = data;
+
+
+	uint bytes = sizeof(ranges); //Store ranges
+	memcpy(cursor, ranges, bytes);
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_vertex;
+	memcpy(cursor, mesh->vertex, bytes);
+
+	cursor += bytes;//Store index;
+	bytes = sizeof(uint) * mesh->num_index;
+	memcpy(cursor, mesh->index, bytes);
+
+	//----
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_normal;
+	memcpy(cursor, mesh->normal, bytes);
+
+
+
+	//---
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_uvs;
+	memcpy(cursor, mesh->uvs, bytes);
+
+	//--
+
+
+	//---
+
+	//----
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_color;
+	memcpy(cursor, mesh->normal, bytes);
+
+
+	std::string temp = App->fs->GetFileName(path);
+	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
+	LOG("tets %s", test.c_str());
+	std::string output;
+	App->fs->SaveUnique(output, data, size, test.c_str());
+	LOG("output %s 1 %s", output, output.c_str());
+
+}
+
+meshInfo* ModuleImporter::LoadtoMeta(const char* path)
+{
+
+	meshInfo* mesh = new meshInfo;
+
+	uint ranges[5] = {
+		mesh->num_vertex,
+		mesh->num_index,
+		mesh->num_normal,
+		mesh->num_uvs,
+		mesh->num_color
+	};
+	//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
+	char* buffer;
+	uint testu = App->fs->Load(path, &buffer);
+
+	char* cursor = buffer;
+	uint bytes = sizeof(ranges);
+
+	memcpy(ranges, cursor, bytes);
+	mesh->num_vertex = ranges[0];
+	mesh->num_index = ranges[1];
+	mesh->num_normal = ranges[2];
+	mesh->num_uvs = ranges[3];
+	mesh->num_color = ranges[4];
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_vertex;
+	mesh->vertex = new float[mesh->num_vertex];
+	memcpy(mesh->vertex, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_index;
+	mesh->index = new uint[mesh->num_index];
+	memcpy(mesh->index, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_normal;
+	mesh->normal = new float[mesh->num_normal];
+	memcpy(mesh->normal, cursor, bytes);
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_uvs;
+	mesh->uvs = new float[mesh->num_uvs];
+	memcpy(mesh->uvs, cursor, bytes);
+
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh->num_color;
+	mesh->color = new float[mesh->num_color];
+	memcpy(mesh->color, cursor, bytes);
+
+	return mesh;
 }
 
 

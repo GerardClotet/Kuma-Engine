@@ -6,6 +6,7 @@
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
 #include "ModuleTexture.h"
+#include "ModuleFileSystem.h"
 
 
 
@@ -67,6 +68,11 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, meshInfo * mesh, GameObject * o
 
 	//LoadMeshFromMeta. This will be the function that will load the info and store it to the local variables
 	//LoadMeshFromMeta(meshInfo* mesh);
+	ExtractMeshInfo(mesh);
+	CreateMesh();
+	gl_Int = true;
+	has_normals = true;
+	has_uvs = true;
 }
 
 Component_Mesh::~Component_Mesh()
@@ -402,16 +408,120 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 	CreateMesh();
 }
 
-void Component_Mesh::LoadMeshFromMeta(meshInfo * mesh)
+void Component_Mesh::LoadMeshFromMeta(const char* path)
 {
 	//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
+	char** buffer;
+	uint testu = App->fs->Load(path, buffer);
+
+	char* cursor = (char*)buffer;
+	uint bytes = sizeof(ranges);
+
+	memcpy(ranges, cursor, bytes);
+	num_index = ranges[0];
+	num_normal = ranges[1];
+	num_uvs = ranges[2];
+	num_vertex = ranges[3];
+	num_color = ranges[4];
+
+	cursor += bytes;
+	bytes = sizeof(uint) * num_index;
+	index = new uint[num_index];
+	memcpy(index, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(uint) * num_normal;
+	normal = new float[num_normal];
+	memcpy(normal, cursor, bytes);
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * num_uvs;
+	uvs = new float[num_uvs];
+	memcpy(uvs, cursor, bytes);
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * num_vertex;
+	vertex = new float[num_vertex];
+	memcpy(vertex, cursor, bytes);
+
+
+	cursor += bytes;
+	bytes = sizeof(uint) * num_color;
+	color = new float[num_color];
+	memcpy(color, cursor, bytes);
 }
 
-void Component_Mesh::SaveMeshToMeta()
-{
-	//gameObject_Item->name;   this is the name of the mesh, i think this will be the file name with "_meta.kuma"
-	//Save all the info to the new file
-}
+//void Component_Mesh::SaveToMeta(const char* path)
+//{
+//	//gameObject_Item->name;   this is the name of the mesh, i think thicxs will be the file name with "_meta.kuma"
+//	//Save all the info to the new file
+//
+//	/* ranges[5] = {
+//		num_index,
+//		num_normal,
+//		num_uvs,
+//		num_vertex,
+//		num_color
+//	};*/
+//
+//
+//	 size = sizeof(ranges)
+//		+ sizeof(uint) * num_index * 3
+//		+ sizeof(uint) * num_normal * 3
+//		+ sizeof(uint) * num_uvs * 2
+//		+ sizeof(uint) * num_vertex * 3
+//		+ sizeof(uint) * num_color * 4;
+//
+//	
+//
+//	char* data = new char[size]; //Allocate
+//	char* cursor = data;
+//
+//
+//	uint bytes = sizeof(ranges); //Store ranges
+//	memcpy(cursor, ranges, bytes);
+//
+//
+//	cursor += bytes;//Store index;
+//	bytes = sizeof(uint) * num_index;
+//	memcpy(cursor,index, bytes);
+//
+//	//----
+//	cursor += bytes;
+//	bytes = sizeof(uint) * num_normal;
+//	memcpy(cursor, normal, bytes);
+//
+//
+//
+//	//---
+//
+//	cursor += bytes;
+//	bytes = sizeof(uint) * num_uvs;
+//	memcpy(cursor, uvs, bytes);
+//
+//	//--
+//	cursor += bytes;
+//	bytes = sizeof(uint) * num_vertex;
+//	memcpy(cursor, vertex, bytes);
+//
+//	//---
+//
+//	//----
+//	cursor += bytes;
+//	bytes = sizeof(uint) * num_color;
+//	memcpy(cursor, normal, bytes);
+//
+//	
+//	std::string temp = App->fs->GetFileName(path);
+//	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
+//	LOG("tets %s", test.c_str());
+//	std::string output;
+//	App->fs->SaveUnique(output, data, size, test.c_str());
+//	LOG("output %s 1 %s", output, output.c_str());
+//	//App->sf->save
+//}
 
 void Component_Mesh::GenerateCone()
 {
@@ -738,6 +848,45 @@ void Component_Mesh::TranslateMesh(float pos[3])
 std::list<debug_mesh> Component_Mesh::GetDebugInfo()
 {
 	return mesh_debug;
+}
+
+meshInfo* Component_Mesh::saveMeshinfo()
+{
+	meshInfo* mesh  = new meshInfo;
+	mesh->num_color = num_color;
+	//...
+	mesh->num_index = num_index;
+	mesh->num_normal = num_normal;
+	mesh->num_uvs = num_uvs;
+	mesh->num_vertex = num_vertex;
+	mesh->index = index;
+	mesh->vertex = vertex;
+	mesh->normal = normal;
+	mesh->uvs = uvs;
+	mesh->color = color;
+
+	return mesh;
+}
+
+void Component_Mesh::ExtractMeshInfo(meshInfo* info)
+{
+
+	num_color = info->num_color;
+	num_vertex = info->num_vertex;
+	num_index = info->num_index;
+	num_normal = info->num_normal;
+	num_uvs = info->num_uvs;
+	index = info->index;
+	color = info->color;
+	vertex = info->vertex;
+	uvs = info->uvs;
+	normal = info->normal;
+
+	/*uint a = sizeof(uint) * info->num_index;
+
+	memcpy(index, info->index, a);*/
+
+	
 }
 
 

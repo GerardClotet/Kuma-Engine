@@ -54,6 +54,8 @@ public:
 	void LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node);
 	bool LoadModelFile(const char* model_file);
 	bool LoadTextureFile(const char* texture_file);
+	void SaveToMeta(const char *path,meshInfo* mesh);
+	meshInfo* LoadtoMeta(const char* path);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);
