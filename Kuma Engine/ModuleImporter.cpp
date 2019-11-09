@@ -396,14 +396,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 
 	std::string name;
 	if (mesh->name !="subparent") {
-		 name = LIBRARY_MODEL_FOLDER + mesh->name + EXTENSION_META;
+		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META;
 		LOG("tets %s", name.c_str());
 
 	}
 	else
 	{
 		std::string temp = App->fs->GetFileName(path);
-		name = LIBRARY_MODEL_FOLDER + temp + EXTENSION_META;
+		name = LIBRARY_MESH_FOLDER + temp + EXTENSION_META;
 	}
 
 	std::string output;
@@ -528,14 +528,27 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	//	bytes = sizeof(uint) *model->meshinfo[i]->route.capacity(); //converts string to unsigned int
 	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
 	//}
+	uint i = 0;
+	const char* ranges[10];
+	for (i; i < model->meshinfo.size(); ++i) 
+	{
+		ranges[i] = model->meshinfo[i]->route.c_str();
+	}
+
+	uint size = sizeof(ranges);
+		
+	char* data = new char[size]; //Allocate
+	char* cursor = data;
+
+	uint bytes = sizeof(ranges); //Store ranges
+	memcpy(cursor, ranges, bytes);
 
 
-	////--------------------
-	//std::string name = App->fs->GetFileName(path);
-	//name = LIBRARY_MODEL_FOLDER + name + EXTENSION_META;
-
-	//std::string output;
-	//App->fs->SaveUnique(output, data, size, name.c_str());
+	std::string temp = App->fs->GetFileName(path);
+	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
+	LOG("tets %s", test.c_str());
+	std::string output;
+	App->fs->SaveUnique(output, data, size, test.c_str());
 
 }
 
