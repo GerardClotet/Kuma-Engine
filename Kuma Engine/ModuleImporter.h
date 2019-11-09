@@ -68,6 +68,7 @@ public:
 	bool LoadModelFile(const char* model_file);
 	bool LoadTextureFile(const char* texture_file);
 	void SaveMeshToMeta(const char *path,meshInfo* mesh);
+	void LoadModelFromMeta(const char* original_path, const char* path);
 	meshInfo* LoadMeshtoMeta(const char* path);
 	void SaveModelToMeta(const char* path,modelInfo* model);
 
@@ -95,13 +96,11 @@ public:
 	std::string imported_route;
 	TexData* texture;
 
-	int tem;
 private:
 	std::string dropped_file_dir;
 	SDL_Event event;
 	bool dropped_file_done = false;
 	modelInfo* model_info = nullptr;
-
 };
 
 

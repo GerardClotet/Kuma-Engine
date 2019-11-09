@@ -519,7 +519,7 @@ std::string ModuleFileSystem::GetModelMetaPath(const char * path)
 	std::string file;
 	App->fs->SplitFilePath(path, nullptr, &file);
 	file = App->fs->GetFileName(file.c_str());
-	file = LIBRARY_MODEL_FOLDER + file + EXTENSION_META;
+	file = LIBRARY_MODEL_FOLDER + file + EXTENSION_MODEL_META;
 	return file;
 }
 std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
