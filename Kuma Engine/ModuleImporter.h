@@ -55,6 +55,7 @@ public:
 	bool LoadModelFile(const char* model_file);
 	bool LoadTextureFile(const char* texture_file);
 	void SaveToMeta(const char *path,meshInfo* mesh);
+	void SaveTextureToMeta(const char *path);
 	meshInfo* LoadtoMeta(const char* path);
 	bool Init();
 	bool Start();

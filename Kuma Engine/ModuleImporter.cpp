@@ -12,7 +12,16 @@
 #include "Components.h"
 #include "Component_Material.h"
 #include "Component_Mesh.h"
+#include "DevIL/include/IL/ilu.h"
+#include "DevIL/include/IL/ilut.h"
+#include "DevIL/include/IL/il.h"
+
+
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
+
+#pragma comment(lib,"Devil/libx86/DevIL.lib")
+#pragma comment(lib,"Devil/libx86/ILU.lib")
+#pragma comment(lib,"Devil/libx86/ILUT.lib")
 
 
 
@@ -112,6 +121,8 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 					(*it)->AddComponent(GO_COMPONENT::MATERIAL);
 
 				(*it)->material->ReadTexture(path.c_str());
+
+				SaveTextureToMeta(path.c_str());
 				++it;
 			}
 			return;
@@ -122,6 +133,7 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
 
 			App->scene_intro->selected_game_obj->material->ReadTexture(path.c_str());
+			SaveTextureToMeta(path.c_str());
 			return;
 		}
 	}
@@ -169,7 +181,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
 		
-		SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
+		
 
 
 		unsigned int numat = importfile->mNumMaterials;
@@ -185,6 +197,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 				{
 					LOG("%s", texture_path.C_Str());
 					LoadTextureFromMaterial(imported_route + texture_path.data,go);
+					SaveTextureToMeta(texture_path.C_Str());
 
 				}
 				else LOG("%s texture aiRETURN_FAILURE");
@@ -192,6 +205,8 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 			
 		}
 			//for (uint m = 0; m < importfile->mNumMaterials; ++i) //no sense this here, just testing
+
+		SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
 		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
@@ -226,6 +241,26 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 	
 	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
 	App->scene_intro->selected_game_obj = go;
+
+	unsigned int numat = importfile->mNumMaterials;
+
+	if (importfile->HasMaterials())
+	{
+		//Texture
+		for (uint m = 0; m < importfile->mNumMaterials; ++m) //no sense this here, just testing
+		{
+			aiMaterial* material = importfile->mMaterials[m];
+			aiString texture_path;
+			if (/*material->GetTextureCount(aiTextureType_DIFFUSE)>0 && */material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
+			{
+				LOG("%s", texture_path.C_Str());
+				LoadTextureFromMaterial(imported_route + texture_path.data, go);
+
+			}
+			else LOG("%s texture aiRETURN_FAILURE");
+		}
+
+	}
 
 	SaveToMeta(name, go->mesh->saveMeshinfo()); //save it
 
@@ -273,6 +308,26 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 
 bool ModuleImporter::LoadTextureFile(const char * texture_file)
 {
+	std::string path_meta = App->fs->GetTextureMetaPath(texture_file);
+	if (App->fs->Exists(path_meta.c_str()))
+	{
+		//It was previously loaded
+		//Read from the meta
+		/*meshInfo* info = LoadtoMeta(path_meta.c_str());
+		GameObject* go = nullptr;
+		getImportedName(model_file);
+
+		go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::IMPORTER, imported_name);
+
+		go->AddComponent(GO_COMPONENT::MESH, info);
+		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });*/
+
+	}
+	else
+	{
+		//It wasn't loaded before
+		LoadImportedMaterials(std::string(texture_file));
+	}
 	return true;
 }
 
@@ -343,6 +398,28 @@ void ModuleImporter::SaveToMeta(const char* path,meshInfo* mesh)
 	App->fs->SaveUnique(output, data, size, test.c_str());
 	LOG("output %s 1 %s", output, output.c_str());
 
+}
+
+void ModuleImporter::SaveTextureToMeta(const char * path)
+{
+	
+	ILuint size;
+	ILubyte *data;
+	ilSetInteger(IL_DXTC_DATA_FORMAT, IL_DXT5);
+	size = ilSaveL(IL_DDS, NULL, 0);
+	if (size > 0)
+	{
+		data = new ILubyte[size];
+		if (ilSaveL(IL_DDS, data, size) > 0)
+		{
+			std::string temp = App->fs->GetFileName(path);
+			std::string test = LIBRARY_TEXTURES_FOLDER + temp + EXTENSION_TEXTURE_META;
+			LOG("tets %s", test.c_str());
+			std::string output;
+			App->fs->SaveUnique(output, data, size, test.c_str());
+		}
+			
+	}
 }
 
 meshInfo* ModuleImporter::LoadtoMeta(const char* path)
