@@ -426,16 +426,16 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 	bytes = sizeof(float) * mesh->num_color * 4;
 	memcpy(cursor, mesh->color, bytes);
 
-	/*cursor += bytes;
+	cursor += bytes;
 	mesh->size_path_text = path_texture.size();
 	bytes = sizeof(uint) * mesh->size_path_text;
 	memcpy(cursor, &mesh->size_path_text, sizeof(uint));
 
 	cursor += bytes;
 	bytes = sizeof(char)*path_texture.size();
-	memcpy(cursor, mesh->path_text.c_str(), bytes);*/
+	memcpy(cursor, mesh->path_text.c_str(), bytes);
 
-
+	size = size + sizeof(uint) +sizeof(char)*mesh->size_path_text;
 
 	std::string name;
 	if (mesh->name !="subparent") {
@@ -582,14 +582,15 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		mesh->color = new float[mesh->num_color * 4];
 		memcpy(mesh->color, cursor, bytes);
 
-		/*cursor += bytes;
+		cursor += bytes;
 		bytes = sizeof(uint);
+		mesh->size_path_text = 0;
 		memcpy(&mesh->size_path_text, cursor, bytes);
 
 		cursor += bytes;
 		bytes = sizeof(char)*mesh->size_path_text;
 		mesh->path_text = new char[mesh->size_path_text];
-		memcpy(&mesh->path_text, cursor, bytes);*/
+		memcpy(&mesh->path_text, cursor, bytes);
 
 		
 
