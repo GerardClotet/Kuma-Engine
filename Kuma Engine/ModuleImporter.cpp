@@ -370,6 +370,7 @@ void ModuleImporter::LoadTextureFromMeta(const char * path)
 void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string path_texture)
 {
 	mesh->path_text = path_texture;
+	//size = size + sizeof(uint) + (sizeof(char)*mesh->size_path_text);
 	uint ranges[5] = {
 		mesh->num_vertex,
 		mesh->num_index ,
@@ -380,11 +381,12 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 
 	uint size = sizeof(ranges)
 		+ sizeof(uint) * mesh->num_vertex * 3
-		+ sizeof(uint) * mesh->num_index 
+		+ sizeof(uint) * mesh->num_index
 		+ sizeof(uint) * mesh->num_normal * 3
 		+ sizeof(uint) * mesh->num_uvs * 2
-		+ sizeof(uint) * mesh->num_color * 4;
-
+		+ sizeof(uint) * mesh->num_color * 4
+		+ sizeof(uint)
+		+ sizeof(char)*mesh->path_text.size();
 
 
 	char* data = new char[size]; //Allocate
@@ -428,14 +430,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 
 	cursor += bytes;
 	mesh->size_path_text = path_texture.size();
-	bytes = sizeof(uint) * mesh->size_path_text;
-	memcpy(cursor, &mesh->size_path_text, sizeof(uint));
+	bytes = sizeof(uint);
+	memcpy(cursor, &mesh->size_path_text, bytes);
 
 	cursor += bytes;
 	bytes = sizeof(char)*path_texture.size();
 	memcpy(cursor, mesh->path_text.c_str(), bytes);
 
-	size = size + sizeof(uint) +sizeof(char)*mesh->size_path_text;
+	
 
 	std::string name;
 	if (mesh->name !="subparent") {
@@ -589,10 +591,11 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 
 		cursor += bytes;
 		bytes = sizeof(char)*mesh->size_path_text;
-		mesh->path_text = new char[mesh->size_path_text];
-		memcpy(&mesh->path_text, cursor, bytes);
-
+		char* temp_text_path = new char[mesh->size_path_text];
+		memcpy(&temp_text_path, cursor, bytes);
+		cursor += sizeof(char) * mesh->size_path_text;
 		
+		mesh->path_text = temp_text_path;
 
 		return mesh;
 }
