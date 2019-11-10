@@ -49,7 +49,7 @@ public:
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
 	std::string GetFileName(const char* file_name);
-
+	std::string SubstractFromEnd(const char* file_name, const char* substract);
 
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;

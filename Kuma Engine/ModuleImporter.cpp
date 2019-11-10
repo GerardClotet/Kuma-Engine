@@ -420,14 +420,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 
 	std::string name;
 	if (mesh->name !="subparent") {
-		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META;
+		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META_KUMA;
 		LOG("tets %s", name.c_str());
 
 	}
 	else
 	{
 		std::string temp = App->fs->GetFileName(path);
-		name = LIBRARY_MESH_FOLDER + temp + EXTENSION_META;
+		name = LIBRARY_MESH_FOLDER + temp + EXTENSION_META_KUMA;
 	}
 
 	std::string output;
@@ -444,19 +444,48 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	char* buffer = nullptr;
 	uint testu = App->fs->Load(path, &buffer);
 
+
 	char* cursor = buffer;
 	uint num_meshes = 0;
-	memcpy(&num_meshes, cursor, sizeof(uint));
-	cursor += sizeof(uint);
+	memcpy(&num_meshes, cursor, sizeof(uint)); //la memoria a la posicio del cursor es carregar a num_meshes (un uint)
+	cursor += sizeof(uint); //el cursor es desplaça fins al final del tamany de memoria que ocupa; el uint
+
+	GameObject* subparent = nullptr;
+	if (num_meshes > 1)
+	{
+		subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, App->fs->GetFileName(original_path));
+	}
+
 	for (int i = 0; i < num_meshes; ++i)
 	{
 		uint size_str = 0;
-		memcpy(&size_str, cursor, sizeof(uint));
-		cursor += sizeof(uint);
-		char* path_temp = new char[size_str-1];
+		memcpy(&size_str, cursor, sizeof(uint));//uint amb la posicio a memoria del cursor
+		cursor += sizeof(uint);//augmenta el cursor un desto uint
+		char* path_temp = new char[size_str]; //
 		memcpy(path_temp, cursor, sizeof(char)*size_str);
-		std::string path_str = path_temp + '\0';
-		int iy = 0;
+		std::string a,b,a_temp;
+		a_temp = path_temp;//"name weird numebers"
+		a = cursor;// "name%"
+		cursor += sizeof(char) * size_str; //avanza fins al % en la primera i despres avança fins els nums raros
+		b = cursor; // "%"
+
+		size_t size_to_erase = a_temp.rfind("kuma");
+		if (std::string::npos != size_to_erase +4)
+		{
+			a_temp.erase(size_to_erase+4);
+
+			
+		}
+		std::string temporal = App->fs->GetFileName(a_temp.c_str());
+
+		GameObject* child = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, App->fs->SubstractFromEnd(temporal.c_str(),EXTENSION_META));
+
+		child->AddComponent(GO_COMPONENT::MESH, LoadMeshtoMeta(a_temp.c_str()));
+		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+
+
+
+		
 	}
 	
 }
@@ -543,7 +572,7 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
 	std::string output;
 	std::string temp = App->fs->GetFileName(path);
-	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + "_meta.json";
+	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
 	uint size_path = 0;
 	for (int i = 0; i < model->meshinfo.size(); ++i)
 	{
@@ -565,136 +594,12 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 		cursor += sizeof(uint);
 		const char* path_temp = model->meshinfo[i]->route.c_str();
 		memcpy(cursor, path_temp, sizeof(char)*temp);
-		cursor += sizeof(char)*temp + 1;
+		cursor += sizeof(char)*temp;
 	}
 	
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
 	
-
-
-
-	/*std::string output;
-	uint size = 0;
-	char* data = new char[2];
-	for (int i = 0; i < 2; ++i) 
-	{
-		memcpy(data, model->meshinfo[i]->route.c_str(), sizeof(char));
-	}
 	
-
-
-	size = sizeof(uint);
-
-	
-
-
-	std::string temp = App->fs->GetFileName(path);
-	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + "_meta.json";
-	App->fs->SaveUnique(output, data, size, meta_path.c_str());
-*/
-	//JSON_Value* value = json_parse_file(meta_path.c_str());
-	//JSON_Object* object = json_object(value);
-	//std::vector<meshInfo*>::iterator it = model->meshinfo.begin();
-	//
-	//
-	//JSON_Value* leaf = json_value_init_object();
-	//JSON_Object* leaf_obj = json_value_get_object(leaf);
-	//json_serialize_to_file_pretty(leaf, meta_path.c_str());
-
-	//json_object_dotset_string(leaf_obj, "Model.Name", temp.data());
-
-	//json_object_dotset_number(leaf_obj, "Model.Meshes", model->meshinfo.size());
-
-	//while(it < model->meshinfo.end())
-	//{
-	//	JSON_Array* arr = json_object_dotget_array(leaf_obj, "Model.PathMeshes");
-	//	if (arr == nullptr) {
-	//		JSON_Value* new_val = json_value_init_array();
-	//		arr = json_value_get_array(new_val);
-
-	//		json_object_dotset_value(leaf_obj, "Model.PathMeshes", new_val);
-	//	}
-	//	json_array_append_string(arr, (*it)->route.data());
-
-
-	//	/*SetString(object, (*it)->route.c_str());
-	//	json_parse_string((*it)->route.c_str());*/
-	//	++it;
-	//}
-
-
-	//json_serialize_to_file_pretty(leaf, meta_path.c_str());
-
-
-	//SerializeJSONFile(path, value);
-	//--------------
-
-	//char* bufferX;
-	//uint sizeX;
-	//char dataX*
-
-
-	//uint ranges[2]; //error pq es constant
-	//for (uint i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	ranges[i] =(uint)model->meshinfo[i]->route.data();
-	//	
-	//}
-	//LOG("%s", model->meshinfo[0]->route.data());
-	//
-	//uint size = sizeof(ranges);
-
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	size += sizeof(uint) *(uint)model->meshinfo[i]->route.data();
-	//}
-	//
-
-	//char* data = new char[size]; 
-	//char* cursor = data;
-
-	//uint bytes = sizeof(ranges);
-	//memcpy(cursor, ranges, bytes);
-
-
-	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
-	//{
-	//	cursor += bytes;
-	//	bytes = sizeof(int) *(uint)model->meshinfo[i]->route.max_size(); //converts string to unsigned int
-	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
-	//}
-	//
-
-	//std::string temp = App->fs->GetFileName(path);
-	//std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
-	//LOG("tets %s", test.c_str());
-	//std::string output;
-	//App->fs->SaveUnique(output, data, size, test.c_str());
-
-
-
-	//int kase = 0;
-	//for (int i = 0; i < model->meshinfo.size(); ++i)
-	//{
-	//	if (i == model->meshinfo.size())
-	//	{
-	//	}
-	//}
-	//int my_array = model->meshinfo.size();
-	//uint i = 0;
-	//const char* ranges[2];
-	//for (i; i < model->meshinfo.size(); ++i)
-	//{
-	//	ranges[i] = model->meshinfo[i]->route.c_str();
-	//}
-
-	//uint size = sizeof(ranges);
-
-	//char* data = new char[size]; //Allocate
-	//char* cursor = data;
-
-	//uint bytes = sizeof(ranges); //Store ranges
-	//memcpy(cursor, ranges, bytes);
 
 }
 

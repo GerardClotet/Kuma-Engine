@@ -769,7 +769,7 @@ void Component_Mesh::ExtractMeshInfo(meshInfo* info)
 	vertex = info->vertex;
 	uvs = info->uvs;
 	normal = info->normal;
-	this->gameObject_Item->name = info->name;
+//	this->gameObject_Item->name = info->name;
 	
 	/*uint a = sizeof(uint) * info->num_index;
 

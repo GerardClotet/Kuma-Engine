@@ -286,6 +286,18 @@ std::string ModuleFileSystem::GetFileName(const char * file_name)
 	return name;
 }
 
+std::string ModuleFileSystem::SubstractFromEnd(const char* file_name,const char* substract)
+{
+
+	std::string temp = file_name;
+	size_t erase_meta = temp.rfind(substract);
+	if(std::string::npos != erase_meta)
+	{
+			temp.erase(erase_meta);
+	}
+	return temp;
+}
+
 
 unsigned int ModuleFileSystem::Load(const char * path, const char * file, char ** buffer) const
 {
@@ -527,7 +539,7 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	std::string file;
 	App->fs->SplitFilePath(path, nullptr, &file);
 	file = App->fs->GetFileName(file.c_str());
-	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_META;
+	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_META_KUMA;
 	return file;
 }
 	// -----------------------------------------------------
