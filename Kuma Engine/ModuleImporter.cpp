@@ -453,10 +453,10 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		uint size_str = 0;
 		memcpy(&size_str, cursor, sizeof(uint));
 		cursor += sizeof(uint);
-		char* path_temp = new char [size_str];
+		char* path_temp = new char[size_str-1];
 		memcpy(path_temp, cursor, sizeof(char)*size_str);
-		
-		//tallar la string pq es passa de llarg
+		std::string path_str = path_temp + '\0';
+		int iy = 0;
 	}
 	
 }
@@ -565,7 +565,7 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 		cursor += sizeof(uint);
 		const char* path_temp = model->meshinfo[i]->route.c_str();
 		memcpy(cursor, path_temp, sizeof(char)*temp);
-		cursor += sizeof(char)*temp;
+		cursor += sizeof(char)*temp + 1;
 	}
 	
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
