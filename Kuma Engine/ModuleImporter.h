@@ -47,7 +47,10 @@ struct meshInfo
 
 
 	std::string name;
-	std::string route; //route to _meta.kuma file
+	std::string route; 
+	std::string path_text;
+	uint size_path_text;
+	//route to _meta.kuma file
 };
 
 struct modelInfo
@@ -68,9 +71,10 @@ public:
 	void LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node);
 	bool LoadModelFile(const char* model_file);
 	bool LoadTextureFile(const char* texture_file);
-	void SaveMeshToMeta(const char *path,meshInfo* mesh);
+	void LoadTextureFromMeta(const char* path);
+	void SaveMeshToMeta(const char *path,meshInfo* mesh, std::string path_texture);
 	void LoadModelFromMeta(const char* original_path, const char* path);
-	meshInfo* LoadMeshtoMeta(const char* path);
+	meshInfo* LoadMeshFromMeta(const char* path);
 	void SaveModelToMeta(const char* path,modelInfo* model);
 
 

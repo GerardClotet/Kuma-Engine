@@ -88,18 +88,7 @@ void ModuleImporter::getImportedName(const char* path)
 
 	imported_route = file + "textures\\";
 
-	////Get The name
-	//file= path;	
-	//std::string name = file.substr(file.find_last_of("\\") + 1);
-
-	//size_to_erase = name.rfind('.');
-
-	//if (std::string::npos != size_to_erase)
-	//{
-	//	name.erase(size_to_erase);
-
-	//}
-	//LOG("name %s", name.c_str());
+	
 	std::string name;
 	App->fs->SplitFilePath(path, nullptr, &name);
 	name = App->fs->GetFileName(name.c_str());
@@ -186,10 +175,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 		aiMesh* mesh;
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
-		
-		SaveMeshToMeta(name, go->mesh->saveMeshinfo()); //save it
-
-
+		std::string path_tex;
 		unsigned int numat = importfile->mNumMaterials;
 		LOG("%i", a);
 		if (importfile->HasMaterials())
@@ -202,14 +188,28 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 				if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 				{
 					LOG("%s", texture_path.C_Str());
-					LoadTextureFromMaterial(imported_route + texture_path.data,go);
-					SaveTextureToMeta(texture_path.C_Str());
+					path_tex = App->fs->GetTextureMetaPath(texture_path.data);
+						
+					//-----------Get a texture of a fbx that has an associated material--------
+					if (App->fs->Exists(path_tex.c_str()))
+					{
+						//if it exists, call de LoadTextureFromMeta
+						//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
+						LOG("IT EXISTS");
+					}
+					else
+					{
+						LoadTextureFromMaterial(imported_route + texture_path.data, go);
+						SaveTextureToMeta(texture_path.C_Str());
+					}
 
 				}
 				else LOG("%s texture aiRETURN_FAILURE");
 			}
 			
 		}
+
+		SaveMeshToMeta(name, go->mesh->saveMeshinfo(), path_tex); //save it
 		
 	}
 	for (uint i = 0; i < file_node->mNumChildren; i++)
@@ -275,7 +275,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 	
 	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
 	App->scene_intro->selected_game_obj = go;
-
+	std::string path_tex;
 	unsigned int numat = importfile->mNumMaterials;
 
 	if (importfile->HasMaterials())
@@ -288,7 +288,18 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 			if (/*material->GetTextureCount(aiTextureType_DIFFUSE)>0 && */material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 			{
 				LOG("%s", texture_path.C_Str());
-				LoadTextureFromMaterial(imported_route + texture_path.data, go);
+				path_tex = App->fs->GetTextureMetaPath(texture_path.data);
+				//-----------Get a texture of a fbx that has an associated material--------
+				if (App->fs->Exists(path_tex.c_str()))
+				{
+					//if it exists, call de LoadTextureFromMeta
+					//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
+					LOG("IT EXISTS");
+				}
+				else
+					LoadTextureFromMaterial(imported_route + texture_path.data, go);
+
+
 
 			}
 			else LOG("%s texture aiRETURN_FAILURE");
@@ -296,7 +307,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 
 	}
 	model_info = new modelInfo;
-	SaveMeshToMeta(name, go->mesh->saveMeshinfo()); //save it
+	SaveMeshToMeta(name, go->mesh->saveMeshinfo(), path_tex); //save it
 	SaveModelToMeta(name, model_info);
 
 }
@@ -338,17 +349,10 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 	std::string path_meta = App->fs->GetTextureMetaPath(texture_file);
 	if (App->fs->Exists(path_meta.c_str()))
 	{
-		//It was previously loaded
-		//Read from the meta
-		/*meshInfo* info = LoadtoMeta(path_meta.c_str());
-		GameObject* go = nullptr;
-		getImportedName(model_file);
-
-		go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::IMPORTER, imported_name);
-
-		go->AddComponent(GO_COMPONENT::MESH, info);
-		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });*/
-
+		//LoadTextureFromMeta
+		//LoadImportedMaterials with the path loaded before?
+		//The game object needed for the LoadImportedMaterials is the selected_gameobject, because LoadTextureFIle comes from
+		//dragging a texture into a selected mesh
 	}
 	else
 	{
@@ -358,9 +362,14 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 	return true;
 }
 
-void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
+void ModuleImporter::LoadTextureFromMeta(const char * path)
 {
 
+}
+
+void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string path_texture)
+{
+	mesh->path_text = path_texture;
 	uint ranges[5] = {
 		mesh->num_vertex,
 		mesh->num_index ,
@@ -417,6 +426,16 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 	bytes = sizeof(float) * mesh->num_color * 4;
 	memcpy(cursor, mesh->color, bytes);
 
+	/*cursor += bytes;
+	mesh->size_path_text = path_texture.size();
+	bytes = sizeof(uint) * mesh->size_path_text;
+	memcpy(cursor, &mesh->size_path_text, sizeof(uint));
+
+	cursor += bytes;
+	bytes = sizeof(char)*path_texture.size();
+	memcpy(cursor, mesh->path_text.c_str(), bytes);*/
+
+
 
 	std::string name;
 	if (mesh->name !="subparent") {
@@ -447,8 +466,8 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 	char* cursor = buffer;
 	uint num_meshes = 0;
-	memcpy(&num_meshes, cursor, sizeof(uint)); //la memoria a la posicio del cursor es carregar a num_meshes (un uint)
-	cursor += sizeof(uint); //el cursor es desplaça fins al final del tamany de memoria que ocupa; el uint
+	memcpy(&num_meshes, cursor, sizeof(uint)); 
+	cursor += sizeof(uint); 
 
 	GameObject* subparent = nullptr;
 	if (num_meshes > 1)
@@ -459,14 +478,14 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	for (int i = 0; i < num_meshes; ++i)
 	{
 		uint size_str = 0;
-		memcpy(&size_str, cursor, sizeof(uint));//uint amb la posicio a memoria del cursor
-		cursor += sizeof(uint);//augmenta el cursor un desto uint
+		memcpy(&size_str, cursor, sizeof(uint));
+		cursor += sizeof(uint);
 		char* path_temp = new char[size_str]; //
 		memcpy(path_temp, cursor, sizeof(char)*size_str);
 		std::string a,b,a_temp;
 		a_temp = path_temp;//"name weird numebers"
 		a = cursor;// "name%"
-		cursor += sizeof(char) * size_str; //avanza fins al % en la primera i despres avança fins els nums raros
+		cursor += sizeof(char) * size_str; 
 		b = cursor; // "%"
 
 		size_t size_to_erase = a_temp.rfind("kuma");
@@ -480,7 +499,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 		GameObject* child = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, App->fs->SubstractFromEnd(temporal.c_str(),EXTENSION_META));
 
-		child->AddComponent(GO_COMPONENT::MESH, LoadMeshtoMeta(a_temp.c_str()));
+		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
 		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 
 
@@ -492,27 +511,25 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 void ModuleImporter::SaveTextureToMeta(const char * path)
 {
-	
+	std::string output;
 	ILuint size;
 	ILubyte *data;
-	ilSetInteger(IL_DXTC_DATA_FORMAT, IL_DXT5);
-	size = ilSaveL(IL_DDS, NULL, 0);
-	if (size > 0)
-	{
-		data = new ILubyte[size];
+	
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
+	if (size > 0) {
+		data = new ILubyte[size]; // allocate data buffer
 		if (ilSaveL(IL_DDS, data, size) > 0)
 		{
+			// Save to buffer with the ilSaveIL function
 			std::string temp = App->fs->GetFileName(path);
-			std::string test = LIBRARY_TEXTURES_FOLDER + temp + EXTENSION_TEXTURE_META;
-			LOG("tets %s", test.c_str());
-			std::string output;
-			App->fs->SaveUnique(output, data, size, test.c_str());
+			App->fs->SaveUnique(output, data, size, LIBRARY_TEXTURES_FOLDER, temp.c_str(), ".dds");
 		}
-			
+		RELEASE_ARRAY(data);
 	}
 }
 
-meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
+meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 {
 		meshInfo* mesh = new meshInfo;
 
@@ -564,6 +581,17 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 		bytes = sizeof(float) * mesh->num_color * 4;
 		mesh->color = new float[mesh->num_color * 4];
 		memcpy(mesh->color, cursor, bytes);
+
+		/*cursor += bytes;
+		bytes = sizeof(uint);
+		memcpy(&mesh->size_path_text, cursor, bytes);
+
+		cursor += bytes;
+		bytes = sizeof(char)*mesh->size_path_text;
+		mesh->path_text = new char[mesh->size_path_text];
+		memcpy(&mesh->path_text, cursor, bytes);*/
+
+		
 
 		return mesh;
 }

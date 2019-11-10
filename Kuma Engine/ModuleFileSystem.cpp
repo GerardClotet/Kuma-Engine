@@ -423,6 +423,20 @@ bool ModuleFileSystem::SaveUnique(string& name, const void * buffer, uint size, 
 	return false;
 }
 
+bool ModuleFileSystem::SaveUnique(string& name, const void* buffer, uint size, const char* path, const char* prefix, const char* extension)
+{
+	char result[250];
+
+	sprintf_s(result, 250, "%s%s%s", path, prefix, extension);
+	//NormalizePath(result);
+	if (Save(result, buffer, size) > 0)
+	{
+		name = result;
+		return true;
+	}
+	return false;
+}
+
 bool ModuleFileSystem::Remove(const char * file)
 {
 	bool ret = false;
@@ -539,7 +553,7 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	std::string file;
 	App->fs->SplitFilePath(path, nullptr, &file);
 	file = App->fs->GetFileName(file.c_str());
-	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_META_KUMA;
+	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_TEXTURE_META;
 	return file;
 }
 	// -----------------------------------------------------

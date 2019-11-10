@@ -66,8 +66,6 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, meshInfo * mesh, GameObject * o
 	comp_type = GO_COMPONENT::MESH;
 	this->type = type;
 	this->gameObject_Item = obj;
-	//LoadMeshFromMeta. This will be the function that will load the info and store it to the local variables
-	//LoadMeshFromMeta(meshInfo* mesh);
 	ExtractMeshInfo(mesh);
 	CreateMesh();
 	gl_Int = true;
