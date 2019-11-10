@@ -10,6 +10,7 @@
 #include "Assimp/include/cfileio.h"
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#include "Parson/parson.h"
 
 
 class vec3;
@@ -101,6 +102,12 @@ private:
 	SDL_Event event;
 	bool dropped_file_done = false;
 	modelInfo* model_info = nullptr;
+
+public:
+	std::string LoadModelConfig(JSON_Object*& config,const char* line);
+	void SetString(JSON_Object*& config, const char* container); //Like Saving
+	void SerializeJSONFile(const char* path, JSON_Value* save_value);
+	JSON_Object* LoadJSONFile(const std::string& path, JSON_Value* val);
 
 };
 

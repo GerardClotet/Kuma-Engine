@@ -232,6 +232,37 @@ void ModuleImporter::LoadTextureFromMaterial(std::string path, GameObject* game_
 	
 }
 
+std::string ModuleImporter::LoadModelConfig(JSON_Object*& config, const char* line)
+{
+
+	std::string temp = json_object_dotget_string(config,"line");
+
+
+
+	return temp;
+}
+
+void ModuleImporter::SetString(JSON_Object*& file, const char* container )
+{
+	json_object_dotset_string(file, "Mesh.Route", container);
+
+}
+
+void ModuleImporter::SerializeJSONFile(const char* path,JSON_Value* save_value)
+{
+	json_serialize_to_file_pretty(save_value, path);
+}
+
+JSON_Object* ModuleImporter::LoadJSONFile(const std::string& path, JSON_Value* val)
+{
+	json_parse_file(path.data());
+	JSON_Object* object = json_value_get_object(val);
+
+
+
+	return object;
+}
+
 void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name, aiNode* node)
 {
 	GameObject* go = nullptr;
@@ -467,6 +498,7 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 	mesh->vertex = new float[mesh->num_vertex * 3];
 	memcpy(mesh->vertex, cursor, bytes);
 
+	
 	cursor += bytes;
 	bytes = sizeof(uint) * mesh->num_index;
 	mesh->index = new uint[mesh->num_index];
@@ -496,8 +528,60 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
 
+	std::string output;
+	uint size = 0;
 
+	char* data = "";
+
+
+
+
+
+	std::string temp = App->fs->GetFileName(path);
+	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + ".json";
+	App->fs->SaveUnique(output, data, size, meta_path.c_str());
+
+	JSON_Value* value = json_parse_file(meta_path.c_str());
+	JSON_Object* object = json_object(value);
+	std::vector<meshInfo*>::iterator it = model->meshinfo.begin();
+	
+	
+	JSON_Value* leaf = json_value_init_object();
+	JSON_Object* leaf_obj = json_value_get_object(leaf);
+	json_serialize_to_file_pretty(leaf, meta_path.c_str());
+
+	json_object_dotset_string(leaf_obj, "Model.Name", temp.data());
+
+	json_object_dotset_number(leaf_obj, "Model.Meshes", model->meshinfo.size());
+
+	while(it < model->meshinfo.end())
+	{
+		JSON_Array* arr = json_object_dotget_array(leaf_obj, "Model.PathMeshes");
+		if (arr == nullptr) {
+			JSON_Value* new_val = json_value_init_array();
+			arr = json_value_get_array(new_val);
+
+			json_object_dotset_value(leaf_obj, "Model.PathMeshes", new_val);
+		}
+		json_array_append_string(arr, (*it)->route.data());
+
+
+		/*SetString(object, (*it)->route.c_str());
+		json_parse_string((*it)->route.c_str());*/
+		++it;
+	}
+
+
+	json_serialize_to_file_pretty(leaf, meta_path.c_str());
+
+
+	//SerializeJSONFile(path, value);
 	//--------------
+
+	//char* bufferX;
+	//uint sizeX;
+	//char dataX*
+
 
 	//uint ranges[2]; //error pq es constant
 	//for (uint i = 0; i < model->meshinfo.size(); ++i)
@@ -525,30 +609,41 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	//for (int i = 0; i < model->meshinfo.size(); ++i) //routes of 
 	//{
 	//	cursor += bytes;
-	//	bytes = sizeof(uint) *model->meshinfo[i]->route.capacity(); //converts string to unsigned int
+	//	bytes = sizeof(int) *(uint)model->meshinfo[i]->route.max_size(); //converts string to unsigned int
 	//	memcpy(cursor, model->meshinfo[i]->route.c_str(), bytes);
 	//}
-	uint i = 0;
-	const char* ranges[10];
-	for (i; i < model->meshinfo.size(); ++i) 
-	{
-		ranges[i] = model->meshinfo[i]->route.c_str();
-	}
+	//
 
-	uint size = sizeof(ranges);
-		
-	char* data = new char[size]; //Allocate
-	char* cursor = data;
-
-	uint bytes = sizeof(ranges); //Store ranges
-	memcpy(cursor, ranges, bytes);
+	//std::string temp = App->fs->GetFileName(path);
+	//std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
+	//LOG("tets %s", test.c_str());
+	//std::string output;
+	//App->fs->SaveUnique(output, data, size, test.c_str());
 
 
-	std::string temp = App->fs->GetFileName(path);
-	std::string test = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
-	LOG("tets %s", test.c_str());
-	std::string output;
-	App->fs->SaveUnique(output, data, size, test.c_str());
+
+	//int kase = 0;
+	//for (int i = 0; i < model->meshinfo.size(); ++i)
+	//{
+	//	if (i == model->meshinfo.size())
+	//	{
+	//	}
+	//}
+	//int my_array = model->meshinfo.size();
+	//uint i = 0;
+	//const char* ranges[2];
+	//for (i; i < model->meshinfo.size(); ++i)
+	//{
+	//	ranges[i] = model->meshinfo[i]->route.c_str();
+	//}
+
+	//uint size = sizeof(ranges);
+
+	//char* data = new char[size]; //Allocate
+	//char* cursor = data;
+
+	//uint bytes = sizeof(ranges); //Store ranges
+	//memcpy(cursor, ranges, bytes);
 
 }
 
