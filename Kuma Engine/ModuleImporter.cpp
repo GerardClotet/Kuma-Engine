@@ -295,9 +295,9 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 		}
 
 	}
-
+	model_info = new modelInfo;
 	SaveMeshToMeta(name, go->mesh->saveMeshinfo()); //save it
-
+	SaveModelToMeta(name, model_info);
 
 }
 
@@ -321,14 +321,7 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 	{
 		//It was previously loaded
 		//Read from the meta
-		meshInfo* info = LoadMeshtoMeta(path_meta.c_str());
-		GameObject* go = nullptr;
-		getImportedName(model_file);
-		
-		go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::IMPORTER, imported_name);
-
-		go->AddComponent(GO_COMPONENT::MESH,info);
-		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+		LoadModelFromMeta(model_file, path_meta.c_str());
 
 	}
 	else
@@ -445,6 +438,32 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 	model_info->meshinfo.push_back(mesh);
 }
 
+void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* path)
+{
+	//LoadMeshToMeta with the path readed
+
+	//
+	//
+	// SUBSTITUIR EL 10 PER LA SIZE DEL VECTOR
+	//
+	//
+	uint i = 0;
+	const char* ranges[10];
+	
+	char* buffer;
+	uint testu = App->fs->Load(path, &buffer);
+
+	char* cursor = buffer;
+	uint bytes = sizeof(ranges);
+
+	memcpy(ranges, cursor, bytes);
+
+	for (int i = 0; i < 10; i++)
+	{
+		LoadMeshtoMeta(ranges[i]);
+	}
+}
+
 void ModuleImporter::SaveTextureToMeta(const char * path)
 {
 	
@@ -469,60 +488,58 @@ void ModuleImporter::SaveTextureToMeta(const char * path)
 
 meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 {
+		meshInfo* mesh = new meshInfo;
 
-	meshInfo* mesh = new meshInfo;
+		uint ranges[5] = {
+			mesh->num_vertex,
+			mesh->num_index,
+			mesh->num_normal,
+			mesh->num_uvs,
+			mesh->num_color
+		};
+		//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
+		char* buffer;
+		uint testu = App->fs->Load(path, &buffer);
 
-	uint ranges[5] = {
-		mesh->num_vertex,
-		mesh->num_index,
-		mesh->num_normal,
-		mesh->num_uvs,
-		mesh->num_color
-	};
-	//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
-	char* buffer;
-	uint testu = App->fs->Load(path, &buffer);
+		char* cursor = buffer;
+		uint bytes = sizeof(ranges);
 
-	char* cursor = buffer;
-	uint bytes = sizeof(ranges);
+		memcpy(ranges, cursor, bytes);
+		mesh->num_vertex = ranges[0];
+		mesh->num_index = ranges[1];
+		mesh->num_normal = ranges[2];
+		mesh->num_uvs = ranges[3];
+		mesh->num_color = ranges[4];
 
-	memcpy(ranges, cursor, bytes);
-	mesh->num_vertex = ranges[0];
-	mesh->num_index = ranges[1];
-	mesh->num_normal = ranges[2];
-	mesh->num_uvs = ranges[3];
-	mesh->num_color = ranges[4];
+		cursor += bytes;
+		bytes = sizeof(float) * mesh->num_vertex * 3;
+		mesh->vertex = new float[mesh->num_vertex * 3];
+		memcpy(mesh->vertex, cursor, bytes);
 
-	cursor += bytes;
-	bytes = sizeof(float) * mesh->num_vertex * 3;
-	mesh->vertex = new float[mesh->num_vertex * 3];
-	memcpy(mesh->vertex, cursor, bytes);
+		cursor += bytes;
+		bytes = sizeof(uint) * mesh->num_index;
+		mesh->index = new uint[mesh->num_index];
+		memcpy(mesh->index, cursor, bytes);
 
-	
-	cursor += bytes;
-	bytes = sizeof(uint) * mesh->num_index;
-	mesh->index = new uint[mesh->num_index];
-	memcpy(mesh->index, cursor, bytes);
-
-	cursor += bytes;
-	bytes = sizeof(float) * mesh->num_normal * 3;
-	mesh->normal = new float[mesh->num_normal * 3];
-	memcpy(mesh->normal, cursor, bytes);
+		cursor += bytes;
+		bytes = sizeof(float) * mesh->num_normal * 3;
+		mesh->normal = new float[mesh->num_normal * 3];
+		memcpy(mesh->normal, cursor, bytes);
 
 
-	cursor += bytes;
-	bytes = sizeof(float) * mesh->num_uvs * 2;
-	mesh->uvs = new float[mesh->num_uvs * 2];
-	memcpy(mesh->uvs, cursor, bytes);
+		cursor += bytes;
+		bytes = sizeof(float) * mesh->num_uvs * 2;
+		mesh->uvs = new float[mesh->num_uvs * 2];
+		memcpy(mesh->uvs, cursor, bytes);
 
 
 
-	cursor += bytes;
-	bytes = sizeof(float) * mesh->num_color * 4;
-	mesh->color = new float[mesh->num_color * 4];
-	memcpy(mesh->color, cursor, bytes);
+		cursor += bytes;
+		bytes = sizeof(float) * mesh->num_color * 4;
+		mesh->color = new float[mesh->num_color * 4];
+		memcpy(mesh->color, cursor, bytes);
 
-	return mesh;
+		return mesh;
 }
 
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
