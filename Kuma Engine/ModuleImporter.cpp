@@ -440,28 +440,25 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh)
 
 void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* path)
 {
-	//LoadMeshToMeta with the path readed
-
-	//
-	//
-	// SUBSTITUIR EL 10 PER LA SIZE DEL VECTOR
-	//
-	//
-	uint i = 0;
-	const char* ranges[10];
 	
-	char* buffer;
+	char* buffer = nullptr;
 	uint testu = App->fs->Load(path, &buffer);
 
 	char* cursor = buffer;
-	uint bytes = sizeof(ranges);
-
-	memcpy(ranges, cursor, bytes);
-
-	for (int i = 0; i < 10; i++)
+	uint num_meshes = 0;
+	memcpy(&num_meshes, cursor, sizeof(uint));
+	cursor += sizeof(uint);
+	for (int i = 0; i < num_meshes; ++i)
 	{
-		LoadMeshtoMeta(ranges[i]);
+		uint size_str = 0;
+		memcpy(&size_str, cursor, sizeof(uint));
+		cursor += sizeof(uint);
+		char* path_temp = new char [size_str];
+		memcpy(path_temp, cursor, sizeof(char)*size_str);
+		
+		//tallar la string pq es passa de llarg
 	}
+	
 }
 
 void ModuleImporter::SaveTextureToMeta(const char * path)
@@ -544,52 +541,89 @@ meshInfo* ModuleImporter::LoadMeshtoMeta(const char* path)
 
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
-
 	std::string output;
+	std::string temp = App->fs->GetFileName(path);
+	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + "_meta.json";
+	uint size_path = 0;
+	for (int i = 0; i < model->meshinfo.size(); ++i)
+	{
+		size_path += sizeof(char) * model->meshinfo[i]->route.size();
+
+	}
+	uint size = sizeof(uint) * model->meshinfo.size() + size_path + sizeof(uint);
+	char* data = new char[size];
+	char* cursor = data;
+
+	uint num_meshes = model->meshinfo.size();
+	memcpy(cursor, &num_meshes, sizeof(uint));
+	cursor += sizeof(uint);
+
+	for (int i = 0; i < model->meshinfo.size(); ++i)
+	{
+		uint temp = model->meshinfo[i]->route.size();
+		memcpy(cursor, &temp, sizeof(uint));
+		cursor += sizeof(uint);
+		const char* path_temp = model->meshinfo[i]->route.c_str();
+		memcpy(cursor, path_temp, sizeof(char)*temp);
+		cursor += sizeof(char)*temp;
+	}
+	
+	App->fs->SaveUnique(output, data, size, meta_path.c_str());
+	
+
+
+
+	/*std::string output;
 	uint size = 0;
+	char* data = new char[2];
+	for (int i = 0; i < 2; ++i) 
+	{
+		memcpy(data, model->meshinfo[i]->route.c_str(), sizeof(char));
+	}
+	
 
-	char* data = "";
 
+	size = sizeof(uint);
 
-
+	
 
 
 	std::string temp = App->fs->GetFileName(path);
-	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + ".json";
+	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + "_meta.json";
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
+*/
+	//JSON_Value* value = json_parse_file(meta_path.c_str());
+	//JSON_Object* object = json_object(value);
+	//std::vector<meshInfo*>::iterator it = model->meshinfo.begin();
+	//
+	//
+	//JSON_Value* leaf = json_value_init_object();
+	//JSON_Object* leaf_obj = json_value_get_object(leaf);
+	//json_serialize_to_file_pretty(leaf, meta_path.c_str());
 
-	JSON_Value* value = json_parse_file(meta_path.c_str());
-	JSON_Object* object = json_object(value);
-	std::vector<meshInfo*>::iterator it = model->meshinfo.begin();
-	
-	
-	JSON_Value* leaf = json_value_init_object();
-	JSON_Object* leaf_obj = json_value_get_object(leaf);
-	json_serialize_to_file_pretty(leaf, meta_path.c_str());
+	//json_object_dotset_string(leaf_obj, "Model.Name", temp.data());
 
-	json_object_dotset_string(leaf_obj, "Model.Name", temp.data());
+	//json_object_dotset_number(leaf_obj, "Model.Meshes", model->meshinfo.size());
 
-	json_object_dotset_number(leaf_obj, "Model.Meshes", model->meshinfo.size());
+	//while(it < model->meshinfo.end())
+	//{
+	//	JSON_Array* arr = json_object_dotget_array(leaf_obj, "Model.PathMeshes");
+	//	if (arr == nullptr) {
+	//		JSON_Value* new_val = json_value_init_array();
+	//		arr = json_value_get_array(new_val);
 
-	while(it < model->meshinfo.end())
-	{
-		JSON_Array* arr = json_object_dotget_array(leaf_obj, "Model.PathMeshes");
-		if (arr == nullptr) {
-			JSON_Value* new_val = json_value_init_array();
-			arr = json_value_get_array(new_val);
-
-			json_object_dotset_value(leaf_obj, "Model.PathMeshes", new_val);
-		}
-		json_array_append_string(arr, (*it)->route.data());
-
-
-		/*SetString(object, (*it)->route.c_str());
-		json_parse_string((*it)->route.c_str());*/
-		++it;
-	}
+	//		json_object_dotset_value(leaf_obj, "Model.PathMeshes", new_val);
+	//	}
+	//	json_array_append_string(arr, (*it)->route.data());
 
 
-	json_serialize_to_file_pretty(leaf, meta_path.c_str());
+	//	/*SetString(object, (*it)->route.c_str());
+	//	json_parse_string((*it)->route.c_str());*/
+	//	++it;
+	//}
+
+
+	//json_serialize_to_file_pretty(leaf, meta_path.c_str());
 
 
 	//SerializeJSONFile(path, value);
