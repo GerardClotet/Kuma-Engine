@@ -35,11 +35,33 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Init()
 {
+	bool ret = true;
+
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	return true;
+	ILuint devIl_init;
+
+
+	ilInit();
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+	iluInit();
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+
+	ilutRenderer(ILUT_OPENGL);
+
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+	return ret;
 }
 
 bool ModuleImporter::Start()
@@ -112,7 +134,9 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 				(*it)->material->ReadTexture(path.c_str());
 
 				//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
-				SaveTextureToMeta(path.c_str());
+				if (!App->fs->Exists(App->fs->GetTextureMetaPath(path.c_str()).c_str()))
+					SaveTextureToMeta(path.c_str());
+
 				++it;
 			}
 			return;
@@ -125,7 +149,9 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 			App->scene_intro->selected_game_obj->material->ReadTexture(path.c_str());
 
 			//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
-			SaveTextureToMeta(path.c_str());
+			if (!App->fs->Exists(App->fs->GetTextureMetaPath(path.c_str()).c_str()))
+				SaveTextureToMeta(path.c_str());
+
 			return;
 		}
 	}
@@ -289,22 +315,24 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 		{
 			aiMaterial* material = importfile->mMaterials[m];
 			aiString texture_path;
-			if (/*material->GetTextureCount(aiTextureType_DIFFUSE)>0 && */material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
+			if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 			{
-				LOG("%s", texture_path.C_Str());
-				path_tex = App->fs->GetTextureMetaPath(texture_path.data);
-				//-----------Get a texture of a fbx that has an associated material--------
-				if (App->fs->Exists(path_tex.c_str()))
+				if (texture_path.data != "*0")
 				{
-					LoadTextureFromMaterial(path_tex, go);
-					//if it exists, call de LoadTextureFromMeta
-					//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
-					LOG("IT EXISTS");
+					LOG("%s", texture_path.C_Str());
+					path_tex = App->fs->GetTextureMetaPath(texture_path.data);
+					//-----------Get a texture of a fbx that has an associated material--------
+					if (App->fs->Exists(path_tex.c_str()))
+					{
+						LoadTextureFromMaterial(path_tex, go);
+						//if it exists, call de LoadTextureFromMeta
+						//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
+						LOG("IT EXISTS");
+					}
+					else
+						LoadTextureFromMaterial(imported_route + texture_path.data, go);
+
 				}
-				else
-					LoadTextureFromMaterial(imported_route + texture_path.data, go);
-
-
 
 			}
 			else LOG("%s texture aiRETURN_FAILURE");
@@ -319,21 +347,9 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 
 bool ModuleImporter::LoadModelFile(const char * model_file)
 {
-	//If the fbx wasn't loaded before, call the LoadGeometry and save a .meta
-	//If the fbx was previously loaded, read all meta data in this function.
-	//This function loads the info of the file, saving it to a struct and calling the component constructor,
-	//passing this structure to the constructor
-
-	//meshInfo* mesh_info;
-	//mesh_info->num_vertex = meta_num_vertex... Do you understand it right?
-	//gameObject->AddCOmponent(MESH, mesh_info);
-
-	// To get the file name do: Split with the full path, and then GetFileName with that string
-	// std::string test = LIBRARY_MODEL_FOLDER + file_name + "_meta.kuma";
-	// if(App->fs->Exists(test.c_str()));
-	//TO CREATE A FILE USE App->fs->SaveUnique();
+	
 	std::string path_meta = App->fs->GetModelMetaPath(model_file);
-	if (App->fs->Exists(path_meta.c_str())) //encara que hagi estat carregat diu que no existeix pq el subparent no l'ha fet i aqui busca el meta del subparent;
+	if (App->fs->Exists(path_meta.c_str())) 
 	{
 		//It was previously loaded
 		//Read from the meta
@@ -354,6 +370,7 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 	std::string path_meta = App->fs->GetTextureMetaPath(texture_file);
 	if (App->fs->Exists(path_meta.c_str()))
 	{
+		LoadImportedMaterials(std::string(texture_file));
 		//LOADIMPORTEDMATERIALS. Since the texture is previously loaded, the save inside this function won't be executed
 		//and the hierarchy will function when dragging a texture to a parent
 		LOG("EXIST");
@@ -532,6 +549,7 @@ void ModuleImporter::SaveTextureToMeta(const char * path)
 	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
 	if (size > 0) {
 		data = new ILubyte[size]; // allocate data buffer
+		iluFlipImage();
 		if (ilSaveL(IL_DDS, data, size) > 0)
 		{
 			// Save to buffer with the ilSaveIL function
@@ -646,6 +664,11 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	
 	
 
+}
+
+TexData * ModuleImporter::LoadTextureDevil(const char * path)
+{
+	return nullptr;
 }
 
 
