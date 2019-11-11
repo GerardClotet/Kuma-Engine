@@ -530,9 +530,10 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		//meshInfo* m_inf = child->mesh->saveMeshinfo();
 		LOG("esto %s", child->mesh->path_texture_associated_meta);
 		std::string temp_str = child->mesh->path_texture_associated_meta;
+
+		const char* tt = "C:/Users/Gerard Clotet/Documents/GitHub/Kuma-Engine/Kuma Engine/Game"; //temporal
+		temp_str =  tt + temp_str;
 		child->material->ReadTexture(temp_str.c_str());
-
-
 		
 	}
 	
