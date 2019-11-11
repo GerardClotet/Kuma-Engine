@@ -315,9 +315,11 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 		{
 			aiMaterial* material = importfile->mMaterials[m];
 			aiString texture_path;
+			std::string tempo;
 			if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 			{
-				if (texture_path.data != "*0")
+				tempo = texture_path.data;
+				if (tempo != "*0")
 				{
 					LOG("%s", texture_path.C_Str());
 					path_tex = App->fs->GetTextureMetaPath(texture_path.data);
@@ -455,9 +457,12 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 	bytes = sizeof(uint);
 	memcpy(cursor, &mesh->size_path_text, bytes);
 
-	cursor += bytes;
-	bytes = sizeof(char)*path_texture.size();
-	memcpy(cursor, mesh->path_text.c_str(), bytes);
+	if (mesh->size_path_text != 0)
+	{
+		cursor += bytes;
+		bytes = sizeof(char)*path_texture.size();
+		memcpy(cursor, mesh->path_text.c_str(), bytes);
+	}
 
 	
 
@@ -497,6 +502,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	if (num_meshes > 1)
 	{
 		subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, App->fs->GetFileName(original_path));
+		subparent->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		App->scene_intro->selected_game_obj = subparent;
 	}
 
@@ -526,14 +532,17 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
 		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
-		child->AddComponent(GO_COMPONENT::MATERIAL);
-		//meshInfo* m_inf = child->mesh->saveMeshinfo();
-		LOG("esto %s", child->mesh->path_texture_associated_meta);
-		std::string temp_str = child->mesh->path_texture_associated_meta;
 
-		const char* tt = "C:/Users/Gerard Clotet/Documents/GitHub/Kuma-Engine/Kuma Engine/Game"; //temporal
-		temp_str =  tt + temp_str;
-		child->material->ReadTexture(temp_str.c_str());
+		if (std::string(child->mesh->path_texture_associated_meta) != "")
+		{
+			child->AddComponent(GO_COMPONENT::MATERIAL);
+			LOG("esto %s", child->mesh->path_texture_associated_meta);
+			std::string temp_str = child->mesh->path_texture_associated_meta;
+			child->material->ReadTexture(temp_str.c_str());
+		}
+		
+		
+		
 		
 	}
 	
@@ -618,16 +627,18 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		mesh->size_path_text = 0;
 		memcpy(&mesh->size_path_text, cursor, bytes);
 
-		cursor += bytes;
-		bytes = sizeof(char)*mesh->size_path_text;
-		char* temp_text_path = new char[mesh->size_path_text];
-		
-		memcpy(temp_text_path, cursor, bytes);
+		if (mesh->size_path_text != 0)
+		{
+			cursor += bytes;
+			bytes = sizeof(char)*mesh->size_path_text;
+			char* temp_text_path = new char[mesh->size_path_text];
 
-		LOG("memcpy %s", temp_text_path);
+			memcpy(temp_text_path, cursor, bytes);
 
-		mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META,4/*extension size*/);
+			LOG("memcpy %s", temp_text_path);
 
+			mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META, 4/*extension size*/);
+		}
 		return mesh;
 }
 
