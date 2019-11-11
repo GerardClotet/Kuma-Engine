@@ -7,6 +7,7 @@
 #include "ModuleImporter.h"
 #include "ModuleUI.h"
 #include "ModuleCamera3D.h"
+#include "ModuleFileSystem.h"
 #include "PanelConfig.h"
 
 
@@ -38,8 +39,8 @@ bool ModuleSceneIntro::Start()
 {
 
 	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
-	//App->importer->LoadGeometry(firstFbx.c_str());
-	//App->importer->LoadImportedMaterials(firstTex);
+	App->fs->ManageImportedFile(firstFbx.c_str());
+	App->fs->ManageImportedFile(firstTex.c_str());
 
 	return true;
 }
