@@ -35,11 +35,33 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Init()
 {
+	bool ret = true;
+
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	return true;
+	ILuint devIl_init;
+
+
+	ilInit();
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+	iluInit();
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+
+	ilutRenderer(ILUT_OPENGL);
+
+	devIl_init = ilGetError();
+	if (devIl_init != IL_NO_ERROR)
+		ret = false;
+
+	return ret;
 }
 
 bool ModuleImporter::Start()
@@ -531,6 +553,7 @@ void ModuleImporter::SaveTextureToMeta(const char * path)
 	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
 	if (size > 0) {
 		data = new ILubyte[size]; // allocate data buffer
+		iluFlipImage();
 		if (ilSaveL(IL_DDS, data, size) > 0)
 		{
 			// Save to buffer with the ilSaveIL function
@@ -645,6 +668,11 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	
 	
 
+}
+
+TexData * ModuleImporter::LoadTextureDevil(const char * path)
+{
+	return nullptr;
 }
 
 

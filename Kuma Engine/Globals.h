@@ -52,6 +52,7 @@ enum update_status
 #define LIBRARY_FOLDER "/Library/"
 #define LIBRARY_AUDIO_FOLDER "/Library/Audio/"
 #define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
+#define TEMPORAL_TEX "Library/Textures/"
 #define LIBRARY_MESH_FOLDER "/Library/Meshes/"
 #define LIBRARY_ANIMATION_FOLDER "/Library/Animations/"
 #define LIBRARY_SCENE_FOLDER "/Library/Scenes/"

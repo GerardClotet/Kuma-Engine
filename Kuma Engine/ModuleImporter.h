@@ -76,7 +76,7 @@ public:
 	void LoadModelFromMeta(const char* original_path, const char* path);
 	meshInfo* LoadMeshFromMeta(const char* path);
 	void SaveModelToMeta(const char* path,modelInfo* model);
-
+	TexData* LoadTextureDevil(const char* path);
 
 	
 	void SaveTextureToMeta(const char *path);
