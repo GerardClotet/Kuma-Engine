@@ -553,7 +553,7 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	std::string file;
 	App->fs->SplitFilePath(path, nullptr, &file);
 	file = App->fs->GetFileName(file.c_str());
-	file = TEMPORAL_TEX + file + EXTENSION_TEXTURE_META;
+	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_TEXTURE_META;
 	return file;
 }
 	// -----------------------------------------------------
