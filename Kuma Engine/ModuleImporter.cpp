@@ -111,6 +111,7 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 
 				(*it)->material->ReadTexture(path.c_str());
 
+				//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
 				SaveTextureToMeta(path.c_str());
 				++it;
 			}
@@ -122,6 +123,8 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MATERIAL);
 
 			App->scene_intro->selected_game_obj->material->ReadTexture(path.c_str());
+
+			//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
 			SaveTextureToMeta(path.c_str());
 			return;
 		}
@@ -193,6 +196,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 					//-----------Get a texture of a fbx that has an associated material--------
 					if (App->fs->Exists(path_tex.c_str()))
 					{
+						LoadTextureFromMaterial(path_tex,go);
 						//if it exists, call de LoadTextureFromMeta
 						//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
 						LOG("IT EXISTS");
@@ -292,6 +296,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 				//-----------Get a texture of a fbx that has an associated material--------
 				if (App->fs->Exists(path_tex.c_str()))
 				{
+					LoadTextureFromMaterial(path_tex, go);
 					//if it exists, call de LoadTextureFromMeta
 					//Call the LoadTextureFromMaterial with the path loaded in LoadTextureFromMeta
 					LOG("IT EXISTS");
@@ -349,10 +354,9 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 	std::string path_meta = App->fs->GetTextureMetaPath(texture_file);
 	if (App->fs->Exists(path_meta.c_str()))
 	{
-		//LoadTextureFromMeta
-		//LoadImportedMaterials with the path loaded before?
-		//The game object needed for the LoadImportedMaterials is the selected_gameobject, because LoadTextureFIle comes from
-		//dragging a texture into a selected mesh
+		//LOADIMPORTEDMATERIALS. Since the texture is previously loaded, the save inside this function won't be executed
+		//and the hierarchy will function when dragging a texture to a parent
+		LOG("EXIST");
 
 	}
 	else
@@ -476,6 +480,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	if (num_meshes > 1)
 	{
 		subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, App->fs->GetFileName(original_path));
+		App->scene_intro->selected_game_obj = subparent;
 	}
 
 	for (int i = 0; i < num_meshes; ++i)
@@ -505,7 +510,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
 		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		child->AddComponent(GO_COMPONENT::MATERIAL);
-		meshInfo* m_inf = child->mesh->saveMeshinfo();
+		//meshInfo* m_inf = child->mesh->saveMeshinfo();
 		LOG("esto %s", child->mesh->path_texture_associated_meta);
 		std::string temp_str = child->mesh->path_texture_associated_meta;
 		child->material->ReadTexture(temp_str.c_str());
