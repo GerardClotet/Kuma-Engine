@@ -304,6 +304,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 	mesh = importfile->mMeshes[0];//it has only 1 mesh
 	
 	go->AddComponent(GO_COMPONENT::MESH, mesh, node);
+	go->SetBoundingBox();
 	App->scene_intro->selected_game_obj = go;
 	std::string path_tex;
 	unsigned int numat = importfile->mNumMaterials;
@@ -531,7 +532,9 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		GameObject* child = App->scene_intro->CreateGameObject(subparent, OBJECT_TYPE::IMPORTER, App->fs->SubstractFromEnd(temporal.c_str(),EXTENSION_META));
 
 		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
+
 		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+		child->SetBoundingBox();
 
 		if (std::string(child->mesh->path_texture_associated_meta) != "")
 		{

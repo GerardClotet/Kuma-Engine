@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
-
+#include "Component_Mesh.h"
 Component_Transform::Component_Transform(GameObject * obj, float3 pos, float3 scale, Quat rot)
 {
 	name = "transform";
@@ -30,6 +30,7 @@ Component_Transform::Component_Transform(GameObject * obj, float3 pos, float3 sc
 		//If the parent exists but it has no Transform Component.
 		else
 			global_transformation = local_transformation;
+		
 		
 	}
 	//If the game object has no parent
@@ -163,8 +164,14 @@ void Component_Transform::RecalculateTransformMatrix()
 
 }
 
+float4x4 Component_Transform::GetGlobalMatrix()
+{
+	return global_transformation;
+}
+
 void Component_Transform::DisplayInspector()
 {
+
 	ImGui::Text("Position  ");
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(50);
@@ -172,6 +179,9 @@ void Component_Transform::DisplayInspector()
 	if (ImGui::DragFloat("X", &local_position.x, 0.5F)) 
 	{
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
+
 	}
 	ImGui::PopID();
 	ImGui::SameLine();
@@ -180,6 +190,8 @@ void Component_Transform::DisplayInspector()
 	if (ImGui::DragFloat("Y", &local_position.y, 0.5F)) 
 	{
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
 	}
 	ImGui::PopID();
 	ImGui::SameLine();
@@ -188,6 +200,8 @@ void Component_Transform::DisplayInspector()
 	if (ImGui::DragFloat("Z", &local_position.z, 0.5F)) 
 	{
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
 	}
 	ImGui::PopID();
 	ImGui::Spacing();
@@ -206,6 +220,8 @@ void Component_Transform::DisplayInspector()
 
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
 	}
 	ImGui::PopID();
 
@@ -221,6 +237,8 @@ void Component_Transform::DisplayInspector()
 
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
 	}
 	ImGui::PopID();
 
@@ -236,6 +254,8 @@ void Component_Transform::DisplayInspector()
 
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
+
 	}
 	ImGui::PopID();
 
@@ -249,6 +269,7 @@ void Component_Transform::DisplayInspector()
 	{
 		//check if scale is negative
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
 	}
 	ImGui::PopID();
 
@@ -259,6 +280,7 @@ void Component_Transform::DisplayInspector()
 	{
 		//check if scale is negative
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
 	}
 	ImGui::PopID();
 
@@ -269,6 +291,7 @@ void Component_Transform::DisplayInspector()
 	{
 		//check if scale is negative
 		RecalculateTransformMatrix();
+		gameObject_Item->TransformBBox();
 	}
 	ImGui::PopID();
 

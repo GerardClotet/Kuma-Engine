@@ -4,6 +4,9 @@
 #include "Application.h"
 #include "Globals.h"
 #include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/include/Geometry/AABB.h"
+#include "MathGeoLib/include/Geometry/OBB.h"
+
 #include <string>
 class Components;
 class Component_Material;
@@ -14,6 +17,13 @@ struct aiMesh;
 struct aiNode;
 
 struct meshInfo;
+
+struct BoundingBox
+{
+	OBB obb;
+	AABB aabb;
+	float3 min, max;
+};
  enum class OBJECT_TYPE {
 	PARENT,
 	SUBPARENT,
@@ -44,7 +54,9 @@ public:
 	bool CleanUp();
 	void CheckName(std::string name);
 	bool hasComponent(GO_COMPONENT com);
-
+	void SetBoundingBox();
+	void TransformBBox();
+	void DrawBoundingBox();
 	void SaveToMeta(const char* path);
 public:
 	std::string name;
@@ -75,6 +87,8 @@ public:
 	std::vector<GameObject*> game_object_childs;
 
 	bool texture_Checker = false;
+
+	BoundingBox bbox;
 };
 
 

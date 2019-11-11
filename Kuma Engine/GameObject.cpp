@@ -114,6 +114,11 @@ bool GameObject::Update()
 	{
 		if ((*item_comp)->comp_type == GO_COMPONENT::MESH)
 		{
+		
+
+			DrawBoundingBox();
+			
+
 
 			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
 			{
@@ -182,7 +187,7 @@ void GameObject::RemoveGameObject(GameObject* child)
 		{
 			(*iter)->CleanUp();
 			LOG("deleted component");
-			//delete (*iter);
+			delete (*iter);
 			App->scene_intro->root->game_object_childs.erase(iter);
 			App->scene_intro->selected_game_obj = nullptr;
 			//App->ui->inspector_window = false;
@@ -211,7 +216,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 				{
 					(*it)->CleanUp();
 					LOG("deleted component");
-					//delete (*iter);
+					delete (*iter);
 					(*iter)->game_object_childs.erase(it);
 					App->scene_intro->selected_game_obj = nullptr;
 					//App->ui->inspector_window = false;
@@ -340,7 +345,60 @@ bool GameObject::hasComponent(GO_COMPONENT com)
 	
 }
 
-void GameObject::SaveToMeta(const char* path)
+void GameObject::SetBoundingBox()
+{
+	if (mesh != nullptr)
+	{
+		bbox.aabb.SetNegativeInfinity(); //Set value to 0 /null
+		bbox.aabb.Enclose((float3*)mesh->vertex, mesh->num_vertex);
+
+		bbox.min = bbox.aabb.minPoint;
+		bbox.max = bbox.aabb.maxPoint;
+
+
+		//this for transforming obb
+	bbox.obb.SetFrom(bbox.aabb);
+	bbox.obb.Transform(transform->GetGlobalMatrix());
+
+
+	bbox.aabb.Enclose(bbox.obb);
+	}
+
+	
+}
+
+void GameObject::TransformBBox()
+{
+	bbox.obb.SetFrom(bbox.aabb);
+	bbox.obb.Transform(transform->GetGlobalMatrix());
+
+
+	bbox.aabb.Enclose(bbox.obb);
+
+	bbox.min = bbox.aabb.minPoint;
+	bbox.max = bbox.aabb.maxPoint;
+
+
+
+}
+
+void GameObject::DrawBoundingBox()
+{
+
+
+	for (int i = 0; i < 12; i++)
+	{
+		glBegin(GL_LINES);
+		glLineWidth(1.0f);
+		glColor3f(1, 1, 0);
+		glVertex3f(bbox.aabb.Edge(i).a.x, bbox.aabb.Edge(i).a.y, bbox.aabb.Edge(i).a.z);
+		glVertex3f(bbox.aabb.Edge(i).b.x, bbox.aabb.Edge(i).b.y, bbox.aabb.Edge(i).b.z);
+		glColor3f(1, 0, 0);
+		glEnd();
+	}
+}
+
+void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
 {
 	std::vector<Components*>::iterator it = components.begin();
 		

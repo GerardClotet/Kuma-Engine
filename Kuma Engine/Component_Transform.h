@@ -35,7 +35,7 @@ public:
 
 	//MATRIX TRANSFORM
 	void RecalculateTransformMatrix();
-	
+	float4x4 GetGlobalMatrix();
 
 private:
 	//position
@@ -52,6 +52,7 @@ public:
 
 	float4x4 local_transformation = float4x4::identity;
 	float4x4 global_transformation = float4x4::identity;
+
 
 public:
 	void DisplayInspector();
