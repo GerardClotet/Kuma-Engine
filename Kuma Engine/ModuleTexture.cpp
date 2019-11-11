@@ -1,7 +1,7 @@
+#include "Application.h"
 #include "Globals.h"
 #include "ModuleTexture.h"
-
-
+#include "ModuleFileSystem.h"
 
 
 
@@ -120,7 +120,7 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 	ILuint id;
 	
-	TexData* cmp_tex = CheckAlreadyLoaded(path);
+	TexData* cmp_tex = CheckAlreadyLoaded(App->fs->GetFileName(path, true).c_str());
 
 	if (cmp_tex != nullptr)
 		return cmp_tex;
@@ -137,7 +137,10 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 		{
-			tex_data->path = path;
+			
+			tex_data->naem_extension = App->fs->GetFileName(path, true);
+
+			
 			tex_data->name = path;
 			tex_data->name = tex_data->name.substr(tex_data->name.find_last_of("\\") + 1);
 
@@ -199,7 +202,7 @@ TexData* ModuleTexture::CheckAlreadyLoaded(const char* path) //TODO ajust path t
 	std::vector<TexData*>::iterator it = textures_vec.begin();
 	while (it < textures_vec.end())
 	{
-		if (strcmp((*it)->path.c_str(), path) == 0)
+		if (strcmp((*it)->naem_extension.c_str(), path) == 0)
 		{
 			LOG("Texture %s alreadyLoaded", path);
 			return (*it);

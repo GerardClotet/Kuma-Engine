@@ -261,11 +261,12 @@ void ModuleFileSystem::NormalizePath(std::string & full_path) const
 	}
 }
 
-std::string ModuleFileSystem::GetFileName(const char * file_name)
+std::string ModuleFileSystem::GetFileName(const char * file_name,bool extension)
 {
 	std::string name;
 	std::string full_name(file_name);
 	bool reached_dot = false;
+	extension ? reached_dot = true : reached_dot = false;
 
 	std::string::const_reverse_iterator item = full_name.crbegin();
 	for (; item != full_name.crend(); ++item)

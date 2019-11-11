@@ -48,7 +48,7 @@ public:
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
-	std::string GetFileName(const char* file_name);
+	std::string GetFileName(const char* file_name,bool extension = false);
 	std::string SubstractFromEnd(const char* file_name, const char* substract_to,int offset =0);
 
 	// Open for Read/Write

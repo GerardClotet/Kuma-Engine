@@ -17,7 +17,7 @@
 struct TexData
 {	
 	std::string name;
-	std::string path;
+	std::string naem_extension;
 	int width=0;
 	int height=0;
 	int offsetX=0;
