@@ -286,14 +286,14 @@ std::string ModuleFileSystem::GetFileName(const char * file_name)
 	return name;
 }
 
-std::string ModuleFileSystem::SubstractFromEnd(const char* file_name,const char* substract)
+std::string ModuleFileSystem::SubstractFromEnd(const char* file_name,const char* substract_to,int offset)
 {
 
 	std::string temp = file_name;
-	size_t erase_meta = temp.rfind(substract);
+	size_t erase_meta = temp.rfind(substract_to);
 	if(std::string::npos != erase_meta)
 	{
-			temp.erase(erase_meta);
+			temp.erase(erase_meta+offset);
 	}
 	return temp;
 }

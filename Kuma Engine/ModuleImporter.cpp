@@ -353,6 +353,7 @@ bool ModuleImporter::LoadTextureFile(const char * texture_file)
 		//LoadImportedMaterials with the path loaded before?
 		//The game object needed for the LoadImportedMaterials is the selected_gameobject, because LoadTextureFIle comes from
 		//dragging a texture into a selected mesh
+
 	}
 	else
 	{
@@ -503,7 +504,11 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
 		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
-
+		child->AddComponent(GO_COMPONENT::MATERIAL);
+		meshInfo* m_inf = child->mesh->saveMeshinfo();
+		LOG("esto %s", child->mesh->path_texture_associated_meta);
+		std::string temp_str = child->mesh->path_texture_associated_meta;
+		child->material->ReadTexture(temp_str.c_str());
 
 
 		
@@ -592,10 +597,12 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		cursor += bytes;
 		bytes = sizeof(char)*mesh->size_path_text;
 		char* temp_text_path = new char[mesh->size_path_text];
-		memcpy(&temp_text_path, cursor, bytes);
-		cursor += sizeof(char) * mesh->size_path_text;
 		
-		mesh->path_text = temp_text_path;
+		memcpy(temp_text_path, cursor, bytes);
+
+		LOG("memcpy %s", temp_text_path);
+
+		mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META,4/*extension size*/);
 
 		return mesh;
 }

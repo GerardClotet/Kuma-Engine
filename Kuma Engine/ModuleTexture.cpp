@@ -128,7 +128,7 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 	ilGenImages(1, &id);
 
 	ilBindImage(id);
-	if ((bool)ilLoadImage(path))
+	if ((bool)ilLoadImage(path)) //meta fail
 	{
 		iluFlipImage();
 		
@@ -165,7 +165,7 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 			textures_vec.push_back(tex_data);
 		}
-		else LOG("Failure converting image, error: %s", iluErrorString(ilGetError()));
+		else LOG("Failure converting image, error: %s", iluErrorString(ilGetError())); //gives error whe laoding from meta, says the path has de dirtypart
 
 
 
@@ -193,7 +193,7 @@ TexData* ModuleTexture::GetDefaultTex()
 	return nullptr;
 }
 
-TexData* ModuleTexture::CheckAlreadyLoaded(const char* path)
+TexData* ModuleTexture::CheckAlreadyLoaded(const char* path) //TODO ajust path to filename.extension to avoid loading the same tex twice because its loaded from different folder
 {
 
 	std::vector<TexData*>::iterator it = textures_vec.begin();

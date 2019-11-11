@@ -77,7 +77,7 @@ public:
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
-
+	const char* path_texture_associated_meta;
 public:
 	bool gl_Short = false;
 	bool gl_Int = false;
@@ -85,7 +85,6 @@ public:
 	bool show_normals = false;
 	bool show_face_normal = false;
 	bool test = false;
-
 
 
 private:
