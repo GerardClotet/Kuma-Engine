@@ -209,6 +209,9 @@
     <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>modules</Filter>
     </ClCompile>
+    <ClCompile Include="Component_Camera.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -650,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Component_Camera.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

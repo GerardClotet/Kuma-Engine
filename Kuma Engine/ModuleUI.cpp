@@ -409,7 +409,9 @@ void ModuleEditor::GameObjectScreen()
 	}
 	if (ImGui::MenuItem("Create Empty"))
 	{
-
+		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Empt_CameraTest");
+		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+		go->AddComponent(GO_COMPONENT::CAMERA);
 	}
 	
 	if (ImGui::BeginMenu("3D Objects"))

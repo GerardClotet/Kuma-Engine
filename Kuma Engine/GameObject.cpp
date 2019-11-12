@@ -4,6 +4,7 @@
 #include "Component_Mesh.h"
 #include "Component_Material.h"
 #include "Component_Transform.h"
+#include "Component_Camera.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
@@ -73,6 +74,12 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 		components.push_back(material);
 		break;
 			
+	case GO_COMPONENT::CAMERA:
+
+		camera = new Component_Camera(this);
+		components.push_back(camera);
+
+		break;
 	}
 	return component;
 }
@@ -155,7 +162,9 @@ bool GameObject::Update()
 		}
 
 		
-		else if ((*item_comp)->comp_type != GO_COMPONENT::MESH) { (*item_comp)->Update(); }
+		else if ((*item_comp)->comp_type != GO_COMPONENT::MESH) {
+			(*item_comp)->Update(); 
+		}
 		
 	}
 	return true;
@@ -376,7 +385,7 @@ void GameObject::TransformBBox()
 
 void GameObject::DrawBoundingBox()
 {
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < bbox.aabb_global.NumEdges(); i++)
 	{
 		glBegin(GL_LINES);
 		glLineWidth(1.0f);

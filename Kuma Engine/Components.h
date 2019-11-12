@@ -16,7 +16,8 @@ enum class GO_COMPONENT
 	NONE,
 	MESH,
 	TRANSFORM,
-	MATERIAL
+	MATERIAL,
+	CAMERA
 };
 class Components
 {

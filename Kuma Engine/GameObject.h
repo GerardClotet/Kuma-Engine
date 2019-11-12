@@ -6,12 +6,13 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/Geometry/AABB.h"
 #include "MathGeoLib/include/Geometry/OBB.h"
-
+#include "MathGeoLib/include/Geometry/Frustum.h"
 #include <string>
 class Components;
 class Component_Material;
 class Component_Mesh;
 class Component_Transform;
+class Component_Camera;
 enum class GO_COMPONENT;
 struct aiMesh;
 struct aiNode;
@@ -35,7 +36,8 @@ struct BoundingBox
 	PLANE,
 	IMPORTER,
 	DODECAHEDRON,
-	TORUS
+	TORUS,
+	NONE
 
 };
 
@@ -82,6 +84,7 @@ public:
 	Component_Material* material	= nullptr;
 	Component_Mesh* mesh			= nullptr;
 	Component_Transform* transform	= nullptr;
+	Component_Camera*camera			= nullptr;
 	Components* component			= nullptr;
 
 	std::vector<Components*> components;
