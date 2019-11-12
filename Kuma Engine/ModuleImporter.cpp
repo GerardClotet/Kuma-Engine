@@ -204,6 +204,7 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 		aiMesh* mesh;
 		mesh = importfile->mMeshes[file_node->mMeshes[i]];
 		go->AddComponent(GO_COMPONENT::MESH, mesh, file_node);
+		go->SetBoundingBox();
 		std::string path_tex;
 		unsigned int numat = importfile->mNumMaterials;
 		LOG("%i", a);

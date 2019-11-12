@@ -349,50 +349,48 @@ void GameObject::SetBoundingBox()
 {
 	if (mesh != nullptr)
 	{
-		bbox.aabb.SetNegativeInfinity(); //Set value to 0 /null
-		bbox.aabb.Enclose((float3*)mesh->vertex, mesh->num_vertex);
+		bbox.aabb_local.SetNegativeInfinity(); //Set value to 0 /null
+		bbox.aabb_local.Enclose((float3*)mesh->vertex, mesh->num_vertex);
 
-		bbox.min = bbox.aabb.minPoint;
-		bbox.max = bbox.aabb.maxPoint;
+		bbox.min = bbox.aabb_local.minPoint;
+		bbox.max = bbox.aabb_local.maxPoint;
 
-
-		//this for transforming obb
-	bbox.obb.SetFrom(bbox.aabb);
-	bbox.obb.Transform(transform->GetGlobalMatrix());
-
-
-	bbox.aabb.Enclose(bbox.obb);
+		TransformBBox();
 	}
-
+	
 	
 }
 
 void GameObject::TransformBBox()
 {
-	bbox.obb.SetFrom(bbox.aabb);
+	bbox.obb = bbox.aabb_local;
 	bbox.obb.Transform(transform->GetGlobalMatrix());
 
+	bbox.aabb_global.SetNegativeInfinity();
+	bbox.aabb_global.Enclose(bbox.obb);
 
-	bbox.aabb.Enclose(bbox.obb);
-
-	bbox.min = bbox.aabb.minPoint;
-	bbox.max = bbox.aabb.maxPoint;
-
-
+	bbox.min = bbox.aabb_local.minPoint;
+	bbox.max = bbox.aabb_local.maxPoint;
 
 }
 
 void GameObject::DrawBoundingBox()
 {
-
-
 	for (int i = 0; i < 12; i++)
 	{
 		glBegin(GL_LINES);
 		glLineWidth(1.0f);
+		glColor3f(0, 1, 0);
+		glVertex3f(bbox.aabb_global.Edge(i).a.x, bbox.aabb_global.Edge(i).a.y, bbox.aabb_global.Edge(i).a.z);
+		glVertex3f(bbox.aabb_global.Edge(i).b.x, bbox.aabb_global.Edge(i).b.y, bbox.aabb_global.Edge(i).b.z);
+		glColor3f(1, 0, 0);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glLineWidth(1.0f);
 		glColor3f(1, 1, 0);
-		glVertex3f(bbox.aabb.Edge(i).a.x, bbox.aabb.Edge(i).a.y, bbox.aabb.Edge(i).a.z);
-		glVertex3f(bbox.aabb.Edge(i).b.x, bbox.aabb.Edge(i).b.y, bbox.aabb.Edge(i).b.z);
+		glVertex3f(bbox.obb.Edge(i).a.x, bbox.obb.Edge(i).a.y, bbox.obb.Edge(i).a.z);
+		glVertex3f(bbox.obb.Edge(i).b.x, bbox.obb.Edge(i).b.y, bbox.obb.Edge(i).b.z);
 		glColor3f(1, 0, 0);
 		glEnd();
 	}

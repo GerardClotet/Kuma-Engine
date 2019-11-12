@@ -21,7 +21,8 @@ struct meshInfo;
 struct BoundingBox
 {
 	OBB obb;
-	AABB aabb;
+	AABB aabb_local;
+	AABB aabb_global;
 	float3 min, max;
 };
  enum class OBJECT_TYPE {
