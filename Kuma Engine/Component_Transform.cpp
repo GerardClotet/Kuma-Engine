@@ -191,6 +191,25 @@ float4x4 Component_Transform::GetGlobalMatrix()
 	return global_transformation;
 }
 
+float4x4 Component_Transform::GetParentGlobalMatrix()
+{
+	std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();
+
+	float4x4 temp = (*it)->transform->GetGlobalMatrix();
+	
+	it++;
+
+	while (it < gameObject_Item->game_object_childs.end())
+	{
+		temp = temp * (*it)->transform->GetGlobalMatrix();
+		
+		++it;
+
+	}
+
+	return temp;
+}
+
 void Component_Transform::DisplayInspector()
 {
 

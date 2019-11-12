@@ -549,6 +549,9 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		
 		
 	}
+
+	//GUARRADA
+	subparent->GenerateParentBBox();
 	
 }
 

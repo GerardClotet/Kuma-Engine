@@ -37,6 +37,7 @@ public:
 	void RecalculateTransformMatrix();
 	float4x4 GetGlobalMatrix();
 
+	float4x4 GetParentGlobalMatrix();
 private:
 	//position
 	float3 local_position = { 0,0,0 };

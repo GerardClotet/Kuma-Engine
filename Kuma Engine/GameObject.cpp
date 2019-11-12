@@ -117,6 +117,9 @@ GameObject::~GameObject()
 
 bool GameObject::Update()
 {
+
+
+
 	for (std::vector<Components*>::iterator item_comp = components.begin(); item_comp != components.end(); ++item_comp)
 	{
 		if ((*item_comp)->comp_type == GO_COMPONENT::MESH)
@@ -166,6 +169,12 @@ bool GameObject::Update()
 			(*item_comp)->Update(); 
 		}
 		
+	}
+
+	if (type == OBJECT_TYPE::SUBPARENT)
+	{
+		TransformParentBBox();
+		DrawBoundingBox();
 	}
 	return true;
 }
@@ -383,6 +392,19 @@ void GameObject::TransformBBox()
 
 }
 
+void GameObject::TransformParentBBox()
+{
+
+	bbox.obb = bbox.aabb_local;
+	bbox.obb.Transform(transform->GetParentGlobalMatrix());
+
+	bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
+	bbox.aabb_global.Enclose(bbox.obb);
+
+	bbox.min = bbox.aabb_local.minPoint;
+	bbox.max = bbox.aabb_local.maxPoint;
+}
+
 void GameObject::DrawBoundingBox()
 {
 	for (int i = 0; i < bbox.aabb_global.NumEdges(); i++)
@@ -405,6 +427,34 @@ void GameObject::DrawBoundingBox()
 	}
 }
 
+void GameObject::GenerateParentBBox()
+{
+
+
+	std::vector<GameObject*>::iterator it = game_object_childs.begin();
+
+	bbox.aabb_local.SetNegativeInfinity();
+
+
+	while (it < game_object_childs.end())
+	{
+		
+		bbox.aabb_local.Enclose((*it)->bbox.aabb_local);
+		
+		++it;
+	}
+
+	
+
+	bbox.obb = bbox.aabb_local;
+	bbox.obb.Transform(transform->GetParentGlobalMatrix());
+
+	bbox.aabb_global.SetNegativeInfinity();
+	bbox.aabb_global.Enclose(bbox.obb);
+
+	//bbox.aabb_local.Enclose()
+}
+
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
 {
 	std::vector<Components*>::iterator it = components.begin();
@@ -420,4 +470,6 @@ void GameObject::SaveToMeta(const char* path)//for now we just save mesh & textu
 		++it;
 	}
 }
+
+
 

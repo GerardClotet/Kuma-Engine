@@ -59,8 +59,10 @@ public:
 	bool hasComponent(GO_COMPONENT com);
 	void SetBoundingBox();
 	void TransformBBox();
+	void TransformParentBBox();
 	void DrawBoundingBox();
 	void SaveToMeta(const char* path);
+	void GenerateParentBBox();
 public:
 	std::string name;
 	std::string new_name;

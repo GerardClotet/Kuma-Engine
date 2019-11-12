@@ -22,7 +22,7 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	frustum.verticalFov = 60.0f * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.3f);
 
-	//float aspect = frustum.AspectRatio();
+	float aspect = frustum.AspectRatio();
 	//gameObject_Item->transform->local_transformation = frustum.ProjectionMatrix();
 	//
 	//float4x4 vie_mat = frustum.ViewMatrix();
