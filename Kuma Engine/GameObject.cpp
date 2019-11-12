@@ -348,6 +348,13 @@ bool GameObject::hasComponent(GO_COMPONENT com)
 			return false;
 		break;
 
+	case GO_COMPONENT::CAMERA:
+		if (this->camera != nullptr)
+			return true;
+		else
+			return false;
+		break;
+
 	default:
 		break;
 	}
