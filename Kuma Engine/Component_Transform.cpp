@@ -158,9 +158,15 @@ void Component_Transform::RecalculateTransformMatrix()
 		if ((*item) != nullptr)
 		{
 			if ((*item)->hasComponent(GO_COMPONENT::TRANSFORM))
+			{
 				(*item)->transform->RecalculateTransformMatrix();
+			
+
+			}
 		}
 	}
+	gameObject_Item->TransformBBox();
+
 
 }
 
