@@ -3,11 +3,12 @@
 #include "GameObject.h"
 #include "ModuleWindow.h"
 #include "Component_Transform.h"
+#include "ImGui/imgui.h"
 Component_Camera::Component_Camera(GameObject* game_object)
 {
 	this->gameObject_Item = game_object;
 	name = "camera";
-	SetAspectRatio();
+	SetAspectRatio(16, 9);
 	
 	float a  = frustum.horizontalFov;
 	LOG("%f", a);
@@ -22,12 +23,11 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	frustum.verticalFov = 60.0f * DEGTORAD;
 	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * 1.3f);
 
-	float aspect = frustum.AspectRatio();
-	//gameObject_Item->transform->local_transformation = frustum.ProjectionMatrix();
-	//
-	//float4x4 vie_mat = frustum.ViewMatrix();
+	far_plane = frustum.farPlaneDistance;
+	near_plane = frustum.nearPlaneDistance;
+	vertical_fov = frustum.verticalFov;
+	horizontal_fov = frustum.horizontalFov;
 
-	//frustum.WorldRight();
 	ReloadFrustrum();
 }
 
@@ -104,12 +104,58 @@ void Component_Camera::UpdateTransformFrustum()
 	frustum.up = gameObject_Item->transform->GetGlobalRotation() * float3(0, 1, 0);
 }
 
-void Component_Camera::SetAspectRatio()
+void Component_Camera::DisplayInspector()
 {
-	height = App->window->GetScreenHeight();
-	width = App->window->GetScreenWidth();
+	
 
-	aspect_ratio = height / width;
+	if (ImGui::DragFloat("Near Plane", &near_plane, 1, 0.1f, far_plane - 0.1f, "%.1f"))
+	{
+		frustum.nearPlaneDistance = near_plane;
+	}
+
+	ImGui::Spacing();
+
+
+	if (ImGui::DragFloat("Far Plane", &far_plane, 1, near_plane + 0.1f, 500, "%.1f"))
+	{
+		frustum.farPlaneDistance = far_plane;
+	}
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	
+
+	if (ImGui::DragFloat("FOV Horizontal", &horizontal_fov, 1, 1, 163, "%.1f"))
+	{
+		frustum.horizontalFov = horizontal_fov * DEGTORAD;
+		SetAspectRatio(16, 9, true);
+		vertical_fov = frustum.verticalFov * RADTODEG;
+	}
+	
+	
+
+	if (ImGui::DragFloat("FOV Vertical", &vertical_fov, 1, 1, 150, "%.1f"))
+	{
+		frustum.verticalFov = vertical_fov * DEGTORAD;
+		SetAspectRatio(16, 9);
+		horizontal_fov = frustum.horizontalFov * RADTODEG;
+	}
+	
+
+
+}
+
+void Component_Camera::SetAspectRatio(int width_ratio, int height_ratio, bool type)
+{
+	if (!type)
+	{
+		frustum.horizontalFov = (2.f * atanf(tanf(frustum.verticalFov * 0.5f) * ((float)width_ratio / (float)height_ratio)));
+	}
+	else
+	{
+		frustum.verticalFov = (2.f * atanf(tanf(frustum.horizontalFov * 0.5f) * ((float)height_ratio) / (float)width_ratio));
+	}
 	
 }
 

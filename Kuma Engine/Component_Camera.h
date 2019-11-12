@@ -16,14 +16,22 @@ class Component_Camera : public Components
 	Frustum frustum;
 	void DrawFrustum();
 	void UpdateTransformFrustum();
+	void DisplayInspector();
 	float* vertex;
 	int index;
-	void SetAspectRatio();
+	void SetAspectRatio(int width_ratio, int height_ratio, bool type = false);
 	bool Update();
 	int width, height;
 	float aspect_ratio;
 
 	float3 points[8];
+
+public:
+	float vertical_fov = 60.0f;
+	float horizontal_fov = 90.0f;
+
+	float far_plane = 100.f;
+	float near_plane = 0.1f;
 };
 
 

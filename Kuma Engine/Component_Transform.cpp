@@ -98,7 +98,8 @@ void Component_Transform::SetLocalScale(const float x, const float y, const floa
 
 const float3 Component_Transform::GetLocalScale()
 {
-	return float3();
+
+	return local_scale;
 }
 
 const float3 Component_Transform::GetGlobalScale()
@@ -130,7 +131,7 @@ void Component_Transform::SetLocalRotation(const float x, const float y, const f
 
 const Quat Component_Transform::GetLocalRotation()
 {
-	return Quat();
+	return local_rotation;
 }
 
 const Quat Component_Transform::GetGlobalRotation()

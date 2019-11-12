@@ -3,6 +3,7 @@
 #include "Component_Mesh.h"
 #include "Component_Material.h"
 #include "Component_Transform.h"
+#include "Component_Camera.h"
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleTexture.h"
@@ -55,23 +56,6 @@ void PanelInspector::DisplayInspector()
 		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
 			App->scene_intro->selected_game_obj->transform->DisplayInspector();
-			/*static float pos[3] = { App->scene_intro->selected_game_obj->game_object_pos.x, 
-									App->scene_intro->selected_game_obj->game_object_pos.y, 
-									App->scene_intro->selected_game_obj->game_object_pos.z };
-			ImGui::InputFloat3("Position", pos);
-			if (pos[0] != App->scene_intro->selected_game_obj->game_object_pos.x)
-				App->scene_intro->selected_game_obj->mesh->TranslateMesh(pos);
-
-
-			static float rot[3] = { App->scene_intro->selected_game_obj->game_object_rot.x,
-									App->scene_intro->selected_game_obj->game_object_rot.y,
-									App->scene_intro->selected_game_obj->game_object_rot.z };
-			ImGui::InputFloat3("Rotation", rot);
-
-			static float scale[3] = { App->scene_intro->selected_game_obj->game_object_scale.x,
-									App->scene_intro->selected_game_obj->game_object_scale.y,
-									App->scene_intro->selected_game_obj->game_object_scale.z };
-			ImGui::InputFloat3("Scale", scale);*/
 		}
 	}
 
@@ -144,77 +128,16 @@ void PanelInspector::DisplayInspector()
 		
 	}
 
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::CAMERA))
+		{
+			App->scene_intro->selected_game_obj->camera->DisplayInspector();
+		}
+	}
 
-
-//	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 	ImGui::End();
 }
 
-
-//static inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs)
-//{
-//	return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y);
-//}
-//static inline ImVec2 ImRotate(const ImVec2& v, float cos_a, float sin_a)
-//{
-//	return ImVec2(v.x * cos_a - v.y * sin_a, v.x * sin_a + v.y * cos_a);
-//}
-//void ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle)
-//{
-//	ImDrawList* draw_list = ImGui::GetWindowDrawList();
-//
-//	float cos_a = cosf(angle);
-//	float sin_a = sinf(angle);
-//	ImVec2 pos[4] =
-//	{
-//		center + ImRotate(ImVec2(-size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
-//		center + ImRotate(ImVec2(+size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
-//		center + ImRotate(ImVec2(+size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a),
-//		center + ImRotate(ImVec2(-size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a)
-//	};
-//	ImVec2 uvs[4] =
-//	{
-//		ImVec2(0.0f, 0.0f),
-//		ImVec2(1.0f, 0.0f),
-//		ImVec2(1.0f, 1.0f),
-//		ImVec2(0.0f, 1.0f)
-//	};
-//
-//	draw_list->AddImageQuad(tex_id, pos[0], pos[1], pos[2], pos[3], uvs[0], uvs[1], uvs[2], uvs[3], IM_COL32_WHITE);
-//}
-
-//ImVec2 PanelInspector::ImRotate(const ImVec2& v, float cos_a, float sin_a)
-//{
-//	return ImVec2(v.x * cos_a - v.y * sin_a, v.x * sin_a + v.y * cos_a);
-//}
-//
-// inline ImVec2 PanelInspector::operator+(const ImVec2& lhs, const ImVec2& rhs)
-//{
-//	return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y);
-//}
-//
-//void PanelInspector::ImageRotated(ImTextureID tex_id, ImVec2 center, ImVec2 size, float angle)
-//{
-//	ImDrawList* draw_list = ImGui::GetWindowDrawList();
-//
-//	float cos_a = cosf(angle);
-//	float sin_a = sinf(angle);
-//	ImVec2 pos[4] =
-//	{
-//	ImRotate(ImVec2(-size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
-//	 ImRotate(ImVec2(+size.x * 0.5f, -size.y * 0.5f), cos_a, sin_a),
-//	 ImRotate(ImVec2(+size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a),
-//	ImRotate(ImVec2(-size.x * 0.5f, +size.y * 0.5f), cos_a, sin_a)
-//	};
-//	ImVec2 uvs[4] =
-//	{
-//		ImVec2(0.0f, 0.0f),
-//		ImVec2(1.0f, 0.0f),
-//		ImVec2(1.0f, 1.0f),
-//		ImVec2(0.0f, 1.0f)
-//	};
-//
-//	draw_list->AddImageQuad(tex_id, pos[0], pos[1], pos[2], pos[3], uvs[0], uvs[1], uvs[2], uvs[3], IM_COL32_WHITE);
-//}
 
