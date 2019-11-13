@@ -198,11 +198,18 @@ float4x4 Component_Transform::GetParentGlobalMatrix()
 
 	float4x4 temp = (*it)->transform->GetGlobalMatrix();
 	
+	gameObject_Item->bbox.aabb_local.Enclose((*it)->bbox.aabb_local);
+	gameObject_Item->bbox.obb = gameObject_Item->bbox.aabb_local;
+	gameObject_Item->bbox.obb.Transform((*it)->transform->GetGlobalMatrix());
 	it++;
 
 	while (it < gameObject_Item->game_object_childs.end())
 	{
-		temp = temp * (*it)->transform->GetGlobalMatrix();
+		gameObject_Item->bbox.aabb_local.Enclose((*it)->bbox.aabb_local);
+
+		gameObject_Item->bbox.obb = gameObject_Item->bbox.aabb_local;
+		gameObject_Item->bbox.obb.Transform((*it)->transform->GetGlobalMatrix());
+	//	temp = temp * (*it)->transform->GetGlobalMatrix();
 		
 		++it;
 
