@@ -235,7 +235,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 				{
 					(*it)->CleanUp();
 					LOG("deleted component");
-					//delete (*iter);
+					delete (*it);
 					(*iter)->game_object_childs.erase(it);
 					App->scene_intro->selected_game_obj = nullptr;
 					//App->ui->inspector_window = false;
