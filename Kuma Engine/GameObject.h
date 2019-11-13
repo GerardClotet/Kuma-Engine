@@ -60,6 +60,7 @@ public:
 	void SetBoundingBox();
 	void TransformBBox();
 	void TransformParentBBox();
+	AABB GetAABB();
 	void DrawBoundingBox();
 	void SaveToMeta(const char* path);
 	void GenerateParentBBox();

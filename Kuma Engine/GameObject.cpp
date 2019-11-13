@@ -173,6 +173,7 @@ bool GameObject::Update()
 
 	if (type == OBJECT_TYPE::SUBPARENT)
 	{
+		//GenerateParentBBox();
 		TransformParentBBox(); //peta quan delete
 		DrawBoundingBox();
 		
@@ -403,18 +404,41 @@ void GameObject::TransformBBox()
 void GameObject::TransformParentBBox()
 {
 
-	bbox.obb = bbox.aabb_local;
+	//bbox.obb = bbox.aabb_local;
 	//bbox.obb.Transform(transform->GetParentGlobalMatrix());
 
-	transform->GetParentGlobalMatrix();
+	
 
+	std::vector<GameObject*>::iterator it = game_object_childs.begin();
+	
+
+	while (it < game_object_childs.end())
+	{
+		bbox.obb = (*it)->GetAABB();
+		bbox.obb.Transform((*it)->transform->GetGlobalMatrix());
+		bbox.aabb_global.Enclose(bbox.obb);
+		++it;
+	}
+	bbox.obb.SetNegativeInfinity();
+
+	//bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
+	//bbox.aabb_global.Enclose(bbox.obb);
+
+	//bbox.min = bbox.aabb_local.minPoint;
+	//bbox.max = bbox.aabb_local.maxPoint;
+}
+
+AABB GameObject::GetAABB()
+{
+	if (mesh != nullptr)
+	{
+		AABB aabb;
+		aabb.SetNegativeInfinity();
+		aabb.Enclose((float3*)mesh->vertex, mesh->num_vertex);
+		return aabb;
+	}
 
 	
-	bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
-	bbox.aabb_global.Enclose(bbox.obb);
-
-	bbox.min = bbox.aabb_local.minPoint;
-	bbox.max = bbox.aabb_local.maxPoint;
 }
 
 void GameObject::DrawBoundingBox()
