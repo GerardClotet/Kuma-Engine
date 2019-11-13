@@ -173,7 +173,7 @@ bool GameObject::Update()
 
 	if (type == OBJECT_TYPE::SUBPARENT)
 	{
-		TransformParentBBox(); //peta quan delete
+		//TransformParentBBox(); //peta quan delete
 		DrawBoundingBox();
 		
 	}
@@ -402,16 +402,19 @@ void GameObject::TransformBBox()
 
 void GameObject::TransformParentBBox()
 {
-
 	bbox.obb = bbox.aabb_local;
-	//bbox.obb.Transform(transform->GetParentGlobalMatrix());
 
-	transform->GetParentGlobalMatrix();
+	bbox.obb.Transform(transform->GetParentGlobalMatrix());
+
+	bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
+	bbox.aabb_global.Enclose(bbox.obb);
+
 
 
 	
-	bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
-	bbox.aabb_global.Enclose(bbox.obb);
+
+
+
 
 	bbox.min = bbox.aabb_local.minPoint;
 	bbox.max = bbox.aabb_local.maxPoint;
