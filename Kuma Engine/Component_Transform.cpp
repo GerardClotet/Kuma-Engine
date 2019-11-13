@@ -232,7 +232,8 @@ void Component_Transform::DisplayInspector()
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
 
-
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 	}
 	ImGui::PopID();
 	ImGui::SameLine();
@@ -245,6 +246,9 @@ void Component_Transform::DisplayInspector()
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
 
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
+
 	}
 	ImGui::PopID();
 	ImGui::SameLine();
@@ -256,6 +260,9 @@ void Component_Transform::DisplayInspector()
 		gameObject_Item->TransformBBox();
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
+
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -279,6 +286,9 @@ void Component_Transform::DisplayInspector()
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
 
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
+
 	}
 	ImGui::PopID();
 
@@ -297,6 +307,9 @@ void Component_Transform::DisplayInspector()
 		gameObject_Item->TransformBBox();
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
+
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -317,6 +330,9 @@ void Component_Transform::DisplayInspector()
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
 
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
+
 	}
 	ImGui::PopID();
 
@@ -333,6 +349,9 @@ void Component_Transform::DisplayInspector()
 		gameObject_Item->TransformBBox();
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
+
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 	}
 	ImGui::PopID();
 
@@ -346,6 +365,9 @@ void Component_Transform::DisplayInspector()
 		gameObject_Item->TransformBBox();
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
+
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 	}
 	ImGui::PopID();
 
@@ -359,6 +381,9 @@ void Component_Transform::DisplayInspector()
 		gameObject_Item->TransformBBox();
 		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
 			gameObject_Item->parent->TransformParentBBox();
+
+		else if (gameObject_Item->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->TransformParentBBox();
 	}
 	ImGui::PopID();
 

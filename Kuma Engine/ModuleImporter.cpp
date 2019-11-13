@@ -180,6 +180,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			App->scene_intro->selected_game_obj = go_subparent;
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
 			SaveModelToMeta(path, model_info);
+			go_subparent->GenerateParentBBox();
 		}
 
 		else LoadSingleMesh(scene, path, scene->mRootNode);

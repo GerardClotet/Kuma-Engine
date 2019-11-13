@@ -406,10 +406,11 @@ void GameObject::TransformParentBBox()
 	//bbox.obb = bbox.aabb_local;
 	//bbox.obb.Transform(transform->GetParentGlobalMatrix());
 
-	
+	bbox.aabb_global.SetNegativeInfinity();
+
 
 	std::vector<GameObject*>::iterator it = game_object_childs.begin();
-	
+
 
 	while (it < game_object_childs.end())
 	{
@@ -418,15 +419,8 @@ void GameObject::TransformParentBBox()
 		bbox.aabb_global.Enclose(bbox.obb);
 		++it;
 	}
-	bbox.obb.SetNegativeInfinity();
 
-	//bbox.aabb_global.SetNegativeInfinity(); //Sino es crida sempre que es transforma la bbox augmenta
-	//bbox.aabb_global.Enclose(bbox.obb);
-
-	//bbox.min = bbox.aabb_local.minPoint;
-	//bbox.max = bbox.aabb_local.maxPoint;
 }
-
 AABB GameObject::GetAABB()
 {
 	if (mesh != nullptr)
