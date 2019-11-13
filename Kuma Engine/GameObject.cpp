@@ -173,8 +173,7 @@ bool GameObject::Update()
 
 	if (type == OBJECT_TYPE::SUBPARENT)
 	{
-		//GenerateParentBBox();
-		TransformParentBBox(); //peta quan delete
+		//TransformParentBBox(); //peta quan delete
 		DrawBoundingBox();
 		
 	}

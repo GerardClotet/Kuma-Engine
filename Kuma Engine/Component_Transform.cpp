@@ -229,6 +229,8 @@ void Component_Transform::DisplayInspector()
 	{
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 
 	}
@@ -240,6 +242,8 @@ void Component_Transform::DisplayInspector()
 	{
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -250,6 +254,8 @@ void Component_Transform::DisplayInspector()
 	{
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -270,6 +276,8 @@ void Component_Transform::DisplayInspector()
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -287,6 +295,8 @@ void Component_Transform::DisplayInspector()
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -304,6 +314,8 @@ void Component_Transform::DisplayInspector()
 		local_rotation = Quat::FromEulerXYZ(aux_rot.x, aux_rot.y, aux_rot.z);
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 
 	}
 	ImGui::PopID();
@@ -319,6 +331,8 @@ void Component_Transform::DisplayInspector()
 		//check if scale is negative
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 	}
 	ImGui::PopID();
 
@@ -330,6 +344,8 @@ void Component_Transform::DisplayInspector()
 		//check if scale is negative
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 	}
 	ImGui::PopID();
 
@@ -341,6 +357,8 @@ void Component_Transform::DisplayInspector()
 		//check if scale is negative
 		RecalculateTransformMatrix();
 		gameObject_Item->TransformBBox();
+		if (gameObject_Item->parent->type == OBJECT_TYPE::SUBPARENT)
+			gameObject_Item->parent->TransformParentBBox();
 	}
 	ImGui::PopID();
 
