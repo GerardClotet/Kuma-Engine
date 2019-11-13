@@ -6,6 +6,8 @@
 
 #define MAX_LIGHTS 8
 
+class Component_Camera;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -21,6 +23,7 @@ public:
 
 public:
 
+	Component_Camera* actual_camera = nullptr;
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;

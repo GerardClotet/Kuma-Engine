@@ -28,6 +28,8 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	vertical_fov = frustum.verticalFov;
 	horizontal_fov = frustum.horizontalFov;
 
+	color_camera_bg = Color(0.5f, 0.5f, 0.5f, 1.0f);
+
 	ReloadFrustrum();
 }
 
@@ -44,12 +46,8 @@ void Component_Camera::ReloadFrustrum()
 
 void Component_Camera::DrawFrustum()
 {
-
-
 	ReloadFrustrum();
 
-	
-	
 
 	glLineWidth(3.0);
 	glColor3f(1, .54, 0);
@@ -100,14 +98,13 @@ void Component_Camera::UpdateTransformFrustum()
 	gameObject_Item->transform->GetGlobalMatrix();
 	frustum.pos = gameObject_Item->transform->GetGlobalPosition();
 
-	frustum.front = gameObject_Item->transform->GetGlobalRotation() * float3 (0,0,1);
-	frustum.up = gameObject_Item->transform->GetGlobalRotation() * float3(0, 1, 0);
+	frustum.front = gameObject_Item->transform->GetGlobalRotation() * float3::unitZ;
+	frustum.up = gameObject_Item->transform->GetGlobalRotation() * float3::unitY;;
 }
 
 void Component_Camera::DisplayInspector()
 {
 	
-
 	if (ImGui::DragFloat("Near Plane", &near_plane, 1, 0.1f, far_plane - 0.1f, "%.1f"))
 	{
 		frustum.nearPlaneDistance = near_plane;
@@ -144,6 +141,31 @@ void Component_Camera::DisplayInspector()
 	
 
 
+}
+
+void Component_Camera::Look(const float3 & position)
+{
+	float3 direction = position - frustum.pos;
+
+	float3x3 matrix = float3x3::LookAt(frustum.front, direction.Normalized(), frustum.up, float3::unitY);
+
+	frustum.front = matrix.MulDir(frustum.front).Normalized();
+	frustum.up = matrix.MulDir(frustum.up).Normalized();
+}
+
+float3 Component_Camera::GetCameraPosition() const
+{
+	return frustum.pos;
+}
+
+float * Component_Camera::GetViewMatrix()
+{
+	return (float*)static_cast<float4x4>(frustum.ViewMatrix()).Transposed().v;
+}
+
+float * Component_Camera::GetProjectionMatrix() const
+{
+	return (float*)frustum.ProjectionMatrix().Transposed().v;
 }
 
 void Component_Camera::SetAspectRatio(int width_ratio, int height_ratio, bool type)

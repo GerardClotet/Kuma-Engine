@@ -3,6 +3,7 @@
 
 #include "Components.h"
 #include "GameObject.h"
+#include "Color.h"
 #include "MathGeoLib/include/Geometry/Frustum.h"
 class GameObject;
 
@@ -13,10 +14,15 @@ class Component_Camera : public Components
 	~Component_Camera();
 
 	void ReloadFrustrum();
-	Frustum frustum;
 	void DrawFrustum();
 	void UpdateTransformFrustum();
 	void DisplayInspector();
+	void Look(const float3 &position);
+	float3 GetCameraPosition() const;
+	float* GetViewMatrix();
+	float* GetProjectionMatrix() const;
+
+	Frustum frustum;
 	float* vertex;
 	int index;
 	void SetAspectRatio(int width_ratio, int height_ratio, bool type = false);
@@ -31,7 +37,9 @@ public:
 	float horizontal_fov = 90.0f;
 
 	float far_plane = 100.f;
-	float near_plane = 0.1f;
+	float near_plane = 1.0f;
+
+	Color color_camera_bg{ 0.0f, 0.0f, 0.0f, 1.0f };
 };
 
 

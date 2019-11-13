@@ -3,6 +3,9 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
+#include "ModuleSceneIntro.h"
+#include "GameObject.h"
+#include "Component_Camera.h"
 #include "SDL\include\SDL_opengl.h"
 
 #include <gl/GL.h>
@@ -42,6 +45,13 @@ bool ModuleRenderer3D::Init()
 	}
 	else App->saveLog("OpenGL context created");
 	GLenum error = glewInit();
+
+	GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Fake");
+	App->camera->camera_fake = new Component_Camera(camera_go);
+	App->camera->camera_fake->frustum.farPlaneDistance = 1000.0F;
+	actual_camera = App->camera->camera_fake;
+
+
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error initializing glew library! %s\n", SDL_GetError());
@@ -75,31 +85,41 @@ bool ModuleRenderer3D::Init()
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
-		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
 
-		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+		//Initialize clear color
+		glClearColor(actual_camera->color_camera_bg.r, actual_camera->color_camera_bg.g, actual_camera->color_camera_bg.b, actual_camera->color_camera_bg.a);
+
+		//Check for error
+		error = glGetError();
+		if (error != GL_NO_ERROR)
+		{
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			ret = false;
+		}
+
+		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
-		
-		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
-		lights[0].Init();
-		
-		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
+
+		GLfloat MaterialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
 
-		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+		GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
-		
+
+
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glClearDepth(1.0f);
+		glClearColor(actual_camera->color_camera_bg.r, actual_camera->color_camera_bg.g, actual_camera->color_camera_bg.b, actual_camera->color_camera_bg.a);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		
 	}
 
@@ -131,7 +151,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(App->camera->camera_fake->GetViewMatrix());
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -167,7 +187,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	glLoadMatrixf(App->camera->camera_fake->GetProjectionMatrix());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

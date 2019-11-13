@@ -2,6 +2,10 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "MathGeoLib/include/Geometry/Frustum.h"
+
+class Component_Camera;
+
 
 class ModuleCamera3D : public Module
 {
@@ -13,31 +17,30 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
+	void Move(const float3 &Movement);
 	float* GetViewMatrix();
 	void MovementCamera();
-	void RotationCamera();
+	void RotationCamera(float dt);
 	void ZoomCamera();
 
-private:
-
-	void CalculateViewMatrix();
 
 public:
 	
 	float camera_speed = 20.0f;
 	float camera_zoom_speed = 60.0f;
 	float key_speed = 35.0f;
-	vec3 X, Y, Z, Position, Reference;
+	float3 X, Y, Z, Position, Reference;
 	bool capMouseInput	= false;
 
+	Component_Camera* camera_fake = nullptr;
+	Frustum* frustum = nullptr;
+
 private:
-	
-	vec3 newPos{ 0,0,0 };
+	bool start_lerp = false;
+	float3 newPos{ 0,0,0 };
 	float speed = 0.f;
 	float zoom_speed = 0.f;
 	float mouse_speed = 0.f;
+	float3 point_to_look = (float3::zero);
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 };

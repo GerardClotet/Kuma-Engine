@@ -78,6 +78,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 		camera = new Component_Camera(this);
 		components.push_back(camera);
+		component = camera;
 
 		break;
 	}

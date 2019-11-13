@@ -8,6 +8,7 @@
 #include "ModuleUI.h"
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
+#include "Component_Camera.h"
 #include "PanelConfig.h"
 
 
@@ -26,8 +27,8 @@ bool ModuleSceneIntro::Init()
 	App->saveLog("Loading Intro assets");
 	bool ret = true;
 	
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	App->camera->camera_fake->frustum.pos = { -20,0,5 };
+	App->camera->camera_fake->Look(float3(0, 0, 0));
 
 	//RandomFloatGenerator();
 	//RandomintGenerator(5, 6);
