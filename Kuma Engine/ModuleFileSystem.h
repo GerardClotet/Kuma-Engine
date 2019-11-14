@@ -50,7 +50,8 @@ public:
 	void NormalizePath(std::string& full_path) const;
 	std::string GetFileName(const char* file_name,bool extension = false);
 	std::string SubstractFromEnd(const char* file_name, const char* substract_to,int offset =0);
-
+	std::string SubstracFromEndtoDigit(const char* file_name, int offset = 0);
+	void SubstractFromBegin(std::string& path, const char* subs_to, int offset = 0);
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;
 	unsigned int Load(const char* file, char** buffer) const;

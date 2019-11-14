@@ -751,6 +751,7 @@ meshInfo* Component_Mesh::saveMeshinfo()
 	mesh->uvs = uvs;
 	mesh->color = color;
 	mesh->name = name;
+	mesh->UUID = gameObject_Item->UUID;
 	//TODO :/ mesh->UUID = gameObject_Item->ID;
 	return mesh;
 }

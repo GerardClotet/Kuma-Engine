@@ -9,7 +9,7 @@
 #include "ModuleUI.h"
 #include "ModuleImporter.h"
 #include <string_view>
-
+#include "RandomHelper.h"
 GameObject::GameObject()
 {
 	LOG("Game Object root");
@@ -21,7 +21,7 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 	this->name = name;
 	Set_Parent_and_Name(parent,name);
 	//TODO :/Generate random and save it to ID
-	
+	UUID = GetRandomID();
 	LOG("game object name %s", this->name.c_str());
 }
 

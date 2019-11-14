@@ -18,6 +18,7 @@ float RandomFloatGenerator()
 	LOG("%f.2", result);
 
 	return result;
+
 }
 
 int RandomintGenerator(int min, int max)
@@ -35,4 +36,13 @@ int RandomintGenerator(int min, int max)
 	LOG("%i", mean);
 
 	return mean;
+}
+
+UINT32 GetRandomID()
+{
+	pcg_extras::seed_seq_from<std::random_device> seed;
+	pcg32 rng(seed);
+	std::uniform_int_distribution<UINT32> uniform_d(1, ULONG_MAX);
+
+	return uniform_d(rng);
 }

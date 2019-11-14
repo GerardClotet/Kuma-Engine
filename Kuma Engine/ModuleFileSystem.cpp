@@ -104,6 +104,7 @@ bool ModuleFileSystem::AddPath(const char* path_or_zip)
 // Check if a file exists
 bool ModuleFileSystem::Exists(const char* file) const
 {
+
 	return PHYSFS_exists(file) != 0;
 }
 
@@ -297,6 +298,55 @@ std::string ModuleFileSystem::SubstractFromEnd(const char* file_name,const char*
 			temp.erase(erase_meta+offset);
 	}
 	return temp;
+}
+
+std::string ModuleFileSystem::SubstracFromEndtoDigit(const char* file_name, int offset)
+{
+	std::string temp = file_name;
+	
+	std::vector<size_t>size_t_vec;
+	for (int i = 0; i < 10; ++i)
+	{
+		size_t case_size = temp.rfind(std::to_string(i));
+		if(case_size < 100)
+		size_t_vec.push_back(case_size);
+	}
+
+	size_t final_size_to_erase;
+
+	if (!size_t_vec.empty())
+	{
+		std::vector<size_t>::iterator it = size_t_vec.begin();
+
+		final_size_to_erase = (*it);
+		++it;
+
+		while (it < size_t_vec.end())
+		{
+			if ((*it) > final_size_to_erase)
+				final_size_to_erase = (*it); //get the largest size_t = the end number of string
+
+			++it;
+		}
+
+		if (std::string::npos != final_size_to_erase)
+		{
+			temp.erase(final_size_to_erase + offset);
+		}
+	}
+	return temp;
+}
+
+void ModuleFileSystem::SubstractFromBegin(std::string& path, const char* subs_to, int offset)
+{
+
+
+	size_t erase = path.find(subs_to);
+	if (std::string::npos != erase)
+	{
+		path.erase(erase + offset);
+	}
+	
 }
 
 
@@ -541,13 +591,16 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 	}
 
 }
-std::string ModuleFileSystem::GetModelMetaPath(const char * path)
+std::string ModuleFileSystem::GetModelMetaPath(const char * path) //aqui
 {
 	//TODO :/Suda dels ID i llegeix el nom
 	//Estructura del nom : 345678283642473847_sida_model_meta.kuma
+
+	std::string aha = path;
+	SubstractFromBegin(aha,"_");
 	std::string file;
-	App->fs->SplitFilePath(path, nullptr, &file);
-	file = App->fs->GetFileName(file.c_str());
+	SplitFilePath(path, nullptr, &file);
+	file = GetFileName(file.c_str());
 	file = LIBRARY_MODEL_FOLDER + file + EXTENSION_MODEL_META;
 	return file;
 }

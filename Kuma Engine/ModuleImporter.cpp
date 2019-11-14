@@ -12,6 +12,7 @@
 #include "Components.h"
 #include "Component_Material.h"
 #include "Component_Mesh.h"
+#include "RandomHelper.h"
 #include "DevIL/include/IL/ilu.h"
 #include "DevIL/include/IL/ilut.h"
 #include "DevIL/include/IL/il.h"
@@ -352,7 +353,7 @@ bool ModuleImporter::LoadModelFile(const char * model_file)
 {
 	
 	std::string path_meta = App->fs->GetModelMetaPath(model_file);
-	if (App->fs->Exists(path_meta.c_str())) 
+	if (App->fs->Exists(path_meta.c_str())) // need to look just for namemodel
 	{
 		//It was previously loaded
 		//Read from the meta
@@ -396,13 +397,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 {
 	mesh->path_text = path_texture;
 	
-	//TODO add more ranges
+	//TODO add more ranges DONE
 	uint ranges[5] = {
 		mesh->num_vertex,
 		mesh->num_index ,
 		mesh->num_normal,
 		mesh->num_uvs,
-		mesh->num_color
+		mesh->num_color,
+//		mesh->UUID,
 	};
 
 	uint size = sizeof(ranges)
@@ -412,9 +414,9 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		+ sizeof(uint) * mesh->num_uvs * 2
 		+ sizeof(uint) * mesh->num_color * 4
 		+ sizeof(uint)
-		+ sizeof(char)*mesh->path_text.size();
-
-	//TODO :/ Add the mesh->UUID to the size
+		+ sizeof(char) * mesh->path_text.size();
+	//	+ sizeof(uint32) * mesh->UUID;
+	//TODO :/ Add the mesh->UUID to the size DONE
 
 	char* data = new char[size]; //Allocate
 	char* cursor = data;
@@ -467,11 +469,17 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		memcpy(cursor, mesh->path_text.c_str(), bytes);
 	}
 
+	//cursor += bytes;
+	//bytes = sizeof(uint)*mesh->UUID;
+	//memcpy(cursor, &mesh->UUID, bytes);
+
+	//TODO :/Save the UUID as string DONE
+
 	
-	//TODO :/Save the UUID as string
+	std::string s_id = std::to_string(mesh->UUID) + "_";
 	std::string name;
 	if (mesh->name !="subparent") {
-		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META_KUMA;
+		 name =  LIBRARY_MESH_FOLDER + s_id + mesh->name + EXTENSION_META_KUMA;
 		LOG("tets %s", name.c_str());
 
 	}
@@ -493,6 +501,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* path)
 {
 	//TODO :/ Read the UUID
+
+
+	std::string UID_s =  App->fs->GetFileName(path);
+	UID_s = App->fs->SubstractFromEnd(UID_s.c_str(), "_");
+	
+	UID_s = App->fs->SubstracFromEndtoDigit(UID_s.c_str());
+
+
 	char* buffer = nullptr;
 	uint testu = App->fs->Load(path, &buffer);
 
@@ -508,6 +524,8 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		subparent = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::SUBPARENT, App->fs->GetFileName(original_path));
 		subparent->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		App->scene_intro->selected_game_obj = subparent;
+
+		subparent->UUID = std::stoul(UID_s); //to string
 	}
 
 	for (int i = 0; i < num_meshes; ++i)
@@ -517,11 +535,11 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		cursor += sizeof(uint);
 		char* path_temp = new char[size_str]; //
 		memcpy(path_temp, cursor, sizeof(char)*size_str);
-		std::string a,b,a_temp;
+		std::string a_temp;
 		a_temp = path_temp;//"name weird numebers"
-		a = cursor;// "name%"
 		cursor += sizeof(char) * size_str; 
-		b = cursor; // "%"
+
+	
 
 		size_t size_to_erase = a_temp.rfind("kuma");
 		if (std::string::npos != size_to_erase +4)
@@ -591,8 +609,9 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 			mesh->num_normal,
 			mesh->num_uvs,
 			mesh->num_color
+		//	mesh->UUID
 		};
-		//Save the variables of meshInfo to the local variables. This is GG compared with the other ;)
+
 		char* buffer;
 		uint testu = App->fs->Load(path, &buffer);
 
@@ -605,6 +624,7 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		mesh->num_normal = ranges[2];
 		mesh->num_uvs = ranges[3];
 		mesh->num_color = ranges[4];
+		//mesh->UUID = ranges[5];
 
 		cursor += bytes;
 		bytes = sizeof(float) * mesh->num_vertex * 3;
@@ -647,6 +667,12 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 
 			memcpy(temp_text_path, cursor, bytes);
 
+			//cursor += bytes;
+			//bytes = sizeof(uint)*mesh->UUID;
+			//mesh->UUID = new uint32[mesh->UUID];
+			//memcpy(mesh->UUID, cursor, bytes);
+
+			//mesh->UUID;
 			LOG("memcpy %s", temp_text_path);
 
 			mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META, 4/*extension size*/);
@@ -657,11 +683,13 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
 	//TODO :/ Create the UUID
-	//TODO :/ save the UUID
+	//TODO :/ save the UUID DONE
+	uint32 UUID = GetRandomID();
+	std::string s = std::to_string(UUID) + "_";
 
 	std::string output;
 	std::string temp = App->fs->GetFileName(path);
-	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
+	std::string meta_path = LIBRARY_MODEL_FOLDER + s + temp + EXTENSION_MODEL_META;
 	uint size_path = 0;
 	for (int i = 0; i < model->meshinfo.size(); ++i)
 	{
@@ -687,7 +715,7 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 	}
 	
 
-	//TODO :/ The meta path is the combination of UUID + "_" meta_path
+
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
 	
 	
