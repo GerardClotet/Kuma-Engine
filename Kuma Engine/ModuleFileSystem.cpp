@@ -543,6 +543,8 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 }
 std::string ModuleFileSystem::GetModelMetaPath(const char * path)
 {
+	//TODO :/Suda dels ID i llegeix el nom
+	//Estructura del nom : 345678283642473847_sida_model_meta.kuma
 	std::string file;
 	App->fs->SplitFilePath(path, nullptr, &file);
 	file = App->fs->GetFileName(file.c_str());

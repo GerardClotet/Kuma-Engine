@@ -69,6 +69,7 @@ public:
 public:
 	std::string name;
 	std::string new_name;
+	uint32 UUID = 0;
 	char c;
 	double name_counter;
 	char buf[4096];

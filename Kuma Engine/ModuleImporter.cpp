@@ -174,9 +174,7 @@ void ModuleImporter::LoadGeometry(const char* path)
 			go_subparent->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 			
 			model_info = new modelInfo;
-			/*meshInfo* meshinf = new meshInfo;
-			meshinf->name = "subparent";
-			SaveMeshToMeta(path, meshinf);*/
+			
 			App->scene_intro->selected_game_obj = go_subparent;
 			LoadNode(scene, scene->mRootNode, path,go_subparent);
 			SaveModelToMeta(path, model_info);
@@ -397,7 +395,8 @@ void ModuleImporter::LoadTextureFromMeta(const char * path)
 void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string path_texture)
 {
 	mesh->path_text = path_texture;
-	//size = size + sizeof(uint) + (sizeof(char)*mesh->size_path_text);
+	
+	//TODO add more ranges
 	uint ranges[5] = {
 		mesh->num_vertex,
 		mesh->num_index ,
@@ -415,6 +414,7 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		+ sizeof(uint)
 		+ sizeof(char)*mesh->path_text.size();
 
+	//TODO :/ Add the mesh->UUID to the size
 
 	char* data = new char[size]; //Allocate
 	char* cursor = data;
@@ -468,13 +468,14 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 	}
 
 	
-
+	//TODO :/Save the UUID as string
 	std::string name;
 	if (mesh->name !="subparent") {
 		 name = LIBRARY_MESH_FOLDER + mesh->name + EXTENSION_META_KUMA;
 		LOG("tets %s", name.c_str());
 
 	}
+	//this maybe is obsolete
 	else
 	{
 		std::string temp = App->fs->GetFileName(path);
@@ -491,7 +492,7 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 
 void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* path)
 {
-	
+	//TODO :/ Read the UUID
 	char* buffer = nullptr;
 	uint testu = App->fs->Load(path, &buffer);
 
@@ -582,6 +583,8 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 {
 		meshInfo* mesh = new meshInfo;
 
+		//TODO :/read the UUID from memory
+
 		uint ranges[5] = {
 			mesh->num_vertex,
 			mesh->num_index,
@@ -653,6 +656,9 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 
 void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
+	//TODO :/ Create the UUID
+	//TODO :/ save the UUID
+
 	std::string output;
 	std::string temp = App->fs->GetFileName(path);
 	std::string meta_path = LIBRARY_MODEL_FOLDER + temp + EXTENSION_MODEL_META;
@@ -680,6 +686,8 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 		cursor += sizeof(char)*temp;
 	}
 	
+
+	//TODO :/ The meta path is the combination of UUID + "_" meta_path
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
 	
 	

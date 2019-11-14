@@ -50,6 +50,9 @@ struct meshInfo
 	std::string route; 
 	std::string path_text="";
 	uint size_path_text;
+
+	uint32 UUID = 0;
+
 	//route to _meta.kuma file
 };
 
