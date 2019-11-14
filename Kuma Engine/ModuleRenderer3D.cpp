@@ -103,8 +103,9 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 
-		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera");
-		App->camera->camera_fake = new Component_Camera(go);
+		//GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Fake");
+		//camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+		//App->camera->camera_fake = (Component_Camera*)camera_go->AddComponent(GO_COMPONENT::CAMERA);
 		actual_camera = App->camera->camera_fake;
 	}
 

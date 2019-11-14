@@ -48,3 +48,8 @@ void Components::SaveToMeta(const char* path)
 {
 
 }
+
+GameObject * Components::GetGameObject()
+{
+	return gameObject_Item;
+}

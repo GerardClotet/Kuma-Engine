@@ -22,13 +22,16 @@ public:
 	void MovementCamera();
 	void RotationCamera(float dt);
 	void ZoomCamera();
+	void Orbit(float motion_x, float motion_y);
+	void LookAt(float motion_x, float motion_y);
 
 
 public:
 	
-	float camera_speed = 20.0f;
+	float camera_speed = 40.0f;
 	float camera_zoom_speed = 60.0f;
 	float key_speed = 35.0f;
+	float rot_speed = 15.0f;
 	float3 X, Y, Z, Position, Reference;
 	bool capMouseInput	= false;
 

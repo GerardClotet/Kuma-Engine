@@ -31,6 +31,7 @@ public:
 	virtual bool Disable();
 
 	virtual void SaveToMeta(const char* path);
+	GameObject* GetGameObject();
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;
 	//GameObject* my_GameObject = nullptr;

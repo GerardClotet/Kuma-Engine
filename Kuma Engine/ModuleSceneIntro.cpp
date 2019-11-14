@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Init()
 	App->saveLog("Loading Intro assets");
 	bool ret = true;
 	
-	App->camera->camera_fake->frustum.pos = { -20,0,5 };
+	App->camera->camera_fake->frustum.pos = { -20,20,20 };
 	App->camera->camera_fake->Look(float3(0, 0, 0));
 
 	//RandomFloatGenerator();

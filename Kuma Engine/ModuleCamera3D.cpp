@@ -14,6 +14,8 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Fake");
 	camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 	camera_fake = (Component_Camera*)camera_go->AddComponent(GO_COMPONENT::CAMERA);
+
+	Reference = float3::zero;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -112,11 +114,11 @@ void ModuleCamera3D::MovementCamera()
 		{
 			ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
 
-			if (App->input->GetMouseXMotion() > 4) newPos -= frustum->WorldRight();
-			if (App->input->GetMouseXMotion() < -4) newPos += frustum->WorldRight();
+			if (App->input->GetMouseXMotion() > 4) newPos -= frustum->WorldRight()*mouse_speed;
+			if (App->input->GetMouseXMotion() < -4) newPos += frustum->WorldRight()*mouse_speed;
 
-			if (App->input->GetMouseYMotion() < 5) newPos -= Y * mouse_speed;
-			if (App->input->GetMouseYMotion() > -5) newPos += Y * mouse_speed;
+			if (App->input->GetMouseYMotion() < 5) newPos -= frustum->up*mouse_speed;
+			if (App->input->GetMouseYMotion() > -5) newPos += frustum->up *mouse_speed;
 
 			if (!newPos.Equals(float3::zero))
 			{
@@ -129,16 +131,16 @@ void ModuleCamera3D::MovementCamera()
 	{
 		if (!capMouseInput)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT) newPos += float3::unitY;
-			if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) newPos -= float3::unitY;
+			if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT) newPos += float3::unitY*speed;
+			if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT) newPos -= float3::unitY*speed;
 
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += frustum->front;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += frustum->front*speed;
 
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= frustum->front;
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= frustum->front*speed;
 
 
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= frustum->WorldRight();
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += frustum->WorldRight();
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= frustum->WorldRight()*speed;
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += frustum->WorldRight()*speed;
 		}
 
 		if (!newPos.Equals(float3::zero))
@@ -152,19 +154,19 @@ void ModuleCamera3D::MovementCamera()
 
 void ModuleCamera3D::RotationCamera(float dt)
 {
+	
 	if (!capMouseInput)
 	{
-			float3 distance = camera_fake->frustum.pos - Reference;
+		int motion_x = App->input->GetMouseXMotion();
+		int motion_y = App->input->GetMouseYMotion();
 
-			Quat rotationy(camera_fake->frustum.up, -App->input->GetMouseXMotion()* dt*0.3F);
-			Quat rotationx(camera_fake->frustum.WorldRight(), -App->input->GetMouseYMotion()* dt*0.3F);
+		if (motion_x != 0 || motion_y != 0)
+		{
+			float dx = (float)-motion_x * rot_speed * dt;
+			float dy = (float)-motion_y * rot_speed * dt;
 
-			distance = rotationx.Transform(distance);
-			distance = rotationy.Transform(distance);
-
-			camera_fake->frustum.pos = distance + Reference;
-
-			camera_fake->Look(Reference);
+			Orbit(dx, dy);
+		}
 	}
 }
 
@@ -176,12 +178,12 @@ void ModuleCamera3D::ZoomCamera()
 		if (App->input->GetMouseWheel() > 0)
 		{
 			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
-			newPos += frustum->front;
+			newPos += frustum->front * zoom_speed;
 		}
 		else if (App->input->GetMouseWheel() < 0)
 		{
 			ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
-			newPos -= frustum->front;
+			newPos -= frustum->front * zoom_speed;
 		}
 		frustum->Translate(newPos * mouse_speed);
 
@@ -191,14 +193,14 @@ void ModuleCamera3D::ZoomCamera()
 			if (App->input->GetMouseYMotion() < 0)
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomIn);
-				newPos += frustum->front;
+				newPos += frustum->front * zoom_speed;
 			}
 
 
 			if (App->input->GetMouseYMotion() > 0)
 			{
 				ImGui::SetMouseCursor(ImGuiMouseCursor_ZoomOut);
-				newPos -= frustum->front;
+				newPos -= frustum->front * zoom_speed;
 			}
 
 			if (App->input->GetMouseYMotion() == 0)
@@ -209,5 +211,45 @@ void ModuleCamera3D::ZoomCamera()
 			frustum->Translate(newPos * mouse_speed);
 		}
 	}
+}
+
+void ModuleCamera3D::Orbit(float motion_x, float motion_y)
+{
+	frustum->pos -= Reference;
+
+	if (motion_x != 0)
+	{
+		vec3 rot_Y = rotate(vec3(frustum->up.x, frustum->up.y, frustum->up.z), motion_x, vec3(0.0f, 1.0f, 0.0f));
+		vec3 rot_Z = rotate(vec3(frustum->front.x, frustum->front.y, frustum->front.z), motion_x, vec3(0.0f, 1.0f, 0.0f));
+
+		frustum->up = float3(rot_Y.x, rot_Y.y, rot_Y.z);
+		frustum->front = float3(rot_Z.x, rot_Z.y, rot_Z.z);
+	}
+
+	if (motion_y != 0)
+	{
+		vec3 rot_Y = rotate(vec3(frustum->up.x, frustum->up.y, frustum->up.z), motion_y, vec3(frustum->WorldRight().x, frustum->WorldRight().y, frustum->WorldRight().z));
+		vec3 rot_Z = rotate(vec3(frustum->front.x, frustum->front.y, frustum->front.z), motion_y, vec3(frustum->WorldRight().x, frustum->WorldRight().y, frustum->WorldRight().z));
+
+		frustum->up = float3(rot_Y.x, rot_Y.y, rot_Y.z);
+		frustum->front = float3(rot_Z.x, rot_Z.y, rot_Z.z);
+
+		if (frustum->up.y < 0.0f)
+		{
+			frustum->front = float3(0.0f, frustum->front.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			vec3 cross_vec = cross(vec3(frustum->front.x, frustum->front.y, frustum->front.z), vec3(frustum->WorldRight().x, frustum->WorldRight().y, frustum->WorldRight().z));
+			frustum->up = float3(cross_vec.x, cross_vec.y, cross_vec.z);
+		}
+	}
+	frustum->pos = Reference - frustum->front * length(vec3(frustum->pos.x, frustum->pos.y, frustum->pos.z));
+
+	/*camera_fake->gameObject_Item->transform->RecalculateTransformMatrix();
+	camera_fake->UpdateTransformFrustum();
+	camera_fake->ReloadFrustrum();*/
+	
+}
+
+void ModuleCamera3D::LookAt(float motion_x, float motion_y)
+{
 }
 
