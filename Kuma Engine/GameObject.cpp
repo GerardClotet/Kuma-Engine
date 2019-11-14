@@ -118,18 +118,14 @@ GameObject::~GameObject()
 
 bool GameObject::Update()
 {
-
-
+	isInsideFrustum = CheckAABBinFrustum();
+	DrawBoundingBox();
 
 	for (std::vector<Components*>::iterator item_comp = components.begin(); item_comp != components.end(); ++item_comp)
 	{
-		if ((*item_comp)->comp_type == GO_COMPONENT::MESH)
-		{
 		
-
-			DrawBoundingBox();
-			
-
+		if ((*item_comp)->comp_type == GO_COMPONENT::MESH && isInsideFrustum)
+		{
 
 			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
 			{
@@ -484,6 +480,20 @@ void GameObject::GenerateParentBBox()
 	bbox.aabb_global.Enclose(bbox.obb);
 
 	//bbox.aabb_local.Enclose()
+}
+
+bool GameObject::CheckAABBinFrustum()
+{
+	
+	if (App->scene_intro->camera_hardcoded->frustum.Intersects(this->bbox.aabb_global))
+	{
+		return true;
+	}
+
+	else
+		return false;
+
+
 }
 
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components

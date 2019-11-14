@@ -177,6 +177,7 @@ void Component_Camera::SetAspectRatio(int width_ratio, int height_ratio, bool ty
 	else
 	{
 		frustum.verticalFov = (2.f * atanf(tanf(frustum.horizontalFov * 0.5f) * ((float)height_ratio) / (float)width_ratio));
+		
 	}
 	
 }

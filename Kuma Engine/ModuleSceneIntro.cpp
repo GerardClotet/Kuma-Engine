@@ -9,6 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
 #include "Component_Camera.h"
+#include "Component_Transform.h"
 #include "PanelConfig.h"
 
 
@@ -30,6 +31,7 @@ bool ModuleSceneIntro::Init()
 	App->camera->camera_fake->frustum.pos = { -20,20,20 };
 	App->camera->camera_fake->Look(float3(0, 0, 0));
 
+
 	//RandomFloatGenerator();
 	//RandomintGenerator(5, 6);
 	//
@@ -43,6 +45,12 @@ bool ModuleSceneIntro::Start()
 	App->fs->ManageImportedFile(firstFbx.c_str());
 	App->fs->ManageImportedFile(firstTex.c_str());
 
+
+	GameObject* hard_camera_go = CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Harcoded");
+	hard_camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+	camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
+	camera_hardcoded->frustum.farPlaneDistance = 30.0f;
+	hard_camera_go->transform->SetLocalPosition(0.0f, 0.0f, 10.0f);
 	return true;
 }
 

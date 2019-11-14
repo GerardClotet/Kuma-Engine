@@ -64,6 +64,8 @@ public:
 	void DrawBoundingBox();
 	void SaveToMeta(const char* path);
 	void GenerateParentBBox();
+	bool CheckAABBinFrustum();
+
 public:
 	std::string name;
 	std::string new_name;
@@ -96,6 +98,8 @@ public:
 	bool texture_Checker = false;
 
 	BoundingBox bbox;
+
+	bool isInsideFrustum = false;
 };
 
 
