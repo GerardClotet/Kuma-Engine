@@ -349,20 +349,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 
 }
 
-bool ModuleImporter::LoadReferenceMeta(const char* path)
-{
-	//std::string p;
 
-	//App->fs->SplitFilePath(path, nullptr, &p);
-	//p = App->fs->GetFileName(p.c_str());
-	//p = ASSETS_REFERENCE_META_MODEL + p + EXTENSION_MODEL_META;
-
-	//if (App->fs->Exists(p.c_str()))
-	//{
-	//	LoadModelFromMeta()
-	//}
-	return true;
-}
 bool ModuleImporter::LoadModelFile(const char * model_file)
 {
 	
@@ -418,7 +405,6 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		mesh->num_normal,
 		mesh->num_uvs,
 		mesh->num_color,
-//		mesh->UUID,
 	};
 
 	uint size = sizeof(ranges)
@@ -429,8 +415,7 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		+ sizeof(uint) * mesh->num_color * 4
 		+ sizeof(uint)
 		+ sizeof(char) * mesh->path_text.size();
-	//	+ sizeof(uint32) * mesh->UUID;
-	//TODO :/ Add the mesh->UUID to the size DONE
+
 
 	char* data = new char[size]; //Allocate
 	char* cursor = data;
@@ -483,17 +468,13 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		memcpy(cursor, mesh->path_text.c_str(), bytes);
 	}
 
-	//cursor += bytes;
-	//bytes = sizeof(uint)*mesh->UUID;
-	//memcpy(cursor, &mesh->UUID, bytes);
-
-	//TODO :/Save the UUID as string DONE
+	
 
 	
-	std::string s_id = std::to_string(mesh->UUID) + "_";
+//	std::string s_id = std::to_string(mesh->UUID) + "_";
 	std::string name;
 	if (mesh->name !="subparent") {
-		 name =  LIBRARY_MESH_FOLDER + s_id + mesh->name + EXTENSION_META_KUMA;
+		 name =  LIBRARY_MESH_FOLDER  + mesh->name + EXTENSION_META_KUMA;
 		LOG("tets %s", name.c_str());
 
 	}
@@ -517,10 +498,10 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	//TODO :/ Read the UUID
 
 
-	std::string UID_s =  App->fs->GetFileName(path);
-	UID_s = App->fs->SubstractFromEnd(UID_s.c_str(), "_");
-	
-	UID_s = App->fs->SubstracFromEndtoDigit(UID_s.c_str());
+	//std::string UID_s =  App->fs->GetFileName(path);
+	//UID_s = App->fs->SubstractFromEnd(UID_s.c_str(), "_");
+	//
+	//UID_s = App->fs->SubstracFromEndtoDigit(UID_s.c_str());
 
 
 	char* buffer = nullptr;
@@ -539,7 +520,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 		subparent->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		App->scene_intro->selected_game_obj = subparent;
 
-		subparent->UUID = std::stoul(UID_s); //to string
+		//subparent->UUID = std::stoul(UID_s); //to string
 	}
 
 	for (int i = 0; i < num_meshes; ++i)
@@ -623,7 +604,7 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 			mesh->num_normal,
 			mesh->num_uvs,
 			mesh->num_color
-		//	mesh->UUID
+
 		};
 
 		char* buffer;
@@ -638,7 +619,7 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		mesh->num_normal = ranges[2];
 		mesh->num_uvs = ranges[3];
 		mesh->num_color = ranges[4];
-		//mesh->UUID = ranges[5];
+	
 
 		cursor += bytes;
 		bytes = sizeof(float) * mesh->num_vertex * 3;
@@ -681,12 +662,7 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 
 			memcpy(temp_text_path, cursor, bytes);
 
-			//cursor += bytes;
-			//bytes = sizeof(uint)*mesh->UUID;
-			//mesh->UUID = new uint32[mesh->UUID];
-			//memcpy(mesh->UUID, cursor, bytes);
-
-			//mesh->UUID;
+		
 			LOG("memcpy %s", temp_text_path);
 
 			mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META, 4/*extension size*/);
@@ -698,12 +674,11 @@ void ModuleImporter::SaveModelToMeta(const char* path,modelInfo* model)
 {
 	//TODO :/ Create the UUID
 	//TODO :/ save the UUID DONE
-	uint32 UUID = GetRandomID();
-	std::string s = std::to_string(UUID) + "_";
+
 
 	std::string output;
 	std::string temp = App->fs->GetFileName(path);
-	std::string meta_path = LIBRARY_MODEL_FOLDER + s + temp + EXTENSION_MODEL_META;
+	std::string meta_path = LIBRARY_MODEL_FOLDER  + temp + EXTENSION_MODEL_META;
 	uint size_path = 0;
 	for (int i = 0; i < model->meshinfo.size(); ++i)
 	{

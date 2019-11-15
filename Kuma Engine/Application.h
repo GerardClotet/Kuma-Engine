@@ -10,7 +10,7 @@
 #include "Parson/parson.h"
 #include "PerfTimer.h"
 #include "Timer.h"
-
+#include "SerializerJSON.h"
 class ModuleWindow;
 class ModuleInput;
 class ModuleSceneIntro;
@@ -21,6 +21,8 @@ class ModuleEditor;
 class ModuleImporter;
 class ModuleTexture;
 class ModuleFileSystem;
+class ModuleSerializeScene;
+
 class Application
 {
 public:
@@ -34,6 +36,7 @@ public:
 	ModuleImporter* importer = nullptr;
 	ModuleTexture* texture = nullptr;
 	ModuleFileSystem* fs = nullptr;
+	ModuleSerializeScene* serialize = nullptr;
 private:
 
 	Timer		ms_timer;

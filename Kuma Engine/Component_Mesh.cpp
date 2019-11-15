@@ -13,6 +13,7 @@
 Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()
 {
 	name = "mesh";
+
 	this->type = type;
 	this->gameObject_Item = obj;
 	comp_type = GO_COMPONENT::MESH;
@@ -752,6 +753,7 @@ meshInfo* Component_Mesh::saveMeshinfo()
 	mesh->color = color;
 	mesh->name = name;
 	mesh->UUID = gameObject_Item->UUID;
+	
 	//TODO :/ mesh->UUID = gameObject_Item->ID;
 	return mesh;
 }
@@ -772,6 +774,15 @@ void Component_Mesh::ExtractMeshInfo(meshInfo* info)
 	
 	path_texture_associated_meta = info->path_text.c_str();
 	
+}
+
+void Component_Mesh::SaveScene(R_JSON_Value* v) const
+{
+	R_JSON_Value* mesh = v->NewValue(rapidjson::kObjectType);
+
+	mesh->SetString("Name", gameObject_Item->staticName.c_str());
+	
+	mesh->AddValue("Mesh", *mesh);
 }
 
 
