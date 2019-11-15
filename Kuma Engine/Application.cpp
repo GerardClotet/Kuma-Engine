@@ -10,8 +10,7 @@
 #include "Parson/parson.h"
 #include "p2Defs.h"
 #include "ModuleUI.h"
-#include "ModuleSerializeScene.h"
-#include "SerializerJSON.h"
+
 #include "mmgr\nommgr.h"
 #include "mmgr\mmgr.h"
 
@@ -28,8 +27,6 @@ Application::Application()
 	importer = new ModuleImporter(this);
 	fs = new ModuleFileSystem(this, ASSETS_FOLDER);
 	texture = new ModuleTexture(this);
-	serialize = new ModuleSerializeScene(this);
-
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -39,7 +36,6 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 
-	AddModule(serialize);
 	AddModule(importer);
 	AddModule(texture);
 	// Scenes

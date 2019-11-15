@@ -52,8 +52,7 @@ struct meshInfo
 	uint size_path_text;
 
 	uint32 UUID = 0;
-private:
-	std::string staticName;
+
 	//route to _meta.kuma file
 };
 
@@ -82,7 +81,7 @@ public:
 	void SaveModelToMeta(const char* path,modelInfo* model);
 	TexData* LoadTextureDevil(const char* path);
 
-
+	bool LoadReferenceMeta(const char* path);
 	void SaveTextureToMeta(const char *path);
 	bool Init();
 	bool Start();

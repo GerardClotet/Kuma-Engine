@@ -217,8 +217,6 @@
     <ClCompile Include="SerializerJSON.cpp" />
     <ClCompile Include="PanelFile.cpp">
       <Filter>Editor</Filter>
-    <ClCompile Include="ModuleSerializeScene.cpp">
-      <Filter>modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -730,8 +728,6 @@
     </ClInclude>
     <ClInclude Include="PanelFile.h">
       <Filter>Editor</Filter>
-    <ClInclude Include="ModuleSerializeScene.h">
-      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
