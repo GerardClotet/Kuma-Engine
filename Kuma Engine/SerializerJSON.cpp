@@ -202,22 +202,48 @@ void R_JSON_Value::Set3DVec(const char* name, float3 vec)
 	this->value->AddMember(index, a, *alloc_doc);
 }
 
+void R_JSON_Value::SetQuat(const char* name, Quat quat)
+{
+	std::string s = name;
+	rapidjson::Value index(s.c_str(), s.size(), *alloc_doc);
+	rapidjson::Value a(rapidjson::kArrayType);
+	a.PushBack(quat.x, *alloc_doc);
+	a.PushBack(quat.y, *alloc_doc);
+	a.PushBack(quat.z, *alloc_doc);
+	a.PushBack(quat.w, *alloc_doc);
+
+	this->value->AddMember(index, a, *alloc_doc);
+}
+
+void R_JSON_Value::SetColor(const char* name, Color color)
+{
+	std::string s = name;
+	rapidjson::Value index(s.c_str(), s.size(), *alloc_doc);
+	rapidjson::Value a(rapidjson::kArrayType);
+	a.PushBack(color.r, *alloc_doc);
+	a.PushBack(color.g, *alloc_doc);
+	a.PushBack(color.b, *alloc_doc);
+	a.PushBack(color.a, *alloc_doc);
+
+	this->value->AddMember(index, a, *alloc_doc);
+}
+
 R_JSON_File::R_JSON_File(rapidjson::FileReadStream* read_st, FILE* file)
 {
 	filep = file;
 	read_st = read_stream;
 	document = new rapidjson::Document();
-	document->SetObject();
+	document->ParseStream(*read_st);
 
 	alloc_doc = &document->GetAllocator();
 }
 
-R_JSON_File::R_JSON_File(rapidjson::FileWriteStream* write_st, FILE* file)
+R_JSON_File::R_JSON_File(rapidjson::FileWriteStream* write_st, FILE* file) : write_stream(write_st), filep(file)
 {
-	filep = file;
-	write_st = write_stream;
+
 	document = new rapidjson::Document();
-	document->ParseStream(*write_st);
+	document->SetObject();
+
 
 	alloc_doc = &document->GetAllocator();
 }

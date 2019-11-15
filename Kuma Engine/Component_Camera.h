@@ -21,16 +21,21 @@ class Component_Camera : public Components
 	float3 GetCameraPosition() const;
 	float* GetViewMatrix();
 	float* GetProjectionMatrix() const;
+	void SetAspectRatio(int width_ratio, int height_ratio, bool type = false);
+	bool Update();
+
+	void SaveScene(R_JSON_Value* val) const;
 
 	Frustum frustum;
 	float* vertex;
 	int index;
-	void SetAspectRatio(int width_ratio, int height_ratio, bool type = false);
-	bool Update();
+	
 	int width, height;
 	float aspect_ratio;
 
 	float3 points[8];
+
+	
 
 public:
 	float vertical_fov = 60.0f;

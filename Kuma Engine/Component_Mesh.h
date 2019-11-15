@@ -51,7 +51,7 @@ public:
 
 	meshInfo* saveMeshinfo();
 	void ExtractMeshInfo(meshInfo* info);
-
+	void SaveScene(R_JSON_Value* v)const;
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
