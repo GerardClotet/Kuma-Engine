@@ -59,3 +59,4 @@ enum update_status
 #define LIBRARY_MATERIAL_FOLDER "/Library/Materials/"
 #define LIBRARY_STATE_MACHINE_FOLDER "/Library/StateMachines/"
 #define ASSETS_REFERENCE_META_MODEL "/assets/reference/"
+#define FILE_MAX 250

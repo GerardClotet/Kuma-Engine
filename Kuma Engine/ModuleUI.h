@@ -1,7 +1,6 @@
 
 #pragma once
 #include "Module.h"
-//#include "Globals.h"
 
 
 #include "ModuleSceneIntro.h"
@@ -16,6 +15,7 @@ class PanelConsole;
 class PanelAbout;
 class PanelInspector;
 class PanelHierarchy;
+class PanelFile;
 
 
 class ModuleEditor : public Module
@@ -38,6 +38,7 @@ public:
 	bool show_obj_edit_window	= false;
 	bool configuration_window	= false;
 	bool console_window			= false;
+	bool file_window			= false;
 	bool config_default			= false;
 	bool about_window			= false;
 	bool inspector_window		= false;
@@ -47,6 +48,7 @@ public:
 	void AddFPS(float fps, float ms);
 	
 	void Log(const char* fmt,...);
+	void LoadFile(const char* filter_extension = nullptr, const char* from_dir = nullptr);
 
 	std::list<Sphere> spherelist;
 
@@ -61,6 +63,8 @@ private:
 	void FileScreen();
 	void GameObjectScreen();
 	void ComponentsScreen();
+	
+	void DrawDirectoryTree(const char* directory, const char* filter_extension);
 
 private:
 	bool activeWindow = true;
@@ -74,6 +78,7 @@ public:
 	PanelAbout* about_p			= nullptr;
 	PanelInspector* inspector_p = nullptr;
 	PanelHierarchy* hierarchy_p = nullptr;
-
+	PanelFile* file_p			= nullptr;
+	char selected_file[FILE_MAX];
 	std::list<Panel*> panel_list;
 };
