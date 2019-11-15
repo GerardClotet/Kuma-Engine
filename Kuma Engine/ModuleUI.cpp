@@ -8,15 +8,12 @@
 #include "PanelAbout.h"
 #include "PanelInspector.h"
 #include "PanelHierarchy.h"
-#include "PanelFile.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleFileSystem.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imconfig.h"
 #include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
 #include <list>
-#include <algorithm>
 #include "GameObject.h"
 #include "Components.h"
 
@@ -24,7 +21,6 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
 {
 	fps_log.resize(100);
 	ms_log.resize(100);
-	selected_file[0] = '\0';
 	
 }
 
@@ -57,7 +53,6 @@ bool ModuleEditor::Start()
 	panel_list.push_back(about_p		= new PanelAbout("About"));
 	panel_list.push_back(inspector_p	= new PanelInspector("Inspector"));
 	panel_list.push_back(hierarchy_p	= new PanelHierarchy("Hierarchy"));
-	panel_list.push_back(file_p			= new PanelFile("File"));
 	console_window = true;
 	hierarchy_window = true;
 	inspector_window = true;
@@ -404,15 +399,6 @@ void ModuleEditor::FileScreen()
 	ImGui::SameLine();
 	ImGui::TextDisabled("ESC");
 
-	if (ImGui::MenuItem("Load File"))
-	{
-		file_window = (file_window == false) ? true : false;
-	}
-	if (ImGui::MenuItem("Save File"))
-	{
-
-	}
-
 }
 
 void ModuleEditor::GameObjectScreen()
@@ -601,70 +587,6 @@ void ModuleEditor::ComponentsScreen()
 		}
 	}
 	
-}
-
-void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir)
-{
-	ImGui::Begin("Load File", &App->ui->file_window);
-
-	ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
-	ImGui::BeginChild("File Browser", ImVec2(0, 500), true);
-	DrawDirectoryTree(from_dir, filter_extension);
-	ImGui::EndChild();
-	ImGui::PopStyleVar();
-	ImGui::End();
-}
-
-void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter_extension)
-{
-
-	std::vector<std::string> files_list;
-	std::vector<std::string> dirs_list;
-
-	//If the directory is empty
-	std::string dir((directory) ? directory : "");
-	dir += "/";
-
-	//Add the files and directories to the lists
-	App->fs->DiscoverFiles(dir.c_str(), files_list, dirs_list);
-
-	for (std::vector<std::string>::const_iterator it = dirs_list.begin(); it != dirs_list.end(); ++it)
-	{
-		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
-		{
-			DrawDirectoryTree((dir + (*it)).c_str(), filter_extension);
-			ImGui::TreePop();
-		}
-	}
-
-	std::sort(files_list.begin(), files_list.end());
-
-	for (std::vector<std::string>::const_iterator it = files_list.begin(); it != files_list.end(); ++it)
-	{
-		const std::string& file_str = *it;
-
-		bool correctExtension = true;
-
-		//Apply the filter. If the extensions doesn't match with the filter extension, it wont be shown
-		if (filter_extension && file_str.substr(file_str.find_last_of(".") + 1) != filter_extension)
-			correctExtension = false;
-
-		if (correctExtension && ImGui::TreeNodeEx(file_str.c_str(), ImGuiTreeNodeFlags_Leaf))
-		{
-			//If the file is clicked add a selected file
-			//TODO :/Call the LoadScene with the selected_file
-			if (ImGui::IsItemClicked()) {
-				sprintf_s(selected_file, FILE_MAX, "%s%s", dir.c_str(), file_str.c_str());
-
-				//Close the window if a file is double clicked
-				if (ImGui::IsMouseDoubleClicked(0))
-					file_window = false;
-			}
-
-			ImGui::TreePop();
-		}
-	}
-
 }
 
 
