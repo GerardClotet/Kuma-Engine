@@ -520,13 +520,21 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 	}
 
 	go->AddValue("Components", *c);
-	go->AddValue("GameObject", *go);
+	json_val->AddValue("", *go);
 
-	std::vector<GameObject*>::iterator iter = game_object_childs.begin();
+	for (auto& child : game_object_childs)
+	{
+		LOG("ah passt");
+		child->SaveToScene(json_val);
+	}
+	/*std::vector<GameObject*>::iterator iter = game_object_childs.begin();
 	while (iter < game_object_childs.end());
 	{
 		(*iter)->SaveToScene(json_val);
-	}
+
+		++iter;
+	}*/
+
 }
 
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
