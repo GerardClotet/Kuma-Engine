@@ -165,7 +165,6 @@
     <ClCompile Include="PanelConsole.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Parson\parson.c" />
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>tools\mmgr</Filter>
     </ClCompile>
@@ -212,6 +211,10 @@
     <ClCompile Include="Component_Camera.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Parson\parson.c">
+      <Filter>tools\parson</Filter>
+    </ClCompile>
+    <ClCompile Include="SerializerJSON.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -481,7 +484,6 @@
     <ClInclude Include="PanelConsole.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Parson\parson.h" />
     <ClInclude Include="mmgr\mmgr.h">
       <Filter>tools\mmgr</Filter>
     </ClInclude>
@@ -657,6 +659,70 @@
     <ClInclude Include="Component_Camera.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Parson\parson.h">
+      <Filter>tools\parson</Filter>
+    </ClInclude>
+    <ClInclude Include="SerializerJSON.h" />
+    <ClInclude Include="rapidjson\allocators.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\cursorstreamwrapper.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\document.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\encodedstream.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\encodings.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\filereadstream.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\filewritestream.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\fwd.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\istreamwrapper.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\memorybuffer.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\memorystream.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\ostreamwrapper.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\pointer.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\prettywriter.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\rapidjson.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\reader.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\schema.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\stream.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\stringbuffer.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidjson\writer.h">
+      <Filter>tools\rapidjson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -706,6 +772,12 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{677e9053-bf98-4354-8521-a98ec184025b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\parson">
+      <UniqueIdentifier>{3563d584-1480-4b81-a028-ff83693131a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\rapidjson">
+      <UniqueIdentifier>{e0d2ccce-b770-45f8-8937-775112e50900}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
