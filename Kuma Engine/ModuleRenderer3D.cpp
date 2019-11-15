@@ -6,6 +6,7 @@
 #include "ModuleSceneIntro.h"
 #include "GameObject.h"
 #include "Component_Camera.h"
+#include "Component_Transform.h"
 #include "SDL\include\SDL_opengl.h"
 
 #include <gl/GL.h>
@@ -140,7 +141,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(actual_camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(actual_camera->frustum.pos.x, actual_camera->frustum.pos.x, actual_camera->frustum.pos.x);
+	lights[0].SetPos(actual_camera->frustum.pos.x, actual_camera->frustum.pos.y, actual_camera->frustum.pos.z);
+
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();

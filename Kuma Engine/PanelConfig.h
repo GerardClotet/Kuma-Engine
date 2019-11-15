@@ -59,6 +59,12 @@ private:
 
 	bool GL_Wireframe = true;
 	bool GL_Fill = true;
+
+	float vertical_fov = 60.0f;
+	float horizontal_fov = 90.0f;
+
+	float far_plane = 500.f;
+	float near_plane = 10.0f;
 };
 
 

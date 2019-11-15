@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleCamera3D.h"
 #include "Components.h"
 #include "Component_Mesh.h"
 #include "Component_Material.h"
@@ -485,7 +486,7 @@ void GameObject::GenerateParentBBox()
 bool GameObject::CheckAABBinFrustum()
 {
 	
-	if (App->scene_intro->camera_hardcoded->frustum.Intersects(this->bbox.aabb_global))
+	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
 	{
 		return true;
 	}
