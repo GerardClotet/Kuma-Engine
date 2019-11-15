@@ -14,7 +14,10 @@ Component_Material::Component_Material(GameObject* obj)
 
 Component_Material::~Component_Material()
 {
-	App->texture->RemoveTexture(texture);
+	if(gameObject_Item->parent->game_object_childs.size() <2)
+		App->texture->RemoveTexture(texture);
+
+
 	texture = nullptr;
 }
 

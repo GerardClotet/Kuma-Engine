@@ -39,6 +39,15 @@ void PanelHierarchy::RecursiveTreeNode(GameObject* parent)
 		if (ImGui::IsItemClicked())
 			App->scene_intro->selected_game_obj = parent;
 
+		
+		ImGui::OpenPopupOnItemClick("test");
+
+		ImGuiWindowFlags fl = ImGuiWindowFlags_MenuBar;
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginPopup("mem",fl);
+		}
+		
 		std::vector<GameObject*>::const_iterator iter = parent->game_object_childs.begin(); //const_iterator just for reading
 		while (iter != parent->game_object_childs.end())
 		{

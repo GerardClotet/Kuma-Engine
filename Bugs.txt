@@ -1,0 +1,9 @@
+
+when deleting a child, the texture deltes and the other child dont find any texture
+camera rotation, to0 bruto, seems like duplicating scene
+
+empty parent borrar bbox
+
+
+habilitar menu en a hierarchy pe4r crea més fills
+

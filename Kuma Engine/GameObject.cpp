@@ -249,7 +249,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 bool GameObject::CleanUp()
 {
 	LOG("---Cleaning %s---", name.c_str());
-	parent = nullptr;
+	
 	//name = nullptr;
 	std::vector<GameObject*>::iterator it = game_object_childs.begin();
 	while (it != game_object_childs.end())
@@ -257,7 +257,7 @@ bool GameObject::CleanUp()
 		std::vector<Components*>::iterator item = (*it)->components.begin();
 		while (item != (*it)->components.end())
 		{
-			LOG("deleted compoennt %s", (*item)->name.c_str());
+			LOG("deleted compoennt %s", (*item)->name.c_str()); //tindre en compte borrar la textura des del el parent
 			delete (*item);
 			++item;
 		}
@@ -278,7 +278,7 @@ bool GameObject::CleanUp()
 	}
 	components.clear();
 
-	
+	parent = nullptr;
 	//std::vector<GameObject*>::iterator iter = game_object_childs.begin();
 	//while (iter != game_object_childs.end())
 	//{
