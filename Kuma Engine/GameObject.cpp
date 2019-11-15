@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleCamera3D.h"
 #include "Components.h"
 #include "Component_Mesh.h"
 #include "Component_Material.h"
@@ -437,18 +438,18 @@ void GameObject::DrawBoundingBox()
 	{
 		glBegin(GL_LINES);
 		glLineWidth(1.0f);
-		glColor3f(0, 1, 0);
+		glColor3f(color_aabb.r, color_aabb.g, color_aabb.b);
 		glVertex3f(bbox.aabb_global.Edge(i).a.x, bbox.aabb_global.Edge(i).a.y, bbox.aabb_global.Edge(i).a.z);
 		glVertex3f(bbox.aabb_global.Edge(i).b.x, bbox.aabb_global.Edge(i).b.y, bbox.aabb_global.Edge(i).b.z);
-		glColor3f(1, 0, 0);
+		
 		glEnd();
 
 		glBegin(GL_LINES);
 		glLineWidth(1.0f);
-		glColor3f(1, 1, 0);
+		glColor3f(color_obb.r, color_obb.g, color_obb.b);
 		glVertex3f(bbox.obb.Edge(i).a.x, bbox.obb.Edge(i).a.y, bbox.obb.Edge(i).a.z);
 		glVertex3f(bbox.obb.Edge(i).b.x, bbox.obb.Edge(i).b.y, bbox.obb.Edge(i).b.z);
-		glColor3f(1, 0, 0);
+		
 		glEnd();
 	}
 }
@@ -485,7 +486,7 @@ void GameObject::GenerateParentBBox()
 bool GameObject::CheckAABBinFrustum()
 {
 	
-	if (App->scene_intro->camera_hardcoded->frustum.Intersects(this->bbox.aabb_global))
+	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
 	{
 		return true;
 	}

@@ -387,5 +387,13 @@ void Component_Transform::DisplayInspector()
 	}
 	ImGui::PopID();
 
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	ImGui::ColorEdit4("AABB Color", (float*)& gameObject_Item->color_aabb);
+	ImGui::ColorEdit4("OBB Color", (float*)& gameObject_Item->color_obb);
+
 
 }

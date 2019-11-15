@@ -5,7 +5,9 @@
 #include "ModuleInput.h"
 #include "ModuleHardware.h"
 #include "ModuleImporter.h"
+#include "ModuleCamera3D.h"
 #include "ModuleSceneIntro.h"
+#include "Component_Camera.h"
 #include "GameObject.h"
 #include "Component_Material.h"
 
@@ -404,6 +406,45 @@ void PanelConfig::DisplayConfig()
 
 
 	}
+
+	if (ImGui::CollapsingHeader("Scene Camera"))
+	{
+		if (ImGui::DragFloat("Near Plane", &near_plane, 1, 0.1f, far_plane - 0.1f, "%.1f"))
+		{
+			App->camera->camera_fake->frustum.nearPlaneDistance = near_plane;
+		}
+
+		ImGui::Spacing();
+
+
+		if (ImGui::DragFloat("Far Plane", &far_plane, 1, near_plane + 0.1f, 500, "%.1f"))
+		{
+			App->camera->camera_fake->frustum.farPlaneDistance = far_plane;
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+
+
+		if (ImGui::DragFloat("FOV Horizontal", &horizontal_fov, 1, 1, 163, "%.1f"))
+		{
+			App->camera->camera_fake->frustum.horizontalFov = horizontal_fov * DEGTORAD;
+			App->camera->camera_fake->SetAspectRatio(16, 9, true);
+			vertical_fov = App->camera->camera_fake->frustum.verticalFov * RADTODEG;
+		}
+
+
+
+		if (ImGui::DragFloat("FOV Vertical", &vertical_fov, 1, 1, 150, "%.1f"))
+		{
+			App->camera->camera_fake->frustum.verticalFov = vertical_fov * DEGTORAD;
+			App->camera->camera_fake->SetAspectRatio(16, 9);
+			horizontal_fov = App->camera->camera_fake->frustum.horizontalFov * RADTODEG;
+		}
+	}
+
+
 	ImGui::End();
 }
 

@@ -7,6 +7,7 @@
 #include "MathGeoLib/include/Geometry/AABB.h"
 #include "MathGeoLib/include/Geometry/OBB.h"
 #include "MathGeoLib/include/Geometry/Frustum.h"
+#include "Color.h"
 #include <string>
 class Components;
 class Component_Material;
@@ -101,6 +102,8 @@ public:
 	BoundingBox bbox;
 
 	bool isInsideFrustum = false;
+	Color color_aabb{ 0.0f,1.0f,0.0f,1.0f };
+	Color color_obb{ 1.0f,1.0f,0.0f,1.0f };
 };
 
 

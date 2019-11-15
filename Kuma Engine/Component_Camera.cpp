@@ -29,6 +29,7 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	horizontal_fov = frustum.horizontalFov;
 
 	color_camera_bg = Color(0.5f, 0.5f, 0.5f, 1.0f);
+	color_frustum = Color( 1.0f, 0.54f, 0.0f, 1.0f );
 
 	ReloadFrustrum();
 }
@@ -50,7 +51,7 @@ void Component_Camera::DrawFrustum()
 
 
 	glLineWidth(3.0);
-	glColor3f(1, .54, 0);
+	glColor3f(color_frustum.r, color_frustum.g, color_frustum.b);
 	glBegin(GL_LINES);
 
 	glVertex3f(points[0].x, points[0].y, points[0].z);
@@ -139,6 +140,7 @@ void Component_Camera::DisplayInspector()
 		horizontal_fov = frustum.horizontalFov * RADTODEG;
 	}
 	
+	ImGui::ColorEdit4("Frustum Color", (float*)& color_frustum);
 
 
 }
