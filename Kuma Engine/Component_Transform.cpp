@@ -47,7 +47,6 @@ Component_Transform::~Component_Transform()
 	gameObject_Item = nullptr;
 }
 
-
 bool Component_Transform::Update()
 {
 	return true;
@@ -77,7 +76,7 @@ float3& Component_Transform::GetLocalPosition()
 	return local_position;
 }
 
-const float3 Component_Transform::GetGlobalPosition()const
+const float3 Component_Transform::GetGlobalPosition()
 {
 	float3 pos, scale;
 	Quat rot;
@@ -97,13 +96,13 @@ void Component_Transform::SetLocalScale(const float x, const float y, const floa
 	RecalculateTransformMatrix();
 }
 
-const float3 Component_Transform::GetLocalScale()const
+const float3 Component_Transform::GetLocalScale()
 {
 
 	return local_scale;
 }
 
-const float3 Component_Transform::GetGlobalScale()const
+const float3 Component_Transform::GetGlobalScale()
 {
 	float3 pos, scale;
 	Quat rot;
@@ -130,12 +129,12 @@ void Component_Transform::SetLocalRotation(const float x, const float y, const f
 	RecalculateTransformMatrix();
 }
 
-const Quat Component_Transform::GetLocalRotation()const
+const Quat Component_Transform::GetLocalRotation()
 {
 	return local_rotation;
 }
 
-const Quat Component_Transform::GetGlobalRotation()const
+const Quat Component_Transform::GetGlobalRotation()
 {
 	float3 pos, scale;
 	Quat rot;
@@ -188,12 +187,12 @@ void Component_Transform::RecalculateTransformMatrix()
 
 }
 
-float4x4 Component_Transform::GetGlobalMatrix()const
+float4x4 Component_Transform::GetGlobalMatrix()
 {
 	return global_transformation;
 }
 
-float4x4 Component_Transform::GetParentGlobalMatrix()const
+float4x4 Component_Transform::GetParentGlobalMatrix()
 {
 	std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();
 
@@ -217,21 +216,6 @@ float4x4 Component_Transform::GetParentGlobalMatrix()const
 	}
 
 	return temp;
-}
-
-void Component_Transform::SaveScene(R_JSON_Value* val)const
-{
-	R_JSON_Value* transform = val->NewValue(rapidjson::kObjectType);
-
-
-
-
-	transform->Set3DVec("Position", GetGlobalPosition());
-	transform->SetQuat("Rotation", GetGlobalRotation());
-
-	transform->Set3DVec("Scale", GetGlobalScale());
-
-	val->AddValue("Transformation", *transform);
 }
 
 void Component_Transform::DisplayInspector()

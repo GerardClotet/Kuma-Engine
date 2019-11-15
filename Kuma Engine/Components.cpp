@@ -49,11 +49,6 @@ void Components::SaveToMeta(const char* path)
 
 }
 
-void Components::SaveScene(R_JSON_Value* component)const
-{
-	
-}
-
 GameObject * Components::GetGameObject()
 {
 	return gameObject_Item;
