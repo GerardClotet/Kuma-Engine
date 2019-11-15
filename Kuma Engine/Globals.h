@@ -45,6 +45,7 @@ enum update_status
 #define EXTENSION_META_KUMA "_meta.kuma"
 #define EXTENSION_MODEL_META "_model_meta.kuma"
 #define EXTENSION_TEXTURE_META ".dds"
+#define EXTENSION_SCENE ".kumaScene"
 #define ASSETS_FOLDER "/Assets/"
 #define SETTINGS_FOLDER "/Settings/"
 #define MODELS_FOLDER "Assets/models/"
@@ -58,4 +59,4 @@ enum update_status
 #define LIBRARY_MODEL_FOLDER "/Library/Models/"
 #define LIBRARY_MATERIAL_FOLDER "/Library/Materials/"
 #define LIBRARY_STATE_MACHINE_FOLDER "/Library/StateMachines/"
-#define ASSETS_REFERENCE_META_MODEL "/assets/reference/"
+#define LIBRARY_SCENE_FOLDER "Library/Scenes/"

@@ -20,6 +20,7 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 {
 	this->type = type;
 	this->name = name;
+	staticName = name;
 	Set_Parent_and_Name(parent,name);
 	//TODO :/Generate random and save it to ID
 	UUID = GetRandomID();
@@ -495,6 +496,37 @@ bool GameObject::CheckAABBinFrustum()
 		return false;
 
 
+}
+
+void GameObject::SaveToScene(R_JSON_Value* json_val)
+{
+
+	R_JSON_Value* go = json_val->NewValue(rapidjson::kObjectType);
+
+	go->SetUint32("UUID", UUID);
+	if (parent != nullptr)
+		go->SetUint32("Parent UUID", parent->UUID);
+
+	go->SetString("Name", name.c_str());
+
+	R_JSON_Value* c = go->NewValue(rapidjson::kArrayType);
+
+	std::vector<Components*>::iterator it = components.begin();
+		
+	while (it < components.end())
+	{
+		(*it)->SaveScene(c);
+		++it;
+	}
+
+	go->AddValue("Components", *c);
+	go->AddValue("GameObject", *go);
+
+	std::vector<GameObject*>::iterator iter = game_object_childs.begin();
+	while (iter < game_object_childs.end());
+	{
+		(*iter)->SaveToScene(json_val);
+	}
 }
 
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
