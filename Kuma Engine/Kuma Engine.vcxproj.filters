@@ -215,6 +215,9 @@
       <Filter>tools\parson</Filter>
     </ClCompile>
     <ClCompile Include="SerializerJSON.cpp" />
+    <ClCompile Include="PanelFile.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -722,6 +725,9 @@
     </ClInclude>
     <ClInclude Include="rapidjson\writer.h">
       <Filter>tools\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelFile.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
