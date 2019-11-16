@@ -490,16 +490,24 @@ void GameObject::GenerateParentBBox()
 
 bool GameObject::CheckAABBinFrustum()
 {
-	
+	bool ret = true;
 	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
+		ret = true;
+	else
+		ret = false;
+
+	for (std::vector<Components*>::iterator iter = App->scene_intro->camera_list.begin(); iter != App->scene_intro->camera_list.end(); ++iter)
 	{
-		return true;
+		if ((*iter)->gameObject_Item->camera->culling)
+		{
+			if ((*iter)->gameObject_Item->camera->frustum.Intersects(this->bbox.aabb_global))
+				ret = true;
+			else
+				ret = false;
+		}
 	}
 
-	else
-		return false;
-
-
+	return ret;
 }
 
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
