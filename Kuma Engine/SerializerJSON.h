@@ -8,7 +8,8 @@
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "MathGeoLib/include/Math/float3.h"
-
+#include "MathGeoLib/include/Math/Quat.h"
+#include "Color.h"
 #include <vector>
 struct R_JSON_Value {
 	
@@ -34,7 +35,8 @@ public:
 	void SetString(const char* name, const char* value);
 	void SetBoolean(const char* name, bool value);
 	void Set3DVec(const char* name, float3 vec);
-
+	void SetQuat(const char* name, Quat quat);
+	void SetColor(const char* name, Color color);
 
 	rapidjson::Document::AllocatorType* alloc_doc = nullptr;
 	rapidjson::Value* value = nullptr;

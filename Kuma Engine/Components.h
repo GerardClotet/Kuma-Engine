@@ -2,6 +2,7 @@
 #ifndef _COMPONENTS_H__
 #define _COMPONENTS_H__
 
+#include "SerializerJSON.h"
 #include <string>
 
 class GameObject;
@@ -31,6 +32,8 @@ public:
 	virtual bool Disable();
 
 	virtual void SaveToMeta(const char* path);
+	virtual void SaveScene(R_JSON_Value* component)const;
+
 	GameObject* GetGameObject();
 public:
 	GO_COMPONENT comp_type = GO_COMPONENT::NONE;

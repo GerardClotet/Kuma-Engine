@@ -349,20 +349,7 @@ void ModuleImporter::LoadSingleMesh(const aiScene* importfile, const char* name,
 
 }
 
-bool ModuleImporter::LoadReferenceMeta(const char* path)
-{
-	//std::string p;
 
-	//App->fs->SplitFilePath(path, nullptr, &p);
-	//p = App->fs->GetFileName(p.c_str());
-	//p = ASSETS_REFERENCE_META_MODEL + p + EXTENSION_MODEL_META;
-
-	//if (App->fs->Exists(p.c_str()))
-	//{
-	//	LoadModelFromMeta()
-	//}
-	return true;
-}
 bool ModuleImporter::LoadModelFile(const char * model_file)
 {
 	

@@ -24,6 +24,8 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 	//TODO :/Generate random and save it to ID
 	UUID = GetRandomID();
 	LOG("game object name %s", this->name.c_str());
+	staticName = name;
+
 }
 
 //GameObject::GameObject(std::string name, OBJECT_TYPE type)
@@ -514,4 +516,32 @@ void GameObject::SaveToMeta(const char* path)//for now we just save mesh & textu
 }
 
 
+void GameObject::SaveToScene(R_JSON_Value* json_val)
+{
 
+	R_JSON_Value* go = json_val->NewValue(rapidjson::kObjectType);
+
+	go->SetUint32("UUID", UUID);
+	if (parent != nullptr)
+		go->SetUint32("Parent UUID", parent->UUID);
+
+	go->SetString("Name", name.c_str());
+
+	R_JSON_Value* c = go->NewValue(rapidjson::kArrayType);
+
+	std::vector<Components*>::iterator it = components.begin();
+
+	while (it < components.end())
+	{
+		(*it)->SaveScene(c);
+		++it;
+	}
+
+	go->AddValue("Components", *c);
+	json_val->AddValue("", *go);
+
+	for (auto& child : game_object_childs)
+	{
+		child->SaveToScene(json_val);
+	}
+}

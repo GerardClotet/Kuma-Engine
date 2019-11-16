@@ -66,6 +66,7 @@ public:
 	void SaveToMeta(const char* path);
 	void GenerateParentBBox();
 	bool CheckAABBinFrustum();
+	void SaveToScene(R_JSON_Value* json_val);
 
 public:
 	std::string name;
@@ -104,6 +105,8 @@ public:
 	bool isInsideFrustum = false;
 	Color color_aabb{ 0.0f,1.0f,0.0f,1.0f };
 	Color color_obb{ 1.0f,1.0f,0.0f,1.0f };
+	std::string staticName;
+
 };
 
 

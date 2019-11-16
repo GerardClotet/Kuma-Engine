@@ -20,12 +20,14 @@ public:
 	void ReadTexture(std::string file);
 	void SetDefaultTexture();
 	void QuitDefautTexture();
-	TexData* GetTexture();
+	TexData* GetTexture()const;
 
-	TexData* texture = nullptr;
+	std::string GetTexturePath()const;
+
+	void SaveScene(R_JSON_Value* material)const;
 
 public:
-	
+	TexData* texture = nullptr;
 	std::string file_path;
 	uint width = 0;
 	uint height = 0;

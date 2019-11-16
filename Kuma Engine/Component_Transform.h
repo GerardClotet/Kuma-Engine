@@ -21,23 +21,25 @@ public:
 	//POSITION
 	void SetLocalPosition(const float x, const float y, const float z);
 	float3& GetLocalPosition();
-	const float3 GetGlobalPosition();
+	const float3 GetGlobalPosition()const;
 
 	//SCALE
 	void SetLocalScale(const float x, const float y, const float z);
-	const float3 GetLocalScale();
-	const float3 GetGlobalScale();
+	const float3 GetLocalScale()const;
+	const float3 GetGlobalScale()const;
 
 	//ROTATION
 	void SetLocalRotation(const float x, const float y, const float z, const float angle);
-	const Quat GetLocalRotation();
-	const Quat GetGlobalRotation();
+	const Quat GetLocalRotation()const;
+	const Quat GetGlobalRotation()const;
 
 	//MATRIX TRANSFORM
 	void RecalculateTransformMatrix();
-	float4x4 GetGlobalMatrix();
+	float4x4 GetGlobalMatrix()const;
 
-	float4x4 GetParentGlobalMatrix();
+	float4x4 GetParentGlobalMatrix()const;
+	void SaveScene(R_JSON_Value* val) const;
+
 private:
 	//position
 	float3 local_position = { 0,0,0 };
