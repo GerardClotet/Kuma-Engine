@@ -608,10 +608,27 @@ void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir
 	ImGui::Begin("Load File", &App->ui->file_window);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
-	ImGui::BeginChild("File Browser", ImVec2(0, 500), true);
+	ImGui::BeginChild("File Browser", ImVec2(0, 200), true);
 	DrawDirectoryTree(from_dir, filter_extension);
 	ImGui::EndChild();
 	ImGui::PopStyleVar();
+
+	
+	if (ImGui::Button("Cancel"))
+	{
+		//TODO
+		//LoadScene(selected_file)
+		file_window = false;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("OK"))
+	{
+		//TODO
+		//LoadScene(selected_file)
+		file_window = false;
+	}
+	
+
 	ImGui::End();
 }
 
@@ -658,7 +675,10 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 
 				//Close the window if a file is double clicked
 				if (ImGui::IsMouseDoubleClicked(0))
+				{
 					file_window = false;
+					//LoadScene(selected_file);
+				}
 			}
 
 			ImGui::TreePop();

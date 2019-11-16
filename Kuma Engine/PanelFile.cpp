@@ -5,8 +5,6 @@
 #include "PanelFile.h"
 
 
-
-
 PanelFile::~PanelFile()
 {
 }
