@@ -46,6 +46,8 @@ public:
 
 	Color color_camera_bg{ 0.0f, 0.0f, 0.0f, 1.0f };
 	Color color_frustum{ 1.0f, 0.54f, 0.0f, 1.0f };
+
+	bool culling = false;
 };
 
 

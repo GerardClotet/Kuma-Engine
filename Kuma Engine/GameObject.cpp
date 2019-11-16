@@ -81,7 +81,9 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 		camera = new Component_Camera(this);
 		components.push_back(camera);
+		camera_list.push_back(camera);
 		component = camera;
+
 
 		break;
 	}
@@ -544,4 +546,31 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 	{
 		child->SaveToScene(json_val);
 	}
+}
+
+void GameObject::RemoveCameraFromist(GameObject *obj)
+{
+	
+	for (std::vector<Components*>::iterator item = camera_list.begin(); item != camera_list.end(); ++item)
+	{
+		if ((*item) == obj->camera)
+		{
+			for (std::vector<Components*>::iterator it = obj->components.begin(); it != obj->components.end(); ++it)
+			{
+				if ((*it) == (*item))
+				{
+					obj->components.erase(it);
+					break;
+				}
+			}
+			LOG("deleted compoennt %s", (*item)->name.c_str());
+			delete (*item);
+			camera_list.erase(item);
+			break;
+			
+			
+		}
+		LOG("HH");
+	}
+
 }

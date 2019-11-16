@@ -10,6 +10,7 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	name = "camera";
 	comp_type = GO_COMPONENT::CAMERA;
 	SetAspectRatio(16, 9);
+	culling = false;
 	
 	float a  = frustum.horizontalFov;
 	LOG("%f", a);
@@ -140,7 +141,9 @@ void Component_Camera::DisplayInspector()
 		SetAspectRatio(16, 9);
 		horizontal_fov = frustum.horizontalFov * RADTODEG;
 	}
-	
+	ImGui::Spacing();
+	ImGui::Checkbox("Frustum Culling", &culling);
+	ImGui::Spacing();
 	ImGui::ColorEdit4("Frustum Color", (float*)& color_frustum);
 
 

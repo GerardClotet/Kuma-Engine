@@ -38,12 +38,19 @@ void PanelInspector::DisplayInspector()
 		ImGui::SameLine();
 		if (ImGui::Button("delete", ImVec2(90, 20)))
 		{
+			if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::CAMERA))
+			{
+				App->scene_intro->selected_game_obj->RemoveCameraFromist(App->scene_intro->selected_game_obj);
+			}
+
 			if (App->scene_intro->selected_game_obj->parent->type == OBJECT_TYPE::SUBPARENT)
 			{
 				App->scene_intro->root->RemoveSubChildGameObject(App->scene_intro->selected_game_obj);
 			}
 
 			else App->scene_intro->root->RemoveGameObject(App->scene_intro->selected_game_obj);
+
+			
 			
 		}
 

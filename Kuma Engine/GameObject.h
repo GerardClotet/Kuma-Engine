@@ -67,6 +67,7 @@ public:
 	void GenerateParentBBox();
 	bool CheckAABBinFrustum();
 	void SaveToScene(R_JSON_Value* json_val);
+	void RemoveCameraFromist(GameObject* obj);
 
 public:
 	std::string name;
@@ -97,6 +98,7 @@ public:
 
 	std::vector<Components*> components;
 	std::vector<GameObject*> game_object_childs;
+	std::vector<Components*> camera_list;
 
 
 	bool texture_Checker = false;
