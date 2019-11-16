@@ -81,8 +81,9 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 
 		camera = new Component_Camera(this);
 		components.push_back(camera);
-		camera_list.push_back(camera);
 		component = camera;
+		if (this->name != "Camera Fake")
+			App->scene_intro->camera_list.push_back(camera);
 
 
 		break;
@@ -551,7 +552,7 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 void GameObject::RemoveCameraFromist(GameObject *obj)
 {
 	
-	for (std::vector<Components*>::iterator item = camera_list.begin(); item != camera_list.end(); ++item)
+	for (std::vector<Components*>::iterator item = App->scene_intro->camera_list.begin(); item != App->scene_intro->camera_list.end(); ++item)
 	{
 		if ((*item) == obj->camera)
 		{
@@ -565,7 +566,7 @@ void GameObject::RemoveCameraFromist(GameObject *obj)
 			}
 			LOG("deleted compoennt %s", (*item)->name.c_str());
 			delete (*item);
-			camera_list.erase(item);
+			App->scene_intro->camera_list.erase(item);
 			break;
 			
 			

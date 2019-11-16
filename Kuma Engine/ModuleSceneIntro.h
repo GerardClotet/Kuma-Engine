@@ -16,6 +16,7 @@
 
 
 class GameObject;
+class Components;
 class Component_Camera;
 struct SDL_Window;
 struct aiMesh;
@@ -49,6 +50,7 @@ public:
 	GameObject* root = nullptr; //emptygame objects containing all game obects
 	GameObject* selected_game_obj = nullptr;
 	Component_Camera* camera_hardcoded = nullptr;
+	std::vector<Components*> camera_list;
 
 public:
 	//std::list<Spherestruct*> sphere_struct_list;

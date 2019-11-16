@@ -98,7 +98,6 @@ public:
 
 	std::vector<Components*> components;
 	std::vector<GameObject*> game_object_childs;
-	std::vector<Components*> camera_list;
 
 
 	bool texture_Checker = false;
