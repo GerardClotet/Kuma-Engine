@@ -496,16 +496,21 @@ bool GameObject::CheckAABBinFrustum()
 	else
 		ret = false;
 
-	for (std::vector<Components*>::iterator iter = App->scene_intro->camera_list.begin(); iter != App->scene_intro->camera_list.end(); ++iter)
-	{
-		if ((*iter)->gameObject_Item->camera->culling)
+	
+		for (std::vector<Components*>::iterator iter = App->scene_intro->camera_list.begin(); iter != App->scene_intro->camera_list.end(); ++iter)
 		{
-			if ((*iter)->gameObject_Item->camera->frustum.Intersects(this->bbox.aabb_global))
-				ret = true;
-			else
-				ret = false;
+			if (App->camera->camera_fake->frustum.Intersects((*iter)->gameObject_Item->camera->frustum))
+			{
+				if ((*iter)->gameObject_Item->camera->culling)
+				{
+					if ((*iter)->gameObject_Item->camera->frustum.Intersects(this->bbox.aabb_global))
+						ret = true;
+					else
+						ret = false;
+				}
+			}
 		}
-	}
+	
 
 	return ret;
 }
