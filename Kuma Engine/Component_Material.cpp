@@ -119,6 +119,8 @@ void Component_Material::SaveScene(R_JSON_Value* v)const
 	TexData* temp = GetTexture();
 	R_JSON_Value* material = v->NewValue(rapidjson::kObjectType);
 	//material
+	material->SetString("Component", "Material");
+
 	material->SetString("Name", temp->name.c_str());
 	material->SetString("Texture Paht", GetTexturePath().c_str());
 	//For now just this

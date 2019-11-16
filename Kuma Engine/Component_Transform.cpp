@@ -404,6 +404,7 @@ void Component_Transform::SaveScene(R_JSON_Value* val)const
 
 
 
+	transform->SetString("Component", "Transform");
 
 	transform->Set3DVec("Position", GetGlobalPosition());
 	transform->SetQuat("Rotation", GetGlobalRotation());

@@ -1,13 +1,14 @@
 {
     "GameObject Root": [
         {
-            "UUID": 3052379658,
-            "Parent UUID": 4194568227,
+            "UUID": 3587343941,
+            "Parent UUID": 3069121187,
             "Name": "bakerhouse parent",
             "Components": [
                 {
+                    "Component": "Transform",
                     "Position": [
-                        0.0,
+                        -8.5,
                         0.0,
                         0.0
                     ],
@@ -26,50 +27,53 @@
             ]
         },
         {
-            "UUID": 4184495439,
-            "Parent UUID": 3052379658,
+            "UUID": 3073558357,
+            "Parent UUID": 3587343941,
             "Name": "Chimney",
             "Components": [
                 {
+                    "Component": "Transform",
                     "Position": [
-                        0.0,
+                        -22.0,
                         0.0,
                         0.0
                     ],
                     "Rotation": [
-                        -0.7071068286895752,
-                        0.0,
-                        0.0,
-                        0.7071067094802856
+                        -0.6362188458442688,
+                        -0.2865956723690033,
+                        0.4998287260532379,
+                        0.5130882859230042
                     ],
                     "Scale": [
                         1.0,
-                        0.9999999403953552,
-                        0.9999999403953552
+                        17.0,
+                        1.0
                     ]
                 },
                 {
+                    "Component": "Material",
                     "Name": "Assets/textures/bakerhouse.dds",
                     "Texture Paht": "Assets/textures/bakerhouse.dds"
                 }
             ]
         },
         {
-            "UUID": 650150018,
-            "Parent UUID": 3052379658,
+            "UUID": 1915639638,
+            "Parent UUID": 3587343941,
             "Name": "Baker_house",
             "Components": [
                 {
+                    "Component": "Transform",
                     "Position": [
-                        0.0,
+                        11.0,
                         0.0,
                         0.0
                     ],
                     "Rotation": [
-                        -0.7071068286895752,
-                        0.0,
-                        0.0,
-                        0.7071067094802856
+                        -0.6286301016807556,
+                        0.32376575469970705,
+                        -0.32376575469970705,
+                        0.6286301016807556
                     ],
                     "Scale": [
                         1.0,
@@ -78,17 +82,19 @@
                     ]
                 },
                 {
+                    "Component": "Material",
                     "Name": "Assets/textures/bakerhouse.dds",
                     "Texture Paht": "Assets/textures/bakerhouse.dds"
                 }
             ]
         },
         {
-            "UUID": 4241580929,
-            "Parent UUID": 4194568227,
+            "UUID": 4242188757,
+            "Parent UUID": 3069121187,
             "Name": "Camera Harcoded",
             "Components": [
                 {
+                    "Component": "Transform",
                     "Position": [
                         0.0,
                         0.0,
@@ -107,6 +113,7 @@
                     ]
                 },
                 {
+                    "Component": "Camera",
                     "Position": [
                         0.0,
                         0.0,
@@ -127,7 +134,7 @@
                     "FarPlane": 100.0,
                     "Near Plane": 1.0,
                     "Horizontal Fov": 1.287712812423706,
-                    "Horizontal Fov": 1.0471975803375245,
+                    "Vertical Fov": 1.0471975803375245,
                     "Frustum Color": [
                         1.0,
                         0.5400000214576721,
