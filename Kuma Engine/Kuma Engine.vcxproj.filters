@@ -218,6 +218,9 @@
     <ClCompile Include="PanelFile.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSerializeScene.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -728,6 +731,9 @@
     </ClInclude>
     <ClInclude Include="PanelFile.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSerializeScene.h">
+      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,154 @@
+{
+    "GameObject Root": [
+        {
+            "UUID": 3587343941,
+            "Parent UUID": 3069121187,
+            "Name": "bakerhouse parent",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -8.5,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 3073558357,
+            "Parent UUID": 3587343941,
+            "Name": "Chimney",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -22.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        -0.6362188458442688,
+                        -0.2865956723690033,
+                        0.4998287260532379,
+                        0.5130882859230042
+                    ],
+                    "Scale": [
+                        1.0,
+                        17.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Assets/textures/bakerhouse.dds",
+                    "Texture Paht": "Assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1915639638,
+            "Parent UUID": 3587343941,
+            "Name": "Baker_house",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        11.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        -0.6286301016807556,
+                        0.32376575469970705,
+                        -0.32376575469970705,
+                        0.6286301016807556
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Assets/textures/bakerhouse.dds",
+                    "Texture Paht": "Assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 4242188757,
+            "Parent UUID": 3069121187,
+            "Name": "Camera Harcoded",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Camera",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "front": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Up": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "FrustumType": 2,
+                    "AspectRatio": -1.5816464369601856e38,
+                    "FarPlane": 100.0,
+                    "Near Plane": 1.0,
+                    "Horizontal Fov": 1.287712812423706,
+                    "Vertical Fov": 1.0471975803375245,
+                    "Frustum Color": [
+                        1.0,
+                        0.5400000214576721,
+                        0.0,
+                        1.0
+                    ],
+                    "Camera Background Color": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        1.0
+                    ]
+                }
+            ]
+        }
+    ]
+}

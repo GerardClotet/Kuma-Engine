@@ -101,9 +101,29 @@ void Component_Material::QuitDefautTexture()
 	}
 }
 
-TexData * Component_Material::GetTexture()
+TexData * Component_Material::GetTexture()const
 {
 	if (this->texture != nullptr)
 		return this->texture;
 }
 
+
+std::string Component_Material::GetTexturePath()const
+{
+
+	return file_path;
+}
+
+void Component_Material::SaveScene(R_JSON_Value* v)const
+{
+	TexData* temp = GetTexture();
+	R_JSON_Value* material = v->NewValue(rapidjson::kObjectType);
+	//material
+	material->SetString("Component", "Material");
+
+	material->SetString("Name", temp->name.c_str());
+	material->SetString("Texture Paht", GetTexturePath().c_str());
+	//For now just this
+
+	v->AddValue("Material", *material);
+}

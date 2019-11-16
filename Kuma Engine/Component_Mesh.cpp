@@ -774,4 +774,15 @@ void Component_Mesh::ExtractMeshInfo(meshInfo* info)
 	
 }
 
+void Component_Mesh::SaveScene(R_JSON_Value* v) const
+{
+	R_JSON_Value* mesh = v->NewValue(rapidjson::kObjectType);
+
+	mesh->SetString("Component", "Mesh");
+
+	mesh->SetString("Name", gameObject_Item->staticName.c_str());
+
+	mesh->AddValue("Mesh", *mesh);
+}
+
 
