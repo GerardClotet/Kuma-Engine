@@ -8,12 +8,15 @@
 #include "PanelAbout.h"
 #include "PanelInspector.h"
 #include "PanelHierarchy.h"
+#include "PanelFile.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleFileSystem.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imconfig.h"
 #include "ImGui/examples/imgui_impl_opengl3.h"
 #include "ImGui/examples/imgui_impl_sdl.h"
 #include <list>
+#include <algorithm>
 #include "GameObject.h"
 #include "Components.h"
 
@@ -21,7 +24,8 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
 {
 	fps_log.resize(100);
 	ms_log.resize(100);
-	
+	selected_file[0] = '\0';
+
 }
 
 ModuleEditor::~ModuleEditor()
@@ -31,35 +35,36 @@ ModuleEditor::~ModuleEditor()
 bool ModuleEditor::Start()
 {
 
-	
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	
+
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable;//enable docking   
 	io.ConfigDockingWithShift = false; // dock without shift
 	io.ConfigWindowsResizeFromEdges = true;
 	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 
-	  // Setup Dear ImGui style
+	// Setup Dear ImGui style
 	ImGui::StyleColorsEdited();
-	
+
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
-	panel_list.push_back(config_p		= new PanelConfig("Configuration"));
-	panel_list.push_back(console_p		= new PanelConsole("Console"));
-	panel_list.push_back(about_p		= new PanelAbout("About"));
-	panel_list.push_back(inspector_p	= new PanelInspector("Inspector"));
-	panel_list.push_back(hierarchy_p	= new PanelHierarchy("Hierarchy"));
+	panel_list.push_back(config_p = new PanelConfig("Configuration"));
+	panel_list.push_back(console_p = new PanelConsole("Console"));
+	panel_list.push_back(about_p = new PanelAbout("About"));
+	panel_list.push_back(inspector_p = new PanelInspector("Inspector"));
+	panel_list.push_back(hierarchy_p = new PanelHierarchy("Hierarchy"));
+	panel_list.push_back(file_p = new PanelFile("File"));
 	console_window = true;
 	hierarchy_window = true;
 	inspector_window = true;
-	
 
 
-	
+
+
 
 	std::list<const char*>::iterator item = App->log_saves.begin();
 
@@ -69,7 +74,7 @@ bool ModuleEditor::Start()
 
 		LOG("%s", logs);
 	}
-	
+
 
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
 	LOG("Renderer: %s", glGetString(GL_RENDERER));
@@ -84,8 +89,8 @@ update_status ModuleEditor::Update(float dt)
 {
 	/*if (App->scene_intro->selected_game_obj !=nullptr)
 		inspector_window = true;*/
-	
-	
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -93,7 +98,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	
+
 
 
 	//Change style color with hotkey
@@ -101,7 +106,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	{
 		changeColor = (changeColor == false) ? true : false;
 		if (changeColor)
-		ImGui::StyleColorsDark();
+			ImGui::StyleColorsDark();
 		else
 			ImGui::StyleColorsEdited();
 	}
@@ -171,7 +176,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	if (demoWindow)
 		ImGui::ShowDemoWindow();//ImGui::ShowDemoWindow();
 
-		
+
 
 	if (show_obj_edit_window)
 	{
@@ -180,7 +185,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	ImGui::Render();
 
-	
+
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	return ret;
 }
@@ -264,11 +269,11 @@ void ModuleEditor::BackgroundDockSpace()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("DockSpace Invisible Background",0, window_flags);
+	ImGui::Begin("DockSpace Invisible Background", 0, window_flags);
 	ImGui::PopStyleVar(3);
 
 
-	
+
 	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
@@ -278,7 +283,7 @@ void ModuleEditor::BackgroundDockSpace()
 
 void ModuleEditor::ObjectEditor()
 {
-	ImGui::Begin("Object Editor",&show_obj_edit_window);
+	ImGui::Begin("Object Editor", &show_obj_edit_window);
 
 	if (ImGui::CollapsingHeader("Create"))
 
@@ -286,23 +291,23 @@ void ModuleEditor::ObjectEditor()
 		if (ImGui::TreeNode("Create"))
 		{
 
-			
+
 			static float vec4f[4] = { 0, 0, 0,0 };
-			 
+
 			ImGui::Text("Radius");
-			ImGui::InputFloat4("X , Y , Z , radius",vec4f );
-	
-			
-		if(	ImGui::Button("Create Sphere"))
+			ImGui::InputFloat4("X , Y , Z , radius", vec4f);
+
+
+			if (ImGui::Button("Create Sphere"))
 			{
-			Sphere es({ vec4f[0],vec4f[1],vec4f[2] }, vec4f[3]);
-			spherelist.push_back(es);
+				Sphere es({ vec4f[0],vec4f[1],vec4f[2] }, vec4f[3]);
+				spherelist.push_back(es);
 
 			}
 			ImGui::TreePop();
 		}
 	}
-	
+
 
 	ImGui::End();
 
@@ -310,10 +315,10 @@ void ModuleEditor::ObjectEditor()
 
 void ModuleEditor::AddFPS(float fps, float ms)
 {
-	static int count=0;
+	static int count = 0;
 	if (count = 100)
 	{
-		for (int i = 0; i < 100-1; ++i)
+		for (int i = 0; i < 100 - 1; ++i)
 		{
 			fps_log[i] = fps_log[i + 1];
 			ms_log[i] = ms_log[i + 1];
@@ -327,9 +332,9 @@ void ModuleEditor::AddFPS(float fps, float ms)
 
 }
 
-void ModuleEditor::Log(const char* fmt,...)
+void ModuleEditor::Log(const char* fmt, ...)
 {
-	if ( console_p != nullptr &&console_window)
+	if (console_p != nullptr &&console_window)
 	{
 		console_p->AddLog(fmt);
 	}
@@ -399,6 +404,15 @@ void ModuleEditor::FileScreen()
 	ImGui::SameLine();
 	ImGui::TextDisabled("ESC");
 
+	if (ImGui::MenuItem("Load File"))
+	{
+		file_window = (file_window == false) ? true : false;
+	}
+	if (ImGui::MenuItem("Save File"))
+	{
+
+	}
+
 }
 
 void ModuleEditor::GameObjectScreen()
@@ -417,7 +431,7 @@ void ModuleEditor::GameObjectScreen()
 		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		go->AddComponent(GO_COMPONENT::CAMERA);
 	}
-	
+
 	if (ImGui::BeginMenu("3D Objects"))
 	{
 
@@ -543,7 +557,7 @@ void ModuleEditor::ComponentsScreen()
 				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::TRANSFORM);
 			}
 		}
-		
+
 	}
 	if (ImGui::MenuItem("Mesh"))
 	{
@@ -563,7 +577,7 @@ void ModuleEditor::ComponentsScreen()
 				App->scene_intro->selected_game_obj->AddComponent(GO_COMPONENT::MESH);
 			}
 		}
-		
+
 	}
 
 	if (ImGui::MenuItem("Material"))
@@ -586,8 +600,69 @@ void ModuleEditor::ComponentsScreen()
 
 		}
 	}
-	
+
 }
 
+void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir)
+{
+	ImGui::Begin("Load File", &App->ui->file_window);
 
+	ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
+	ImGui::BeginChild("File Browser", ImVec2(0, 500), true);
+	DrawDirectoryTree(from_dir, filter_extension);
+	ImGui::EndChild();
+	ImGui::PopStyleVar();
+	ImGui::End();
+}
 
+void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter_extension)
+{
+
+	std::vector<std::string> files_list;
+	std::vector<std::string> dirs_list;
+
+	//If the directory is empty
+	std::string dir((directory) ? directory : "");
+	dir += "/";
+
+	//Add the files and directories to the lists
+	App->fs->DiscoverFiles(dir.c_str(), files_list, dirs_list);
+
+	for (std::vector<std::string>::const_iterator it = dirs_list.begin(); it != dirs_list.end(); ++it)
+	{
+		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
+		{
+			DrawDirectoryTree((dir + (*it)).c_str(), filter_extension);
+			ImGui::TreePop();
+		}
+	}
+
+	std::sort(files_list.begin(), files_list.end());
+
+	for (std::vector<std::string>::const_iterator it = files_list.begin(); it != files_list.end(); ++it)
+	{
+		const std::string& file_str = *it;
+
+		bool correctExtension = true;
+
+		//Apply the filter. If the extensions doesn't match with the filter extension, it wont be shown
+		if (filter_extension && file_str.substr(file_str.find_last_of(".") + 1) != filter_extension)
+			correctExtension = false;
+
+		if (correctExtension && ImGui::TreeNodeEx(file_str.c_str(), ImGuiTreeNodeFlags_Leaf))
+		{
+			//If the file is clicked add a selected file
+			//TODO :/Call the LoadScene with the selected_file
+			if (ImGui::IsItemClicked()) {
+				sprintf_s(selected_file, FILE_MAX, "%s%s", dir.c_str(), file_str.c_str());
+
+				//Close the window if a file is double clicked
+				if (ImGui::IsMouseDoubleClicked(0))
+					file_window = false;
+			}
+
+			ImGui::TreePop();
+		}
+	}
+
+}
