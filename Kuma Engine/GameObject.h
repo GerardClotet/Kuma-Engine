@@ -97,6 +97,7 @@ public:
 	std::vector<Components*> components;
 	std::vector<GameObject*> game_object_childs;
 
+
 	bool texture_Checker = false;
 
 	BoundingBox bbox;

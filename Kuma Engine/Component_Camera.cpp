@@ -8,6 +8,7 @@ Component_Camera::Component_Camera(GameObject* game_object)
 {
 	this->gameObject_Item = game_object;
 	name = "camera";
+	comp_type = GO_COMPONENT::CAMERA;
 	SetAspectRatio(16, 9);
 	
 	float a  = frustum.horizontalFov;

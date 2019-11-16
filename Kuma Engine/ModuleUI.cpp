@@ -410,7 +410,7 @@ void ModuleEditor::FileScreen()
 	}
 	if (ImGui::MenuItem("Save File"))
 	{
-
+		file_save_window = (file_save_window == false) ? true : false;
 	}
 
 }
@@ -605,31 +605,78 @@ void ModuleEditor::ComponentsScreen()
 
 void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir)
 {
-	ImGui::Begin("Load File", &App->ui->file_window);
+	//ImGui::Begin("Load File", &App->ui->file_window);
 
-	ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
-	ImGui::BeginChild("File Browser", ImVec2(0, 200), true);
-	DrawDirectoryTree(from_dir, filter_extension);
-	ImGui::EndChild();
-	ImGui::PopStyleVar();
-
-	
-	if (ImGui::Button("Cancel"))
+	ImGui::OpenPopup("Load File");
+	if (ImGui::BeginPopupModal("Load File", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		//TODO
-		//LoadScene(selected_file)
-		file_window = false;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("OK"))
-	{
-		//TODO
-		//LoadScene(selected_file)
-		file_window = false;
-	}
-	
+		ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
+		ImGui::BeginChild("File Browser", ImVec2(300, 300), true);
+		DrawDirectoryTree(from_dir, filter_extension);
+		ImGui::EndChild();
+		ImGui::PopStyleVar();
 
-	ImGui::End();
+		if (ImGui::InputText("##Show File Selected", selected_file, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		{
+			//TODO 
+			//LoadScene(selected_file);
+			file_window = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+		{
+			//TODO
+			//LoadScene(selected_file)
+			file_window = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("OK"))
+		{
+			//TODO
+			//LoadScene(selected_file)
+			file_window = false;
+		}
+		ImGui::EndPopup();
+	}
+	//ImGui::End();
+}
+
+void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir)
+{
+	ImGui::OpenPopup("Save File");
+	if (ImGui::BeginPopupModal("Save File", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
+		ImGui::BeginChild("File Browser", ImVec2(300, 300), true);
+		DrawDirectoryTree(from_dir, filter_extension);
+		ImGui::EndChild();
+		ImGui::PopStyleVar();
+
+		if (ImGui::InputText("##Show File Selected", selected_file, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+		{
+			//Tenir en compte que al guardar la escena, es necessita un nom i també una extensió
+			//TODO 
+			//SaveScene(selected_file);
+			file_window = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+		{
+			//TODO
+			//SaveScene(selected_file)
+			if (selected_file)
+				file_save_window = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("OK"))
+		{
+			//TODO
+			//LoadScene(selected_file)
+			if (selected_file)
+				file_save_window = false;
+		}
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter_extension)

@@ -19,6 +19,7 @@ public:
 
 	update_status Draw();
 	void DisplayFiles();
+	void DisplaySaveFiles();
 
 	bool file_window = true;
 

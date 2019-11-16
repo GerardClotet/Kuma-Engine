@@ -38,6 +38,7 @@ public:
 	bool configuration_window = false;
 	bool console_window = false;
 	bool file_window = false;
+	bool file_save_window = false;
 	bool config_default = false;
 	bool about_window = false;
 	bool inspector_window = false;
@@ -48,6 +49,7 @@ public:
 
 	void Log(const char* fmt, ...);
 	void LoadFile(const char* filter_extension = nullptr, const char* from_dir = nullptr);
+	void SaveFile(const char* filter_extension = nullptr, const char* from_dir = nullptr);
 
 	std::list<Sphere> spherelist;
 
