@@ -132,7 +132,7 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	if (last_sec_frame_time.Read() > 1000)
+	if (last_sec_frame_time.ReadTime() > 1000)
 	{
 		last_sec_frame_time.Start();
 		prev_last_sec_frame_count = last_sec_frame_count;
@@ -140,7 +140,7 @@ void Application::FinishUpdate()
 	}
 	float avg_fps = (float)frame_count / ms_timer.ReadSec();
 	float seconds_since_startup = ms_timer.ReadSec();
-	double last_frame_ms = frame_time.Read();
+	double last_frame_ms = frame_time.ReadTime();
 
 
 	/*static char title[256];

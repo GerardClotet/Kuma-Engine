@@ -16,28 +16,68 @@ ModuleSerializeScene::~ModuleSerializeScene()
 update_status ModuleSerializeScene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		SaveScene("test");
+	{
+		if (!current_scene.empty())
+			SaveScene(current_scene.c_str());
+
+		else {
+			//display To set Name;
+			//current_scene = name_to_get
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		
+			LoadScene("ep");
+
+	
+	}
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSerializeScene::LoadScene()
+void ModuleSerializeScene::LoadScene(const char* path)
 {
 
+	std::string path_load = path;
+	path_load = ASSETS_SCENE_FOLDER + path_load + EXTENSION_SCENE; 
 
+	if (!App->fs->Exists(path_load.c_str()))
+	{
+		LOG("PATH %s doesn't exists or can be found", path_load.c_str());
+		return;
+	}
+	R_JSON_File* scene = json_serializer->R_JSONRead(path_load.c_str()); //good load
+
+	if (scene != nullptr)
+	{
+		LOG("");
+		R_JSON_Value* go = scene->GetValue("Camera");
+
+		int a = 1127477312;
+		go->GetInt( "UUID",a);
+
+	}
 }
 
 void ModuleSerializeScene::SaveScene(const char* name)
 {
 	std::string path_to_save = name;
+	current_scene = name;
+	path_to_save = ASSETS_SCENE_FOLDER + path_to_save + EXTENSION_SCENE; //change to assets scene
+	
+	if (!App->fs->Exists(path_to_save.c_str()))
+	{
+		std::string output;
+		char* buffer = new char[0];
 
-	path_to_save = LIBRARY_SCENE_FOLDER + path_to_save + EXTENSION_SCENE;
+		App->fs->SaveUnique(output, buffer, 0, path_to_save.c_str());
+
+	}
 
 	App->fs->NormalizePath(path_to_save);
 
-	/*const char* a = "C://Users//Gerard Clotet//Documents//GitHub//Kuma-Engine//Kuma Engine//Game//Library//Scenes//test.kumascene";
-	const char* ap = App->fs->GetWritePath();
-	App->fs->SplitFilePath(a->c_str(),a);*/
-	//App->fs->NormalizePath(*a);
+
 	R_JSON_File* scene = json_serializer->R_JSONWrite(path_to_save.c_str());
 
 	if (scene != nullptr)

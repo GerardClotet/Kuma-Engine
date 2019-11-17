@@ -7,6 +7,7 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
+#include "rapidjson/encodings.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/Quat.h"
 #include "Color.h"
@@ -38,7 +39,13 @@ public:
 	void SetQuat(const char* name, Quat quat);
 	void SetColor(const char* name, Color color);
 
+	void GetInt(const char* name, int value);
+	void GetString(const char* name, const char* value);
+
+
 	rapidjson::Document::AllocatorType* alloc_doc = nullptr;
+	rapidjson::Document::EncodingType* encoding_doc = nullptr;
+	
 	rapidjson::Value* value = nullptr;
 	std::vector<R_JSON_Value*> values_vec;
 };
