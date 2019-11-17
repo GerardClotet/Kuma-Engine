@@ -9,6 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
 #include "Component_Camera.h"
+#include "Component_Mesh.h"
 #include "Component_Transform.h"
 #include "PanelConfig.h"
 #include "Assimp/include/anim.h"
@@ -236,13 +237,16 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 	//It takes the first value, and the last and with them two does the function compare
 	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);
 	GameObject* temp = nullptr;
+	GameObject* selected = nullptr;
 	for (std::vector<RayCast>::iterator iter = scene_obj.begin(); iter != scene_obj.end(); ++iter)
 	{
 		temp = (*iter).trans->gameObject_Item;
-		break;
+		selected = TriangleTest(*ray, temp);
+		if (selected != nullptr)
+			break;
 	}
 	
-	return temp;
+	return selected;
 }
 
 void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std::vector<RayCast>& scene_obj)
@@ -262,18 +266,56 @@ void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std:
 			}
 		}
 	}
-		for (auto iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
-		{
-			BoxIntersection((*iter), ray, scene_obj);
-		}
+	for (auto iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
+	{
+		BoxIntersection((*iter), ray, scene_obj);
+	}
 
 	
 
 }
 
-bool ModuleSceneIntro::TriangleTest(LineSegment * ray, std::vector<RayCast>& scene_obj, RayCast & point)
+GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 {
-	return false;
+	Component_Mesh* mesh_go = nullptr;
+	if (obj->hasComponent(GO_COMPONENT::MESH))
+		mesh_go = obj->mesh;
+	// TODO: if obj doesnt have mesh, just set it selected because it might be camera or light
+	if (mesh_go != nullptr)
+	{
+		Component_Transform* trans_go = nullptr;
+		if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
+			trans_go = obj->transform;
+
+		for (uint i = 0; i < mesh_go->num_index; i += 3)
+		{
+			uint index_a, index_b, index_c;
+
+			index_a = mesh_go->index[i] * 3;
+			float3 point_a(&mesh_go->vertex[index_a]);
+
+			index_b = mesh_go->index[i + 1] * 3;
+			float3 point_b(&mesh_go->vertex[index_b]);
+
+			index_c = mesh_go->index[i + 2] * 3;
+			float3 point_c(&mesh_go->vertex[index_c]);
+
+			Triangle triangle_to_check(point_a, point_b, point_c);
+			triangle_to_check.Transform(trans_go->global_transformation);
+			if (ray.Intersects(triangle_to_check, nullptr, nullptr))
+			{
+				LOG("DID IT");
+				return obj;
+				break;
+			}
+		}
+	}
+
+	else if (obj->game_object_childs.empty())
+		return obj;
+	
+	else
+		return nullptr;
 }
 
 

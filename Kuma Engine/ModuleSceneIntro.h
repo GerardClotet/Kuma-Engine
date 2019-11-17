@@ -43,7 +43,7 @@ public:
 	void UpdateGameObject(GameObject* parent);
 	GameObject* MyRayCastIntersection(LineSegment* ray, RayCast& hit);
 	void BoxIntersection(GameObject* obj, LineSegment* ray, std::vector<RayCast>& scene_obj);
-	bool TriangleTest(LineSegment* ray, std::vector<RayCast>& scene_obj, RayCast& point);
+	GameObject* TriangleTest(LineSegment& ray, GameObject* obj);
 	
 
 
