@@ -392,6 +392,10 @@ void Component_Transform::DisplayInspector()
 	ImGui::Spacing();
 	ImGui::Spacing();
 
+	ImGui::Checkbox("Bounding Box", &boundingBoxActive);
+
+	ImGui::Spacing();
+
 	ImGui::ColorEdit4("AABB Color", (float*)& gameObject_Item->color_aabb);
 	ImGui::ColorEdit4("OBB Color", (float*)& gameObject_Item->color_obb);
 

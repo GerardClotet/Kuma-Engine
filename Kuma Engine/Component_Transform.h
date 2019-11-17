@@ -55,6 +55,7 @@ public:
 
 	float4x4 local_transformation = float4x4::identity;
 	float4x4 global_transformation = float4x4::identity;
+	bool boundingBoxActive = false;
 
 
 public:

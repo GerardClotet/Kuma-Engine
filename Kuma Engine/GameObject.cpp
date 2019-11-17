@@ -125,7 +125,8 @@ GameObject::~GameObject()
 bool GameObject::Update()
 {
 	isInsideFrustum = CheckAABBinFrustum();
-	DrawBoundingBox();
+	if (this->hasComponent(GO_COMPONENT::TRANSFORM) && this->transform->boundingBoxActive)
+		DrawBoundingBox();
 
 	for (std::vector<Components*>::iterator item_comp = components.begin(); item_comp != components.end(); ++item_comp)
 	{
@@ -177,7 +178,8 @@ bool GameObject::Update()
 	if (type == OBJECT_TYPE::SUBPARENT)
 	{
 		//TransformParentBBox(); //peta quan delete
-		DrawBoundingBox();
+		if (this->transform->boundingBoxActive)
+			DrawBoundingBox();
 		
 	}
 	return true;
