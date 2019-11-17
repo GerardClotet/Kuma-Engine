@@ -277,6 +277,7 @@ void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std:
 
 GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 {
+	bool intersected = false;
 	Component_Mesh* mesh_go = nullptr;
 	if (obj->hasComponent(GO_COMPONENT::MESH))
 		mesh_go = obj->mesh;
@@ -305,10 +306,14 @@ GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 			if (ray.Intersects(triangle_to_check, nullptr, nullptr))
 			{
 				LOG("DID IT");
+				intersected = true;
 				return obj;
 				break;
 			}
 		}
+		if (!intersected)
+			return nullptr;
+
 	}
 
 	else if (obj->game_object_childs.empty())
