@@ -417,3 +417,14 @@ void Component_Transform::SaveScene(R_JSON_Value* val)const
 
 	val->AddValue("Transformation", *transform);
 }
+
+bool Component_Transform::ItIntersect(LineSegment ray)
+{
+	AABB inter_box = gameObject_Item->bbox.aabb_global;
+	if (inter_box.IsFinite())
+		return ray.Intersects(inter_box);
+
+	else
+		return false;
+	
+}

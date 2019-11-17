@@ -40,6 +40,8 @@ public:
 	float4x4 GetParentGlobalMatrix()const;
 	void SaveScene(R_JSON_Value* val) const;
 
+	bool ItIntersect(LineSegment ray);
+
 private:
 	//position
 	float3 local_position = { 0,0,0 };

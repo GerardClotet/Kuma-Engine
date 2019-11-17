@@ -247,6 +247,7 @@
     <ClInclude Include="rapidjson\stream.h" />
     <ClInclude Include="rapidjson\stringbuffer.h" />
     <ClInclude Include="rapidjson\writer.h" />
+    <ClInclude Include="RayCast.h" />
     <ClInclude Include="SerializerJSON.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
