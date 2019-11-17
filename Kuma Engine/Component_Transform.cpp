@@ -392,6 +392,10 @@ void Component_Transform::DisplayInspector()
 	ImGui::Spacing();
 	ImGui::Spacing();
 
+	ImGui::Checkbox("Bounding Box", &boundingBoxActive);
+
+	ImGui::Spacing();
+
 	ImGui::ColorEdit4("AABB Color", (float*)& gameObject_Item->color_aabb);
 	ImGui::ColorEdit4("OBB Color", (float*)& gameObject_Item->color_obb);
 
@@ -412,4 +416,15 @@ void Component_Transform::SaveScene(R_JSON_Value* val)const
 	transform->Set3DVec("Scale", GetGlobalScale());
 
 	val->AddValue("Transformation", *transform);
+}
+
+bool Component_Transform::ItIntersect(LineSegment ray)
+{
+	AABB inter_box = gameObject_Item->bbox.aabb_global;
+	if (inter_box.IsFinite())
+		return ray.Intersects(inter_box);
+
+	else
+		return false;
+	
 }

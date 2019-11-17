@@ -11,7 +11,7 @@
 #include "Component_Camera.h"
 #include "Component_Transform.h"
 #include "PanelConfig.h"
-
+#include "Assimp/include/anim.h"
 
 #include "GameObject.h"
 
@@ -97,7 +97,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 }
 
 
-
+bool CompareRayCast(RayCast & a, RayCast & b)
+{
+	return a.distance < b.distance;
+}
 
 
 
@@ -224,6 +227,57 @@ void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 			UpdateGameObject((*iter));
 	}
 }
+
+GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast & hit)
+{
+	std::vector<RayCast> scene_obj;
+	BoxIntersection(root, ray, scene_obj);
+
+	//It takes the first value, and the last and with them two does the function compare
+	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);
+	GameObject* temp = nullptr;
+	for (std::vector<RayCast>::iterator iter = scene_obj.begin(); iter != scene_obj.end(); ++iter)
+	{
+		temp = (*iter).trans->gameObject_Item;
+		break;
+	}
+	
+	return temp;
+}
+
+void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std::vector<RayCast>& scene_obj)
+{
+	if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
+	{
+		if (obj->transform->ItIntersect(*ray))
+		{
+			RayCast hit(obj->transform);
+
+			float near_hit, far_hit;
+
+			if (ray->Intersects(obj->bbox.obb, near_hit, far_hit))
+			{
+				hit.distance = near_hit;
+				scene_obj.push_back(hit);
+			}
+		}
+	}
+		for (auto iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
+		{
+			BoxIntersection((*iter), ray, scene_obj);
+		}
+
+	
+
+}
+
+bool ModuleSceneIntro::TriangleTest(LineSegment * ray, std::vector<RayCast>& scene_obj, RayCast & point)
+{
+	return false;
+}
+
+
+
 
 
 

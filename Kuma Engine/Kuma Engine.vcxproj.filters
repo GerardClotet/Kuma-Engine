@@ -735,6 +735,9 @@
     <ClInclude Include="ModuleSerializeScene.h">
       <Filter>modules</Filter>
     </ClInclude>
+    <ClInclude Include="RayCast.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

@@ -5,6 +5,7 @@
 #include "MathGeoLib/include/Geometry/Frustum.h"
 
 class Component_Camera;
+class GameObject;
 
 
 class ModuleCamera3D : public Module
@@ -21,9 +22,11 @@ public:
 	float* GetViewMatrix();
 	void MovementCamera();
 	void RotationCamera(float dt);
+	void Focus();
 	void ZoomCamera();
 	void Orbit(float motion_x, float motion_y);
 	void LookAt(float motion_x, float motion_y);
+	GameObject* Pick(float3* hit_point = nullptr);
 
 
 public:

@@ -10,6 +10,7 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLibFwd.h"
+#include "RayCast.h"
 
 #define MAX_SNAKE 2
 
@@ -38,14 +39,13 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void createGrid();
 	void createDirtyCube();
-
-	//AddGameObject
-	//GameObject* AddGameObject(std::string name, OBJECT_TYPE type); // not using
-	//GameObject* AddGameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh); //not using anymore
-	//
-	
 	GameObject* CreateGameObject(GameObject* parent,OBJECT_TYPE type, std::string name);
 	void UpdateGameObject(GameObject* parent);
+	GameObject* MyRayCastIntersection(LineSegment* ray, RayCast& hit);
+	void BoxIntersection(GameObject* obj, LineSegment* ray, std::vector<RayCast>& scene_obj);
+	bool TriangleTest(LineSegment* ray, std::vector<RayCast>& scene_obj, RayCast& point);
+	
+
 
 	GameObject* root = nullptr; //emptygame objects containing all game obects
 	GameObject* selected_game_obj = nullptr;

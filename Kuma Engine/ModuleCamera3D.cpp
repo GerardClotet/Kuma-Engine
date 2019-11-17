@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "ModuleSceneIntro.h"
@@ -7,6 +8,7 @@
 #include "Component_Transform.h"
 #include "Component_Camera.h"
 #include "ImGui/imgui.h"
+#include "RayCast.h"
 
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -83,12 +85,22 @@ update_status ModuleCamera3D::Update(float dt)
 				LookAt(spot);
 			}
 		}*/
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+			Focus();
 
 		MovementCamera();
 		ZoomCamera();
 
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 			RotationCamera(dt);
+
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			GameObject* pick_go = Pick();
+			if (pick_go != nullptr)
+				App->scene_intro->selected_game_obj = pick_go;
+
+		}
 
 	}
 	return UPDATE_CONTINUE;
@@ -172,6 +184,11 @@ void ModuleCamera3D::RotationCamera(float dt)
 	}
 }
 
+void ModuleCamera3D::Focus()
+{
+
+}
+
 void ModuleCamera3D::ZoomCamera()
 {
 	newPos = { 0,0,0 };
@@ -253,5 +270,26 @@ void ModuleCamera3D::Orbit(float motion_x, float motion_y)
 
 void ModuleCamera3D::LookAt(float motion_x, float motion_y)
 {
+}
+
+GameObject * ModuleCamera3D::Pick(float3 * hit_point)
+{
+	float width = (float)App->window->GetScreenWidth();
+	float height = (float)App->window->GetScreenHeight();
+
+	int mouse_x, mouse_y;
+	mouse_x = App->input->GetMouseX();
+	mouse_y = App->input->GetMouseY();
+
+	float normalized_x = -(1.0f - (float(mouse_x) * 2.0f) / width);
+	float normalized_y = 1.0f - (float(mouse_y) * 2.0f) / height;
+
+	LineSegment pick_ray = camera_fake->frustum.UnProjectLineSegment(normalized_x, normalized_y);
+
+	RayCast ray;
+
+	
+
+	return App->scene_intro->MyRayCastIntersection(&pick_ray, ray);
 }
 
