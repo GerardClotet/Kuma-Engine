@@ -14,8 +14,11 @@ public:
 
 	update_status Update(float dt);
 
-	void LoadScene();
+	void LoadScene(const char* path);
 	void SaveScene(const char* path);
 
 	SerializerR_JSON* json_serializer;
+
+private:
+	std::string current_scene;
 };

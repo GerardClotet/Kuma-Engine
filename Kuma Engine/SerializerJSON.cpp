@@ -228,19 +228,36 @@ void R_JSON_Value::SetColor(const char* name, Color color)
 	this->value->AddMember(index, a, *alloc_doc);
 }
 
-R_JSON_File::R_JSON_File(rapidjson::FileReadStream* read_st, FILE* file)
+void R_JSON_Value::GetInt(const char* name, int value)
 {
-	filep = file;
-	read_st = read_stream;
+	std::string str = name;
+	unsigned char uC = (unsigned)name;
+	encoding_doc->supportUnicode;
+	//encoding_doc->GetRange(str.c_str());
+	rapidjson::Value i(value);
+	
+	this->value->FindMember(name);
+	this->value->GetInt();
+	//rapidjson::Value() ep
+}
+
+void R_JSON_Value::GetString(const char* name, const char* value)
+{
+}
+
+R_JSON_File::R_JSON_File(rapidjson::FileReadStream* read_st, FILE* file): read_stream(read_st),filep(file)
+{
+	
+	
 	document = new rapidjson::Document();
 	document->ParseStream(*read_st);
-
+	LOG("haha");
 	alloc_doc = &document->GetAllocator();
 }
 
 R_JSON_File::R_JSON_File(rapidjson::FileWriteStream* write_st, FILE* file) : write_stream(write_st), filep(file)
 {
-
+	LOG("hehe");
 	document = new rapidjson::Document();
 	document->SetObject();
 

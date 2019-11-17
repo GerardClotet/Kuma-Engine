@@ -56,6 +56,9 @@ public:
 
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;
+	const char* GetExtension(const char* extension,const char* directory = nullptr);
+	const char* ChooseExtension(const char* ext);
+
 private:
 	//void DisplayConsole();
 	//void DisplayConfig();
@@ -64,12 +67,16 @@ private:
 	void FileScreen();
 	void GameObjectScreen();
 	void ComponentsScreen();
-
 	void DrawDirectoryTree(const char* directory, const char* filter_extension);
+	void ShowErrorPopUp(const char* text);
 
 private:
 	bool activeWindow = true;
 	bool changeColor = false;
+
+	bool alternate_extension = false;
+	bool show_error_popUp = false;
+	std::string error_text;
 	/*std::vector<float>fps_log;
 	std::vector<float>ms_log;*/
 public:

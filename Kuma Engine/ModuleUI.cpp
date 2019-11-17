@@ -19,7 +19,7 @@
 #include <algorithm>
 #include "GameObject.h"
 #include "Components.h"
-
+#include "ModuleSerializeScene.h"
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -183,6 +183,9 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ObjectEditor();
 	}
 
+	//if (show_error_popUp)
+	//	ShowErrorPopUp(error_text.c_str());
+
 	ImGui::Render();
 
 
@@ -206,7 +209,7 @@ bool ModuleEditor::CleanUp()
 	}
 	panel_list.clear();
 	console_p->Clear();
-	//panel_list.clear();
+	
 	panel_list.clear();
 	console_p = nullptr;
 	config_p = nullptr;
@@ -369,7 +372,7 @@ void ModuleEditor::HelpScreen()
 	}
 	if (ImGui::MenuItem("About"))
 	{
-		about_window = (about_window == false) ? true : false;
+		about_window = (about_window == false) ? true : false;//here aki
 	}
 }
 
@@ -641,14 +644,18 @@ void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir
 	//ImGui::End();
 }
 
-void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir)
+void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir) //TODO MAKE FILTER OPTIONAL, initialazing at char* nullptr / filter_ext  true false
 {
 	ImGui::OpenPopup("Save File");
 	if (ImGui::BeginPopupModal("Save File", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
 		ImGui::BeginChild("File Browser", ImVec2(300, 300), true);
-		DrawDirectoryTree(from_dir, filter_extension);
+		
+	
+			DrawDirectoryTree(from_dir, filter_extension);
+
+		
 		ImGui::EndChild();
 		ImGui::PopStyleVar();
 
@@ -657,23 +664,42 @@ void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir
 			//Tenir en compte que al guardar la escena, es necessita un nom i també una extensió
 			//TODO 
 			//SaveScene(selected_file);
-			file_window = false;
+			std::string tttemp = App->fs->GetFileName(selected_file);
+			if (selected_file != "")
+			{
+				App->serialize->SaveScene(selected_file);
+				file_window = false;
+			}
+			else {
+				show_error_popUp = true;
+				error_text = "EmptyName";
+				
+			
+
+				
+			}
+
+		//	else 
+			
 		}
+		
 		ImGui::SameLine();
 		if (ImGui::Button("Cancel"))
 		{
-			//TODO
-			//SaveScene(selected_file)
+			
 			if (selected_file)
 				file_save_window = false;
+			
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("OK"))
 		{
-			//TODO
-			//LoadScene(selected_file)
+			
 			if (selected_file)
+			{
+				App->serialize->SaveScene(selected_file);
 				file_save_window = false;
+			}
 		}
 		ImGui::EndPopup();
 	}
@@ -686,20 +712,13 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 	std::vector<std::string> dirs_list;
 
 	//If the directory is empty
+
+	
 	std::string dir((directory) ? directory : "");
 	dir += "/";
-
+	std::string test;
 	//Add the files and directories to the lists
 	App->fs->DiscoverFiles(dir.c_str(), files_list, dirs_list);
-
-	for (std::vector<std::string>::const_iterator it = dirs_list.begin(); it != dirs_list.end(); ++it)
-	{
-		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
-		{
-			DrawDirectoryTree((dir + (*it)).c_str(), filter_extension);
-			ImGui::TreePop();
-		}
-	}
 
 	std::sort(files_list.begin(), files_list.end());
 
@@ -708,10 +727,16 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 		const std::string& file_str = *it;
 
 		bool correctExtension = true;
-
+		test  = (*it);
+		test = ChooseExtension(test.substr(test.find_last_of(".") + 1).c_str()); //to apply filter
 		//Apply the filter. If the extensions doesn't match with the filter extension, it wont be shown
-		if (filter_extension && file_str.substr(file_str.find_last_of(".") + 1) != filter_extension)
+		//GetExtension();
+
+		if (test == "Not Found")
 			correctExtension = false;
+
+		/*if (test.c_str() && file_str.substr(file_str.find_last_of(".") + 1) != test.c_str())
+			correctExtension = false;*/
 
 		if (correctExtension && ImGui::TreeNodeEx(file_str.c_str(), ImGuiTreeNodeFlags_Leaf))
 		{
@@ -725,6 +750,8 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 				{
 					file_window = false;
 					//LoadScene(selected_file);
+					
+
 				}
 			}
 
@@ -732,4 +759,101 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 		}
 	}
 
+	for (std::vector<std::string>::const_iterator it = dirs_list.begin(); it != dirs_list.end(); ++it)
+	{
+		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
+		{
+			DrawDirectoryTree((dir + (*it)).c_str(), filter_extension); 
+			ImGui::TreePop();
+		}
+	}
+
+
+
+
+}
+
+
+const char* ModuleEditor::GetExtension(const char* extension,const char* directory)
+{
+	std::string size = extension;
+	char c=size[0];
+	bool upper_extension = false;
+	if (isupper(c))
+		upper_extension = true;
+
+	for (int i = 0; i < EXTENSION_LIST; ++i)
+	{
+		if (upper_extension)
+		{
+			alternate_extension ? alternate_extension = false : true; //to alternate drawing between lower & upper extensions with the same name
+
+			std::string temp = extensions_size[i];
+			if(isupper(temp[0]))
+				return extensions_size[i];
+
+			continue;
+			
+		}
+		if (extension == extensions_size[i])
+
+			return extensions_size[i];
+			
+
+		
+	}
+
+
+	return "Extension Not Found";
+}
+
+const char* ModuleEditor::ChooseExtension(const char* ext)
+{
+	int extension_case;
+
+	for (int i = 0; i < EXTENSION_LIST; ++i)
+	{
+		
+		if (strcmp(ext, extensions_size[i]) == 0)
+		{
+			extension_case = i;
+			break;
+		}
+		else extension_case = 5;
+	}
+	
+	switch (extension_case)
+	{
+	case 0:
+
+		ext = extensions_size[0];
+
+		break;
+	case 1:
+
+		ext = extensions_size[1];
+
+		break;
+	case 2:
+
+		ext = extensions_size[2];
+
+		break;
+	case 3:
+
+		ext = extensions_size[3];
+
+		break;
+	case 4:
+
+		ext = extensions_size[4];
+
+		break;
+	default:
+		return "Not Found";
+		break;
+
+	}
+
+	return ext;
 }
