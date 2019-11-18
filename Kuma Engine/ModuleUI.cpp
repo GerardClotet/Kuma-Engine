@@ -9,6 +9,7 @@
 #include "PanelInspector.h"
 #include "PanelHierarchy.h"
 #include "PanelFile.h"
+#include "PanelScene.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleFileSystem.h"
 #include "ImGui/imgui.h"
@@ -58,6 +59,7 @@ bool ModuleEditor::Start()
 	panel_list.push_back(inspector_p = new PanelInspector("Inspector"));
 	panel_list.push_back(hierarchy_p = new PanelHierarchy("Hierarchy"));
 	panel_list.push_back(file_p = new PanelFile("File"));
+	panel_list.push_back(scene_p = new PanelScene("Scene"));
 	console_window = true;
 	hierarchy_window = true;
 	inspector_window = true;
@@ -85,11 +87,14 @@ bool ModuleEditor::Start()
 
 }
 
+update_status ModuleEditor::PreUpdate(float dt)
+{
+
+	return UPDATE_CONTINUE;
+}
+
 update_status ModuleEditor::Update(float dt)
 {
-	/*if (App->scene_intro->selected_game_obj !=nullptr)
-		inspector_window = true;*/
-
 
 	return UPDATE_CONTINUE;
 }
@@ -97,8 +102,6 @@ update_status ModuleEditor::Update(float dt)
 update_status ModuleEditor::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-
-
 
 
 	//Change style color with hotkey
@@ -172,6 +175,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	{
 		ret = (*item)->Draw();
 	}
+
 	//call demo function
 	if (demoWindow)
 		ImGui::ShowDemoWindow();//ImGui::ShowDemoWindow();
@@ -203,6 +207,7 @@ bool ModuleEditor::CleanUp()
 	std::list<Panel*>::iterator item = panel_list.begin();
 	while (item != panel_list.end())
 	{
+		//TODO :/ DAFUK BRO WE SUCK DELETING THINGS
 		//panel_list.erase(item);
 		/*panel_list.remove(*item);*/
 		++item;
@@ -218,6 +223,14 @@ bool ModuleEditor::CleanUp()
 }
 
 
+
+void ModuleEditor::DrawImGui()
+{
+	// Rendering
+	ImGui::Render();
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
 
 

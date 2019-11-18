@@ -4,6 +4,7 @@
 #include "glmath.h"
 #include "Light.h"
 #include "FBO.h"
+#include "ImGui/imgui.h"
 
 #define MAX_LIGHTS 8
 
@@ -21,6 +22,9 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+
+	ImVec2 GetTextureSize() const;
+	uint GetWinTexture() const;
 
 public:
 	FBO* fbo = nullptr;

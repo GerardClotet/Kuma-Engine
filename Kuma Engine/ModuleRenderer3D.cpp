@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleUI.h"
 #include "GameObject.h"
 #include "Component_Camera.h"
 #include "Component_Transform.h"
@@ -140,6 +141,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	fbo->Bind();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -159,6 +162,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	fbo->Unbind();
+	App->ui->DrawImGui();
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -167,6 +172,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
+
+
+	fbo->Unbind();
+	RELEASE(fbo);
 
 	SDL_GL_DeleteContext(context);
 
@@ -185,4 +194,14 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+ImVec2 ModuleRenderer3D::GetTextureSize() const
+{
+	return ImVec2(fbo->width, fbo->height);
+}
+
+uint ModuleRenderer3D::GetWinTexture() const
+{
+	return fbo->GetTexture();
 }

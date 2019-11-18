@@ -15,6 +15,7 @@ class PanelAbout;
 class PanelInspector;
 class PanelHierarchy;
 class PanelFile;
+class PanelScene;
 
 
 class ModuleEditor : public Module
@@ -23,9 +24,11 @@ public:
 	ModuleEditor(Application* app, bool start_enabled = true);
 	~ModuleEditor();
 	bool Start();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
+	void DrawImGui();
 	static void HelpMarker(const char* desc);
 	void LoadConfig(JSON_Object*& config);
 	void LoadInputEvent(uint id, uint state);
@@ -81,12 +84,13 @@ private:
 	std::vector<float>ms_log;*/
 public:
 
-	PanelConsole* console_p = nullptr;
-	PanelConfig* config_p = nullptr;
-	PanelAbout* about_p = nullptr;
+	PanelConsole* console_p		= nullptr;
+	PanelConfig* config_p		= nullptr;
+	PanelAbout* about_p			= nullptr;
 	PanelInspector* inspector_p = nullptr;
 	PanelHierarchy* hierarchy_p = nullptr;
-	PanelFile* file_p = nullptr;
+	PanelFile* file_p			= nullptr;
+	PanelScene* scene_p			= nullptr;
 	char selected_file[FILE_MAX];
 	std::list<Panel*> panel_list;
 };
