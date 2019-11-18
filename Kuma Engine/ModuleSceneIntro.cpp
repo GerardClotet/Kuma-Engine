@@ -1,6 +1,7 @@
 ﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleInput.h"
 #include <random>
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
@@ -13,6 +14,8 @@
 #include "Component_Transform.h"
 #include "PanelConfig.h"
 #include "Assimp/include/anim.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_internal.h"
 
 #include "GameObject.h"
 
@@ -74,6 +77,9 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->camera->capMouseInput = false;
 
 	UpdateGameObject(root);
+
+	/*GuizmosControls();
+	GuizmosLogic();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -321,6 +327,49 @@ GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 	
 	else
 		return nullptr;
+}
+
+void ModuleSceneIntro::GuizmosControls()
+{
+	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+		guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		guizmo_operation = ImGuizmo::OPERATION::SCALE;
+
+	if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN))
+		guizmo_mode = ImGuizmo::MODE::WORLD;
+
+	if ((App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN))
+		guizmo_mode = ImGuizmo::MODE::LOCAL;
+}
+
+void ModuleSceneIntro::GuizmosLogic()
+{
+	if (App->scene_intro->selected_game_obj != nullptr) {
+		Component_Transform* transform = App->scene_intro->selected_game_obj->transform;
+
+		float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
+		view_transposed.Transpose();
+		float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
+		projection_transposed.Transpose();
+		float4x4 object_transform_matrix = transform->global_transformation;
+		object_transform_matrix.Transpose();
+		float4x4 delta_matrix;
+
+		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
+		ImGuizmo::SetDrawlist();
+		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, object_transform_matrix.ptr(), delta_matrix.ptr());
+		ImGuizmo::Enable(true);
+		if (ImGuizmo::IsUsing() && !delta_matrix.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+		{
+			transform->SetLocalTransform(object_transform_matrix.Transposed());
+		}
+	}
+	
 }
 
 

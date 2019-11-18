@@ -71,6 +71,12 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 
+
+		//Initialize FBO
+		fbo = new FBO();
+		fbo->Create((uint)App->window->GetScreenWidth(), (uint)App->window->GetScreenHeight());
+
+
 		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -111,7 +117,7 @@ bool ModuleRenderer3D::Init()
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->GetScreenWidth(), App->window->GetScreenHeight());
 
 	/*App->hardware->gpu_vendor = (const char*)glGetString(GL_VENDOR);
 	App->hardware->gpu_brand = (const char*)glGetString(GL_RENDERER);*/

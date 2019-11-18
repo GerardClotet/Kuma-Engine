@@ -221,6 +221,24 @@
     <ClCompile Include="ModuleSerializeScene.cpp">
       <Filter>modules</Filter>
     </ClCompile>
+    <ClCompile Include="imGuizmo\ImSequencer.cpp">
+      <Filter>Guizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="imGuizmo\ImGuizmo.cpp">
+      <Filter>Guizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="imGuizmo\ImGradient.cpp">
+      <Filter>Guizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="imGuizmo\ImCurveEdit.cpp">
+      <Filter>Guizmos</Filter>
+    </ClCompile>
+    <ClCompile Include="FBO.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelScene.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -738,6 +756,24 @@
     <ClInclude Include="RayCast.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="imGuizmo\ImSequencer.h">
+      <Filter>Guizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="imGuizmo\ImGuizmo.h">
+      <Filter>Guizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="imGuizmo\ImGradient.h">
+      <Filter>Guizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="imGuizmo\ImCurveEdit.h">
+      <Filter>Guizmos</Filter>
+    </ClInclude>
+    <ClInclude Include="FBO.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelScene.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -793,6 +829,9 @@
     </Filter>
     <Filter Include="tools\rapidjson">
       <UniqueIdentifier>{e0d2ccce-b770-45f8-8937-775112e50900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Guizmos">
+      <UniqueIdentifier>{7d89d81d-80e3-4223-9634-aa7e94ee24ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
