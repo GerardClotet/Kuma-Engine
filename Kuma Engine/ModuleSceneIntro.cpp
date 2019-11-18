@@ -9,6 +9,8 @@
 #include "ModuleUI.h"
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
+#include "ModuleRenderer3D.h"
+#include "FBO.h"
 #include "Component_Camera.h"
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
@@ -76,7 +78,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	else
 		App->camera->capMouseInput = false;
 
+	App->renderer3D->fbo->Bind();
 	UpdateGameObject(root);
+	App->renderer3D->fbo->Unbind();
 
 	/*GuizmosControls();
 	GuizmosLogic();*/
