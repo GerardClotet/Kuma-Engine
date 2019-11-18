@@ -78,8 +78,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	UpdateGameObject(root);
 
-	/*GuizmosControls();
-	GuizmosLogic();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -363,7 +361,7 @@ void ModuleSceneIntro::GuizmosLogic()
 		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
 		ImGuizmo::SetDrawlist();
 		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, object_transform_matrix.ptr(), delta_matrix.ptr());
-		ImGuizmo::Enable(true);
+	
 		if (ImGuizmo::IsUsing() && !delta_matrix.IsIdentity()/*Test if the gameobject is static or dynamic*/)
 		{
 			transform->SetLocalTransform(object_transform_matrix.Transposed());

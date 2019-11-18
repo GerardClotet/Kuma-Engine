@@ -45,9 +45,6 @@ public:
 	GameObject* MyRayCastIntersection(LineSegment* ray, RayCast& hit);
 	void BoxIntersection(GameObject* obj, LineSegment* ray, std::vector<RayCast>& scene_obj);
 	GameObject* TriangleTest(LineSegment& ray, GameObject* obj);
-	
-private:
-
 	void GuizmosControls();
 	void GuizmosLogic();
 
