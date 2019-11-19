@@ -43,7 +43,7 @@ public:
 	bool about_window = false;
 	bool inspector_window = false;
 	bool hierarchy_window = false;
-
+	bool activate_gizmo = true;
 
 	void AddFPS(float fps, float ms);
 

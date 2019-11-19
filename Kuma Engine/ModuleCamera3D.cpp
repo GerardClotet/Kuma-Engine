@@ -74,32 +74,22 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 
 
-		//Focus
-		/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		{
-			if (App->scene_intro->selected_game_obj != nullptr)
-			{
-				vec3 spot = { App->scene_intro->selected_game_obj->game_object_pos.x,
-								App->scene_intro->selected_game_obj->game_object_pos.y,
-								App->scene_intro->selected_game_obj->game_object_pos.z };
-				LookAt(spot);
-			}
-		}*/
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 			Focus();
 
 		MovementCamera();
 		ZoomCamera();
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+		if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 			RotationCamera(dt);
 
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			GameObject* pick_go = Pick();
 			if (pick_go != nullptr)
 				App->scene_intro->selected_game_obj = pick_go;
-
+			else
+				App->scene_intro->selected_game_obj = nullptr;
 		}
 
 		if (pickedRayCast)
@@ -125,7 +115,7 @@ float* ModuleCamera3D::GetViewMatrix()
 void ModuleCamera3D::MovementCamera()
 {
 	newPos = { 0,0,0 };
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		if (!capMouseInput)
 		{
@@ -189,7 +179,40 @@ void ModuleCamera3D::RotationCamera(float dt)
 
 void ModuleCamera3D::Focus()
 {
+	if (App->scene_intro->selected_game_obj != nullptr)
+	{
+		AABB bobox = App->scene_intro->selected_game_obj->bbox.aabb_global;
 
+		if (bobox.IsFinite())
+		{
+			float offset = bobox.Diagonal().Length() * 2;
+
+			camera_fake->Look(bobox.CenterPoint());
+
+			Reference = bobox.CenterPoint();
+
+			float3 distance = camera_fake->frustum.pos - bobox.CenterPoint();
+
+			//Create a shorter vector bewtween de camera and the bbox making it proporcional for every distance
+			point_to_look = camera_fake->frustum.pos - (distance - (offset * distance.Normalized()/*make the vector distance shorter*/));
+			start_lerp = true; //move the camera
+		}
+		else
+		{
+			Component_Transform* transform = nullptr;
+			if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
+				transform = App->scene_intro->selected_game_obj->transform;
+			
+			float3 pos = transform->GetGlobalPosition();
+
+			camera_fake->Look(pos);
+			Reference = pos;
+
+			float3 distance = camera_fake->frustum.pos - pos;
+			point_to_look = camera_fake->frustum.pos - (distance - (2.f * distance.Normalized()));
+			start_lerp = true;
+		}
+	}
 }
 
 void ModuleCamera3D::ZoomCamera()
@@ -288,7 +311,6 @@ GameObject * ModuleCamera3D::Pick(float3 * hit_point)
 	float normalized_y = 1.0f - (float(mouse_y) * 2.0f) / height;
 
 	pick_ray = camera_fake->frustum.UnProjectLineSegment(normalized_x, normalized_y);
-	pickedRayCast = true;
 
 	RayCast ray;
 
@@ -299,10 +321,10 @@ GameObject * ModuleCamera3D::Pick(float3 * hit_point)
 
 void ModuleCamera3D::DrawLineSegment()
 {
-	glLineWidth(5.0f);
+	glLineWidth(2.0f);
 	glBegin(GL_LINES);
 
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(ray_color.r, ray_color.g, ray_color.b);
 	glVertex3f(pick_ray.a.x, pick_ray.a.y, pick_ray.a.z);
 	glVertex3f(pick_ray.b.x, pick_ray.b.y, pick_ray.b.z);
 	glEnd();

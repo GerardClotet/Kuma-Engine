@@ -404,7 +404,16 @@ void PanelConfig::DisplayConfig()
 		ImGui::ColorEdit4("Face normal Color", (float*)& App->importer->face_normal_color);
 		ImGui::ColorEdit4("Vertex normal Color", (float*)& App->importer->vertex_normal_color);
 
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
 
+		ImGui::Checkbox("Debug Mouse Picking", &App->camera->pickedRayCast);
+		ImGui::Spacing();
+		ImGui::ColorEdit4("Raycast Color", (float*)& App->camera->ray_color);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
 	}
 
 	if (ImGui::CollapsingHeader("Scene Camera"))

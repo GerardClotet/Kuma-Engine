@@ -1,6 +1,7 @@
 #include "Component_Transform.h"
 #include "Application.h"
 #include "GameObject.h"
+#include "ModuleUI.h"
 #include "ImGui/imgui.h"
 #include "Component_Mesh.h"
 Component_Transform::Component_Transform(GameObject * obj, float3 pos, float3 scale, Quat rot)
@@ -435,7 +436,7 @@ void Component_Transform::DisplayInspector()
 	ImGui::Spacing();
 	ImGui::Spacing();
 	ImGui::Spacing();
-	ImGui::Spacing();
+	ImGui::Separator();
 
 	ImGui::Checkbox("Bounding Box", &boundingBoxActive);
 
@@ -444,6 +445,14 @@ void Component_Transform::DisplayInspector()
 	ImGui::ColorEdit4("AABB Color", (float*)& gameObject_Item->color_aabb);
 	ImGui::ColorEdit4("OBB Color", (float*)& gameObject_Item->color_obb);
 
+	ImGui::Separator();
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Checkbox("Activate Gizmo", &App->ui->activate_gizmo);
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
 
 }
 
