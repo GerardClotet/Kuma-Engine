@@ -11,6 +11,7 @@ class Component_Camera : public Components
 {
 	public:
 	Component_Camera(GameObject* game_object);
+	Component_Camera();//SetLinked GameObjectManually
 	~Component_Camera();
 
 	void ReloadFrustrum();

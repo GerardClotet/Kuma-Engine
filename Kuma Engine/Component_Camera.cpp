@@ -36,6 +36,12 @@ Component_Camera::Component_Camera(GameObject* game_object)
 	ReloadFrustrum();
 }
 
+Component_Camera::Component_Camera()
+{
+	comp_type = GO_COMPONENT::CAMERA;
+	
+}
+
 Component_Camera::~Component_Camera()
 {
 }
@@ -202,16 +208,20 @@ void Component_Camera::SaveScene(R_JSON_Value* val) const
 	R_JSON_Value* camera = val->NewValue(rapidjson::kObjectType);
 
 	camera->SetString("Component", "Camera");
+	camera->SetUint("FrustumType", frustum.type);
+	camera->SetFloat("Horizontal Fov", horizontal_fov);
+	camera->SetFloat("Vertical Fov", vertical_fov);
+
+	camera->SetFloat("AspectRatio", aspect_ratio);
+	camera->SetFloat("Far Plane", far_plane);
+	camera->SetFloat("Near Plane", near_plane);
+
 	camera->Set3DVec("Position", GetCameraPosition());
 	camera->Set3DVec("front", frustum.front);
 	camera->Set3DVec("Up", frustum.up);
-	camera->SetUint("FrustumType", frustum.type);
 
-	camera->SetFloat("AspectRatio", aspect_ratio);
-	camera->SetFloat("FarPlane", far_plane);
-	camera->SetFloat("Near Plane", near_plane);
-	camera->SetFloat("Horizontal Fov", horizontal_fov);
-	camera->SetFloat("Vertical Fov", vertical_fov);
+	
+	
 
 	camera->SetColor("Frustum Color", color_frustum);
 	camera->SetColor("Camera Background Color", color_camera_bg);

@@ -122,7 +122,7 @@ void Component_Material::SaveScene(R_JSON_Value* v)const
 	material->SetString("Component", "Material");
 
 	material->SetString("Name", temp->name.c_str());
-	material->SetString("Texture Paht", GetTexturePath().c_str());
+	material->SetString("Texture Path", GetTexturePath().c_str());
 	//For now just this
 
 	v->AddValue("Material", *material);

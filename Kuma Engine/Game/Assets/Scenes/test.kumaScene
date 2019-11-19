@@ -1,0 +1,164 @@
+{
+    "GameObject Root": [
+        {
+            "UUID": 2085656909,
+            "Parent UUID": 1,
+            "Name": "bakerhouse",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 3288424981,
+            "Parent UUID": 2085656909,
+            "Name": "Chimney",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Chimney",
+                    "Meta Route": "/Library/Meshes/Chimney_meta.kuma"
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Assets/textures/bakerhouse.dds",
+                    "Texture Path": "Assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2020379073,
+            "Parent UUID": 2085656909,
+            "Name": "Baker_house",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Baker_house",
+                    "Meta Route": "/Library/Meshes/Baker_house_meta.kuma"
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Assets/textures/bakerhouse.dds",
+                    "Texture Path": "Assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2126363077,
+            "Parent UUID": 1,
+            "Name": "Camera Harcoded",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Camera",
+                    "FrustumType": 2,
+                    "Horizontal Fov": 1.287712812423706,
+                    "Vertical Fov": 1.0471975803375245,
+                    "AspectRatio": -1.5816464369601856e38,
+                    "Far Plane": 100.0,
+                    "Near Plane": 1.0,
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "front": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Up": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "Frustum Color": [
+                        1.0,
+                        0.5400000214576721,
+                        0.0,
+                        1.0
+                    ],
+                    "Camera Background Color": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        1.0
+                    ]
+                }
+            ]
+        }
+    ]
+}

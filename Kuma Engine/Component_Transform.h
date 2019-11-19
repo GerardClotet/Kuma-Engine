@@ -28,6 +28,17 @@ public:
 	const float3 GetLocalScale()const;
 	const float3 GetGlobalScale()const;
 
+	//LOADING SCENE
+
+	//axis counter  x y z, 0 1 2
+	void SetLocalPosToSingleAxis(const float pos, int axis);
+
+	//axis ==3 sets Quat angle 
+	void SetLocalRotToSingleAxis(const float pos, int axis);
+
+
+	
+	void SetLocalScaleToSingleAxis(const float scale, int axis);
 	//ROTATION
 	void SetLocalRotation(const float x, const float y, const float z, const float angle);
 	const Quat GetLocalRotation()const;

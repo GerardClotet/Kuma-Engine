@@ -12,7 +12,7 @@ R_JSON_File* SerializerR_JSON::R_JSONRead(const char* path)
 {
 
 	FILE* file = fopen(path,"rb"); //read binary
-	char buffer[100000];
+	char buffer[65536];
 
 	if (file != nullptr)
 		return new R_JSON_File(new rapidjson::FileReadStream(file, buffer, sizeof(buffer)), file);
@@ -26,7 +26,7 @@ R_JSON_File* SerializerR_JSON::R_JSONWrite(const char* path)
 
 	FILE* file = fopen(path, "wb"); //write binary
 
-	char buffer[100000];
+	char buffer[65536];//maximum allowed
 	if (file != nullptr)
 		return new R_JSON_File(new rapidjson::FileWriteStream(file, buffer, sizeof(buffer)), file);
 
@@ -232,7 +232,7 @@ void R_JSON_Value::GetInt(const char* name, int value)
 {
 	std::string str = name;
 	unsigned char uC = (unsigned)name;
-	encoding_doc->supportUnicode;
+	
 	//encoding_doc->GetRange(str.c_str());
 	rapidjson::Value i(value);
 	
@@ -248,11 +248,11 @@ void R_JSON_Value::GetString(const char* name, const char* value)
 R_JSON_File::R_JSON_File(rapidjson::FileReadStream* read_st, FILE* file): read_stream(read_st),filep(file)
 {
 	
-	
 	document = new rapidjson::Document();
 	document->ParseStream(*read_st);
 	LOG("haha");
 	alloc_doc = &document->GetAllocator();
+	
 }
 
 R_JSON_File::R_JSON_File(rapidjson::FileWriteStream* write_st, FILE* file) : write_stream(write_st), filep(file)
@@ -260,7 +260,6 @@ R_JSON_File::R_JSON_File(rapidjson::FileWriteStream* write_st, FILE* file) : wri
 	LOG("hehe");
 	document = new rapidjson::Document();
 	document->SetObject();
-
 	alloc_doc = &document->GetAllocator();
 }
 

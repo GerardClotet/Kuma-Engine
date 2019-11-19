@@ -51,8 +51,7 @@ public:
 
 	meshInfo* saveMeshinfo();
 	void ExtractMeshInfo(meshInfo* info);
-	void SaveScene(R_JSON_Value* v)const;
-
+	void SaveScene(R_JSON_Value* component)const;
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
@@ -79,6 +78,7 @@ public:
 	uint id_color = 0;
 	float* color = nullptr;
 	const char* path_texture_associated_meta;
+	const char* mesh_meta_route = nullptr;
 public:
 	bool gl_Short = false;
 	bool gl_Int = false;

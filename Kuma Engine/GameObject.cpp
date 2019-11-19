@@ -13,9 +13,17 @@
 #include "RandomHelper.h"
 GameObject::GameObject()
 {
-	LOG("Game Object root");
+	//thought for constructing through SerializedScene and fill it later
+
 }
 
+GameObject::GameObject(const char* name) //just for root
+{
+	LOG("Game Object root");
+	UUID = 1;
+
+	Set_Parent_and_Name(nullptr, "Root");
+}
 GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 {
 	this->type = type;
@@ -27,6 +35,8 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 	staticName = name;
 
 }
+
+
 
 //GameObject::GameObject(std::string name, OBJECT_TYPE type)
 //{
@@ -59,7 +69,7 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 
 
 
-Components* GameObject::AddComponent(GO_COMPONENT type)
+Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 {
 	switch (type)
 	{
@@ -79,7 +89,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type)
 			
 	case GO_COMPONENT::CAMERA:
 
-		camera = new Component_Camera(this);
+		serialized_cam ?  camera = new Component_Camera() : camera = new Component_Camera(this);
 		components.push_back(camera);
 		component = camera;
 		if (this->name != "Camera Fake")
@@ -198,6 +208,20 @@ void GameObject::Set_Parent_and_Name(GameObject* go_parent, std::string path)
 	go_parent->game_object_childs.push_back(this);
 
 	CheckName(path);
+}
+
+void GameObject::Set_Parent(GameObject* go_parent)
+{
+	LOG("name %s", name.c_str());
+	if (parent == go_parent)
+	{
+		parent = App->scene_intro->root;
+		parent->game_object_childs.push_back(this);	
+		return;
+	}
+
+	parent = go_parent;
+	go_parent->game_object_childs.push_back(this);
 }
 
 void GameObject::RemoveGameObject(GameObject* child)
@@ -556,7 +580,7 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 	}
 
 	go->AddValue("Components", *c);
-	json_val->AddValue("", *go);
+	json_val->AddValue("GameObject", *go);
 
 	for (auto& child : game_object_childs)
 	{
@@ -589,4 +613,9 @@ void GameObject::RemoveCameraFromist(GameObject *obj)
 		LOG("HH");
 	}
 
+}
+
+void GameObject::SetUUID(uint32 ID)
+{
+	UUID = ID;
 }

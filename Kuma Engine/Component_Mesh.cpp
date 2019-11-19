@@ -752,6 +752,7 @@ meshInfo* Component_Mesh::saveMeshinfo()
 	mesh->color = color;
 	mesh->name = name;
 	mesh->UUID = gameObject_Item->UUID;
+	//mesh->route = mesh_meta_route;
 	//TODO :/ mesh->UUID = gameObject_Item->ID;
 	return mesh;
 }
@@ -770,6 +771,8 @@ void Component_Mesh::ExtractMeshInfo(meshInfo* info)
 	uvs = info->uvs;
 	normal = info->normal;
 	
+	mesh_meta_route = info->route.c_str();
+	
 	path_texture_associated_meta = info->path_text.c_str();
 	
 }
@@ -779,10 +782,12 @@ void Component_Mesh::SaveScene(R_JSON_Value* v) const
 	R_JSON_Value* mesh = v->NewValue(rapidjson::kObjectType);
 
 	mesh->SetString("Component", "Mesh");
-
 	mesh->SetString("Name", gameObject_Item->staticName.c_str());
 
-	mesh->AddValue("Mesh", *mesh);
+	if (mesh_meta_route != nullptr)
+		mesh->SetString("Meta Route", mesh_meta_route);
+
+	v->AddValue("Mesh", *mesh);
 }
 
 

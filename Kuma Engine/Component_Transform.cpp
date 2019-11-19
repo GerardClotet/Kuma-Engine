@@ -112,6 +112,38 @@ const float3 Component_Transform::GetGlobalScale()const
 	return scale;
 }
 
+void Component_Transform::SetLocalPosToSingleAxis(const float pos, int axis)
+{
+	if (axis == 0)
+		local_position.x = pos;
+	else if (axis == 1)
+		local_position.y = pos;
+	else if (axis == 2)
+		local_position.z = pos;
+}
+
+void Component_Transform::SetLocalRotToSingleAxis(const float rot, int axis)
+{
+	if (axis == 0)
+		local_rotation.x = rot;
+	else if (axis == 1)
+		local_rotation.y = rot;
+	else if (axis == 2)
+		local_rotation.z = rot;
+	else if (axis == 3)
+		local_rotation.w = rot;
+}
+
+void Component_Transform::SetLocalScaleToSingleAxis(const float scale, int axis)
+{
+	if (axis == 0)
+		local_rotation.x = scale;
+	else if (axis == 1)
+		local_rotation.y = scale;
+	else if (axis == 2)
+		local_rotation.z = scale;
+}
+
 void Component_Transform::SetLocalRotation(const float x, const float y, const float z, const float angle)
 {
 	local_rotation.x = x;

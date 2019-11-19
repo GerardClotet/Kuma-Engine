@@ -7,7 +7,6 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
-#include "rapidjson/encodings.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Math/Quat.h"
 #include "Color.h"
@@ -44,7 +43,7 @@ public:
 
 
 	rapidjson::Document::AllocatorType* alloc_doc = nullptr;
-	rapidjson::Document::EncodingType* encoding_doc = nullptr;
+	//rapidjson::Document::EncodingType* encoding_doc = nullptr;
 	
 	rapidjson::Value* value = nullptr;
 	std::vector<R_JSON_Value*> values_vec;
@@ -78,6 +77,7 @@ public:
 	rapidjson::FileReadStream* read_stream = nullptr;
 	rapidjson::Document::AllocatorType* alloc_doc = nullptr;
 	std::vector<R_JSON_Value*> val_vec;
+	char buffer[65536];
 };
 
 class SerializerR_JSON {

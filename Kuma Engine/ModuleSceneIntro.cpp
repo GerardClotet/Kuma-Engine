@@ -41,7 +41,7 @@ bool ModuleSceneIntro::Init()
 bool ModuleSceneIntro::Start()
 {
 
-	root = new GameObject(nullptr,OBJECT_TYPE::PARENT, "root"); //empty gameobject containig  all game objects
+	root = new GameObject("root"); //empty gameobject containig  all game objects
 	App->fs->ManageImportedFile(firstFbx.c_str());
 	App->fs->ManageImportedFile(firstTex.c_str());
 

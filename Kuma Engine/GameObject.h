@@ -46,13 +46,17 @@ class GameObject {
 
 
 public:
+	//thought for constructing through SerializedScene and fill it later
 	GameObject();
+	//common constructor
 	GameObject(GameObject* parent,OBJECT_TYPE type,std::string name);
-	/*GameObject(std::string name, OBJECT_TYPE type);
-	GameObject(std::string name, OBJECT_TYPE type, aiMesh* mesh);*/
+	//just for root
+	GameObject(const char* name);
+	
 	~GameObject();
 	bool Update();
 	void Set_Parent_and_Name(GameObject* parent, std::string path);
+	void Set_Parent(GameObject*);
 	void RemoveGameObject(GameObject* child);
 	void RemoveSubChildGameObject(GameObject* subchild);
 	bool CleanUp();
@@ -68,11 +72,12 @@ public:
 	bool CheckAABBinFrustum();
 	void SaveToScene(R_JSON_Value* json_val);
 	void RemoveCameraFromist(GameObject* obj);
-
+	void SetUUID(uint32 ID);
 public:
 	std::string name;
 	std::string new_name;
 	uint32 UUID = 0;
+	uint32 Parent_UUID = 0; //use only when loading serialized scene
 	char c;
 	double name_counter;
 	char buf[4096];
@@ -84,11 +89,11 @@ public:
 	float3 game_object_rot		= { 0.0f, 0.0f, 0.0f };
 	float3 game_object_scale	= { 0.0f, 0.0f, 0.0f };
 
-	Components* AddComponent(GO_COMPONENT type);
+	//if true setupCameraManually
+	Components* AddComponent(GO_COMPONENT type,bool serialized_cam = false);
 	Components* AddComponent(GO_COMPONENT type, aiMesh* mesh, aiNode* node);
 	Components* AddComponent(GO_COMPONENT type, float3 pos, float3 scale, Quat rot);
 	Components* AddComponent(GO_COMPONENT type, meshInfo* info);
-
 	GameObject* parent				= nullptr; // to the scene invisible game object containing all gameobjects
 	Component_Material* material	= nullptr;
 	Component_Mesh* mesh			= nullptr;

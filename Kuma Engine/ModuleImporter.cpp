@@ -665,6 +665,8 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 			
 			mesh->path_text = App->fs->SubstractFromEnd(temp_text_path, EXTENSION_TEXTURE_META, tmp_ext.size()/*4extension size*/);
 		}
+
+		mesh->route = path;
 		return mesh;
 }
 
