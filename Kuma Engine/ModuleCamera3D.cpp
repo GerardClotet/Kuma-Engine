@@ -74,17 +74,6 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 
 
-		//Focus
-		/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-		{
-			if (App->scene_intro->selected_game_obj != nullptr)
-			{
-				vec3 spot = { App->scene_intro->selected_game_obj->game_object_pos.x,
-								App->scene_intro->selected_game_obj->game_object_pos.y,
-								App->scene_intro->selected_game_obj->game_object_pos.z };
-				LookAt(spot);
-			}
-		}*/
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 			Focus();
 
@@ -189,7 +178,40 @@ void ModuleCamera3D::RotationCamera(float dt)
 
 void ModuleCamera3D::Focus()
 {
+	if (App->scene_intro->selected_game_obj != nullptr)
+	{
+		AABB bobox = App->scene_intro->selected_game_obj->bbox.aabb_global;
 
+		if (bobox.IsFinite())
+		{
+			float offset = bobox.Diagonal().Length() * 2;
+
+			camera_fake->Look(bobox.CenterPoint());
+
+			Reference = bobox.CenterPoint();
+
+			float3 distance = camera_fake->frustum.pos - bobox.CenterPoint();
+
+			//Create a shorter vector bewtween de camera and the bbox making it proporcional for every distance
+			point_to_look = camera_fake->frustum.pos - (distance - (offset * distance.Normalized()/*make the vector distance shorter*/));
+			start_lerp = true; //move the camera
+		}
+		else
+		{
+			Component_Transform* transform = nullptr;
+			if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
+				transform = App->scene_intro->selected_game_obj->transform;
+			
+			float3 pos = transform->GetGlobalPosition();
+
+			camera_fake->Look(pos);
+			Reference = pos;
+
+			float3 distance = camera_fake->frustum.pos - pos;
+			point_to_look = camera_fake->frustum.pos - (distance - (2.f * distance.Normalized()));
+			start_lerp = true;
+		}
+	}
 }
 
 void ModuleCamera3D::ZoomCamera()
