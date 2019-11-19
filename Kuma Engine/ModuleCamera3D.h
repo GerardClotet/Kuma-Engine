@@ -4,6 +4,7 @@
 #include "glmath.h"
 #include "MathGeoLib/include/Geometry/LineSegment.h"
 #include "MathGeoLib/include/Geometry/Frustum.h"
+#include "Color.h"
 
 class Component_Camera;
 class GameObject;
@@ -44,6 +45,7 @@ public:
 	Frustum* frustum = nullptr;
 	LineSegment pick_ray;
 	bool pickedRayCast = false;
+	Color ray_color{ 1.0f, 0.0f, 0.0f, 1.0f };
 
 private:
 	bool start_lerp = false;

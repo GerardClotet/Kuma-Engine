@@ -288,7 +288,6 @@ GameObject * ModuleCamera3D::Pick(float3 * hit_point)
 	float normalized_y = 1.0f - (float(mouse_y) * 2.0f) / height;
 
 	pick_ray = camera_fake->frustum.UnProjectLineSegment(normalized_x, normalized_y);
-	pickedRayCast = true;
 
 	RayCast ray;
 
@@ -299,10 +298,10 @@ GameObject * ModuleCamera3D::Pick(float3 * hit_point)
 
 void ModuleCamera3D::DrawLineSegment()
 {
-	glLineWidth(5.0f);
+	glLineWidth(2.0f);
 	glBegin(GL_LINES);
 
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(ray_color.r, ray_color.g, ray_color.b);
 	glVertex3f(pick_ray.a.x, pick_ray.a.y, pick_ray.a.z);
 	glVertex3f(pick_ray.b.x, pick_ray.b.y, pick_ray.b.z);
 	glEnd();
