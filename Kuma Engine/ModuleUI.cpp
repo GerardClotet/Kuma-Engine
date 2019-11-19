@@ -167,6 +167,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 			ImGui::EndMenu();
 		}
 
+		ImGui::Begin("Pause Play",0, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar);
+		DisplayGameButtons();
+		ImGui::End();
+
 
 		ImGui::EndMainMenuBar();
 	}//end menu bar --> maybe a func for this?
@@ -356,6 +360,18 @@ void ModuleEditor::Log(const char* fmt, ...)
 
 
 
+
+void ModuleEditor::DisplayGameButtons()
+{
+	ImGui::Spacing();
+
+	//ImGui::Text("Here goes the buttons");
+	ImGui::Button("PLAY", ImVec2(70,20));
+	ImGui::SameLine();
+	ImGui::Button("PAUSE", ImVec2(70, 20));
+	ImGui::SameLine();
+	ImGui::Button("I> ||", ImVec2(70, 20));
+}
 
 void ModuleEditor::HelpScreen()
 {

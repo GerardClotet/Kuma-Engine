@@ -63,6 +63,7 @@ public:
 private:
 	//void DisplayConsole();
 	//void DisplayConfig();
+	void DisplayGameButtons();
 	void HelpScreen();
 	void ViewScreen();
 	void FileScreen();
