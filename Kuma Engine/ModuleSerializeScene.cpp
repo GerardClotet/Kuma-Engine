@@ -171,7 +171,8 @@ void ModuleSerializeScene::parseRecursive(std::string scope
 void ModuleSerializeScene::LoadScene(const char* path)
 {
 
-	std::string path_load = path;
+	std::string path_load;
+	path_load = App->fs->GetFileName(path);
 	path_load = ASSETS_SCENE_FOLDER + path_load + EXTENSION_SCENE; 
 
 	if (!App->fs->Exists(path_load.c_str()))
@@ -237,8 +238,9 @@ void ModuleSerializeScene::LoadScene(const char* path)
 
 void ModuleSerializeScene::SaveScene(const char* name)
 {
-	std::string path_to_save = name;
+	std::string path_to_save;
 	current_scene = name;
+	path_to_save = App->fs->GetFileName(name);
 	path_to_save = ASSETS_SCENE_FOLDER + path_to_save + EXTENSION_SCENE; //change to assets scene
 	
 	if (!App->fs->Exists(path_to_save.c_str()))

@@ -18,9 +18,9 @@ public:
 	~PanelFile();
 
 	update_status Draw();
-	void DisplayFiles();
-	void DisplaySaveFiles();
-
+	void LoadModel();
+	void DisplaySaveScene();
+	void DisplayLoadScene();
 	bool file_window = true;
 
 };

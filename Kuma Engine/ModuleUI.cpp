@@ -21,6 +21,7 @@
 #include "Components.h"
 #include "ModuleSerializeScene.h"
 #include "imGuizmo/ImGuizmo.h"
+#include "ModuleImporter.h"
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -414,13 +415,17 @@ void ModuleEditor::FileScreen()
 	ImGui::SameLine();
 	ImGui::TextDisabled("ESC");
 
-	if (ImGui::MenuItem("Load File"))
+	if (ImGui::MenuItem("Load Model"))
 	{
-		file_window = (file_window == false) ? true : false;
+		file_load_model = (file_load_model == false) ? true : false;
 	}
-	if (ImGui::MenuItem("Save File"))
+	if (ImGui::MenuItem("Save Scene"))
 	{
-		file_save_window = (file_save_window == false) ? true : false;
+		file_save_scene = (file_save_scene == false) ? true : false;
+	}
+	if (ImGui::MenuItem("Load Scene"))
+	{
+		file_load_scene = (file_load_scene == false) ? true : false;
 	}
 
 }
@@ -630,21 +635,38 @@ void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir
 		{
 			//TODO 
 			//LoadScene(selected_file);
-			file_window = false;
+
+			if (filter_extension == "kumaScene")
+				App->serialize->LoadScene(selected_file);
+
+			else if (filter_extension == "fbx")
+				App->importer->LoadModelFile(selected_file);
+
+			file_load_model = false;
+			file_load_scene = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Cancel"))
 		{
 			//TODO
 			//LoadScene(selected_file)
-			file_window = false;
+			file_load_model = false;
+			file_load_scene = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("OK"))
 		{
 			//TODO
 			//LoadScene(selected_file)
-			file_window = false;
+
+			if (filter_extension == "kumaScene")
+				App->serialize->LoadScene(selected_file);
+
+			else if (filter_extension == "fbx")
+				App->importer->LoadModelFile(selected_file);
+
+			file_load_scene = false;
+			file_load_model = false;
 		}
 		ImGui::EndPopup();
 	}
@@ -675,7 +697,8 @@ void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir
 			if (selected_file != "")
 			{
 				App->serialize->SaveScene(selected_file);
-				file_window = false;
+				file_save_scene = false;
+
 			}
 			else {
 				show_error_popUp = true;
@@ -694,8 +717,9 @@ void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir
 		if (ImGui::Button("Cancel"))
 		{
 			
-			if (selected_file)
-				file_save_window = false;
+			file_save_scene = false;
+
+			
 			
 		}
 		ImGui::SameLine();
@@ -705,7 +729,7 @@ void ModuleEditor::SaveFile(const char * filter_extension, const char * from_dir
 			if (selected_file)
 			{
 				App->serialize->SaveScene(selected_file);
-				file_save_window = false;
+				file_save_scene = false;
 			}
 		}
 		ImGui::EndPopup();
@@ -740,10 +764,10 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 		//GetExtension();
 
 		if (test == "Not Found")
+			correctExtension = false; 
+	
+		if (test.c_str() && file_str.substr(file_str.find_last_of(".") + 1) != filter_extension)
 			correctExtension = false;
-
-		/*if (test.c_str() && file_str.substr(file_str.find_last_of(".") + 1) != test.c_str())
-			correctExtension = false;*/
 
 		if (correctExtension && ImGui::TreeNodeEx(file_str.c_str(), ImGuiTreeNodeFlags_Leaf))
 		{
@@ -755,7 +779,7 @@ void ModuleEditor::DrawDirectoryTree(const char * directory, const char * filter
 				//Close the window if a file is double clicked
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
-					file_window = false;
+					file_load_model = false;
 					//LoadScene(selected_file);
 					
 

@@ -11,19 +11,25 @@ PanelFile::~PanelFile()
 
 update_status PanelFile::Draw()
 {
-	if (App->ui->file_window)DisplayFiles();
-	if (App->ui->file_save_window)DisplaySaveFiles();
+	if (App->ui->file_load_model)LoadModel();
+	if (App->ui->file_save_scene)DisplaySaveScene();
+	if (App->ui->file_load_scene)DisplayLoadScene();
 
 	return UPDATE_CONTINUE;
 }
 
-void PanelFile::DisplayFiles()
+void PanelFile::LoadModel()
 {
 	App->ui->LoadFile("fbx");
 
 }
 
-void PanelFile::DisplaySaveFiles()
+void PanelFile::DisplaySaveScene()
 {
-	App->ui->SaveFile("fbx");
+	App->ui->SaveFile("kumaScene");
+}
+
+void PanelFile::DisplayLoadScene()
+{
+	App->ui->LoadFile("kumaScene");
 }

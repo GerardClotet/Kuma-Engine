@@ -37,8 +37,9 @@ public:
 	bool show_obj_edit_window = false;
 	bool configuration_window = false;
 	bool console_window = false;
-	bool file_window = false;
-	bool file_save_window = false;
+	bool file_load_model = false;
+	bool file_save_scene = false;
+	bool file_load_scene = false;
 	bool config_default = false;
 	bool about_window = false;
 	bool inspector_window = false;
