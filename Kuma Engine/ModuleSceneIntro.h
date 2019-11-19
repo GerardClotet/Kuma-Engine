@@ -10,6 +10,7 @@
 #include "MathGeoLib/include/MathGeoLib.h"
 #include "MathGeoLib/include/MathBuildConfig.h"
 #include "MathGeoLib/include/MathGeoLibFwd.h"
+#include "imGuizmo/ImGuizmo.h"
 #include "RayCast.h"
 
 #define MAX_SNAKE 2
@@ -43,14 +44,22 @@ public:
 	void UpdateGameObject(GameObject* parent);
 	GameObject* MyRayCastIntersection(LineSegment* ray, RayCast& hit);
 	void BoxIntersection(GameObject* obj, LineSegment* ray, std::vector<RayCast>& scene_obj);
-	bool TriangleTest(LineSegment* ray, std::vector<RayCast>& scene_obj, RayCast& point);
-	
+	GameObject* TriangleTest(LineSegment& ray, GameObject* obj);
+	void GuizmosControls();
+	void GuizmosLogic();
 
 
+
+public:
 	GameObject* root = nullptr; //emptygame objects containing all game obects
 	GameObject* selected_game_obj = nullptr;
 	Component_Camera* camera_hardcoded = nullptr;
 	std::vector<Components*> camera_list;
+
+	ImGuizmo::OPERATION guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+	ImGuizmo::MODE guizmo_mode = ImGuizmo::MODE::WORLD;
+	bool                guizmo_useSnap = false;
+	float3              guizmo_snap = float3(1.0f);
 
 public:
 	//std::list<Spherestruct*> sphere_struct_list;

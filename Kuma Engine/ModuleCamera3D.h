@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "MathGeoLib/include/Geometry/LineSegment.h"
 #include "MathGeoLib/include/Geometry/Frustum.h"
 
 class Component_Camera;
@@ -27,6 +28,7 @@ public:
 	void Orbit(float motion_x, float motion_y);
 	void LookAt(float motion_x, float motion_y);
 	GameObject* Pick(float3* hit_point = nullptr);
+	void DrawLineSegment();
 
 
 public:
@@ -40,6 +42,8 @@ public:
 
 	Component_Camera* camera_fake = nullptr;
 	Frustum* frustum = nullptr;
+	LineSegment pick_ray;
+	bool pickedRayCast = false;
 
 private:
 	bool start_lerp = false;

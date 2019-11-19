@@ -20,6 +20,7 @@
 #include "GameObject.h"
 #include "Components.h"
 #include "ModuleSerializeScene.h"
+#include "imGuizmo/ImGuizmo.h"
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -118,6 +119,9 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
+	ImGuizmo::BeginFrame();
+	ImGuizmo::Enable(true);
+
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -185,6 +189,9 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	//if (show_error_popUp)
 	//	ShowErrorPopUp(error_text.c_str());
+	App->scene_intro->GuizmosControls();
+	App->scene_intro->GuizmosLogic();
+
 
 	ImGui::Render();
 

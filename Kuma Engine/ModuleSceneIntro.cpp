@@ -1,6 +1,7 @@
 ﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleInput.h"
 #include <random>
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
@@ -9,9 +10,12 @@
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
 #include "Component_Camera.h"
+#include "Component_Mesh.h"
 #include "Component_Transform.h"
 #include "PanelConfig.h"
 #include "Assimp/include/anim.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_internal.h"
 
 #include "GameObject.h"
 
@@ -73,6 +77,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->camera->capMouseInput = false;
 
 	UpdateGameObject(root);
+
 
 	return UPDATE_CONTINUE;
 }
@@ -236,13 +241,16 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 	//It takes the first value, and the last and with them two does the function compare
 	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);
 	GameObject* temp = nullptr;
+	GameObject* selected = nullptr;
 	for (std::vector<RayCast>::iterator iter = scene_obj.begin(); iter != scene_obj.end(); ++iter)
 	{
 		temp = (*iter).trans->gameObject_Item;
-		break;
+		selected = TriangleTest(*ray, temp);
+		if (selected != nullptr)
+			break;
 	}
 	
-	return temp;
+	return selected;
 }
 
 void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std::vector<RayCast>& scene_obj)
@@ -262,18 +270,104 @@ void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std:
 			}
 		}
 	}
-		for (auto iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
-		{
-			BoxIntersection((*iter), ray, scene_obj);
-		}
+	for (auto iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
+	{
+		BoxIntersection((*iter), ray, scene_obj);
+	}
 
 	
 
 }
 
-bool ModuleSceneIntro::TriangleTest(LineSegment * ray, std::vector<RayCast>& scene_obj, RayCast & point)
+GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 {
-	return false;
+	bool intersected = false;
+	Component_Mesh* mesh_go = nullptr;
+	if (obj->hasComponent(GO_COMPONENT::MESH))
+		mesh_go = obj->mesh;
+	// TODO: if obj doesnt have mesh, just set it selected because it might be camera or light
+	if (mesh_go != nullptr)
+	{
+		Component_Transform* trans_go = nullptr;
+		if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
+			trans_go = obj->transform;
+
+		for (uint i = 0; i < mesh_go->num_index; i += 3)
+		{
+			uint index_a, index_b, index_c;
+
+			index_a = mesh_go->index[i] * 3;
+			float3 point_a(&mesh_go->vertex[index_a]);
+
+			index_b = mesh_go->index[i + 1] * 3;
+			float3 point_b(&mesh_go->vertex[index_b]);
+
+			index_c = mesh_go->index[i + 2] * 3;
+			float3 point_c(&mesh_go->vertex[index_c]);
+
+			Triangle triangle_to_check(point_a, point_b, point_c);
+			triangle_to_check.Transform(trans_go->global_transformation);
+			if (ray.Intersects(triangle_to_check, nullptr, nullptr))
+			{
+				LOG("DID IT");
+				intersected = true;
+				return obj;
+				break;
+			}
+		}
+		if (!intersected)
+			return nullptr;
+
+	}
+
+	else if (obj->game_object_childs.empty())
+		return obj;
+	
+	else
+		return nullptr;
+}
+
+void ModuleSceneIntro::GuizmosControls()
+{
+	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
+		guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		guizmo_operation = ImGuizmo::OPERATION::SCALE;
+
+	if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN))
+		guizmo_mode = ImGuizmo::MODE::WORLD;
+
+	if ((App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN))
+		guizmo_mode = ImGuizmo::MODE::LOCAL;
+}
+
+void ModuleSceneIntro::GuizmosLogic()
+{
+	if (App->scene_intro->selected_game_obj != nullptr) {
+		Component_Transform* transform = App->scene_intro->selected_game_obj->transform;
+
+		float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
+		view_transposed.Transpose();
+		float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
+		projection_transposed.Transpose();
+		float4x4 object_transform_matrix = transform->global_transformation;
+		object_transform_matrix.Transpose();
+		float4x4 delta_matrix;
+
+		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
+		ImGuizmo::SetDrawlist();
+		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, object_transform_matrix.ptr(), delta_matrix.ptr());
+	
+		if (ImGuizmo::IsUsing() && !delta_matrix.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+		{
+			transform->SetLocalTransform(object_transform_matrix.Transposed());
+		}
+	}
+	
 }
 
 

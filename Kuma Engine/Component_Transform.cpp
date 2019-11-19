@@ -224,6 +224,19 @@ float4x4 Component_Transform::GetGlobalMatrix()const
 	return global_transformation;
 }
 
+void Component_Transform::SetLocalTransform(float4x4 & trans_matrix)
+{
+	trans_matrix.Decompose(local_position, local_rotation, local_scale);
+
+	euler_rotation = local_rotation.ToEulerXYZ();
+
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	RecalculateTransformMatrix();
+}
+
 float4x4 Component_Transform::GetParentGlobalMatrix()const
 {
 	std::vector<GameObject*>::iterator it = gameObject_Item->game_object_childs.begin();

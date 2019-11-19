@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "FBO.h"
 
 #define MAX_LIGHTS 8
 
@@ -22,7 +23,7 @@ public:
 	void OnResize(int width, int height);
 
 public:
-
+	FBO* fbo = nullptr;
 	Component_Camera* actual_camera = nullptr;
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

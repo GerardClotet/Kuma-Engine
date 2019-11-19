@@ -124,11 +124,16 @@
     <ClInclude Include="DevIL\include\IL\ilut_config.h" />
     <ClInclude Include="DevIL\include\IL\ilu_region.h" />
     <ClInclude Include="DevIL\include\IL\il_wrap.h" />
+    <ClInclude Include="FBO.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="gpudetect\DeviceId.h" />
     <ClInclude Include="gpudetect\dxgi1_4.h" />
+    <ClInclude Include="imGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="imGuizmo\ImGradient.h" />
+    <ClInclude Include="imGuizmo\ImGuizmo.h" />
+    <ClInclude Include="imGuizmo\ImSequencer.h" />
     <ClInclude Include="ImGui\examples\imgui_impl_opengl3.h" />
     <ClInclude Include="ImGui\examples\imgui_impl_sdl.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -220,6 +225,7 @@
     <ClInclude Include="PanelFile.h" />
     <ClInclude Include="PanelInspector.h" />
     <ClInclude Include="PanelHierarchy.h" />
+    <ClInclude Include="PanelScene.h" />
     <ClInclude Include="Parson\parson.h" />
     <ClInclude Include="par_shapes.h" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_extras.hpp" />
@@ -259,9 +265,14 @@
     <ClCompile Include="Component_Material.cpp" />
     <ClCompile Include="Component_Mesh.cpp" />
     <ClCompile Include="Component_Transform.cpp" />
+    <ClCompile Include="FBO.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="gpudetect\DeviceId.cpp" />
+    <ClCompile Include="imGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="imGuizmo\ImGradient.cpp" />
+    <ClCompile Include="imGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="imGuizmo\ImSequencer.cpp" />
     <ClCompile Include="ImGui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="ImGui\examples\imgui_impl_sdl.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -321,6 +332,7 @@
     <ClCompile Include="PanelFile.cpp" />
     <ClCompile Include="PanelInspector.cpp" />
     <ClCompile Include="PanelHierarchy.cpp" />
+    <ClCompile Include="PanelScene.cpp" />
     <ClCompile Include="Parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="PerfTimer.cpp" />

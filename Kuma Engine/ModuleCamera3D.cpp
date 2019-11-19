@@ -94,13 +94,16 @@ update_status ModuleCamera3D::Update(float dt)
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 			RotationCamera(dt);
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			GameObject* pick_go = Pick();
 			if (pick_go != nullptr)
 				App->scene_intro->selected_game_obj = pick_go;
 
 		}
+
+		if (pickedRayCast)
+			DrawLineSegment();
 
 	}
 	return UPDATE_CONTINUE;
@@ -280,16 +283,28 @@ GameObject * ModuleCamera3D::Pick(float3 * hit_point)
 	int mouse_x, mouse_y;
 	mouse_x = App->input->GetMouseX();
 	mouse_y = App->input->GetMouseY();
-
+	
 	float normalized_x = -(1.0f - (float(mouse_x) * 2.0f) / width);
 	float normalized_y = 1.0f - (float(mouse_y) * 2.0f) / height;
 
-	LineSegment pick_ray = camera_fake->frustum.UnProjectLineSegment(normalized_x, normalized_y);
+	pick_ray = camera_fake->frustum.UnProjectLineSegment(normalized_x, normalized_y);
+	pickedRayCast = true;
 
 	RayCast ray;
 
 	
 
 	return App->scene_intro->MyRayCastIntersection(&pick_ray, ray);
+}
+
+void ModuleCamera3D::DrawLineSegment()
+{
+	glLineWidth(5.0f);
+	glBegin(GL_LINES);
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(pick_ray.a.x, pick_ray.a.y, pick_ray.a.z);
+	glVertex3f(pick_ray.b.x, pick_ray.b.y, pick_ray.b.z);
+	glEnd();
 }
 
