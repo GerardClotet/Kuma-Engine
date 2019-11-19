@@ -88,7 +88,8 @@ update_status ModuleCamera3D::Update(float dt)
 			GameObject* pick_go = Pick();
 			if (pick_go != nullptr)
 				App->scene_intro->selected_game_obj = pick_go;
-
+			else
+				App->scene_intro->selected_game_obj = nullptr;
 		}
 
 		if (pickedRayCast)
