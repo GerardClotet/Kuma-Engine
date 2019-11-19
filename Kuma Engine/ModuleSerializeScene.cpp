@@ -404,6 +404,9 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		{
 			_counter = 0;
 			go_to_fill->AddComponent(GO_COMPONENT::TRANSFORM, t_pos, t_scale, t_rot);
+			go_to_fill->transform->RecalculateTransformMatrix();
+			go_to_fill->SetBoundingBox();
+
 		}
 
 		break;
@@ -411,7 +414,6 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		c = static_cast<const char* const>(undefined);  
 		
 		go_to_fill->AddComponent(GO_COMPONENT::MESH,App->importer->LoadMeshFromMeta(c));
-		
 		//dsgo_to_fill->mesh->mesh_meta_route = static_cast<const char* const>(undefined);
 		break;
 	case GO_Properties::TEXTURE_PATH:
