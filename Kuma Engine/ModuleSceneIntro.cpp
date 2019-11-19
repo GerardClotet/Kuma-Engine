@@ -347,7 +347,8 @@ void ModuleSceneIntro::GuizmosControls()
 
 void ModuleSceneIntro::GuizmosLogic()
 {
-	if (App->scene_intro->selected_game_obj != nullptr) {
+	if (App->scene_intro->selected_game_obj != nullptr) 
+	{
 		Component_Transform* transform = App->scene_intro->selected_game_obj->transform;
 
 		float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();

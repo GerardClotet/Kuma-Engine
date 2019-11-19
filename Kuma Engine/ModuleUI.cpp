@@ -120,7 +120,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 	ImGui::NewFrame();
 
 	ImGuizmo::BeginFrame();
-	ImGuizmo::Enable(true);
+	ImGuizmo::Enable(activate_gizmo);
 
 
 	if (ImGui::BeginMainMenuBar())
