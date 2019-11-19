@@ -10,7 +10,7 @@
 
 class GameObject;
 class SerializerR_JSON;
-
+enum class OBJECT_TYPE;
 enum class GO_Properties
 {
 	NONE = -1,
@@ -32,7 +32,8 @@ enum class GO_Properties
 	FRUSTRUM_COLOR,
 	CAMERA_BACKGROUND_COLOR,
 	FRONT,
-	UP
+	UP,
+	TYPE
 };
 
 
@@ -52,8 +53,9 @@ struct infoToFill {
 	float3 front_c;
 	float3 up_c;
 	
+	
 
-	const char* names_r_json[19]
+	const char* names_r_json[20]
 	{
 		"UUID", //0
 		"Parent UUID",
@@ -75,6 +77,7 @@ struct infoToFill {
 		"Camera Background Color",
 		"front",
 		"Up", //17
+		"Type"
 
 	};
 };

@@ -782,12 +782,27 @@ void Component_Mesh::SaveScene(R_JSON_Value* v) const
 	R_JSON_Value* mesh = v->NewValue(rapidjson::kObjectType);
 
 	mesh->SetString("Component", "Mesh");
-	mesh->SetString("Name", gameObject_Item->staticName.c_str());
+	mesh->SetString("Name", gameObject_Item->name.c_str());
 
 	if (mesh_meta_route != nullptr)
 		mesh->SetString("Meta Route", mesh_meta_route);
 
+	 int i = static_cast<int>(type);
+	mesh->SetInt("Type",i);
+
+
 	v->AddValue("Mesh", *mesh);
+}
+
+void Component_Mesh::SetType(int t)
+{
+	
+	
+	
+
+	this->type = static_cast<OBJECT_TYPE>(t);
+
+
 }
 
 
