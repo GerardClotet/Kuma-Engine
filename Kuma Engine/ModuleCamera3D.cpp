@@ -91,10 +91,10 @@ update_status ModuleCamera3D::Update(float dt)
 		MovementCamera();
 		ZoomCamera();
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+		if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 			RotationCamera(dt);
 
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			GameObject* pick_go = Pick();
 			if (pick_go != nullptr)
@@ -125,7 +125,7 @@ float* ModuleCamera3D::GetViewMatrix()
 void ModuleCamera3D::MovementCamera()
 {
 	newPos = { 0,0,0 };
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	if (!ImGuizmo::IsUsing() && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
 		if (!capMouseInput)
 		{

@@ -354,17 +354,17 @@ void ModuleSceneIntro::GuizmosLogic()
 		view_transposed.Transpose();
 		float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
 		projection_transposed.Transpose();
-		float4x4 object_transform_matrix = transform->global_transformation;
-		object_transform_matrix.Transpose();
-		float4x4 delta_matrix;
+		float4x4 model = transform->global_transformation;
+		model.Transpose();
+		float4x4 delta;
 
 		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
 		ImGuizmo::SetDrawlist();
-		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, object_transform_matrix.ptr(), delta_matrix.ptr());
+		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
 	
-		if (ImGuizmo::IsUsing() && !delta_matrix.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+		if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
 		{
-			transform->SetLocalTransform(object_transform_matrix.Transposed());
+			transform->SetLocalTransform(model.Transposed());
 		}
 	}
 	
