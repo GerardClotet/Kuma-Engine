@@ -195,7 +195,8 @@ void ModuleSerializeScene::LoadScene(const char* path)
 			{
 				//Here create GameObject
 				sc_obj->inf_to_f = new infoToFill; 
-				sc_obj->inf_to_f->go_to_fill = new GameObject();  
+				sc_obj->inf_to_f->go_to_fill = new GameObject(); 
+				sc_obj->inf_to_f->go_to_fill->type = OBJECT_TYPE::IMPORTER;
 				for (auto autom = aut->value[i].MemberBegin(); autom != aut->value[i].MemberEnd(); ++autom)
 				{
 					//here set gameobject var like UUID, here passes the component array
@@ -410,6 +411,7 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		c = static_cast<const char* const>(undefined);  
 		
 		go_to_fill->AddComponent(GO_COMPONENT::MESH,App->importer->LoadMeshFromMeta(c));
+		
 		//dsgo_to_fill->mesh->mesh_meta_route = static_cast<const char* const>(undefined);
 		break;
 	case GO_Properties::TEXTURE_PATH:
