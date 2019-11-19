@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModuleTexture.h"
 #include "GameObject.h"
-
+#include "ModuleFileSystem.h"
 
 Component_Material::Component_Material(GameObject* obj)
 {
@@ -121,8 +121,10 @@ void Component_Material::SaveScene(R_JSON_Value* v)const
 	//material
 	material->SetString("Component", "Material");
 
-	material->SetString("Name", temp->name.c_str());
-	material->SetString("Texture Path", GetTexturePath().c_str());
+	std::string t_path = GetTexturePath();
+	App->fs->NormalizePath(t_path);
+	//material->SetString("TextureName", temp->name.c_str());
+	material->SetString("Texture Path", t_path.c_str());
 	//For now just this
 
 	v->AddValue("Material", *material);

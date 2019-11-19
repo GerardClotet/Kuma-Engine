@@ -52,6 +52,7 @@ public:
 	meshInfo* saveMeshinfo();
 	void ExtractMeshInfo(meshInfo* info);
 	void SaveScene(R_JSON_Value* component)const;
+	void SetType(int type);
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 
@@ -89,8 +90,9 @@ public:
 
 
 private:
-	std::list<debug_mesh> mesh_debug;
 	OBJECT_TYPE type;
+
+	std::list<debug_mesh> mesh_debug;
 	TexData* text = nullptr;
 	meshInfo* mesh_info = nullptr;
 

@@ -1,0 +1,102 @@
+{
+    "GameObject Root": [
+        {
+            "UUID": 3667615595,
+            "Parent UUID": 1,
+            "Name": "ant parent",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        -0.0,
+                        -0.0,
+                        0.9999999403953552,
+                        0.0
+                    ],
+                    "Scale": [
+                        28.0,
+                        28.0,
+                        9.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 2618788768,
+            "Parent UUID": 3667615595,
+            "Name": "Ant",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.9999999403953552,
+                        0.0
+                    ],
+                    "Scale": [
+                        28.0,
+                        28.0,
+                        9.0
+                    ]
+                },
+                {
+                    "Component": "Mesh",
+                    "Name": "Ant",
+                    "Type": 7
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Library/Textures/anttexture.dds",
+                    "Texture Path": "library/textures/anttexture.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2551304141,
+            "Parent UUID": 3667615595,
+            "Name": "Ant(1)",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.9999999403953552,
+                        0.0
+                    ],
+                    "Scale": [
+                        28.0,
+                        28.0,
+                        9.0
+                    ]
+                },
+                {
+                    "Component": "Mesh",
+                    "Name": "Ant(1)",
+                    "Type": 7
+                },
+                {
+                    "Component": "Material",
+                    "Name": "Library/Textures/anttexture.dds",
+                    "Texture Path": "library/textures/anttexture.dds"
+                }
+            ]
+        }
+    ]
+}

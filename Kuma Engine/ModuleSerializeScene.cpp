@@ -313,9 +313,14 @@ void SceneObjects::FamilyGameObjects(std::vector<GameObject*> go)
 
 	}
 	
-
+	for (auto node = go.begin(); node < go.end(); ++node)
+	{
+		(*node)->CheckName((*node)->name);
+	}
 
 }
+
+
 
 
 
@@ -359,6 +364,10 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 			 go_to_fill->camera->gameObject_Item = go_to_fill; //Link Go & Component
 			 go_to_fill->camera->frustum.pos = go_to_fill->transform->GetGlobalPosition();
 			 LOG("Component Camera  Added");
+		 }
+		 else if (strcmp(c, "Material") == 0)
+		 {
+			 go_to_fill->AddComponent(GO_COMPONENT::MATERIAL);
 		 }
 		 //El material tambe s'ha de carregar un cop es tingui el pathtexture
 			//go_to_fill->AddComponent()
@@ -418,10 +427,13 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		break;
 	case GO_Properties::TEXTURE_PATH:
 		 //Aqui
-		go_to_fill->AddComponent(GO_COMPONENT::MATERIAL);
-		go_to_fill->mesh->path_texture_associated_meta = static_cast<const char* const>(undefined);
-		go_to_fill->material->ReadTexture(static_cast<const char* const>(undefined));
-		
+	
+		if (go_to_fill->mesh != nullptr)
+		{
+			go_to_fill->mesh->path_texture_associated_meta = static_cast<const char* const>(undefined);
+			if (go_to_fill->mesh->path_texture_associated_meta != nullptr)
+				go_to_fill->material->ReadTexture(static_cast<const char* const>(undefined));
+		}
 		break;
 	case GO_Properties::FRUSTRUM_TYPE:
 
@@ -499,9 +511,21 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 			_counter = 0;
 		}
 		break;
+
+	case GO_Properties::TYPE:
+
+		a = static_cast<int>(reinterpret_cast<intptr_t>(undefined));
+
+		if(go_to_fill->material!=nullptr)
+			go_to_fill->mesh->SetType(a);
+		//static_cast<OBJECT_TYPE>(static_cast<int>(reinterpret_cast<intptr_t>(undefined)))
+		LOG("Cannot find which property has to be filled");
+		break;
 	case GO_Properties::NONE:
 		LOG("Cannot find which property has to be filled");
 		break;
+
+
 	default:
 		break;
 	}
@@ -512,7 +536,7 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 void infoToFill::Go_ElementToFill(const char* field)
 {
 
-	for (int i = 0; i < 19; ++i) 
+	for (int i = 0; i < 20; ++i) 
 	{
 	
 		if (i == 17 || i == 18 || i == 19)

@@ -1,7 +1,7 @@
 {
     "GameObject Root": [
         {
-            "UUID": 2085656909,
+            "UUID": 1554563922,
             "Parent UUID": 1,
             "Name": "bakerhouse",
             "Components": [
@@ -27,14 +27,15 @@
             ]
         },
         {
-            "UUID": 3288424981,
-            "Parent UUID": 2085656909,
+            "UUID": 2296361684,
+            "Parent UUID": 1554563922,
             "Name": "Chimney",
             "Components": [
                 {
                     "Component": "Mesh",
                     "Name": "Chimney",
-                    "Meta Route": "/Library/Meshes/Chimney_meta.kuma"
+                    "Meta Route": "/Library/Meshes/Chimney_meta.kuma",
+                    "Type": 7
                 },
                 {
                     "Component": "Transform",
@@ -57,20 +58,20 @@
                 },
                 {
                     "Component": "Material",
-                    "Name": "Assets/textures/bakerhouse.dds",
-                    "Texture Path": "Assets/textures/bakerhouse.dds"
+                    "Texture Path": "assets/textures/bakerhouse.dds"
                 }
             ]
         },
         {
-            "UUID": 2020379073,
-            "Parent UUID": 2085656909,
+            "UUID": 3969131178,
+            "Parent UUID": 1554563922,
             "Name": "Baker_house",
             "Components": [
                 {
                     "Component": "Mesh",
                     "Name": "Baker_house",
-                    "Meta Route": "/Library/Meshes/Baker_house_meta.kuma"
+                    "Meta Route": "/Library/Meshes/Baker_house_meta.kuma",
+                    "Type": 7
                 },
                 {
                     "Component": "Transform",
@@ -93,13 +94,12 @@
                 },
                 {
                     "Component": "Material",
-                    "Name": "Assets/textures/bakerhouse.dds",
-                    "Texture Path": "Assets/textures/bakerhouse.dds"
+                    "Texture Path": "assets/textures/bakerhouse.dds"
                 }
             ]
         },
         {
-            "UUID": 2126363077,
+            "UUID": 3735168783,
             "Parent UUID": 1,
             "Name": "Camera Harcoded",
             "Components": [
@@ -157,6 +157,424 @@
                         0.5,
                         1.0
                     ]
+                }
+            ]
+        },
+        {
+            "UUID": 511210826,
+            "Parent UUID": 1,
+            "Name": "bakerhouse(1)",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 2624041891,
+            "Parent UUID": 511210826,
+            "Name": "Chimney",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Chimney",
+                    "Meta Route": "/Library/Meshes/Chimney_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3043228122,
+            "Parent UUID": 511210826,
+            "Name": "Baker_house",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Baker_house",
+                    "Meta Route": "/Library/Meshes/Baker_house_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 272617187,
+            "Parent UUID": 1,
+            "Name": "Camera Harcoded(1)",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Camera",
+                    "FrustumType": 2,
+                    "Horizontal Fov": 90.0,
+                    "Vertical Fov": 60.0,
+                    "AspectRatio": -1.5816464369601856e38,
+                    "Far Plane": 100.0,
+                    "Near Plane": 1.0,
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "front": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Up": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "Frustum Color": [
+                        1.0,
+                        0.5400000214576721,
+                        0.0,
+                        1.0
+                    ],
+                    "Camera Background Color": [
+                        0.5,
+                        1.0,
+                        0.5,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 511210826,
+            "Parent UUID": 1,
+            "Name": "bakerhouse(2)",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 2624041891,
+            "Parent UUID": 511210826,
+            "Name": "Chimney",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Chimney",
+                    "Meta Route": "/Library/Meshes/Chimney_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3043228122,
+            "Parent UUID": 511210826,
+            "Name": "Baker_house",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Baker_house",
+                    "Meta Route": "/Library/Meshes/Baker_house_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "assets/textures/bakerhouse.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 272617187,
+            "Parent UUID": 1,
+            "Name": "Camera Harcoded(2)",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Camera",
+                    "FrustumType": 2,
+                    "Horizontal Fov": 90.0,
+                    "Vertical Fov": 60.0,
+                    "AspectRatio": -1.5816464369601856e38,
+                    "Far Plane": 100.0,
+                    "Near Plane": 1.0,
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "front": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Up": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "Frustum Color": [
+                        1.0,
+                        0.5400000214576721,
+                        0.0,
+                        1.0
+                    ],
+                    "Camera Background Color": [
+                        0.5,
+                        1.0,
+                        0.5,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 625741477,
+            "Parent UUID": 1,
+            "Name": "ant",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 3357851957,
+            "Parent UUID": 625741477,
+            "Name": "Ant",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Ant",
+                    "Meta Route": "/Library/Meshes/Ant_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/anttexture.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3773182112,
+            "Parent UUID": 625741477,
+            "Name": "Ant(1)",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Ant(1)",
+                    "Meta Route": "/Library/Meshes/Ant(1)_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/anttexture.dds"
                 }
             ]
         }
