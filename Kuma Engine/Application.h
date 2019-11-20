@@ -82,6 +82,7 @@ public:
 	JSON_Object* LoadJSONFile(const std::string &path);
 	void Log(const char* fmt,...);
 	void saveLog(const char* fmt,...);
+	Uint32 GetMsTimer();
 
 	const char* GetAppName() const;
 	void SetAppName(const char* name);

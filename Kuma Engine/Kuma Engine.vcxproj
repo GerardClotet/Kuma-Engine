@@ -255,6 +255,7 @@
     <ClInclude Include="rapidjson\writer.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="SerializerJSON.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -338,6 +339,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="RandomHelper.cpp" />
     <ClCompile Include="SerializerJSON.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

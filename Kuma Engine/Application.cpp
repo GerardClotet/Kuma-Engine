@@ -329,6 +329,11 @@ void Application::saveLog(const char* fmt,...)
 	log_saves.push_back(fmt);
 }
 
+Uint32 Application::GetMsTimer()
+{
+	return ms_timer.ReadTime();
+}
+
 const char * Application::GetAppName() const
 {
 	return app_name.c_str();

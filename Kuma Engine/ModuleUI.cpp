@@ -171,6 +171,10 @@ update_status ModuleEditor::PostUpdate(float dt)
 		DisplayGameButtons();
 		ImGui::End();
 
+		ImGui::Begin("Time");
+		ImGui::Text("%i", App->GetMsTimer());
+		ImGui::End();
+
 
 		ImGui::EndMainMenuBar();
 	}//end menu bar --> maybe a func for this?
@@ -423,6 +427,7 @@ void ModuleEditor::ViewScreen()
 	{
 		hierarchy_window = (hierarchy_window == false) ? true : false;
 	}
+
 }
 
 void ModuleEditor::FileScreen()
