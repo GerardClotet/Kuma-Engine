@@ -69,6 +69,10 @@ bool ModuleWindow::Init()
 		}
 	}
 
+	//Icon
+	SDL_Surface* icon = SDL_LoadBMP("Assets/icons/Icon.bmp");
+	SDL_SetWindowIcon(window, icon);
+
 	return ret;
 }
 
