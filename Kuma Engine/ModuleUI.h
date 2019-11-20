@@ -31,20 +31,23 @@ public:
 	void LoadInputEvent(uint id, uint state);
 	void BackgroundDockSpace();
 	void ObjectEditor();
-	bool show_another_window = false;
-	bool demoWindow = false;
-	bool stylewindow = false;
-	bool show_obj_edit_window = false;
-	bool configuration_window = false;
-	bool console_window = false;
-	bool file_load_model = false;
-	bool file_save_scene = false;
-	bool file_load_scene = false;
-	bool config_default = false;
-	bool about_window = false;
-	bool inspector_window = false;
-	bool hierarchy_window = false;
-	bool activate_gizmo = true;
+
+
+	bool show_another_window	= false;
+	bool demoWindow				= false;
+	bool stylewindow			= false;
+	bool show_obj_edit_window	= false;
+	bool configuration_window	= false;
+	bool console_window			= false;
+	bool file_load_model		= false;
+	bool file_save_scene		= false;
+	bool file_load_scene		= false;
+	bool config_default			= false;
+	bool about_window			= false;
+	bool inspector_window		= false;
+	bool hierarchy_window		= false;
+	bool activate_gizmo			= true;
+	bool time_panel				= false;
 
 	void AddFPS(float fps, float ms);
 

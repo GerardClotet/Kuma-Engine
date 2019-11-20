@@ -171,10 +171,7 @@ update_status ModuleEditor::PostUpdate(float dt)
 		DisplayGameButtons();
 		ImGui::End();
 
-		ImGui::Begin("Time");
-		ImGui::Text("Real Time: %.3f", App->GetMsTimer());
-		ImGui::Text("Game Time: %.3f", Time::time);
-		ImGui::End();
+		
 
 
 		ImGui::EndMainMenuBar();
@@ -195,6 +192,14 @@ update_status ModuleEditor::PostUpdate(float dt)
 	if (show_obj_edit_window)
 	{
 		ObjectEditor();
+	}
+
+	if (time_panel)
+	{
+		ImGui::Begin("Time", &time_panel);
+		ImGui::Text("Real Time: %.3f", App->GetMsTimer());
+		ImGui::Text("Game Time: %.3f", Time::time);
+		ImGui::End();
 	}
 
 	//if (show_error_popUp)
@@ -465,6 +470,9 @@ void ModuleEditor::ViewScreen()
 	{
 		hierarchy_window = (hierarchy_window == false) ? true : false;
 	}
+
+	if (ImGui::MenuItem("Time clocks"))
+		time_panel = (time_panel == false) ? true : false;	
 
 }
 
