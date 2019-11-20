@@ -172,7 +172,8 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::End();
 
 		ImGui::Begin("Time");
-		ImGui::Text("%i", App->GetMsTimer());
+		ImGui::Text("Real Time: %.3f", App->GetMsTimer());
+		ImGui::Text("Game Time: %.3f", Time::time);
 		ImGui::End();
 
 
@@ -368,13 +369,50 @@ void ModuleEditor::Log(const char* fmt, ...)
 void ModuleEditor::DisplayGameButtons()
 {
 	ImGui::Spacing();
+	std::string stop_or_play = Time::running ? "STOP" : "PLAY";
+	if (ImGui::Button(stop_or_play.c_str(), ImVec2(70, 20)))
+	{
+		//Call play or stop depending of the running value
+		Time::running ? App->scene_intro->Stop() : App->scene_intro->Play();
+	}
 
-	//ImGui::Text("Here goes the buttons");
-	ImGui::Button("PLAY", ImVec2(70,20));
 	ImGui::SameLine();
-	ImGui::Button("PAUSE", ImVec2(70, 20));
+
+	std::string pause_or_resume = Time::paused ? "RESUME" : "PAUSE";
+	if (ImGui::Button(pause_or_resume.c_str(), ImVec2(70, 20)))
+	{
+		Time::paused ? Time::Resume() : Time::Pause();
+	}
+
 	ImGui::SameLine();
-	ImGui::Button("I> ||", ImVec2(70, 20));
+
+	if (ImGui::Button("I> ||", ImVec2(70, 20)))
+	{
+		//avançar 1 frame
+	}
+
+
+
+	//if (ImGui::Begin("PlayButton", &open, flags))
+	//{
+	//	std::string name = Time::running ? "Stop" : "Play";
+	//	if (ImGui::Button(name.c_str()))
+	//	{
+	//		Time::running ? App->scene->Stop() : App->scene->Play();
+	//	}
+	//	ImGui::SameLine();
+	//	std::string name2 = Time::paused ? "Resmue" : "Pause";
+	//	if (ImGui::Button(name2.c_str()))
+	//	{
+	//		Time::paused ? Time::Resume() : Time::Pause();
+	//	}
+	//	//ImGui::SameLine();
+	//	//if (ImGui::Button("Frame"))
+	//	//{
+
+	//	//}
+	//	ImGui::End();
+	//}
 }
 
 void ModuleEditor::HelpScreen()

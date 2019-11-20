@@ -25,7 +25,11 @@ void Time::PreUpdate(float dt)
 	delta_time = running ? dt : 0;
 
 	if (running)
-		time = game_timer.ReadSec();
+		time = game_timer.ReadTime()/1000.0f;
+}
+
+void Time::Update()
+{
 }
 
 

@@ -11,7 +11,7 @@ public:
 	//basic
 	static void Start();
 	static void PreUpdate(float dt);
-	//static void Update();
+	static void Update();
 
 	//Buttons functions
 	static void Play();

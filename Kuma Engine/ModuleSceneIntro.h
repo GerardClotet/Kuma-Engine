@@ -48,6 +48,10 @@ public:
 	void GuizmosControls();
 	void GuizmosLogic();
 
+	//Timer functions
+	void Play();
+	void Stop();
+
 
 
 public:

@@ -127,11 +127,14 @@ void Application::PrepareUpdate()
 //	dt = (float)ms_timer.Read() / 1000.0f;
 	frame_time.Start();
 
+	Time::PreUpdate(dt);
+
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	Time::Update();
 	if (last_sec_frame_time.ReadTime() > 1000)
 	{
 		last_sec_frame_time.Start();
@@ -329,9 +332,9 @@ void Application::saveLog(const char* fmt,...)
 	log_saves.push_back(fmt);
 }
 
-Uint32 Application::GetMsTimer()
+float Application::GetMsTimer()
 {
-	return ms_timer.ReadTime();
+	return ms_timer.ReadTime()/1000.0f;
 }
 
 const char * Application::GetAppName() const

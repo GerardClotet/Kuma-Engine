@@ -371,6 +371,18 @@ void ModuleSceneIntro::GuizmosLogic()
 	
 }
 
+void ModuleSceneIntro::Play()
+{
+	Time::Start();
+	//TODO  :/  Save Scene
+}
+
+void ModuleSceneIntro::Stop()
+{
+	Time::Stop();
+	//TODO :/  Load Scene
+}
+
 
 
 
