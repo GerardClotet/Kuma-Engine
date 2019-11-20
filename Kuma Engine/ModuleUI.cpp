@@ -87,6 +87,12 @@ bool ModuleEditor::Start()
 
 }
 
+update_status ModuleEditor::PreUpdate(float dt)
+{
+	
+	return UPDATE_CONTINUE;
+}
+
 update_status ModuleEditor::Update(float dt)
 {
 	/*if (App->scene_intro->selected_game_obj !=nullptr)
@@ -373,6 +379,13 @@ void ModuleEditor::Log(const char* fmt, ...)
 
 void ModuleEditor::DisplayGameButtons()
 {
+
+	if (Time::play_one)
+	{
+		Time::Pause();
+		Time::play_one = false;
+	}
+
 	ImGui::Spacing();
 	std::string stop_or_play = Time::running ? "STOP" : "PLAY";
 	if (ImGui::Button(stop_or_play.c_str(), ImVec2(70, 20)))
@@ -393,6 +406,21 @@ void ModuleEditor::DisplayGameButtons()
 
 	if (ImGui::Button("I> ||", ImVec2(70, 20)))
 	{
+		Time::play_one = (Time::play_one == false) ? true : false;
+		if (Time::play_one)
+		{
+			if (Time::paused)
+			{
+				Time::Resume();
+				Time::paused = true;
+
+			}
+			else
+			{
+				Time::paused = true;
+				Time::Resume();
+			}
+		}
 		//avançar 1 frame
 	}
 

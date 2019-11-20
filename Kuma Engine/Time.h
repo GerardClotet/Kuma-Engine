@@ -27,6 +27,7 @@ public:
 	static Timer game_timer;
 	static bool paused;
 	static bool running;
+	static bool play_one;
 };
 
 
