@@ -1,0 +1,35 @@
+{
+    "GameObject Root": [
+        {
+            "UUID": 287138346,
+            "Parent UUID": 1,
+            "Name": "cube",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "cube",
+                    "Type": 2
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        }
+    ]
+}

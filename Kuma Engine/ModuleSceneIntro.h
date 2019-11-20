@@ -51,6 +51,7 @@ public:
 	//Timer functions
 	void Play();
 	void Stop();
+	void DeleteObjectsPostGame();
 
 
 

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "ModuleWindow.h"
+#include "ModuleSceneIntro.h"
 #include "Component_Transform.h"
 #include "ImGui/imgui.h"
 Component_Camera::Component_Camera(GameObject* game_object)
@@ -44,6 +45,14 @@ Component_Camera::Component_Camera()
 
 Component_Camera::~Component_Camera()
 {
+	for (std::vector<Components*>::iterator item = App->scene_intro->camera_list.begin(); item != App->scene_intro->camera_list.end(); ++item)
+	{
+		if (this == (*item))
+		{
+			App->scene_intro->camera_list.erase(item);
+			break;
+		}
+	}
 }
 
 void Component_Camera::ReloadFrustrum()

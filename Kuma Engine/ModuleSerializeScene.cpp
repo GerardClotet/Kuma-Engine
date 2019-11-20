@@ -363,6 +363,7 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		 else if (strcmp(c, "Camera") == 0) 
 		 { 
 			 go_to_fill->AddComponent(GO_COMPONENT::CAMERA, true); //SetUp Manually
+			 //App->scene_intro->camera_list.push_back(go_to_fill->camera);
 			 go_to_fill->camera->gameObject_Item = go_to_fill; //Link Go & Component
 			 go_to_fill->camera->frustum.pos = go_to_fill->transform->GetGlobalPosition();
 			 LOG("Component Camera  Added");

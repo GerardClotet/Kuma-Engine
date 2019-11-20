@@ -309,8 +309,11 @@ bool GameObject::CleanUp()
 		++item;
 	}
 	components.clear();
-
+	
 	parent = nullptr;
+
+	//this->~GameObject();
+	
 	//std::vector<GameObject*>::iterator iter = game_object_childs.begin();
 	//while (iter != game_object_childs.end())
 	//{
@@ -605,7 +608,8 @@ void GameObject::RemoveCameraFromist(GameObject *obj)
 			}
 			LOG("deleted compoennt %s", (*item)->name.c_str());
 			delete (*item);
-			App->scene_intro->camera_list.erase(item);
+
+			//App->scene_intro->camera_list.erase(item);
 			break;
 			
 			

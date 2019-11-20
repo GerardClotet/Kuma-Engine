@@ -46,6 +46,7 @@ Component_Transform::~Component_Transform()
 {
 	LOG("deleted transform");
 	gameObject_Item = nullptr;
+	
 }
 
 bool Component_Transform::Update()
