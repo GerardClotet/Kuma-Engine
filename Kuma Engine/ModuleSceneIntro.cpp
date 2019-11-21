@@ -387,7 +387,8 @@ void ModuleSceneIntro::Stop()
 	
 	DeleteObjectsPostGame();
 	App->serialize->LoadScene("Assets/Scenes/temporal.kumaScene");
-	//TODO :/  Load Scene
+	//App->fs->Remove("Assets/Scenes/temporal.kumaScene");
+	std::remove("Assets/Scenes/temporal.kumaScene");
 }
 
 void ModuleSceneIntro::DeleteObjectsPostGame()
