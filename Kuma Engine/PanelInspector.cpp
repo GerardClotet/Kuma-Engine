@@ -40,6 +40,10 @@ void PanelInspector::DisplayInspector()
 		{
 			if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::CAMERA))
 			{
+				if (App->scene_intro->selected_game_obj == App->scene_intro->selected_camera_obj)
+				{
+					App->scene_intro->selected_camera_obj = nullptr;
+				}
 				App->scene_intro->selected_game_obj->RemoveCameraFromist(App->scene_intro->selected_game_obj);
 			}
 

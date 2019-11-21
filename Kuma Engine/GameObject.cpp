@@ -38,37 +38,6 @@ GameObject::GameObject(GameObject* parent,OBJECT_TYPE type, std::string name)
 
 
 
-//GameObject::GameObject(std::string name, OBJECT_TYPE type)
-//{
-//	this->name = name;
-//	this->type = type;
-//
-//	//if (type == OBJECT_TYPE::CUBE || type == OBJECT_TYPE::SPHERE || type == OBJECT_TYPE::CONE || type == OBJECT_TYPE::CYLINDER || type ==  OBJECT_TYPE::DODECAHEDRON)
-//	//{
-//		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
-//		components.push_back(AddComponent(GO_COMPONENT::MESH));
-//	//}
-//
-//}
-//
-//GameObject::GameObject(std::string name, OBJECT_TYPE type, aiMesh * mesh)
-//{
-//	this->name = name;
-//	this->type = type;
-//
-//	if (type == OBJECT_TYPE::IMPORTER)
-//	{
-//		//components.push_back(AddComponent(GO_COMPONENT::TRANSFORM));
-//		components.push_back(AddComponent(GO_COMPONENT::MESH, mesh));
-//	}
-//
-//}
-
-
-
-
-
-
 Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 {
 	switch (type)
@@ -316,14 +285,7 @@ bool GameObject::CleanUp()
 	
 	parent = nullptr;
 
-	//this->~GameObject();
-	
-	//std::vector<GameObject*>::iterator iter = game_object_childs.begin();
-	//while (iter != game_object_childs.end())
-	//{
-	//	delete (*iter);
-	//	++iter;
-	//}
+
 
 	
 	return true;
@@ -530,19 +492,22 @@ bool GameObject::CheckAABBinFrustum()
 		ret = false;
 
 	
-		for (std::vector<Components*>::iterator iter = App->scene_intro->camera_list.begin(); iter != App->scene_intro->camera_list.end(); ++iter)
+		
+	if (App->scene_intro->selected_camera_obj!=nullptr && App->scene_intro->selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
+	{
+		if (App->camera->camera_fake->frustum.Intersects(App->scene_intro->selected_camera_obj->camera->frustum))
 		{
-			if (App->camera->camera_fake->frustum.Intersects((*iter)->gameObject_Item->camera->frustum))
+			if (App->scene_intro->selected_camera_obj->camera->culling)
 			{
-				if ((*iter)->gameObject_Item->camera->culling)
-				{
-					if ((*iter)->gameObject_Item->camera->frustum.Intersects(this->bbox.aabb_global))
-						ret = true;
-					else
-						ret = false;
-				}
+				if (App->scene_intro->selected_camera_obj->camera->frustum.Intersects(this->bbox.aabb_global))
+					ret = true;
+				else
+					ret = false;
 			}
 		}
+	}
+		
+
 	
 
 	return ret;

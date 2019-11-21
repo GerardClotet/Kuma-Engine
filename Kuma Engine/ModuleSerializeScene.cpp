@@ -225,8 +225,6 @@ void ModuleSerializeScene::LoadScene(const char* path)
 	json_serializer->R_JSON_Close(scene);
 
 	
-	json_serializer->R_JSON_Close(scene);
-	
 
 }
 
