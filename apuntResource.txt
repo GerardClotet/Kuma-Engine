@@ -1,0 +1,17 @@
+Tenim bé lo de carregar el model meta.
+
+tots els objestec nomes s'han de carregar 1 cop, etx,fbx,etc.
+
+S'ha de tenir un counter de punters a cada objecte.
+
+Quan el numero de punters vagi de zero a 1 allocatar a memoria el objecte,
+
+quan vagi de 1 a zero desallocatar
+
+
+podem fer, guardar els meta amb el uid pero tindre un fitxer model
+
+Guardar Tots els recursos a assets de primeres en meta
+
+
+manageImportedFile ->añadir escena

@@ -3,6 +3,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
 //#include "ModuleResources.h"
+#include "ModuleSerializeScene.h"
 #include "PhysFS/include/physfs.h"
 #include "Assimp/include/cfileio.h"
 #include "Assimp/include/types.h"
@@ -543,6 +544,9 @@ const FileDropType & ModuleFileSystem::SearchExtension(const std::string & exter
 		ext_type = FileDropType::MODEL3D;
 	else if (extension == "PNG" || extension == "png" || extension == "jpg" || extension == "dds")
 		ext_type = FileDropType::TEXTURE;
+
+	else if (extension == "kumaScene" || extension == "kumascene")
+		ext_type = FileDropType::SCENE;
 	else
 		LOG("Extension unknown!");
 
@@ -569,6 +573,12 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 		break;
 	case FileDropType::TEXTURE:
 		last_path = TEXTURES_FOLDER + last_path;
+
+	case FileDropType::SCENE:
+		last_path = ASSETS_SCENE_FOLDER + last_path;
+		break;
+
+	default:
 		break;
 	}
 
@@ -588,6 +598,11 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 	case FileDropType::TEXTURE:
 		App->importer->LoadTextureFile(last_path.c_str());
 		break;
+
+	case FileDropType::SCENE:
+		App->serialize->LoadScene(last_path.c_str());
+		break;
+
 	}
 
 }
@@ -611,6 +626,53 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	file = App->fs->GetFileName(file.c_str());
 	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_TEXTURE_META;
 	return file;
+}
+bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path)
+{
+
+	SearchExtension(base_file_path);
+	std::string name = GetFileName(base_file_path);
+	name = SubstractFromEnd(name.c_str(), ".", +1);
+
+	switch (SearchExtension(base_file_path))
+	{
+	case FileDropType::MODEL3D:
+
+		name = LIBRARY_MODEL_FOLDER + name + EXTENSION_MODEL_META;
+		if (!Exists(name.c_str()))
+		{
+			//CREATE RESOURCE HERE
+		}
+		break;
+	case FileDropType::TEXTURE:
+		break;
+	case FileDropType::FOLDER:
+		break;
+	case FileDropType::SCRIPT:
+		break;
+	case FileDropType::SCENE:
+		name = ASSETS_SCENE_FOLDER + name + EXTENSION_SCENE;
+		if (!App->fs->Exists(name.c_str()))
+		{
+			//CREATE RESOURCE HERE
+			LOG("");
+			return false;
+		}
+
+		else
+		{
+			LOG("");
+
+			return true;
+		}
+		break;
+	case FileDropType::UNKNOWN:
+		break;
+	default:
+		break;
+	}
+	
+	return false;
 }
 	// -----------------------------------------------------
 	// ASSIMP IO

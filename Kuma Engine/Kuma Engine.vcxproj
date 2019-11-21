@@ -212,6 +212,7 @@
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleResource.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleSerializeScene.h" />
     <ClInclude Include="ModuleTexture.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="ModuleImporter.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
+    <ClCompile Include="ModuleResource.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleSerializeScene.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />

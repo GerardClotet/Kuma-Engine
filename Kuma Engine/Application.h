@@ -24,6 +24,7 @@ class ModuleImporter;
 class ModuleTexture;
 class ModuleFileSystem;
 class ModuleSerializeScene;
+class ModuleResource;
 
 class Application
 {
@@ -39,7 +40,7 @@ public:
 	ModuleTexture* texture = nullptr;
 	ModuleFileSystem* fs = nullptr;
 	ModuleSerializeScene* serialize = nullptr;
-
+	ModuleResource* resources = nullptr;
 private:
 
 	Timer		ms_timer;

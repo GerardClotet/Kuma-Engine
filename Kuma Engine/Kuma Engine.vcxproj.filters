@@ -242,6 +242,9 @@
     <ClCompile Include="Time.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleResource.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -779,6 +782,9 @@
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResource.h">
+      <Filter>modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

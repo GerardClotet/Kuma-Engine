@@ -18,7 +18,7 @@ enum class FileDropType {
 	TEXTURE,
 	FOLDER,
 	SCRIPT,
-
+	SCENE,
 	UNKNOWN
 };
 
@@ -73,10 +73,12 @@ public:
 
 public: 
 	const FileDropType& SearchExtension(const std::string& extern_path);
+
 	void ManageImportedFile(const char* in_path);
 	std::string GetModelMetaPath(const char* path);
 	std::string GetTextureMetaPath(const char* path);
 
+	bool CheckIfExistingInMeta(const char* base_file_path);
 private:
 
 	void CreateAssimpIO();

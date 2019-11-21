@@ -20,6 +20,7 @@ void _log(const char file[], int line, const char* format, ...);
 
 
 typedef unsigned int uint;
+typedef unsigned long  UID;
 
 enum update_status
 {
