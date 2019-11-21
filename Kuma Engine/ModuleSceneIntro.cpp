@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
 #include <random>
 #include <gl/GL.h>
 #include "pcg-cpp-0.98/include/pcg_random.hpp"
@@ -383,6 +384,8 @@ void ModuleSceneIntro::Play()
 {
 	Time::Start();
 	App->serialize->SaveScene("Assets/Scenes/temporal.kumaScene");
+	if (selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
+		App->renderer3D->actual_camera = selected_camera_obj->camera;
 	//TODO  :/  Save Scene
 }
 
@@ -395,7 +398,9 @@ void ModuleSceneIntro::Stop()
 	
 	App->fs->Remove("Assets/Scenes/temporal.kumaScene");
 
-	//std::remove("Assets/Scenes/temporal.kumaScene");
+	App->renderer3D->actual_camera = App->camera->camera_fake;
+
+
 }
 
 void ModuleSceneIntro::DeleteObjectsPostGame()
@@ -409,6 +414,7 @@ void ModuleSceneIntro::DeleteObjectsPostGame()
 	root->game_object_childs.clear();
 	App->scene_intro->camera_list.clear();
 	App->scene_intro->selected_game_obj = nullptr;
+	App->scene_intro->selected_camera_obj = nullptr;
 
 }
 

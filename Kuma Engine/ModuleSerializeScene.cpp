@@ -457,19 +457,23 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 	case GO_Properties::NEAR_PLANE:
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.nearPlaneDistance = dest;
+		go_to_fill->camera->near_plane = dest;
 		break;
 	case GO_Properties::FAR_PLANE:
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.farPlaneDistance = dest;
+		go_to_fill->camera->far_plane = dest;
 		break;
 	case GO_Properties::HORIZONTAL_FOV:
 
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.horizontalFov = dest;
+		go_to_fill->camera->horizontal_fov = dest;
 		break;
 	case GO_Properties::VERTICAL_FOV:
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.verticalFov = dest;
+		go_to_fill->camera->vertical_fov = dest;
 		break;
 	case GO_Properties::FRUSTRUM_COLOR: //doesnt modify alpha
 		memcpy(&dest, undefined, sizeof(float));

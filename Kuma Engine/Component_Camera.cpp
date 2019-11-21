@@ -219,12 +219,12 @@ void Component_Camera::SaveScene(R_JSON_Value* val) const
 
 	camera->SetString("Component", "Camera");
 	camera->SetUint("FrustumType", frustum.type);
-	camera->SetFloat("Horizontal Fov", horizontal_fov);
-	camera->SetFloat("Vertical Fov", vertical_fov);
+	camera->SetFloat("Horizontal Fov", frustum.horizontalFov);
+	camera->SetFloat("Vertical Fov", frustum.verticalFov);
 
 	camera->SetFloat("AspectRatio", aspect_ratio);
-	camera->SetFloat("Far Plane", far_plane);
-	camera->SetFloat("Near Plane", near_plane);
+	camera->SetFloat("Far Plane", frustum.farPlaneDistance);
+	camera->SetFloat("Near Plane", frustum.nearPlaneDistance);
 
 	camera->Set3DVec("Position", GetCameraPosition());
 	camera->Set3DVec("front", frustum.front);
