@@ -627,3 +627,15 @@ void GameObject::SetUUID(uint32 ID)
 {
 	UUID = ID;
 }
+
+bool GameObject::IsParShape(int obj_type)
+{
+	if (obj_type >= 2 && obj_type <= 6)
+		return true;
+
+	else if (obj_type > 8 && obj_type <= 9)
+		return true;
+
+
+	return false;
+}

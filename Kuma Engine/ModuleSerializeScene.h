@@ -85,6 +85,7 @@ struct SceneObjects {
 	std::vector<GameObject*> scene_go_vec;
 	infoToFill* inf_to_f;
 	void FamilyGameObjects(std::vector<GameObject*> go);
+	bool CleanUp();
 	
 };
 

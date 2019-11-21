@@ -47,6 +47,7 @@ class GameObject {
 
 
 public:
+
 	//thought for constructing through SerializedScene and fill it later
 	GameObject();
 	//common constructor
@@ -74,6 +75,8 @@ public:
 	void SaveToScene(R_JSON_Value* json_val);
 	void RemoveCameraFromist(GameObject* obj);
 	void SetUUID(uint32 ID);
+
+	bool IsParShape(int obj_type);
 public:
 	std::string name;
 	std::string new_name;
