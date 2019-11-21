@@ -206,7 +206,8 @@ void Component_Camera::SetAspectRatio(int width_ratio, int height_ratio, bool ty
 bool Component_Camera::Update()
 {
 	UpdateTransformFrustum();
-	DrawFrustum();
+	if (!this->gameObject_Item->show)
+		DrawFrustum();
 	return true;
 }
 
