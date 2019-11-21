@@ -207,28 +207,22 @@ void ModuleSerializeScene::LoadScene(const char* path)
 				}
 
 				sc_obj->scene_go_vec.push_back(sc_obj->inf_to_f->go_to_fill);
+				delete sc_obj->inf_to_f;
 			}
 	
 		}
 		
 	
-		sc_obj->FamilyGameObjects(sc_obj->scene_go_vec); //Not parenting well
+		sc_obj->FamilyGameObjects(sc_obj->scene_go_vec); 
+
+
+		sc_obj->CleanUp();
+		//assure sc_obj pointers are deleted;
 
 		delete sc_obj;
 
-	size_t r_st_size = scene->read_stream->Tell();
-	//scene->document->CopyFrom()
-	char peekreturn = scene->read_stream->Peek();
-	rapidjson::Value::MemberIterator v = scene->document->MemberBegin();
-	rapidjson::Value::ValueIterator kkk;
-	
-	
-	R_JSON_Value* value = scene->GetValue("GameObject");
-	
-	rapidjson::Type jj;
-	jj = scene->document->GetType();
 
-
+	json_serializer->R_JSON_Close(scene);
 
 	
 	
@@ -320,6 +314,24 @@ void SceneObjects::FamilyGameObjects(std::vector<GameObject*> go)
 		(*node)->CheckName((*node)->name);
 	}
 
+}
+
+bool SceneObjects::CleanUp()
+{
+
+
+	 std::vector<GameObject*>::iterator it = scene_go_vec.begin();
+
+	 while (it < scene_go_vec.end())
+	 {
+		 
+
+		// delete it;
+		 ++it;
+	 }
+
+	 scene_go_vec.clear();
+	 return true;
 }
 
 
@@ -519,8 +531,14 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 
 		a = static_cast<int>(reinterpret_cast<intptr_t>(undefined));
 
-		if(go_to_fill->material!=nullptr)
-			go_to_fill->mesh->SetType(a);
+		//if(go_to_fill->material!=nullptr/* || go_to_fill->IsParShape(a)*/)
+		//	go_to_fill->mesh->SetType(a);
+
+			if (go_to_fill->IsParShape(a))
+			{
+				go_to_fill->AddComponent(GO_COMPONENT::MESH);
+				go_to_fill->mesh->SetType(a);
+			}
 		//static_cast<OBJECT_TYPE>(static_cast<int>(reinterpret_cast<intptr_t>(undefined)))
 		LOG("Cannot find which property has to be filled");
 		break;
