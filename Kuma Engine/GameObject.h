@@ -72,6 +72,7 @@ public:
 	void SaveToMeta(const char* path);
 	void GenerateParentBBox();
 	bool CheckAABBinFrustum();
+	bool CheckInsideFrustum(const Component_Camera* camera, const AABB& aabb);
 	void SaveToScene(R_JSON_Value* json_val);
 	void RemoveCameraFromist(GameObject* obj);
 	void SetUUID(uint32 ID);

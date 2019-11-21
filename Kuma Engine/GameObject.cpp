@@ -486,7 +486,7 @@ void GameObject::GenerateParentBBox()
 
 bool GameObject::CheckAABBinFrustum()
 {
-	bool ret = true;
+	/*bool ret = true;
 	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
 		ret = true;
 	else
@@ -511,7 +511,62 @@ bool GameObject::CheckAABBinFrustum()
 
 	
 
+	return ret;*/
+	bool ret = true;
+	if (CheckInsideFrustum(App->camera->camera_fake, this->bbox.aabb_global))
+		ret = true;
+	else
+		ret = false;
+
+
+
+	if (App->scene_intro->selected_camera_obj != nullptr && App->scene_intro->selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
+	{
+		if (App->camera->camera_fake->frustum.Intersects(App->scene_intro->selected_camera_obj->camera->frustum))
+		{
+			if (App->scene_intro->selected_camera_obj->camera->culling)
+			{
+				
+				if (CheckInsideFrustum(App->scene_intro->selected_camera_obj->camera, this->bbox.aabb_global))
+					ret = true;
+				else
+					ret = false;
+			}
+		}
+	}
+
+
+
+
 	return ret;
+}
+
+bool GameObject::CheckInsideFrustum(const Component_Camera * camera, const AABB & aabb)
+{
+	//get the 8 cornrs of the bounding box
+	float3 corners[8];
+	aabb.GetCornerPoints(corners);
+
+	//get the 6 planes of the frustum
+	Plane planes[6];
+	camera->frustum.GetPlanes(planes);
+
+	for (uint i = 0; i < 6; ++i)
+	{
+		uint iInCount = 8;
+
+		for (uint p = 0; p < 8; ++p)
+		{
+			if (planes[i].IsOnPositiveSide(corners[p]))
+				--iInCount; //a corner is outside of the plane
+		}
+
+		if (iInCount == 0)
+			return false; //not a single corner inside
+		
+	}
+
+	return true;
 }
 
 void GameObject::SaveToMeta(const char* path)//for now we just save mesh & texture not components
