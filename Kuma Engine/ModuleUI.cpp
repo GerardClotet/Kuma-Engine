@@ -210,8 +210,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	//if (show_error_popUp)
 	//	ShowErrorPopUp(error_text.c_str());
-	App->scene_intro->GuizmosControls();
-	App->scene_intro->GuizmosLogic();
+	if (activate_gizmo)
+	{
+		App->scene_intro->GuizmosControls();
+		App->scene_intro->GuizmosLogic();
+	}
 
 
 	ImGui::Render();

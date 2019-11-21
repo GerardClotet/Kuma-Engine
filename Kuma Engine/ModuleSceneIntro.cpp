@@ -386,6 +386,8 @@ void ModuleSceneIntro::Play()
 	App->serialize->SaveScene("Assets/Scenes/temporal.kumaScene");
 	if (selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
 		App->renderer3D->actual_camera = selected_camera_obj->camera;
+
+	App->ui->activate_gizmo = false;
 	//TODO  :/  Save Scene
 }
 
@@ -399,7 +401,7 @@ void ModuleSceneIntro::Stop()
 	App->fs->Remove("Assets/Scenes/temporal.kumaScene");
 
 	App->renderer3D->actual_camera = App->camera->camera_fake;
-
+	App->ui->activate_gizmo = true;
 
 }
 
