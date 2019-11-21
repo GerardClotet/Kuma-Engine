@@ -165,7 +165,7 @@ bool GameObject::Update()
 				(*item_comp)->Update();
 
 			}
-			if (App->ui->config_p->Getwireframe())
+			else if (App->ui->config_p->Getwireframe())
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				glPolygonOffset(1.0f, 0.375f); //test
@@ -180,7 +180,9 @@ bool GameObject::Update()
 
 		
 		else if ((*item_comp)->comp_type != GO_COMPONENT::MESH) {
+
 			(*item_comp)->Update(); 
+
 		}
 		
 	}
@@ -468,6 +470,7 @@ AABB GameObject::GetAABB()
 
 void GameObject::DrawBoundingBox()
 {
+	LOG("draw bb parent %s", name);
 	for (int i = 0; i < bbox.aabb_global.NumEdges(); i++)
 	{
 		glBegin(GL_LINES);
@@ -486,6 +489,7 @@ void GameObject::DrawBoundingBox()
 		
 		glEnd();
 	}
+	LOG("savado bb parent %s", name);
 }
 
 void GameObject::GenerateParentBBox()

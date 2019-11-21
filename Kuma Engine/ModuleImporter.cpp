@@ -5,7 +5,7 @@
 #include "par_shapes.h"
 #include "ModuleFileSystem.h"
 #include "ModuleSceneIntro.h"
-
+#include "ModuleTexture.h"
 #include "PanelConfig.h"
 #include "ModuleUI.h"
 #include "GameObject.h"
@@ -13,16 +13,12 @@
 #include "Component_Material.h"
 #include "Component_Mesh.h"
 #include "RandomHelper.h"
-#include "DevIL/include/IL/ilu.h"
-#include "DevIL/include/IL/ilut.h"
-#include "DevIL/include/IL/il.h"
+
 
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-#pragma comment(lib,"Devil/libx86/DevIL.lib")
-#pragma comment(lib,"Devil/libx86/ILU.lib")
-#pragma comment(lib,"Devil/libx86/ILUT.lib")
+
 
 
 
@@ -42,25 +38,7 @@ bool ModuleImporter::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	ILuint devIl_init;
 
-
-	ilInit();
-	devIl_init = ilGetError();
-	if (devIl_init != IL_NO_ERROR)
-		ret = false;
-
-	iluInit();
-	devIl_init = ilGetError();
-	if (devIl_init != IL_NO_ERROR)
-		ret = false;
-
-
-	ilutRenderer(ILUT_OPENGL);
-
-	devIl_init = ilGetError();
-	if (devIl_init != IL_NO_ERROR)
-		ret = false;
 
 	return ret;
 }
@@ -136,7 +114,7 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 
 				//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
 				if (!App->fs->Exists(App->fs->GetTextureMetaPath(path.c_str()).c_str()))
-					SaveTextureToMeta(path.c_str());
+					App->texture->SaveTextureTo(path.c_str(), LIBRARY_TEXTURES_FOLDER);
 
 				++it;
 			}
@@ -151,7 +129,7 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 
 			//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
 			if (!App->fs->Exists(App->fs->GetTextureMetaPath(path.c_str()).c_str()))
-				SaveTextureToMeta(path.c_str());
+				App->texture->SaveTextureTo(path.c_str(), LIBRARY_TEXTURES_FOLDER);
 
 			return;
 		}
@@ -231,7 +209,9 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 					else
 					{
 						LoadTextureFromMaterial(imported_route + texture_path.data, go);
-						SaveTextureToMeta(texture_path.C_Str());
+						App->texture->SaveTextureTo(texture_path.C_Str(), LIBRARY_TEXTURES_FOLDER);
+
+						
 					}
 
 				}
@@ -569,26 +549,26 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 	
 }
 
-void ModuleImporter::SaveTextureToMeta(const char * path)
-{
-	std::string output;
-	ILuint size;
-	ILubyte *data;
-	
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
-	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
-	if (size > 0) {
-		data = new ILubyte[size]; // allocate data buffer
-		iluFlipImage();
-		if (ilSaveL(IL_DDS, data, size) > 0)
-		{
-			// Save to buffer with the ilSaveIL function
-			std::string temp = App->fs->GetFileName(path);
-			App->fs->SaveUnique(output, data, size, LIBRARY_TEXTURES_FOLDER, temp.c_str(), ".dds");
-		}
-		RELEASE_ARRAY(data);
-	}
-}
+//void ModuleImporter::SaveTextureToMeta(const char * path)
+//{
+//	std::string output;
+//	ILuint size;
+//	ILubyte *data;
+//	
+//	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+//	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
+//	if (size > 0) {
+//		data = new ILubyte[size]; // allocate data buffer
+//		iluFlipImage();
+//		if (ilSaveL(IL_DDS, data, size) > 0)
+//		{
+//			// Save to buffer with the ilSaveIL function
+//			std::string temp = App->fs->GetFileName(path);
+//			App->fs->SaveUnique(output, data, size, LIBRARY_TEXTURES_FOLDER, temp.c_str(), ".dds");
+//		}
+//		RELEASE_ARRAY(data);
+//	}
+//}
 
 meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 {

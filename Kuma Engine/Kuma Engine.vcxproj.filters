@@ -245,6 +245,18 @@
     <ClCompile Include="ModuleResource.cpp">
       <Filter>modules</Filter>
     </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceModel.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTexture.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -786,6 +798,18 @@
     <ClInclude Include="ModuleResource.h">
       <Filter>modules</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceModel.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTexture.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -844,6 +868,9 @@
     </Filter>
     <Filter Include="Guizmos">
       <UniqueIdentifier>{7d89d81d-80e3-4223-9634-aa7e94ee24ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{a03786f2-ee4b-4932-ac86-9cc3943ec110}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ bool ModuleResource::Init()
 bool ModuleResource::Start()
 {
 	//posar aqui la func
-	GenerateInitMeta();
+	// GenerateInitMeta();
 	return true;
 }
 
@@ -72,9 +72,22 @@ void ModuleResource::LookIn(const char* path)
 	for (f_i; f_i < file_list.end(); ++f_i)
 	{
 		std::string path_s = path + (*f_i);
-		App->fs->CheckIfExistingInMeta(path_s.c_str());
 
-		App->fs->ManageImportedFile(path_s.c_str());
+		FileDropType d_type;
+		if (App->fs->CheckIfExistingInMeta(path_s.c_str(), d_type))
+		{
+			//EXISTS
+			LOG("exists %s",path_s.c_str());
+		}
+
+		else
+		{
+			//CREATE RESOURCE, we have the type in d_type
+			LOG("Doesnt Exist %s", path_s.c_str());
+
+		}
+
+	
 	}
 
 

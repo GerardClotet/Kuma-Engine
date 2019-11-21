@@ -207,6 +207,8 @@ bool Component_Camera::Update()
 {
 	UpdateTransformFrustum();
 	DrawFrustum();
+
+	LOG("cam update %s", gameObject_Item->name.c_str());
 	return true;
 }
 

@@ -77,8 +77,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	else
 		App->camera->capMouseInput = false;
 
+	LOG("preUpdte root");
 	UpdateGameObject(root);
-
+	LOG("postUpdte root");
 
 	return UPDATE_CONTINUE;
 }
@@ -348,27 +349,30 @@ void ModuleSceneIntro::GuizmosControls()
 
 void ModuleSceneIntro::GuizmosLogic()
 {
-	if (App->scene_intro->selected_game_obj != nullptr) 
+	if (App->scene_intro->selected_game_obj != nullptr ) 
 	{
 		Component_Transform* transform = nullptr;
 		if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
+
+		{
 			transform = App->scene_intro->selected_game_obj->transform;
 
-		float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
-		view_transposed.Transpose();
-		float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
-		projection_transposed.Transpose();
-		float4x4 model = transform->global_transformation;
-		model.Transpose();
-		float4x4 delta;
+			float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
+			view_transposed.Transpose();
+			float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
+			projection_transposed.Transpose();
+			float4x4 model = transform->global_transformation;
+			model.Transpose();
+			float4x4 delta;
 
-		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
-		ImGuizmo::SetDrawlist();
-		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
-	
-		if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
-		{
-			transform->SetLocalTransform(model.Transposed());
+			ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
+			ImGuizmo::SetDrawlist();
+			ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
+
+			if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+			{
+				transform->SetLocalTransform(model.Transposed());
+			}
 		}
 	}
 	

@@ -573,7 +573,7 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 		break;
 	case FileDropType::TEXTURE:
 		last_path = TEXTURES_FOLDER + last_path;
-
+		break;
 	case FileDropType::SCENE:
 		last_path = ASSETS_SCENE_FOLDER + last_path;
 		break;
@@ -627,7 +627,7 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_TEXTURE_META;
 	return file;
 }
-bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path)
+bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path,FileDropType& type)
 {
 
 	SearchExtension(base_file_path);
@@ -637,20 +637,53 @@ bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path)
 	switch (SearchExtension(base_file_path))
 	{
 	case FileDropType::MODEL3D:
+		type = FileDropType::MODEL3D;
 
 		name = LIBRARY_MODEL_FOLDER + name + EXTENSION_MODEL_META;
+		NormalizePath(name);
 		if (!Exists(name.c_str()))
 		{
-			//CREATE RESOURCE HERE
+			return false;
+		}
+		else {
+			return true;
 		}
 		break;
 	case FileDropType::TEXTURE:
+		type = FileDropType::TEXTURE;
+		name = LIBRARY_MATERIAL_FOLDER + name + EXTENSION_TEXTURE_META;
+
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
 		break;
 	case FileDropType::FOLDER:
+		type = FileDropType::FOLDER;
+
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
 		break;
 	case FileDropType::SCRIPT:
+		type = FileDropType::SCRIPT;
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
 		break;
 	case FileDropType::SCENE:
+		type = FileDropType::SCENE;
 		name = ASSETS_SCENE_FOLDER + name + EXTENSION_SCENE;
 		if (!App->fs->Exists(name.c_str()))
 		{
@@ -662,11 +695,12 @@ bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path)
 		else
 		{
 			LOG("");
-
 			return true;
 		}
 		break;
 	case FileDropType::UNKNOWN:
+		type = FileDropType::UNKNOWN;
+
 		break;
 	default:
 		break;
