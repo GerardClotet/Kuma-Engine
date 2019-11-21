@@ -87,6 +87,12 @@ bool ModuleEditor::Start()
 
 }
 
+update_status ModuleEditor::PreUpdate(float dt)
+{
+	
+	return UPDATE_CONTINUE;
+}
+
 update_status ModuleEditor::Update(float dt)
 {
 	/*if (App->scene_intro->selected_game_obj !=nullptr)
@@ -373,6 +379,7 @@ void ModuleEditor::Log(const char* fmt, ...)
 
 void ModuleEditor::DisplayGameButtons()
 {
+
 	ImGui::Spacing();
 	std::string stop_or_play = Time::running ? "STOP" : "PLAY";
 	if (ImGui::Button(stop_or_play.c_str(), ImVec2(70, 20)))
@@ -391,33 +398,31 @@ void ModuleEditor::DisplayGameButtons()
 
 	ImGui::SameLine();
 
-	if (ImGui::Button("I> ||", ImVec2(70, 20)))
+	if (Time::play_one)
 	{
-		//avançar 1 frame
+		Time::Pause();
+		Time::play_one = false;
 	}
 
+	if (ImGui::Button("I> ||", ImVec2(70, 20)))
+	{
+		Time::play_one = (Time::play_one == false) ? true : false;
+		if (Time::play_one)
+		{
+			if (Time::paused)
+			{
+				Time::Resume();
+				Time::paused = true;
 
+			}
+			else
+			{
+				Time::paused = true;
+				Time::Resume();
+			}
+		}
+	}
 
-	//if (ImGui::Begin("PlayButton", &open, flags))
-	//{
-	//	std::string name = Time::running ? "Stop" : "Play";
-	//	if (ImGui::Button(name.c_str()))
-	//	{
-	//		Time::running ? App->scene->Stop() : App->scene->Play();
-	//	}
-	//	ImGui::SameLine();
-	//	std::string name2 = Time::paused ? "Resmue" : "Pause";
-	//	if (ImGui::Button(name2.c_str()))
-	//	{
-	//		Time::paused ? Time::Resume() : Time::Pause();
-	//	}
-	//	//ImGui::SameLine();
-	//	//if (ImGui::Button("Frame"))
-	//	//{
-
-	//	//}
-	//	ImGui::End();
-	//}
 }
 
 void ModuleEditor::HelpScreen()
@@ -506,6 +511,7 @@ void ModuleEditor::GameObjectScreen()
 	if (ImGui::MenuItem("Create Empty GameObject"))
 	{
 		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Empty GameObject");
+		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 	}
 	if (ImGui::MenuItem("Create Camera"))
 	{

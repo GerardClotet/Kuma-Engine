@@ -52,7 +52,10 @@ public:
 	meshInfo* saveMeshinfo();
 	void ExtractMeshInfo(meshInfo* info);
 	void SaveScene(R_JSON_Value* component)const;
+
+	//when loading scene
 	void SetType(int type);
+	void SwitchType(OBJECT_TYPE type);
 public:
 	par_shapes_mesh_s* par_mesh = nullptr;
 

@@ -4,6 +4,7 @@
 #include "ModuleImporter.h"
 #include "ModuleTexture.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 #include "GameObject.h"
 #include "Component_Material.h"
 #include "ModuleSceneIntro.h"
@@ -143,8 +144,12 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case SDL_WINDOWEVENT:
 			{
-				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
+				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
+					App->window->SetScreenWidth(e.window.data1);
+					App->window->SetScreenHeight(e.window.data2);
+				}
 			}
 		}
 	}

@@ -8,6 +8,7 @@ Timer Time::game_timer;
 
 bool Time::paused = false;
 bool Time::running = false;
+bool Time::play_one = false;
 
 
 
@@ -49,6 +50,7 @@ void Time::Pause()
 
 void Time::Resume()
 {
+
 	paused = false;
 	game_timer.Resume();
 }

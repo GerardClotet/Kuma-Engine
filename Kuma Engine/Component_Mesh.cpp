@@ -802,7 +802,39 @@ void Component_Mesh::SetType(int t)
 
 	this->type = static_cast<OBJECT_TYPE>(t);
 
+	SwitchType(this->type);
+}
 
+void Component_Mesh::SwitchType(OBJECT_TYPE type)
+{
+
+	switch (type)
+	{
+
+	case OBJECT_TYPE::CUBE:
+		GenerateCube();
+		break;
+	case OBJECT_TYPE::SPHERE:
+		GenerateSphere();
+		break;
+	case OBJECT_TYPE::CYLINDER:
+		GenerateCylinder();
+		break;
+	case OBJECT_TYPE::CONE:
+		GenerateCone();
+		break;
+	case OBJECT_TYPE::PLANE:
+		GeneratePlane();
+		break;
+	case OBJECT_TYPE::DODECAHEDRON:
+		GenerateDodecahedron();
+		break;
+
+	case OBJECT_TYPE::TORUS:
+		GenerateTorus();
+	default:
+		break;
+	}
 }
 
 

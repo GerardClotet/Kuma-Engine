@@ -9,6 +9,7 @@
 #include "ModuleUI.h"
 #include "ModuleCamera3D.h"
 #include "ModuleFileSystem.h"
+#include "ModuleSerializeScene.h"
 #include "Component_Camera.h"
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
@@ -349,7 +350,9 @@ void ModuleSceneIntro::GuizmosLogic()
 {
 	if (App->scene_intro->selected_game_obj != nullptr) 
 	{
-		Component_Transform* transform = App->scene_intro->selected_game_obj->transform;
+		Component_Transform* transform = nullptr;
+		if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
+			transform = App->scene_intro->selected_game_obj->transform;
 
 		float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
 		view_transposed.Transpose();
@@ -374,13 +377,34 @@ void ModuleSceneIntro::GuizmosLogic()
 void ModuleSceneIntro::Play()
 {
 	Time::Start();
+	App->serialize->SaveScene("Assets/Scenes/temporal.kumaScene");
 	//TODO  :/  Save Scene
 }
 
 void ModuleSceneIntro::Stop()
 {
 	Time::Stop();
-	//TODO :/  Load Scene
+	
+	DeleteObjectsPostGame();
+	App->serialize->LoadScene("Assets/Scenes/temporal.kumaScene");
+	
+	App->fs->Remove("Assets/Scenes/temporal.kumaScene");
+
+	//std::remove("Assets/Scenes/temporal.kumaScene");
+}
+
+void ModuleSceneIntro::DeleteObjectsPostGame()
+{
+ 	for (std::vector<GameObject*>::iterator iter = root->game_object_childs.begin(); iter != root->game_object_childs.end(); ++iter)
+	{
+		(*iter)->CleanUp();
+		delete (*iter);
+		//root->game_object_childs.erase(iter);
+	}
+	root->game_object_childs.clear();
+	App->scene_intro->camera_list.clear();
+	App->scene_intro->selected_game_obj = nullptr;
+
 }
 
 
