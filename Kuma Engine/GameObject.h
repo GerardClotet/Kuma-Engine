@@ -38,6 +38,7 @@ struct BoundingBox
 	IMPORTER,
 	DODECAHEDRON,
 	TORUS,
+	CAMERA,
 	NONE
 
 };

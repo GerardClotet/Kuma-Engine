@@ -110,17 +110,13 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 
-		//GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Fake");
-		//camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
-		//App->camera->camera_fake = (Component_Camera*)camera_go->AddComponent(GO_COMPONENT::CAMERA);
+	
 		actual_camera = App->camera->camera_fake;
 	}
 
 	// Projection matrix for
 	OnResize(App->window->GetScreenWidth(), App->window->GetScreenHeight());
 
-	/*App->hardware->gpu_vendor = (const char*)glGetString(GL_VENDOR);
-	App->hardware->gpu_brand = (const char*)glGetString(GL_RENDERER);*/
 
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
 	LOG("Renderer: %s", glGetString(GL_RENDERER));

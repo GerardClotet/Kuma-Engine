@@ -515,7 +515,7 @@ void ModuleEditor::GameObjectScreen()
 	}
 	if (ImGui::MenuItem("Create Camera"))
 	{
-		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera");
+		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera");
 		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		go->AddComponent(GO_COMPONENT::CAMERA);
 	}

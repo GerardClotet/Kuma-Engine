@@ -93,7 +93,11 @@ Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 		components.push_back(camera);
 		component = camera;
 		if (this->name != "Camera Fake")
+		{
 			App->scene_intro->camera_list.push_back(camera);
+			if (App->scene_intro->selected_camera_obj == nullptr)
+				App->scene_intro->selected_camera_obj = this;
+		}
 
 
 		break;

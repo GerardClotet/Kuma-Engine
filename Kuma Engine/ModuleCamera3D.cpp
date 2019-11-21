@@ -13,7 +13,7 @@
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Fake");
+	GameObject* camera_go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera Fake");
 	camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 	camera_fake = (Component_Camera*)camera_go->AddComponent(GO_COMPONENT::CAMERA);
 	camera_fake->frustum.nearPlaneDistance = 10.0f;

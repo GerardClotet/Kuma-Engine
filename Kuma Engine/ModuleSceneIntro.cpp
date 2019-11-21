@@ -51,7 +51,7 @@ bool ModuleSceneIntro::Start()
 	App->fs->ManageImportedFile(firstTex.c_str());
 
 
-	GameObject* hard_camera_go = CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera Harcoded");
+	GameObject* hard_camera_go = CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera Harcoded");
 	hard_camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 	camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
 	camera_hardcoded->frustum.farPlaneDistance = 30.0f;
@@ -78,6 +78,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		App->camera->capMouseInput = false;
 
 	UpdateGameObject(root);
+
 
 
 	return UPDATE_CONTINUE;
@@ -246,7 +247,10 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 	for (std::vector<RayCast>::iterator iter = scene_obj.begin(); iter != scene_obj.end(); ++iter)
 	{
 		temp = (*iter).trans->gameObject_Item;
-		selected = TriangleTest(*ray, temp);
+
+		if (temp->hasComponent(GO_COMPONENT::MESH) && temp->mesh->type == OBJECT_TYPE::IMPORTER)
+			selected = TriangleTest(*ray, temp);
+
 		if (selected != nullptr)
 			break;
 	}
@@ -328,6 +332,7 @@ GameObject* ModuleSceneIntro::TriangleTest(LineSegment& ray, GameObject* obj)
 		return nullptr;
 }
 
+
 void ModuleSceneIntro::GuizmosControls()
 {
 	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
@@ -406,6 +411,8 @@ void ModuleSceneIntro::DeleteObjectsPostGame()
 	App->scene_intro->selected_game_obj = nullptr;
 
 }
+
+
 
 
 
