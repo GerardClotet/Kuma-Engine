@@ -40,6 +40,10 @@ void PanelInspector::DisplayInspector()
 		{
 			if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::CAMERA))
 			{
+				if (App->scene_intro->selected_game_obj == App->scene_intro->selected_camera_obj)
+				{
+					App->scene_intro->selected_camera_obj = nullptr;
+				}
 				App->scene_intro->selected_game_obj->RemoveCameraFromist(App->scene_intro->selected_game_obj);
 			}
 
@@ -137,6 +141,27 @@ void PanelInspector::DisplayInspector()
 
 	if (ImGui::CollapsingHeader("Camera"))
 	{
+		if (App->scene_intro->camera_list.size() > 0)
+		{
+			static std::string item_current = App->scene_intro->selected_camera_obj->name;            // Here our selection is a single pointer stored outside the object.
+			if (ImGui::BeginCombo("Display", item_current.c_str())) // The second parameter is the label previewed before opening the combo.
+			{
+				for (std::vector<Components*>::iterator item = App->scene_intro->camera_list.begin(); item != App->scene_intro->camera_list.end(); ++item)
+				{
+					bool is_selected = (item_current == (*item)->gameObject_Item->name);
+					if (ImGui::Selectable((*item)->gameObject_Item->name.c_str(), is_selected))
+					{
+						item_current = (*item)->gameObject_Item->name;
+						App->scene_intro->selected_camera_obj = (*item)->gameObject_Item;
+					}
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();   // Set the initial focus when opening the combo (scrolling + for keyboard navigation support in the upcoming navigation branch)
+				}
+				ImGui::EndCombo();
+			}
+		}
+		//-----------------------------------------------------------------------------
+
 		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::CAMERA))
 		{
 			App->scene_intro->selected_game_obj->camera->DisplayInspector();

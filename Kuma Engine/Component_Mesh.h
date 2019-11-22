@@ -90,10 +90,10 @@ public:
 	bool show_normals = false;
 	bool show_face_normal = false;
 	bool test = false;
-
+	OBJECT_TYPE type;
 
 private:
-	OBJECT_TYPE type;
+	
 
 	std::list<debug_mesh> mesh_debug;
 	TexData* text = nullptr;

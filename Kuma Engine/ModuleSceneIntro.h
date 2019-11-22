@@ -54,10 +54,10 @@ public:
 	void DeleteObjectsPostGame();
 
 
-
 public:
 	GameObject* root = nullptr; //emptygame objects containing all game obects
 	GameObject* selected_game_obj = nullptr;
+	GameObject* selected_camera_obj = nullptr;
 	Component_Camera* camera_hardcoded = nullptr;
 	std::vector<Components*> camera_list;
 

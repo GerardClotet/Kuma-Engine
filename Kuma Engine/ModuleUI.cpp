@@ -210,8 +210,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	//if (show_error_popUp)
 	//	ShowErrorPopUp(error_text.c_str());
-	App->scene_intro->GuizmosControls();
-	App->scene_intro->GuizmosLogic();
+	if (activate_gizmo)
+	{
+		App->scene_intro->GuizmosControls();
+		App->scene_intro->GuizmosLogic();
+	}
 
 
 	ImGui::Render();
@@ -515,7 +518,7 @@ void ModuleEditor::GameObjectScreen()
 	}
 	if (ImGui::MenuItem("Create Camera"))
 	{
-		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::NONE, "Camera");
+		GameObject* go = App->scene_intro->CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera");
 		go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
 		go->AddComponent(GO_COMPONENT::CAMERA);
 	}
