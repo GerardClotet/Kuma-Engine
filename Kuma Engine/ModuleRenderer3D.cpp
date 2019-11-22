@@ -181,6 +181,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 void ModuleRenderer3D::DrawQuadtreeCube(const float3 * corners, Color color)
 {
+	glDisable(GL_CULL_FACE);
 	glColor3f(color.r, color.g, color.b);
 	glLineWidth(2.0f);
 
@@ -219,5 +220,5 @@ void ModuleRenderer3D::DrawQuadtreeCube(const float3 * corners, Color color)
 	glVertex3fv((const GLfloat*)&corners[1]);
 
 	glEnd();
-	
+	glEnable(GL_CULL_FACE);
 }
