@@ -10,36 +10,45 @@ class GameObject;
 #include <vector>
 #include <map>
 
-class QuadtreeNode
-{
-public:
-	QuadtreeNode();
-	~QuadtreeNode();
-
-	void Create(const AABB limits);
-	void Clear();
-	
-public:
-	AABB node_box;
-	void Draw();
-
-private:
-	QuadtreeNode* children[4] = { nullptr,nullptr,nullptr,nullptr };
-};
 
 class Quadtree
 {
+	friend class QuadtreeNode;
 public:
 	Quadtree();
 	~Quadtree();
 
 	void Create(const AABB limits);
 	void Clear();
-
+	void AddGameObject(const GameObject* gameObject);
 	void Draw();
 private:
 	QuadtreeNode * root = nullptr;
+	std::vector<const GameObject*> out_of_tree;
 };
 
+
+
+class QuadtreeNode
+{
+	friend class Quadtree;
+
+public:
+	QuadtreeNode();
+	~QuadtreeNode();
+
+	void Create(const AABB limits);
+	void Clear();
+	bool AddGameObject(const GameObject* gameObject);
+
+public:
+	AABB node_box;
+	void Draw();
+
+private:
+	std::vector<QuadtreeNode> childs;
+	Quadtree* tree = nullptr;
+	std::vector<const GameObject*> bucket;
+};
 
 #endif

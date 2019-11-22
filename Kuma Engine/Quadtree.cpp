@@ -32,6 +32,10 @@ void Quadtree::Clear()
 	root->Clear();
 }
 
+void Quadtree::AddGameObject(const GameObject * gameObject)
+{
+}
+
 
 
 
@@ -43,11 +47,8 @@ void QuadtreeNode::Draw()
 	App->renderer3D->DrawQuadtreeCube(corners, { 1.0f, 0.5f, 0.9f });
 
 	//if the node has childs, draw their childs recursively
-	if (children[0]) {
-		for (int i = 0; i < CHILD_SIZE; i++) {
-			children[i]->Draw();
-		}
-	}
+	for (uint i = 0; i < childs.size(); i++)
+		childs[i].Draw();
 }
 
 QuadtreeNode::QuadtreeNode()
@@ -67,6 +68,11 @@ void QuadtreeNode::Create(const AABB limits)
 void QuadtreeNode::Clear()
 {
 	
+}
+
+bool QuadtreeNode::AddGameObject(const GameObject * gameObject)
+{
+	return false;
 }
 
 
