@@ -15,6 +15,7 @@
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
 #include "PanelConfig.h"
+#include "Quadtree.h"
 #include "Assimp/include/anim.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
@@ -37,10 +38,10 @@ bool ModuleSceneIntro::Init()
 	App->camera->camera_fake->frustum.pos = { -20,20,20 };
 	App->camera->camera_fake->Look(float3(0, 0, 0));
 
+	quad_tree = new Quadtree();
+	quad_tree->Create(AABB(float3(-20, 0, -20), float3(20, 20, 20)));
 
-	//RandomFloatGenerator();
-	//RandomintGenerator(5, 6);
-	//
+	
 	return ret;
 }
 
@@ -89,6 +90,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	createGrid();
 
+	//draw the quadtree
+	quad_tree->Draw();
 	//glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }
@@ -226,6 +229,7 @@ GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE ty
 
 void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 {
+
 	parent->Update();
 	std::vector<GameObject*>::iterator iter = parent->game_object_childs.begin();
 	for (iter; iter != parent->game_object_childs.end(); ++iter)
@@ -240,6 +244,7 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 {
 	std::vector<RayCast> scene_obj;
 	BoxIntersection(root, ray, scene_obj);
+	//quadtree intersection and fill scene_obj
 
 	//It takes the first value, and the last and with them two does the function compare
 	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);

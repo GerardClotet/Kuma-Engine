@@ -178,3 +178,46 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+void ModuleRenderer3D::DrawQuadtreeCube(const float3 * corners, Color color)
+{
+	glColor3f(color.r, color.g, color.b);
+	glLineWidth(2.0f);
+
+	glBegin(GL_QUADS);
+
+	//Draw the 6 faces of the cube
+
+	glVertex3fv((const GLfloat*)&corners[1]);
+	glVertex3fv((const GLfloat*)&corners[5]);
+	glVertex3fv((const GLfloat*)&corners[7]);
+	glVertex3fv((const GLfloat*)&corners[3]);
+
+	glVertex3fv((const GLfloat*)&corners[4]);
+	glVertex3fv((const GLfloat*)&corners[0]);
+	glVertex3fv((const GLfloat*)&corners[2]);
+	glVertex3fv((const GLfloat*)&corners[6]);
+
+	glVertex3fv((const GLfloat*)&corners[5]);
+	glVertex3fv((const GLfloat*)&corners[4]);
+	glVertex3fv((const GLfloat*)&corners[6]);
+	glVertex3fv((const GLfloat*)&corners[7]);
+
+	glVertex3fv((const GLfloat*)&corners[0]);
+	glVertex3fv((const GLfloat*)&corners[1]);
+	glVertex3fv((const GLfloat*)&corners[3]);
+	glVertex3fv((const GLfloat*)&corners[2]);
+
+	glVertex3fv((const GLfloat*)&corners[3]);
+	glVertex3fv((const GLfloat*)&corners[7]);
+	glVertex3fv((const GLfloat*)&corners[6]);
+	glVertex3fv((const GLfloat*)&corners[2]);
+
+	glVertex3fv((const GLfloat*)&corners[0]);
+	glVertex3fv((const GLfloat*)&corners[4]);
+	glVertex3fv((const GLfloat*)&corners[5]);
+	glVertex3fv((const GLfloat*)&corners[1]);
+
+	glEnd();
+	
+}

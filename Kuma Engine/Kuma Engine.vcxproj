@@ -230,6 +230,7 @@
     <ClInclude Include="pcg-cpp-0.98\include\pcg_random.hpp" />
     <ClInclude Include="pcg-cpp-0.98\include\pcg_uint128.hpp" />
     <ClInclude Include="PerfTimer.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="RandomHelper.h" />
     <ClInclude Include="rapidjson\allocators.h" />
     <ClInclude Include="rapidjson\cursorstreamwrapper.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="Parson\parson.c" />
     <ClCompile Include="par_shapes.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
+    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="RandomHelper.cpp" />
     <ClCompile Include="SerializerJSON.cpp" />
     <ClCompile Include="Time.cpp" />

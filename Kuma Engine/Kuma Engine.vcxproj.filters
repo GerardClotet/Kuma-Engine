@@ -236,6 +236,9 @@
     <ClCompile Include="Time.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -766,6 +769,9 @@
       <Filter>Guizmos</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
       <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>

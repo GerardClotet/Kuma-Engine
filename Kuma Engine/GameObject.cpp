@@ -11,6 +11,8 @@
 #include "ModuleImporter.h"
 #include <string_view>
 #include "RandomHelper.h"
+#include "Quadtree.h"
+
 GameObject::GameObject()
 {
 	//thought for constructing through SerializedScene and fill it later
@@ -108,7 +110,9 @@ GameObject::~GameObject()
 
 bool GameObject::Update()
 {
+
 	isInsideFrustum = CheckAABBinFrustum();
+
 	if (this->hasComponent(GO_COMPONENT::TRANSFORM) && this->transform->boundingBoxActive)
 		DrawBoundingBox();
 
@@ -486,32 +490,7 @@ void GameObject::GenerateParentBBox()
 
 bool GameObject::CheckAABBinFrustum()
 {
-	/*bool ret = true;
-	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
-		ret = true;
-	else
-		ret = false;
-
 	
-		
-	if (App->scene_intro->selected_camera_obj!=nullptr && App->scene_intro->selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
-	{
-		if (App->camera->camera_fake->frustum.Intersects(App->scene_intro->selected_camera_obj->camera->frustum))
-		{
-			if (App->scene_intro->selected_camera_obj->camera->culling)
-			{
-				if (App->scene_intro->selected_camera_obj->camera->frustum.Intersects(this->bbox.aabb_global))
-					ret = true;
-				else
-					ret = false;
-			}
-		}
-	}
-		
-
-	
-
-	return ret;*/
 	bool ret = true;
 	if (CheckInsideFrustum(App->camera->camera_fake, this->bbox.aabb_global))
 		ret = true;

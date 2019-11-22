@@ -21,6 +21,7 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	void DrawQuadtreeCube(const float3 * corners, Color color);
 
 public:
 	FBO* fbo = nullptr;
