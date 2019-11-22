@@ -532,12 +532,13 @@ const char * ModuleFileSystem::GetReadPaths() const
 	return paths;
 }
 
-const FileDropType & ModuleFileSystem::SearchExtension(const std::string & extern_path)
+FileDropType  ModuleFileSystem::SearchExtension(std::string & extern_path)
 {
 	std::string extension;
 	SplitFilePath(extern_path.data(), nullptr, nullptr, &extension);
 
 	FileDropType ext_type = FileDropType::UNKNOWN;
+	LOG("%i", ext_type);
 
 	if (extension == "FBX" || extension == "fbx")
 		ext_type = FileDropType::MODEL3D;
@@ -546,6 +547,7 @@ const FileDropType & ModuleFileSystem::SearchExtension(const std::string & exter
 	else
 		LOG("Extension unknown!");
 
+	LOG("%i", ext_type);
 
 	return ext_type;
 
@@ -560,6 +562,7 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 
 	FileDropType f_type = SearchExtension(std::string(first_path));
 
+	LOG("%i", f_type);
 	std::string aux_path = last_path;
 
 	switch (f_type)
