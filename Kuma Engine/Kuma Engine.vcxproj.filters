@@ -233,12 +233,6 @@
     <ClCompile Include="imGuizmo\ImCurveEdit.cpp">
       <Filter>Guizmos</Filter>
     </ClCompile>
-    <ClCompile Include="FBO.cpp">
-      <Filter>helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="PanelScene.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>tools</Filter>
     </ClCompile>
@@ -770,12 +764,6 @@
     </ClInclude>
     <ClInclude Include="imGuizmo\ImCurveEdit.h">
       <Filter>Guizmos</Filter>
-    </ClInclude>
-    <ClInclude Include="FBO.h">
-      <Filter>helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="PanelScene.h">
-      <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>tools</Filter>

@@ -72,10 +72,6 @@ bool ModuleRenderer3D::Init()
 		}
 
 
-		//Initialize FBO
-		fbo = new FBO();
-		fbo->Create((uint)App->window->GetScreenWidth(), (uint)App->window->GetScreenHeight());
-
 
 		//Initialize Modelview Matrix
 		glMatrixMode(GL_MODELVIEW);
