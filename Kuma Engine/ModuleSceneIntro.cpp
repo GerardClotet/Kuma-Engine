@@ -88,12 +88,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	//fill a list of candidates and then call the checkAABB iterating de list
 	std::vector<GameObject*> candidates;
 	quad_tree->GetCandidates(candidates, App->camera->camera_fake->frustum);
+	SetCandidates(root, candidates);
+	
 	for (std::vector<GameObject*>::iterator iter = candidates.begin(); iter != candidates.end(); ++iter)
 	{
-		if ((*iter)->CheckAABBinFrustum())
-			(*iter)->isInsideFrustum = true;
-		else
-			(*iter)->isInsideFrustum = false;
+		UpdateDrawGameObject((*iter));
 	}
 
 	UpdateGameObject(root);
@@ -444,6 +443,79 @@ void ModuleSceneIntro::DeleteObjectsPostGame()
 	App->scene_intro->camera_list.clear();
 	App->scene_intro->selected_game_obj = nullptr;
 	App->scene_intro->selected_camera_obj = nullptr;
+
+}
+
+void ModuleSceneIntro::SetCandidates(GameObject* obj, std::vector<GameObject*>& candidates)
+{
+	if (!obj->isStatic)
+	{
+		if (obj->CheckAABBinFrustum())
+		{
+			candidates.push_back(obj);
+		}
+	}
+
+	for (std::vector<GameObject*>::iterator iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
+	{
+		if (!(*iter)->isStatic)
+		{
+			if ((*iter)->CheckAABBinFrustum())
+			{
+				candidates.push_back((*iter));
+			}
+		}
+
+		for (std::vector<GameObject*>::iterator item = (*iter)->game_object_childs.begin(); item != (*iter)->game_object_childs.end(); ++item)
+		{
+			SetCandidates((*item), candidates);
+		}
+	}
+
+	
+}
+
+void ModuleSceneIntro::UpdateDrawGameObject(GameObject * obj)
+{
+	for (std::vector<Components*>::iterator item_comp = obj->components.begin(); item_comp != obj->components.end(); ++item_comp)
+	{
+		if ((*item_comp)->comp_type == GO_COMPONENT::MESH)
+		{
+
+			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)& App->importer->wire_color);
+				glLineWidth(1.0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& App->importer->fill_color);
+
+				(*item_comp)->Update();
+
+
+			}
+			else if (App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& App->importer->fill_color);
+				(*item_comp)->Update();
+
+			}
+			if (App->ui->config_p->Getwireframe())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)& App->importer->wire_color);
+				glLineWidth(1.0f);
+				(*item_comp)->Update();
+
+			}
+
+
+		}
+	}
 
 }
 

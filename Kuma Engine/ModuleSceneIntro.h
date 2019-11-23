@@ -53,7 +53,8 @@ public:
 	void Play();
 	void Stop();
 	void DeleteObjectsPostGame();
-
+	void SetCandidates(GameObject* obj, std::vector<GameObject*>& candidates);
+	void UpdateDrawGameObject(GameObject* obj);
 
 public:
 	GameObject* root = nullptr; //emptygame objects containing all game obects
