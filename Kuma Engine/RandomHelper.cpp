@@ -57,7 +57,4 @@ UID GetRandomUID()
 	return uniform_d(rng);
 }
 
-void EstablishRand()
-{
 
-}

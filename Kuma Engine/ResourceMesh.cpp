@@ -5,6 +5,7 @@
 #include "ModuleFileSystem.h"
 ResourceMesh::ResourceMesh(UID id) : Resource(uid, Resource::Resource_Type::mesh)
 {
+	uid = id;
 }
 
 ResourceMesh::~ResourceMesh()

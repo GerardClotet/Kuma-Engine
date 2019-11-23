@@ -13,7 +13,7 @@ ResourceModel::ResourceModel(UID id, const char* base_path) : Resource(uid, Reso
 {
 	ref_path = base_path;
 	uid = id;
-	idk = uid;
+	
 	GenerateResource();
 }
 
@@ -78,7 +78,7 @@ void ResourceModel::LoadModelMeshes(const aiScene* model, std::vector<UID>& ids)
 	for (int i = 0; i < model->mNumMeshes; ++i)
 	{
 
-		uint32 kkk =  App->resources->GenerateUID();
+		UID kkk =  App->resources->GenerateUID();
 		ImportMesh(model->mMeshes[i],kkk);
 		ids.push_back(kkk);
 		
@@ -101,7 +101,7 @@ void ResourceModel::ImportMesh(aiMesh* mesh, UID id) //3
 
 	m->ReleaseFromMemory();
 
-	uid = idk;
+	
 }
 
 bool ResourceModel::SaveModelToMeta()

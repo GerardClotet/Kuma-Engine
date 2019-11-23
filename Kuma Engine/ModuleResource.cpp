@@ -207,5 +207,5 @@ bool ModuleResource::CheckifResourceExists(const char* ref_path) //check by refe
 UID ModuleResource::GenerateUID()
 {
 	
-	return GetRandomID();
+	return GetRandomUID();
 }
