@@ -60,7 +60,7 @@ bool ModuleSceneIntro::Start()
 
 
 
-	quad_tree = new Quadtree(AABB(float3(-20, -20, -20), float3(20, 20, 20)));
+	quad_tree = new Quadtree(AABB(float3(-200, -10, -200), float3(200, 40, 200)));
 	
 
 	return true;
