@@ -424,6 +424,7 @@ void ModuleSceneIntro::DeleteObjectsPostGame()
 		delete (*iter);
 		//root->game_object_childs.erase(iter);
 	}
+	quad_tree->Clear();
 	root->game_object_childs.clear();
 	App->scene_intro->camera_list.clear();
 	App->scene_intro->selected_game_obj = nullptr;

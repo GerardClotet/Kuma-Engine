@@ -213,10 +213,11 @@ void GameObject::RemoveGameObject(GameObject* child)
 		{
 			(*iter)->CleanUp();
 			LOG("deleted component");
+			App->scene_intro->quad_tree->RemoveGameobjectTree(child);
 			delete (*iter);
 			App->scene_intro->root->game_object_childs.erase(iter);
 			App->scene_intro->selected_game_obj = nullptr;
-			//App->ui->inspector_window = false;
+			
 			return;
 		}
 		++iter;
@@ -226,7 +227,7 @@ void GameObject::RemoveGameObject(GameObject* child)
 
 void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 {
-
+	
 	std::vector<GameObject*>::iterator iter = App->scene_intro->root->game_object_childs.begin();
 
 	while (iter != App->scene_intro->root->game_object_childs.end())
@@ -242,6 +243,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 				{
 					(*it)->CleanUp();
 					LOG("deleted component");
+					App->scene_intro->quad_tree->RemoveGameobjectTree(subchild);
 					delete (*it);
 					(*iter)->game_object_childs.erase(it);
 					App->scene_intro->selected_game_obj = nullptr;
@@ -272,6 +274,9 @@ bool GameObject::CleanUp()
 			++item;
 		}
 		(*it)->components.clear();
+
+		//--
+		App->scene_intro->quad_tree->RemoveGameobjectTree((*it));
 
 		delete (*it);
 		++it;

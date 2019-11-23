@@ -17,6 +17,7 @@ Quadtree::~Quadtree()
 }
 
 
+void Quadtree::AddToQuadtree(const GameObject * gameObject)
 {
 	if (root->AddToQuadTreeNode(gameObject) == false) 
 		out_of_tree.push_back(gameObject); //the game object is outside the quadtree
@@ -183,31 +184,32 @@ void QuadtreeNode::RedistributeQuadTree()
 			iter = bucket.erase(iter); //erase the gameobject from the parent if it fits in the child
 
 		else
-			++iter;
+			++iter; //if the gameobject doesn't fit in the child, keep it as parent child
 	}
 }
 
 bool QuadtreeNode::PutGameObjectToChilds(const GameObject * obj)
 {
 	//put the gameobject to the child
-	uint intersectionCount = 0;
-	uint intersectionChild = -1; //to avoid getting the first position
+	uint intersections = 0;
+	uint childpos = -1; //to avoid getting the first position
 
 	for (uint i = 0; i < childs.size(); i++)
 	{
 		if (childs[i].node_box.Intersects(obj->bbox.aabb_global))
 		{
-			intersectionCount++;
-			intersectionChild = i;
+			intersections++;
+			childpos = i;
 		}
 	}
-	if (intersectionCount == 1)
+	if (intersections == 1)
 	{
-		childs[intersectionChild].AddToQuadTreeNode(obj);
+		childs[childpos].AddToQuadTreeNode(obj);
 		return true;
 	}
-	else if (intersectionCount == 0)
-		LOG("[error] Quadtree parent node intersecting but not child intersection found");
+	else if (intersections == 0)
+		LOG("ERROR - No child intersection found");
+
 	return false;
 }
 
@@ -221,9 +223,10 @@ void QuadtreeNode::RemoveChilds()
 		{
 			bucket.push_back(bucket_childs[i]);
 		}
-		childs.clear();
+
+		childs.clear(); //clear the child list
 	}
-	bucket_childs.clear();
+	bucket_childs.clear();  //clear the bucket list
 }
 
 void QuadtreeNode::GetBucketChilds(std::vector<const GameObject*>& obj_vec, bool wantSelf) const

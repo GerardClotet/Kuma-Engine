@@ -58,7 +58,7 @@ void PanelInspector::DisplayInspector()
 			
 			
 		}
-		if (App->scene_intro->selected_game_obj!=nullptr && ImGui::Checkbox("static", &App->scene_intro->selected_game_obj->isStatic))
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->type != OBJECT_TYPE::CAMERA && ImGui::Checkbox("static", &App->scene_intro->selected_game_obj->isStatic))
 		{
 			if (App->scene_intro->selected_game_obj->isStatic)
 				App->scene_intro->quad_tree->AddToQuadtree(App->scene_intro->selected_game_obj);
