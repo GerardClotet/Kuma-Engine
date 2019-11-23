@@ -1,5 +1,10 @@
 #include "ModuleResource.h"
 #include "ModuleFileSystem.h"
+#include "Resource.h"
+#include "ResourceTexture.h"
+#include "ResourceMesh.h"
+#include "ResourceModel.h"
+#include "RandomHelper.h"
 ModuleResource::ModuleResource(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -16,11 +21,11 @@ bool ModuleResource::Init()
 bool ModuleResource::Start()
 {
 	//posar aqui la func
-	// GenerateInitMeta();
+	GenerateResourcesFromAssets();
 	return true;
 }
 
-bool ModuleResource::GenerateInitMeta()
+bool ModuleResource::GenerateResourcesFromAssets()
 {
 
 
@@ -74,7 +79,8 @@ void ModuleResource::LookIn(const char* path)
 		std::string path_s = path + (*f_i);
 
 		FileDropType d_type;
-		if (App->fs->CheckIfExistingInMeta(path_s.c_str(), d_type))
+		//if(CheckifResourceExists(path_s.c_str()))//Here chekcs the path and the reference name of the resources loaded
+		if (App->fs->CheckIfExistingInMeta(path_s.c_str(), d_type)) //aqui haura de mirar les ids no els noms pero aixo es canviara més endavant
 		{
 			//EXISTS
 			LOG("exists %s",path_s.c_str());
@@ -83,7 +89,22 @@ void ModuleResource::LookIn(const char* path)
 		else
 		{
 			//CREATE RESOURCE, we have the type in d_type
+
+		//	if(CheckifResourceExists(path_s.c_str()))//Here chekcs the path and the reference name of the resources loaded
+
+
 			LOG("Doesnt Exist %s", path_s.c_str());
+			
+			
+			Resource::Resource_Type r_type;
+			if (DropTypeToResourceType(r_type, d_type))
+			{
+			
+				CreateNewResources(r_type, GenerateUID(),path_s.c_str());
+
+			}
+
+			else LOG("file %s not supported as resource",path_s.c_str());
 
 		}
 
@@ -106,4 +127,85 @@ void ModuleResource::LookIn(const char* path)
 bool ModuleResource::CleanUp()
 {
 	return false;
+}
+
+Resource* ModuleResource::CreateNewResources(Resource::Resource_Type type, UID uid,const char* base_path)
+{
+	Resource* resource = nullptr;
+	
+
+
+	switch (type)
+	{
+	case Resource::model:
+		resource = (Resource*) new ResourceModel(uid,base_path);
+		break;
+	case Resource::texture:
+		resource = (Resource*) new ResourceTexture(uid, base_path);
+
+		break;
+	case Resource::mesh:
+		resource = (Resource*) new ResourceMesh(uid);
+
+		break;
+
+	case Resource::material:
+		resource = (Resource*) new ResourceMesh(uid);
+
+		break;
+	default:
+		break;
+	}
+	return resource;
+}
+
+bool ModuleResource::DropTypeToResourceType(Resource::Resource_Type& r_type, FileDropType d_type)
+{
+	bool ret = true;
+	switch (d_type)
+	{
+	case FileDropType::MODEL3D:
+
+		r_type = Resource::Resource_Type::model;
+		break;
+	case FileDropType::TEXTURE:
+		r_type = Resource::Resource_Type::texture;
+
+		break;
+	/*case FileDropType::FOLDER:
+		break;
+	case FileDropType::SCRIPT:
+		break;
+	case FileDropType::SCENE:
+		break;
+	case FileDropType::UNKNOWN:
+		break;*/
+	default:
+		ret = false;
+		LOG("resource not supported");
+		break;
+	}
+
+	return ret;
+}
+
+bool ModuleResource::CheckifResourceExists(const char* ref_path) //check by reference Assets path
+{
+	std::vector<Resource*>::iterator it = resources_vec.begin();
+
+	while (it < resources_vec.end())
+	{
+		if (strcmp(ref_path, (*it)->ref_path) == 0)
+			return true;
+
+		++it;
+	}
+
+	return false;
+}
+
+UID ModuleResource::GenerateUID()
+{
+	
+	return GetRandomID();
 }

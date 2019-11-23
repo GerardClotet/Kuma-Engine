@@ -17,6 +17,7 @@ public:
 		model=0,
 		texture,
 		mesh,
+		material,
 	};
 
 
@@ -41,4 +42,5 @@ protected:
 	uint loaded;
 	UID uid;
 	Resource_Type type;
+	const char* ref_path;
 };

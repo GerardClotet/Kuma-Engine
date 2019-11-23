@@ -14,7 +14,7 @@
 #include "ModuleResource.h"
 #include "mmgr\nommgr.h"
 #include "mmgr\mmgr.h"
-
+#include "RandomHelper.h"
 Application::Application()
 {
 	PERF_START(ptimer);
@@ -108,9 +108,10 @@ bool Application::Init()
 		++item;
 	}
 	
+	EstablishRand();
 	ms_timer.Start();
 
-
+	
 
 	PERF_START(ptimer);
 

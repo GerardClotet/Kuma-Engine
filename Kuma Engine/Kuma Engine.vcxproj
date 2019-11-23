@@ -254,6 +254,7 @@
     <ClInclude Include="rapidjson\writer.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ResourceTexture.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="RandomHelper.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />

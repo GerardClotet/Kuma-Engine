@@ -7,7 +7,7 @@ class ResourceTexture : public Resource
 	friend class ModuleTexture;
 
 public:
-	ResourceTexture(UID id);
+	ResourceTexture(UID id,const char* base_path);
 	virtual ~ResourceTexture();
 
 	bool LoadInMemory() override;

@@ -5,5 +5,9 @@ float RandomFloatGenerator();
 int RandomintGenerator(int min, int max);
 
 UINT32 GetRandomID();
+UID GetRandomUID();
+
+void EstablishRand();
+
 
 #endif // !RANDOMHELPER_H
