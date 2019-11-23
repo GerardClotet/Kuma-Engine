@@ -236,13 +236,25 @@ void Component_Transform::SetLocalTransform(float4x4 & trans_matrix)
 
 void Component_Transform::SetGlobalTransform(float4x4 & transform_matrix)
 {
-	transform_matrix.Decompose(local_position, local_rotation, local_scale);
+	float3 position, scale;
+	Quat rotation;
+	transform_matrix.Decompose(position, rotation, scale);
 
-	euler_rotation = local_rotation.ToEulerXYZ();
+	if (App->scene_intro->guizmo_operation == ImGuizmo::OPERATION::SCALE)
+	{
+		local_scale = scale;
+	}
 
-	euler_rotation.x = RadToDeg(euler_rotation.x);
-	euler_rotation.y = RadToDeg(euler_rotation.y);
-	euler_rotation.z = RadToDeg(euler_rotation.z);
+	else
+	{
+		local_position = position;
+		local_rotation = rotation;
+
+		euler_rotation = local_rotation.ToEulerXYZ();
+		euler_rotation.x = RadToDeg(euler_rotation.x);
+		euler_rotation.y = RadToDeg(euler_rotation.y);
+		euler_rotation.z = RadToDeg(euler_rotation.z);
+	}
 
 	RecalculateTransformMatrix();
 }

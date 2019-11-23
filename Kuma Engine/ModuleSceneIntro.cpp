@@ -422,7 +422,6 @@ void ModuleSceneIntro::Play()
 		App->renderer3D->actual_camera = selected_camera_obj->camera;
 
 	App->ui->activate_gizmo = false;
-	//TODO  :/  Save Scene
 }
 
 void ModuleSceneIntro::Stop()
