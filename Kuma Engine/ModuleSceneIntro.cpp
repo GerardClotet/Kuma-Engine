@@ -263,8 +263,12 @@ void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast & hit)
 {
 	std::vector<RayCast> scene_obj;
-	BoxIntersection(root, ray, scene_obj);
-	//quadtree intersection and fill scene_obj
+
+	quad_tree->GetCandidates(scene_obj, ray);
+	//quadtree to pass the game obejct instead of the root
+
+	BoxIntersection(root, ray, scene_obj);  //do this only for non-static
+
 
 	//It takes the first value, and the last and with them two does the function compare
 	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);
@@ -286,18 +290,21 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 
 void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std::vector<RayCast>& scene_obj)
 {
-	if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
+	if (!obj->isStatic)
 	{
-		if (obj->transform->ItIntersect(*ray))
+		if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
-			RayCast hit(obj->transform);
-
-			float near_hit, far_hit;
-
-			if (ray->Intersects(obj->bbox.obb, near_hit, far_hit))
+			if (obj->transform->ItIntersect(*ray))
 			{
-				hit.distance = near_hit;
-				scene_obj.push_back(hit);
+				RayCast hit(obj->transform);
+
+				float near_hit, far_hit;
+
+				if (ray->Intersects(obj->bbox.obb, near_hit, far_hit))
+				{
+					hit.distance = near_hit;
+					scene_obj.push_back(hit);
+				}
 			}
 		}
 	}

@@ -8,6 +8,7 @@
 #include "MathGeoLib/include/Geometry/AABB.h"
 #include "MathGeoLib/include/Math/float3.h"
 #include "Globals.h"
+#include "RayCast.h"
 #include <vector>
 
 
@@ -33,6 +34,13 @@ public:
 		root->GetCandidates(gameObjects, primitive);
 	}
 
+	template<typename PRIMITIVE>
+	void GetCandidates(std::vector<RayCast>& gameObjects, const PRIMITIVE& primitive)
+	{
+		root->GetCandidates(gameObjects, primitive);
+	}
+
+
 private:
 	QuadtreeNode * root = nullptr;
 	std::vector<GameObject*> out_of_tree;
@@ -55,6 +63,9 @@ public:
 
 	template<typename PRIMITIVE>
 	void GetCandidates(std::vector<GameObject*>& gameObjects, PRIMITIVE& primitive);
+
+	template<typename PRIMITIVE>
+	void GetCandidates(std::vector<RayCast>& gameObjects, const PRIMITIVE& primitive);
 
 private:
 	void SubdivideQuadTree();
@@ -81,6 +92,31 @@ void QuadtreeNode::GetCandidates(std::vector<GameObject*>& gameObjects, PRIMITIV
 			gameObjects.push_back(bucket[i]);
 		}
 
+		for (uint i = 0; i < childs.size(); i++)
+		{
+			childs[i].GetCandidates(gameObjects, primitive);
+		}
+	}
+}
+
+
+template<typename PRIMITIVE>
+void QuadtreeNode::GetCandidates(std::vector<RayCast>& gameObjects, const PRIMITIVE& primitive)
+{
+	if (primitive->Intersects(node_box))
+	{
+		float hit_near, hit_far;
+		for (uint i = 0; i < bucket.size(); i++)
+		{
+			RayCast hit(bucket[i]->transform);
+
+			if (primitive->Intersects(bucket[i]->bbox.obb, hit_near, hit_far))
+			{
+				hit.distance = hit_near;
+				gameObjects.push_back(hit);
+			}
+				
+		}
 		for (uint i = 0; i < childs.size(); i++)
 		{
 			childs[i].GetCandidates(gameObjects, primitive);
