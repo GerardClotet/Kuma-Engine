@@ -228,7 +228,15 @@ float4x4 Component_Transform::GetGlobalMatrix()const
 
 void Component_Transform::SetLocalTransform(float4x4 & trans_matrix)
 {
-	trans_matrix.Decompose(local_position, local_rotation, local_scale);
+	local_transformation = trans_matrix;
+	local_transformation.Decompose(local_position, local_rotation, local_scale);
+
+	RecalculateTransformMatrix();
+}
+
+void Component_Transform::SetGlobalTransform(float4x4 & transform_matrix)
+{
+	transform_matrix.Decompose(local_position, local_rotation, local_scale);
 
 	euler_rotation = local_rotation.ToEulerXYZ();
 

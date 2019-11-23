@@ -399,7 +399,16 @@ void ModuleSceneIntro::GuizmosLogic()
 	
 		if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
 		{
-			transform->SetLocalTransform(model.Transposed());
+			Component_Transform* parent_transform = nullptr;
+			if (App->scene_intro->selected_game_obj->parent->transform != nullptr)
+				parent_transform = App->scene_intro->selected_game_obj->parent->transform;
+
+			if (App->scene_intro->selected_game_obj->parent != App->scene_intro->root)
+			{
+				transform->SetGlobalTransform(parent_transform->global_transformation.Inverted() * model.Transposed());
+			}
+			else
+				transform->SetGlobalTransform(model.Transposed());
 		}
 	}
 	

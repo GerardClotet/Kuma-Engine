@@ -48,6 +48,7 @@ public:
 	void RecalculateTransformMatrix();
 	float4x4 GetGlobalMatrix()const;
 	void SetLocalTransform(float4x4 &transform_matrix);
+	void SetGlobalTransform(float4x4 &transform_matrix);
 
 	float4x4 GetParentGlobalMatrix()const;
 	void SaveScene(R_JSON_Value* val) const;
