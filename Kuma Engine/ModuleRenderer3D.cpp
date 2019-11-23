@@ -221,4 +221,5 @@ void ModuleRenderer3D::DrawQuadtreeCube(const float3 * corners, Color color)
 
 	glEnd();
 	glEnable(GL_CULL_FACE);
+
 }

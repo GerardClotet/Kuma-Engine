@@ -510,7 +510,7 @@ bool GameObject::CheckAABBinFrustum()
 		{
 			if (App->scene_intro->selected_camera_obj->camera->culling)
 			{
-				
+				//passar frustum i no camara
 				if (CheckInsideFrustum(App->scene_intro->selected_camera_obj->camera, this->bbox.aabb_global))
 					ret = true;
 				else
@@ -525,7 +525,7 @@ bool GameObject::CheckAABBinFrustum()
 	return ret;
 }
 
-bool GameObject::CheckInsideFrustum(const Component_Camera * camera, const AABB & aabb)
+bool GameObject::CheckInsideFrustum(const Component_Camera * camera, const AABB & aabb) // passarli frustum i no camara
 {
 	//get the 8 cornrs of the bounding box
 	float3 corners[8];

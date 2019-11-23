@@ -84,7 +84,22 @@ update_status ModuleSceneIntro::Update(float dt)
 	else
 		App->camera->capMouseInput = false;
 
+
+	//fill a list of candidates and then call the checkAABB iterating de list
+	std::vector<GameObject*> candidates;
+	quad_tree->GetCandidates(candidates, App->camera->camera_fake->frustum);
+	for (std::vector<GameObject*>::iterator iter = candidates.begin(); iter != candidates.end(); ++iter)
+	{
+		if ((*iter)->CheckAABBinFrustum())
+			(*iter)->isInsideFrustum = true;
+		else
+			(*iter)->isInsideFrustum = false;
+	}
+
 	UpdateGameObject(root);
+
+
+	
 
 
 

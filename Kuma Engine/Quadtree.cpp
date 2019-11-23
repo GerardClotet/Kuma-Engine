@@ -17,7 +17,7 @@ Quadtree::~Quadtree()
 }
 
 
-void Quadtree::AddToQuadtree(const GameObject * gameObject)
+void Quadtree::AddToQuadtree(GameObject * gameObject)
 {
 	if (root->AddToQuadTreeNode(gameObject) == false) 
 		out_of_tree.push_back(gameObject); //the game object is outside the quadtree
@@ -29,7 +29,7 @@ void Quadtree::Draw()
 	root->Draw();
 }
 
-bool Quadtree::RemoveGameobjectTree(const GameObject* obj)
+bool Quadtree::RemoveGameobjectTree(GameObject* obj)
 {
 	if (root->RemoveGameobjectTreeNode(obj) == true) //the gameobject is inside the quadtree
 		return true;
@@ -37,7 +37,7 @@ bool Quadtree::RemoveGameobjectTree(const GameObject* obj)
 	else
 	{
 		//the game object we want to erase is outside the quadtree
-		for (std::vector<const GameObject*>::iterator iter = out_of_tree.begin(); iter != out_of_tree.end(); ++iter)
+		for (std::vector<GameObject*>::iterator iter = out_of_tree.begin(); iter != out_of_tree.end(); ++iter)
 		{
 			if ((*iter) == obj)
 			{
@@ -95,7 +95,7 @@ QuadtreeNode::~QuadtreeNode()
 }
 
 
-bool QuadtreeNode::AddToQuadTreeNode(const GameObject * gameObject)
+bool QuadtreeNode::AddToQuadTreeNode(GameObject * gameObject)
 {
 	if (node_box.Intersects(gameObject->bbox.aabb_global))
 	{
@@ -135,9 +135,9 @@ void QuadtreeNode::Draw()
 		childs[i].Draw();
 }
 
-bool QuadtreeNode::RemoveGameobjectTreeNode(const GameObject * obj)
+bool QuadtreeNode::RemoveGameobjectTreeNode(GameObject * obj)
 {
-	for (std::vector<const GameObject*>::iterator iter = bucket.begin(); iter != bucket.end(); ++iter)
+	for (std::vector<GameObject*>::iterator iter = bucket.begin(); iter != bucket.end(); ++iter)
 	{
 		if ((*iter) == obj) //erase from bucket list if it matches
 		{
@@ -178,7 +178,7 @@ void QuadtreeNode::SubdivideQuadTree()
 
 void QuadtreeNode::RedistributeQuadTree()
 {
-	for (std::vector<const GameObject*>::iterator iter = bucket.begin();iter!= bucket.end();)
+	for (std::vector<GameObject*>::iterator iter = bucket.begin();iter!= bucket.end();)
 	{
 		if (PutGameObjectToChilds(*iter))
 			iter = bucket.erase(iter); //erase the gameobject from the parent if it fits in the child
@@ -188,7 +188,7 @@ void QuadtreeNode::RedistributeQuadTree()
 	}
 }
 
-bool QuadtreeNode::PutGameObjectToChilds(const GameObject * obj)
+bool QuadtreeNode::PutGameObjectToChilds(GameObject * obj)
 {
 	//put the gameobject to the child
 	uint intersections = 0;
@@ -215,7 +215,7 @@ bool QuadtreeNode::PutGameObjectToChilds(const GameObject * obj)
 
 void QuadtreeNode::RemoveChilds()
 {
-	std::vector<const GameObject*> bucket_childs;
+	std::vector<GameObject*> bucket_childs;
 	GetBucketChilds(bucket_childs, false);
 	if (bucket_childs.size() + bucket.size() <= MAX_BUCKET_SIZE)
 	{
@@ -229,7 +229,7 @@ void QuadtreeNode::RemoveChilds()
 	bucket_childs.clear();  //clear the bucket list
 }
 
-void QuadtreeNode::GetBucketChilds(std::vector<const GameObject*>& obj_vec, bool wantSelf) const
+void QuadtreeNode::GetBucketChilds(std::vector<GameObject*>& obj_vec, bool wantSelf) const
 {
 	if (wantSelf)
 	{
