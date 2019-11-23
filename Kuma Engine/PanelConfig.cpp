@@ -414,6 +414,10 @@ void PanelConfig::DisplayConfig()
 
 		ImGui::Spacing();
 		ImGui::Spacing();
+
+		ImGui::Checkbox("Quadtree", &App->scene_intro->printQuadtree);
+		ImGui::Spacing();
+		ImGui::Spacing();
 	}
 
 	if (ImGui::CollapsingHeader("Scene Camera"))

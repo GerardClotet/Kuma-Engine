@@ -88,6 +88,7 @@ public:
 	char buf[4096];
 
 	bool show		= false;
+	bool isStatic	= false;
 
 	OBJECT_TYPE type = OBJECT_TYPE::PARENT;
 	float3 game_object_pos		= { 0.0f, 0.0f, 0.0f };

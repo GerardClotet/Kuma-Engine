@@ -38,8 +38,7 @@ bool ModuleSceneIntro::Init()
 	App->camera->camera_fake->frustum.pos = { -20,20,20 };
 	App->camera->camera_fake->Look(float3(0, 0, 0));
 
-	quad_tree = new Quadtree();
-	quad_tree->Create(AABB(float3(-20, 0, -20), float3(20, 20, 20)));
+	
 
 	
 	return ret;
@@ -58,6 +57,12 @@ bool ModuleSceneIntro::Start()
 	camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
 	camera_hardcoded->frustum.farPlaneDistance = 30.0f;
 	hard_camera_go->transform->SetLocalPosition(0.0f, 0.0f, 10.0f);
+
+
+
+	quad_tree = new Quadtree(AABB(float3(-20, -20, -20), float3(20, 20, 20)));
+	
+
 	return true;
 }
 
@@ -91,7 +96,8 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 	createGrid();
 
 	//draw the quadtree
-	quad_tree->Draw();
+	if (printQuadtree)
+		quad_tree->Draw();
 	//glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }

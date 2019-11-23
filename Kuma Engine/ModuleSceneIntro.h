@@ -66,6 +66,7 @@ public:
 	ImGuizmo::MODE guizmo_mode = ImGuizmo::MODE::WORLD;
 	bool                guizmo_useSnap = false;
 	float3              guizmo_snap = float3(1.0f);
+	bool printQuadtree = true;
 
 	Quadtree* quad_tree = nullptr;
 

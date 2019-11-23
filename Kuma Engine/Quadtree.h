@@ -5,23 +5,27 @@
 #define CHILD_SIZE 4
 
 
-class GameObject;
 #include "MathGeoLib/include/Geometry/AABB.h"
+#include "MathGeoLib/include/Math/float3.h"
+#include "Globals.h"
 #include <vector>
-#include <map>
+
+
+class GameObject;
+class QuadtreeNode;
 
 
 class Quadtree
 {
 	friend class QuadtreeNode;
 public:
-	Quadtree();
+	Quadtree(const AABB& box);
 	~Quadtree();
 
-	void Create(const AABB limits);
 	void Clear();
-	void AddGameObject(const GameObject* gameObject);
+	void AddToQuadtree(const GameObject* gameObject);
 	void Draw();
+	bool RemoveGameobjectTree(const GameObject* obj);
 private:
 	QuadtreeNode * root = nullptr;
 	std::vector<const GameObject*> out_of_tree;
@@ -34,18 +38,23 @@ class QuadtreeNode
 	friend class Quadtree;
 
 public:
-	QuadtreeNode();
+	QuadtreeNode(const AABB& box);
+	QuadtreeNode(Quadtree* quadtree, QuadtreeNode* parent, uint index);
 	~QuadtreeNode();
 
-	void Create(const AABB limits);
-	void Clear();
-	bool AddGameObject(const GameObject* gameObject);
-
-public:
-	AABB node_box;
+	bool AddToQuadTreeNode(const GameObject* gameObject);
 	void Draw();
+	bool RemoveGameobjectTreeNode(const GameObject* obj);
 
 private:
+	void SubdivideQuadTree();
+	void RedistributeQuadTree();
+	bool PutGameObjectToChilds(const GameObject* obj);
+	void RemoveChilds();
+	void GetBucketChilds(std::vector<const GameObject*>& vector, bool wantSelf) const;
+
+private:
+	AABB node_box;
 	std::vector<QuadtreeNode> childs;
 	Quadtree* tree = nullptr;
 	std::vector<const GameObject*> bucket;
