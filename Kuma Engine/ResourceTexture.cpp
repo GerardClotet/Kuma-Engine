@@ -65,3 +65,8 @@ void ResourceTexture::Load()
 	 data = App->texture->LoadTexture(library_path);
 	 ExtractTexData();
 }
+
+const char* ResourceTexture::GetLibraryPath()
+{
+	return library_path;
+}

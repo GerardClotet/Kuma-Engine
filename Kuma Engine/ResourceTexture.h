@@ -21,6 +21,8 @@ public:
 
 	void ExtractTexData();
 	void Load();
+
+	const char* GetLibraryPath();
 public:
 
 	TexData* data = nullptr;

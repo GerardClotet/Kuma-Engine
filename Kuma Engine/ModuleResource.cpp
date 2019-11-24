@@ -230,6 +230,28 @@ bool ModuleResource::FindFileInDirectory(const char* dir, const char* filename, 
 	return false;
 }
 
+UID ModuleResource::findIDbyTexPath(const char* path)
+{
+	std::vector<Resource*>::iterator it = resources_vec.begin();
+
+
+	while (it < resources_vec.end())
+	{
+		if ((*it)->GetType() == 1) //texture
+		{
+			if ((*it)->ref_path == path)
+				return (*it)->GetUID();
+
+		}
+
+
+		++it;
+	}
+
+
+	return 0;
+}
+
 UID ModuleResource::GenerateUID()
 {
 	

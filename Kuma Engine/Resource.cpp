@@ -15,7 +15,7 @@ Resource::Resource_Type Resource::GetType() const
 
 UID Resource::GetUID() const
 {
-	return UID();
+	return uid;
 }
 
 uint Resource::CountResourceRefs() const

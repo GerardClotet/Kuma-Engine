@@ -11,6 +11,7 @@
 ResourceMaterial::ResourceMaterial(UID id) : Resource(uid, Resource::Resource_Type::material)
 {
 	uid = id;
+	mat_texture_metaPath = "id";
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -47,17 +48,31 @@ void ResourceMaterial::Import(const aiMaterial* material, const char* base_path)
 		path = TEXTURES_FOLDER + path;
 		LOG("%s", path.c_str());
 
-		ImportTexture(path.c_str());
+		std::string tpf = ImportTexture(path.c_str());
+		std::string temp2 = App->fs->GetFileName(tpf.c_str(), false);
+
+		if (strcmp(temp2.c_str(), "") == 0)
+			tpf = "checkers";
+
+		mat_texture_metaPath = tpf.c_str();
+		SaveToMeta(tpf);
 	}
-	
+
 }
 
-void ResourceMaterial::ImportTexture(const char* path)
+std::string ResourceMaterial::ImportTexture(const char* path)
 {
 	UID id_t;
 	std::string new_path;
 	if (CheckTextureMeta(path, new_path)) //fer aixo
-		id_t = 0;
+
+	{
+		texture_id = App->resources->findIDbyTexPath(path);
+
+		if (texture_id == 0)
+			return "checkers";
+		LOG("todo");
+	}
 		//Find UID by text path
 	else
 	{
@@ -69,7 +84,9 @@ void ResourceMaterial::ImportTexture(const char* path)
 		{
 			checkers = true;
 			texture_id = id_t;
-			return;
+
+			//tex_path =  new_path.c_str();
+			return new_path;
 
 		}
 
@@ -77,6 +94,8 @@ void ResourceMaterial::ImportTexture(const char* path)
 		t->ReleaseFromMemory();
 
 		texture_id = id_t;
+
+		return t->GetLibraryPath();
 	}
 	//return UID();
 }
@@ -93,4 +112,45 @@ bool ResourceMaterial::CheckTextureMeta(const char* path, std::string& new_path)
 
 
 	return false;
+}
+
+void ResourceMaterial::SaveToMeta(std::string tpf)
+{
+
+	std::string output;
+
+	uint size_path = 0;
+
+	std::string tex_path = tpf;
+	
+	
+	size_path += sizeof(char) * tex_path.size();
+	size_path += sizeof(UID); //texture id
+	size_path += sizeof(bool);
+
+	uint size =  size_path;
+	char* data = new char[size_path];
+	char* cursor = data;
+
+	
+	uint temp = tex_path.size();
+	memcpy(cursor, &temp, sizeof(char) * temp);
+	cursor += sizeof(char) * temp;
+	
+	UID temp_id = texture_id;
+	memcpy(cursor, &temp_id, sizeof(UID));
+	cursor += sizeof(UID);
+
+	bool temp_b = checkers;
+	memcpy(cursor, &temp_b, sizeof(bool));
+	cursor += sizeof(bool);
+
+	std::string meta_path = LIBRARY_MATERIAL_FOLDER + std::to_string(uid) + EXTENSION_META_KUMA;
+
+	App->fs->SaveUnique(output, data, size, meta_path.c_str());
+
+}
+
+void ResourceMaterial::LoadFromMeta()
+{
 }

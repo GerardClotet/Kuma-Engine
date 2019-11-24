@@ -1,0 +1,23 @@
+generard meta from assets with id, generar 1 resource per cada meta, quan el gameobject necesita x model mirar aagafar el id de resource i alla estara la info del meta etc
+
+
+
+
+Que fa el module resource i els resources?
+
+Mirar tots els assets, per cada assets generar un resource --> que es fa? es crear un .meta amb un id i el new resource creat llegeix aquest id.
+
+Un cop tens el resource creat amb un id unic quan generes un nou gameobject ha de saber a través del fbx quin id te per poder apuntar a les variables que te el resource carregat.
+
+
+Important si el numero de referencies al resource es 0 el resource es decarrega de memoria, i si s'importa un nou fbx o lo que sea com que sap a quin resource ha danar, (si no te cap referencia el resource no esta carregat i se n'ha de crear un de nou a trvaés del meta) aixo ultim no estic segur pero diria que es aixi
+
+el resourceModel ha de ser com el importer
+
+el resource es guarda un base paht
+
+
+
+fer llista material i un cop es tingui llista meshes i llista material es vinculen els meshes amb el material segons el seu tipus de index, que coindideix exactament amb el index de la llista de materials creat.
+
+Fer el node

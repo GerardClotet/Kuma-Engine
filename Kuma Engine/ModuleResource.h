@@ -37,7 +37,7 @@ public:
 
 	bool FindFileInDirectory(const char* dir, const char* filename, const char* extension);
 
-
+	UID findIDbyTexPath(const char* path);
 	UID GenerateUID();
 public:
 	std::vector<Resource*> resources_vec;
