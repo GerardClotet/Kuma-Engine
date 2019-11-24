@@ -30,6 +30,9 @@ public:
 	
 	void SaveToMeta( std::string s);
 	void LoadFromMeta();
+	bool LoadInMemory() override;
+	void ReleaseFromMemory() override;
+
 public:
 	UID texture_id;
 	std::string tex_path; //library_texture_path

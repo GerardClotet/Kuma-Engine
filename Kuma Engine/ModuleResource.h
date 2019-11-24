@@ -39,6 +39,8 @@ public:
 
 	UID findIDbyTexPath(const char* path);
 	UID GenerateUID();
+
+	Resource* FindResourcebyID(UID id);
 public:
 	std::vector<Resource*> resources_vec;
 	std::vector<Resource*> model_resources_vec;

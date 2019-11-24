@@ -14,8 +14,7 @@ public:
 	ResourceModel(UID id,const char* base_path);
 	virtual ~ResourceModel();
 
-	bool LoadInMemory() override;
-	void ReleaseFromMemory() override;
+	
 	void LoadModelScene(const aiScene* model);
 
 	void GenerateResource();
@@ -26,10 +25,20 @@ public:
 	void ImportMesh(aiNode* node,aiMesh* mesh,UID id);
 
 	bool SaveModelToMeta();
+	void LoadModelFromMeta();
+
 	void LoadNodeMesh(aiNode* node, const aiScene* model);
 
 	void LoadModelMaterials(const aiScene* model);
 	bool ImportMaterial(aiMaterial* material,UID id);
+
+
+
+	/// Resource Func
+
+	bool LoadToMemory();
+	void ReleaseFromMemory() override;
+	bool IsLoadedToMemory();
 public:
 
 	std::vector<UID>mat_vec;

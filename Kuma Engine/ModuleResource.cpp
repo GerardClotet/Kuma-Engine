@@ -257,3 +257,16 @@ UID ModuleResource::GenerateUID()
 	
 	return GetRandomUID();
 }
+
+Resource* ModuleResource::FindResourcebyID(UID id)
+{
+
+	std::vector<Resource*>::iterator it = resources_vec.begin();
+
+	while (it < resources_vec.end())
+	{
+		if ((*it)->GetUID() == id)
+			return (*it);
+	}
+	return nullptr;
+}

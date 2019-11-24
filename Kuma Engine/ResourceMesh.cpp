@@ -13,6 +13,7 @@
 ResourceMesh::ResourceMesh(UID id) : Resource(uid, Resource::Resource_Type::mesh)
 {
 	uid = id;
+	this->type = Resource::Resource_Type::mesh;
 }
 
 ResourceMesh::~ResourceMesh()
@@ -203,9 +204,10 @@ bool ResourceMesh::SaveToMeta()
 		+ sizeof(uint) * num_normal * 3
 		+ sizeof(uint) * num_uvs * 2
 		+ sizeof(uint) * num_color * 4
-		+ sizeof(float) *3
-		+ sizeof(float)*3 
-		+ sizeof(float)*4;
+		+ sizeof(float) * 3
+		+ sizeof(float) * 3
+		+ sizeof(float) * 4
+		+ sizeof(uint);
 	
 		
 	/*		+ sizeof(float) * 3
@@ -287,7 +289,9 @@ bool ResourceMesh::SaveToMeta()
 	bytes = sizeof(float);
 	memcpy(cursor, &rot.w, bytes);
 	
-
+	cursor += bytes;
+	bytes = sizeof(uint);
+	memcpy(cursor, &materialIndex, bytes);
 	
 	std::string name = LIBRARY_MESH_FOLDER + std::to_string(uid) + EXTENSION_META_KUMA;
 	std::string output;
@@ -411,6 +415,14 @@ bool ResourceMesh::LoadMeta()
 
 	rot.w = t_f[0];
 	LOG("rot w %f", rot.w);
+
+	cursor += bytes;
+	bytes = sizeof(uint);
+	uint* mI = new uint;
+	memcpy(mI, cursor, bytes);
+
+	materialIndex = mI[0];
+	
 
 	BindBuffers();
 

@@ -12,6 +12,8 @@ ResourceMaterial::ResourceMaterial(UID id) : Resource(uid, Resource::Resource_Ty
 {
 	uid = id;
 	mat_texture_metaPath = "id";
+
+	this->type = Resource::Resource_Type::material;
 }
 
 ResourceMaterial::~ResourceMaterial()
@@ -123,7 +125,7 @@ void ResourceMaterial::SaveToMeta(std::string tpf)
 
 	std::string tex_path = tpf;
 	
-	
+	size_path += sizeof(uint);
 	size_path += sizeof(char) * tex_path.size();
 	size_path += sizeof(UID); //texture id
 	size_path += sizeof(bool);
@@ -135,8 +137,12 @@ void ResourceMaterial::SaveToMeta(std::string tpf)
 	
 	uint temp = tex_path.size();
 	memcpy(cursor, &temp, sizeof(char) * temp);
-	cursor += sizeof(char) * temp;
+	cursor += sizeof(uint);
 	
+	memcpy(cursor, tex_path.c_str(), sizeof(char*) * temp);
+	cursor += sizeof(char) * temp;
+
+
 	UID temp_id = texture_id;
 	memcpy(cursor, &temp_id, sizeof(UID));
 	cursor += sizeof(UID);
@@ -148,9 +154,51 @@ void ResourceMaterial::SaveToMeta(std::string tpf)
 	std::string meta_path = LIBRARY_MATERIAL_FOLDER + std::to_string(uid) + EXTENSION_META_KUMA;
 
 	App->fs->SaveUnique(output, data, size, meta_path.c_str());
-
+	
+	
+	//LoadFromMeta();
 }
 
 void ResourceMaterial::LoadFromMeta()
+{
+
+	std::string meta_path = LIBRARY_MATERIAL_FOLDER + std::to_string(uid) + EXTENSION_META_KUMA;
+	char* buffer = nullptr;
+	uint testu = App->fs->Load(meta_path.c_str(), &buffer);
+
+	char* cursor = buffer;
+
+	uint size_str = 0;
+	memcpy(&size_str, cursor, sizeof(uint));
+	cursor += sizeof(uint);
+	char* path_temp = new char[size_str]; //
+
+	memcpy(path_temp, cursor, sizeof(char) * size_str);
+	LOG("%c", cursor);
+	mat_texture_metaPath = cursor;
+
+	cursor += sizeof(char*) * size_str;
+	//std::string temp2 = path_temp;
+	UID id = 0;
+	memcpy(&id, cursor, sizeof(UID));
+
+	texture_id = id;
+
+	cursor += sizeof(UID);
+
+	bool tempB;
+	memcpy(&tempB, cursor, sizeof(bool));
+
+	checkers = tempB;
+	cursor += sizeof(bool);
+}
+
+bool ResourceMaterial::LoadInMemory()
+{
+	LoadFromMeta();
+	return false;
+}
+
+void ResourceMaterial::ReleaseFromMemory()
 {
 }

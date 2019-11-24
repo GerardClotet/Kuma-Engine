@@ -6,6 +6,8 @@ ResourceTexture::ResourceTexture(UID id, const char* base_path): Resource(uid, R
 {
 	ref_path = base_path; //Assets path
 	uid = id;
+	this->type = Resource::Resource_Type::texture;
+	
 }
 
 ResourceTexture::~ResourceTexture()
