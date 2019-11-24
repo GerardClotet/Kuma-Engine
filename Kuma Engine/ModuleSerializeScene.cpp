@@ -282,7 +282,6 @@ void SceneObjects::FamilyGameObjects(std::vector<GameObject*> go)
 	std::vector<GameObject*> parent_or_single;
 	std::vector<GameObject*> dependant;
 
-	
 
 	///___Emparent____
 	for (auto node = go.begin(); node < go.end(); ++node) //divide into 2 different groups
@@ -315,6 +314,10 @@ void SceneObjects::FamilyGameObjects(std::vector<GameObject*> go)
 	{
 		(*node)->CheckName((*node)->name);
 	}
+
+
+	
+	
 
 }
 

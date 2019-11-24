@@ -102,7 +102,8 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 {
 	if (App->scene_intro->selected_game_obj != nullptr)
 	{
-		if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT)
+		if (App->scene_intro->selected_game_obj->type == OBJECT_TYPE::SUBPARENT )
+			
 		{
 			std::vector<GameObject*>::iterator it = App->scene_intro->selected_game_obj->game_object_childs.begin();
 			while (it != App->scene_intro->selected_game_obj->game_object_childs.end())
@@ -111,11 +112,12 @@ void ModuleImporter::LoadImportedMaterials(std::string path)
 					(*it)->AddComponent(GO_COMPONENT::MATERIAL);
 
 				(*it)->material->ReadTexture(path.c_str());
-
+				
+				
 				//CHECK IF THIS PATH ALREADY EXISTS, SO THE SAVE ONLY WILL BE DONE WHEN IT DOESN'T EXIST
 				if (!App->fs->Exists(App->fs->GetTextureMetaPath(path.c_str()).c_str()))
 					App->texture->SaveTextureTo(path.c_str(), LIBRARY_TEXTURES_FOLDER);
-
+				
 				++it;
 			}
 			return;
