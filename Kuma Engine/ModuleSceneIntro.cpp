@@ -52,11 +52,11 @@ bool ModuleSceneIntro::Start()
 	App->fs->ManageImportedFile(firstTex.c_str());
 
 
-	GameObject* hard_camera_go = CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera Harcoded");
-	hard_camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
-	camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
-	camera_hardcoded->frustum.farPlaneDistance = 30.0f;
-	hard_camera_go->transform->SetLocalPosition(0.0f, 0.0f, 10.0f);
+	//GameObject* hard_camera_go = CreateGameObject(nullptr, OBJECT_TYPE::CAMERA, "Camera Harcoded");
+	//hard_camera_go->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+	//camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
+	//camera_hardcoded->frustum.farPlaneDistance = 30.0f;
+	//hard_camera_go->transform->SetLocalPosition(0.0f, 0.0f, 10.0f);
 
 
 
