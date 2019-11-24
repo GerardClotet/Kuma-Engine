@@ -46,3 +46,15 @@ UINT32 GetRandomID()
 
 	return uniform_d(rng);
 }
+
+UID GetRandomUID()
+{
+	pcg_extras::seed_seq_from<std::random_device> seed;
+	pcg32 rng(seed);
+
+	std::uniform_int_distribution<UID> uniform_d(1, ULONG_MAX);
+
+	return uniform_d(rng);
+}
+
+

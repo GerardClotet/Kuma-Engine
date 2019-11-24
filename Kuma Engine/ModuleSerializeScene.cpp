@@ -265,7 +265,7 @@ void ModuleSerializeScene::SaveScene(const char* name)
 			(*it)->SaveToScene(go);
 			++it;
 		}
-
+		LOG("commo estamos");
 		scene->AddValue("GameObject Root", *go);
 		scene->WriteFile();
 

@@ -132,22 +132,24 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 	{
 		iluFlipImage();
 		
-		tex_data = new TexData;
+		cmp_tex = new TexData;
 
 
 		if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 		{
 			
-			tex_data->naem_extension = App->fs->GetFileName(path, true);
+			cmp_tex->naem_extension = App->fs->GetFileName(path, true);
 
 			
-			tex_data->name = path;
-			tex_data->name = tex_data->name.substr(tex_data->name.find_last_of("\\") + 1);
+			cmp_tex->name = path;
+
+			
+			//cmp_tex->name = cmp_tex->name.substr(tex_data->name.find_last_of("/") + 1);
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-			glGenTextures(1, &tex_data->id);
-			glBindTexture(GL_TEXTURE_2D, tex_data->id);
+			glGenTextures(1, &cmp_tex->id);
+			glBindTexture(GL_TEXTURE_2D, cmp_tex->id);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -160,15 +162,20 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 
 
-			tex_data->img_data = ilGetData();
-			tex_data->width = ilGetInteger(IL_IMAGE_WIDTH);
-			tex_data->height = ilGetInteger(IL_IMAGE_HEIGHT);
-			tex_data->offsetX = ilGetInteger(IL_IMAGE_OFFX);
-			tex_data->offsetY = ilGetInteger(IL_IMAGE_OFFY);
+			cmp_tex->img_data = ilGetData();
+			cmp_tex->width = ilGetInteger(IL_IMAGE_WIDTH);
+			cmp_tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
+			cmp_tex->offsetX = ilGetInteger(IL_IMAGE_OFFX);
+			cmp_tex->offsetY = ilGetInteger(IL_IMAGE_OFFY);
 
-			textures_vec.push_back(tex_data);
+			textures_vec.push_back(cmp_tex);
 		}
-		else LOG("Failure converting image, error: %s", iluErrorString(ilGetError())); //gives error whe laoding from meta, says the path has de dirtypart
+		else
+		{
+			LOG("Failure converting image, error: %s", iluErrorString(ilGetError())); //gives error whe laoding from meta, says the path has de dirtypart
+
+			return nullptr;
+		}
 
 
 
@@ -177,7 +184,7 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 	else LOG("Error Loading texture %s", iluErrorString(ilGetError()));
 
 
-	return tex_data;
+	return cmp_tex;
 }
 
 TexData* ModuleTexture::GetDefaultTex()
@@ -210,6 +217,32 @@ TexData* ModuleTexture::CheckAlreadyLoaded(const char* path) //TODO ajust path t
 		++it;
 	}
 	return nullptr;
+}
+
+void ModuleTexture::SaveTextureTo(const char* base_path, const char* save_to)
+{
+	std::string output;
+	ILuint size;
+	ILubyte* data;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
+	if (size > 0) {
+		data = new ILubyte[size]; // allocate data buffer
+		iluFlipImage();
+		if (ilSaveL(IL_DDS, data, size) > 0)
+		{
+			// Save to buffer with the ilSaveIL function
+			std::string temp = App->fs->GetFileName(base_path);
+			App->fs->SaveUnique(output, data, size, save_to, temp.c_str(), ".dds");
+		}
+		RELEASE_ARRAY(data);
+	}
+}
+
+bool ModuleTexture::LoadResourceTexture(ResourceTexture* resource)
+{
+	return false;
 }
 
 

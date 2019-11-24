@@ -211,6 +211,7 @@
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleResource.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleSerializeScene.h" />
     <ClInclude Include="ModuleTexture.h" />
@@ -253,6 +254,11 @@
     <ClInclude Include="rapidjson\stringbuffer.h" />
     <ClInclude Include="rapidjson\writer.h" />
     <ClInclude Include="RayCast.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMaterial.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceModel.h" />
+    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="SerializerJSON.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />
@@ -320,6 +326,7 @@
     <ClCompile Include="ModuleImporter.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
+    <ClCompile Include="ModuleResource.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleSerializeScene.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
@@ -336,6 +343,11 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="RandomHelper.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceModel.cpp" />
+    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="SerializerJSON.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Timer.cpp" />

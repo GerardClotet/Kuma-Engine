@@ -40,7 +40,7 @@ public:
 	
 	void SetLocalScaleToSingleAxis(const float scale, int axis);
 	//ROTATION
-	void SetLocalRotation(const float x, const float y, const float z, const float angle);
+	void SetLocalRotation( float x,  float y,  float z,  float angle);
 	const Quat GetLocalRotation()const;
 	const Quat GetGlobalRotation()const;
 

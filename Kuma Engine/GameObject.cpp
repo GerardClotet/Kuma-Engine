@@ -120,6 +120,7 @@ bool GameObject::Update()
 	{
 		if ((*item_comp)->comp_type != GO_COMPONENT::MESH) {
 			(*item_comp)->Update(); 
+
 		}
 	}
 
@@ -404,6 +405,7 @@ AABB GameObject::GetAABB()
 
 void GameObject::DrawBoundingBox()
 {
+	LOG("draw bb parent %s", name);
 	for (int i = 0; i < bbox.aabb_global.NumEdges(); i++)
 	{
 		glBegin(GL_LINES);
@@ -422,6 +424,7 @@ void GameObject::DrawBoundingBox()
 		
 		glEnd();
 	}
+	LOG("savado bb parent %s", name);
 }
 
 void GameObject::GenerateParentBBox()
@@ -540,6 +543,8 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 		go->SetUint32("Parent UUID", parent->UUID);
 
 	go->SetString("Name", name.c_str());
+	if (name == "Plane001")
+		LOG("");
 
 	R_JSON_Value* c = go->NewValue(rapidjson::kArrayType);
 

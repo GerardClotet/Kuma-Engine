@@ -11,9 +11,9 @@
 
 #include <vector>
 
-#define CHECKERS_WIDTH 100	
-#define CHECKERS_HEIGHT 100
 
+
+class ResourceTexture;
 struct TexData
 {	
 	std::string name;
@@ -46,6 +46,15 @@ public:
 	TexData* tex_data = nullptr;
 	std::vector <TexData*> textures_vec;
 	TexData* CheckAlreadyLoaded(const char* path);
+
+	//SAVE ONLY dds format
+	void SaveTextureTo(const char* base_path, const char* save_to);
+
+
+
+	//RESOURCES
+
+	bool LoadResourceTexture(ResourceTexture* resource);
 public:
 	uint ImageName;
 	

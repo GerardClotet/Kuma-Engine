@@ -20,6 +20,7 @@ void _log(const char file[], int line, const char* format, ...);
 
 
 typedef unsigned int uint;
+typedef unsigned long  UID;
 
 enum update_status
 {
@@ -46,7 +47,7 @@ enum update_status
 #define EXTENSION_MODEL_META "_model_meta.kuma"
 #define EXTENSION_TEXTURE_META ".dds"
 #define EXTENSION_SCENE ".kumaScene"
-#define ASSETS_FOLDER "/Assets/"
+#define ASSETS_FOLDER "Assets/"
 #define SETTINGS_FOLDER "/Settings/"
 #define MODELS_FOLDER "Assets/models/"
 #define TEXTURES_FOLDER "Assets/textures/"
@@ -61,7 +62,8 @@ enum update_status
 #define LIBRARY_STATE_MACHINE_FOLDER "/Library/StateMachines/"
 #define FILE_MAX 250
 #define EXTENSION_LIST 5
-
+#define CHECKERS_WIDTH 100	
+#define CHECKERS_HEIGHT 100
 const char* extensions_size[EXTENSION_LIST]
 {
 	"fbx",

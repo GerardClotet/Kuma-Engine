@@ -3,6 +3,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
 //#include "ModuleResources.h"
+#include "ModuleSerializeScene.h"
 #include "PhysFS/include/physfs.h"
 #include "Assimp/include/cfileio.h"
 #include "Assimp/include/types.h"
@@ -418,6 +419,51 @@ void * ModuleFileSystem::BassLoad(const char * file) const
 	return (void*) fs_file;
 }
 
+bool ModuleFileSystem::HasDirectoryInPath(const char* path)
+{
+	std::string temp = path;
+	char a  = '/';
+	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		if (*it == '\\' || *it == a)
+			return true;
+	}
+	
+	return false;
+}
+
+void ModuleFileSystem::EraseDotsFromBegin(std::string& path)
+{
+	std::string temp = path;
+	
+	size_t sz =0;
+
+	bool previous = true;
+	
+	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		const char a = *it;
+		
+		if (*it == '.' && previous)
+		{
+
+			
+			previous = true;
+			
+			sz++;
+		}
+		else previous = false;
+	}
+
+
+
+	temp = temp.substr(sz, temp.size());
+	path = temp;
+
+	
+
+}
+
 int close_sdl_rwops(SDL_RWops *rw)
 {
 	RELEASE_ARRAY(rw->hidden.mem.base);
@@ -540,18 +586,25 @@ FileDropType  ModuleFileSystem::SearchExtension(std::string & extern_path)
 	FileDropType ext_type = FileDropType::UNKNOWN;
 	LOG("%i", ext_type);
 
-	if (extension == "FBX" || extension == "fbx")
+	if (strcmp(extension.c_str(), "FBX") == 0 || strcmp(extension.c_str(), "fbx") == 0)
+	{
 		ext_type = FileDropType::MODEL3D;
-	else if (extension == "PNG" || extension == "png" || extension == "jpg" || extension == "dds")
+		LOG("searched model");
+	}
+	else if (strcmp(extension.c_str(), "PNG") || strcmp(extension.c_str(), "png") || strcmp(extension.c_str(), "jpg") || strcmp(extension.c_str(), "dds") || strcmp(extension.c_str(), "tga"))
 		ext_type = FileDropType::TEXTURE;
+
+	else if (strcmp(extension.c_str(), "kumaScene") || strcmp(extension.c_str(), "kumascene"))
+		ext_type = FileDropType::SCENE;
 	else
 		LOG("Extension unknown!");
 
-	LOG("%i", ext_type);
-
+	int i = static_cast<int>(ext_type);
+	LOG("type %i", i);
 	return ext_type;
 
 }
+
 
 void ModuleFileSystem::ManageImportedFile(const char * first_path)
 {
@@ -572,7 +625,13 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 		break; }
 	case FileDropType::TEXTURE: {
 		last_path = TEXTURES_FOLDER + last_path;
-		break; }
+		break;}
+	case FileDropType::SCENE:{
+		last_path = ASSETS_SCENE_FOLDER + last_path;
+		break;}
+
+	default:
+		break;
 	}
 
 	//Copy the file to assets folder if it doesn't exist
@@ -590,7 +649,12 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 		break; }
 	case FileDropType::TEXTURE: {
 		App->importer->LoadTextureFile(last_path.c_str());
-		break; }
+		break;}
+
+	case FileDropType::SCENE:{
+		App->serialize->LoadScene(last_path.c_str());
+		break;}
+
 	}
 
 }
@@ -614,6 +678,94 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 	file = App->fs->GetFileName(file.c_str());
 	file = LIBRARY_TEXTURES_FOLDER + file + EXTENSION_TEXTURE_META;
 	return file;
+}
+bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path,FileDropType& type)
+{
+	std::string temp = base_file_path;
+	std::string name = GetFileName(base_file_path);
+	name = SubstractFromEnd(name.c_str(), ".", +1);
+	type = SearchExtension(temp);
+	switch (type)
+	{
+	case FileDropType::MODEL3D:
+		type = FileDropType::MODEL3D;
+
+		LOG("modeltype");
+		name = LIBRARY_MODEL_FOLDER + name + EXTENSION_MODEL_META;
+		NormalizePath(name);
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+		break;
+	case FileDropType::TEXTURE:
+		LOG("texture type");
+
+		type = FileDropType::TEXTURE;
+		name = LIBRARY_MATERIAL_FOLDER + name + EXTENSION_TEXTURE_META;
+
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+		break;
+	case FileDropType::FOLDER:
+		type = FileDropType::FOLDER;
+		LOG("folder type");
+
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+		break;
+	case FileDropType::SCRIPT:
+
+		type = FileDropType::SCRIPT;
+		if (!Exists(name.c_str()))
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+		break;
+	case FileDropType::SCENE:
+		type = FileDropType::SCENE;
+		LOG("scene type");
+
+		name = ASSETS_SCENE_FOLDER + name + EXTENSION_SCENE;
+		if (!App->fs->Exists(name.c_str()))
+		{
+			//CREATE RESOURCE HERE
+			LOG("");
+			return false;
+		}
+
+		else
+		{
+			LOG("");
+			return true;
+		}
+		break;
+	case FileDropType::UNKNOWN:
+		type = FileDropType::UNKNOWN;
+		LOG("uknwon nonono");
+		break;
+	default:
+		LOG("default");
+		break;
+	}
+	
+	return false;
 }
 	// -----------------------------------------------------
 	// ASSIMP IO
@@ -781,50 +933,7 @@ void ModuleFileSystem::CreateBassIO()
 	BassIO->seek = BassSeek;
 }
 
-bool ModuleFileSystem::HasDirectoryInPath(const char* path)
-{
-	std::string temp = path;
-	char a = '/';
-	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
-	{
-		if (*it == '\\' || *it == a)
-			return true;
-	}
 
-	return false;
-}
-
-void ModuleFileSystem::EraseDotsFromBegin(std::string& path)
-{
-	std::string temp = path;
-
-		size_t sz = 0;
-
-	bool previous = true;
-
-	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
-	{
-		const char a = *it;
-
-		if (*it == '.' && previous)
-		{
-
-
-			previous = true;
-
-			sz++;
-		}
-		else previous = false;
-	}
-
-
-
-	temp = temp.substr(sz, temp.size());
-	path = temp;
-
-
-
-}
 
 BASS_FILEPROCS * ModuleFileSystem::GetBassIO()
 {

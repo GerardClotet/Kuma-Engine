@@ -85,7 +85,7 @@ public:
 	void SaveModelToMeta(const char* path,modelInfo* model);
 	TexData* LoadTextureDevil(const char* path);
 
-	void SaveTextureToMeta(const char *path);
+	//void SaveTextureToMeta(const char *path);
 	bool Init();
 	bool Start();
 	update_status Update(float dt);

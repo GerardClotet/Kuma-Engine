@@ -98,10 +98,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	UpdateGameObject(root);
 
 
-	
-
-
-
 	return UPDATE_CONTINUE;
 }
 
@@ -385,7 +381,7 @@ void ModuleSceneIntro::GuizmosControls()
 
 void ModuleSceneIntro::GuizmosLogic()
 {
-	if (App->scene_intro->selected_game_obj != nullptr) 
+	if (App->scene_intro->selected_game_obj != nullptr)
 	{
 		Component_Transform* transform = nullptr;
 		if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
@@ -402,8 +398,8 @@ void ModuleSceneIntro::GuizmosLogic()
 		ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
 		ImGuizmo::SetDrawlist();
 		ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
-	
-		if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+
+		if (ImGuizmo::IsUsing() && !delta.IsIdentity() /* Test if the gameobject is static or dynamic */ )
 		{
 			Component_Transform* parent_transform = nullptr;
 			if (App->scene_intro->selected_game_obj->parent->transform != nullptr)

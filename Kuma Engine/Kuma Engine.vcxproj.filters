@@ -4,19 +4,19 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ImGui\imgui.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\examples\imgui_impl_sdl.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera3D.cpp">
       <Filter>modules</Filter>
@@ -46,7 +46,7 @@
       <Filter>helpers</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\examples\imgui_impl_opengl3.cpp">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>tools</Filter>
@@ -236,6 +236,24 @@
     <ClCompile Include="Time.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleResource.cpp">
+      <Filter>modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceModel.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTexture.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMaterial.cpp">
+      <Filter>Resource</Filter>
+      </ClCompile>
     <ClCompile Include="Quadtree.cpp">
       <Filter>tools</Filter>
     </ClCompile>
@@ -244,25 +262,25 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ImGui\imconfig.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imgui.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imgui_internal.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\examples\imgui_impl_sdl.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imstb_truetype.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imstb_textedit.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>modules</Filter>
@@ -292,7 +310,7 @@
       <Filter>helpers</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\examples\imgui_impl_opengl3.h">
-      <Filter>imgui</Filter>
+      <Filter>tools\imgui</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>tools</Filter>
@@ -771,14 +789,29 @@
     <ClInclude Include="Time.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleResource.h">
+      <Filter>modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceModel.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTexture.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMaterial.h">
+      <Filter>Resource</Filter>
+       </ClInclude>
     <ClInclude Include="Quadtree.h">
       <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{0f684449-1d3a-46e2-b6bb-1866f146da8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="modules">
       <UniqueIdentifier>{29360e5f-ba55-43c2-ac9b-f63c40c2ce10}</UniqueIdentifier>
     </Filter>
@@ -832,6 +865,12 @@
     </Filter>
     <Filter Include="Guizmos">
       <UniqueIdentifier>{7d89d81d-80e3-4223-9634-aa7e94ee24ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{a03786f2-ee4b-4932-ac86-9cc3943ec110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\imgui">
+      <UniqueIdentifier>{0f684449-1d3a-46e2-b6bb-1866f146da8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

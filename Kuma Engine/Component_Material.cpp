@@ -23,6 +23,12 @@ Component_Material::~Component_Material()
 
 bool Component_Material::Update()
 {
+
+	if (strcmp(this->gameObject_Item->name.c_str(), "City_building_034") == 0)
+	{
+		LOG("SI");
+	}
+
 	return true;
 }
 
@@ -40,6 +46,11 @@ void Component_Material::ReadTexture(std::string file)
 {
 	file_path = file;
 	this->texture = App->texture->LoadTexture(file_path.c_str());
+	if (this->texture == nullptr)
+	{
+		LOG("tex null");
+		return;
+	}
 	width = this->texture->width;
 	height = this->texture->height;
 	setTexture = true;

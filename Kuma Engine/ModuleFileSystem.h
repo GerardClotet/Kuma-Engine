@@ -14,11 +14,11 @@ struct aiFileIO;
 #include "Bass/include/bass.h"
 //struct BASS_FILEPROCS;
 enum class FileDropType {
-	MODEL3D,
+	MODEL3D=0,
 	TEXTURE,
 	FOLDER,
 	SCRIPT,
-
+	SCENE,
 	UNKNOWN
 };
 
@@ -57,7 +57,8 @@ public:
 	unsigned int Load(const char* file, char** buffer) const;
 	SDL_RWops* Load(const char* file) const;
 	void* BassLoad(const char* file) const;
-
+	bool HasDirectoryInPath(const char* path);
+	void EraseDotsFromBegin(std::string& paht);
 	// IO interfaces for other libs to handle files via PHYSfs
 	aiFileIO* GetAssimpIO();
 	BASS_FILEPROCS* GetBassIO();
@@ -76,9 +77,9 @@ public:
 	void ManageImportedFile(const char* in_path);
 	std::string GetModelMetaPath(const char* path);
 	std::string GetTextureMetaPath(const char* path);
-	bool HasDirectoryInPath(const char* path);
-	void EraseDotsFromBegin(std::string& path);
+	
 
+	bool CheckIfExistingInMeta(const char* base_file_path,FileDropType& type);
 private:
 
 	void CreateAssimpIO();
