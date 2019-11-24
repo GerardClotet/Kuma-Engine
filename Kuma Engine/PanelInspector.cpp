@@ -8,6 +8,8 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleTexture.h"
 #include "ModuleUI.h"
+#include "Quadtree.h"
+
 update_status PanelInspector::Draw()
 {
 	if (App->ui->inspector_window)
@@ -29,7 +31,6 @@ void PanelInspector::DisplayInspector()
 		{
 			App->scene_intro->selected_game_obj->name = go_name;
 		}
-
 		if (ImGui::Checkbox("hide", &App->scene_intro->selected_game_obj->show))
 		{
 			LOG("hide");
@@ -57,8 +58,16 @@ void PanelInspector::DisplayInspector()
 			
 			
 		}
+		if (App->scene_intro->selected_game_obj != nullptr && App->scene_intro->selected_game_obj->type != OBJECT_TYPE::CAMERA && ImGui::Checkbox("static", &App->scene_intro->selected_game_obj->isStatic))
+		{
+			if (App->scene_intro->selected_game_obj->isStatic)
+				App->scene_intro->quad_tree->AddToQuadtree(App->scene_intro->selected_game_obj);
 
-		
+			else
+				App->scene_intro->quad_tree->RemoveGameobjectTree((App->scene_intro->selected_game_obj));
+
+			LOG("STATIC");
+		}
 		
 	}
 	

@@ -353,39 +353,39 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 
 	switch (go_p)
 	{
-	case GO_Properties::UUID:
+	case GO_Properties::UUID: {
 		go_to_fill->UUID = static_cast<uint64>(reinterpret_cast<uintptr_t>(undefined)); //void to uint64 & int64
-		break;
-	case GO_Properties::PARENT_UUID:
+		break; }
+	case GO_Properties::PARENT_UUID: {
 		go_to_fill->Parent_UUID = static_cast<uint64>(reinterpret_cast<uintptr_t>(undefined)); //void to uint64 & int64
-		break;
-	case GO_Properties::NAME:
+		break; }
+	case GO_Properties::NAME: {
 		go_to_fill->name = static_cast<const char* const>(undefined); //void to const char*
 		go_to_fill->staticName = static_cast<const char* const>(undefined);
-		break;
-	case GO_Properties::COMPONENT:
+		break; }
+	case GO_Properties::COMPONENT: {
 
 		LOG("component %s", field);
-		 c = static_cast<const char* const>(undefined);
+		c = static_cast<const char* const>(undefined);
 		//need to se what component is 
-		 if (strcmp(c, "Transform") == 0) { LOG("Transform will be Added"); }
-		 else if (strcmp(c, "Mesh") == 0) { LOG("Mesh will be Added"); }
-		 else if (strcmp(c, "Camera") == 0) 
-		 { 
-			 go_to_fill->AddComponent(GO_COMPONENT::CAMERA, true); //SetUp Manually
-			 //App->scene_intro->camera_list.push_back(go_to_fill->camera);
-			 go_to_fill->camera->gameObject_Item = go_to_fill; //Link Go & Component
-			 go_to_fill->camera->frustum.pos = go_to_fill->transform->GetGlobalPosition();
-			 LOG("Component Camera  Added");
-		 }
-		 else if (strcmp(c, "Material") == 0)
-		 {
-			 go_to_fill->AddComponent(GO_COMPONENT::MATERIAL);
-		 }
-		 //El material tambe s'ha de carregar un cop es tingui el pathtexture
-			//go_to_fill->AddComponent()
-		break;
-	case GO_Properties::POSITION:
+		if (strcmp(c, "Transform") == 0) { LOG("Transform will be Added"); }
+		else if (strcmp(c, "Mesh") == 0) { LOG("Mesh will be Added"); }
+		else if (strcmp(c, "Camera") == 0)
+		{
+			go_to_fill->AddComponent(GO_COMPONENT::CAMERA, true); //SetUp Manually
+			//App->scene_intro->camera_list.push_back(go_to_fill->camera);
+			go_to_fill->camera->gameObject_Item = go_to_fill; //Link Go & Component
+			go_to_fill->camera->frustum.pos = go_to_fill->transform->GetGlobalPosition();
+			LOG("Component Camera  Added");
+		}
+		else if (strcmp(c, "Material") == 0)
+		{
+			go_to_fill->AddComponent(GO_COMPONENT::MATERIAL);
+		}
+		//El material tambe s'ha de carregar un cop es tingui el pathtexture
+		   //go_to_fill->AddComponent()
+		break; }
+	case GO_Properties::POSITION: {
 		//count x y z to set proper
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
@@ -397,8 +397,8 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		_counter++;
 		if (_counter == 3)
 			_counter = 0;
-		break;
-	case GO_Properties::ROTATION:
+		break; }
+	case GO_Properties::ROTATION: {
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
 			t_rot.x = dest;
@@ -412,8 +412,8 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		_counter++;
 		if (_counter == 4)
 			_counter = 0;
-		break;
-	case GO_Properties::SCALE:
+		break; }
+	case GO_Properties::SCALE: {
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
 			t_scale.x = dest;
@@ -431,66 +431,66 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 
 		}
 
-		break;
-	case GO_Properties::META_ROUTE:
-		c = static_cast<const char* const>(undefined);  
-		
-		go_to_fill->AddComponent(GO_COMPONENT::MESH,App->importer->LoadMeshFromMeta(c));
+		break; }
+	case GO_Properties::META_ROUTE: {
+		c = static_cast<const char* const>(undefined);
+
+		go_to_fill->AddComponent(GO_COMPONENT::MESH, App->importer->LoadMeshFromMeta(c));
 		//dsgo_to_fill->mesh->mesh_meta_route = static_cast<const char* const>(undefined);
-		break;
-	case GO_Properties::TEXTURE_PATH:
-		 //Aqui
-	
+		break; }
+	case GO_Properties::TEXTURE_PATH: {
+		//Aqui
+
 		if (go_to_fill->mesh != nullptr)
 		{
 			go_to_fill->mesh->path_texture_associated_meta = static_cast<const char* const>(undefined);
 			if (go_to_fill->mesh->path_texture_associated_meta != nullptr)
 				go_to_fill->material->ReadTexture(static_cast<const char* const>(undefined));
 		}
-		break;
-	case GO_Properties::FRUSTRUM_TYPE:
+		break; }
+	case GO_Properties::FRUSTRUM_TYPE: {
 
 		go_to_fill->camera->frustum.type = static_cast<FrustumType>(static_cast<int>(reinterpret_cast<intptr_t>(undefined)));
-		break;
-	case GO_Properties::ASPECT_RATIO:
-		break;
-	case GO_Properties::NEAR_PLANE:
+		break; }
+	case GO_Properties::ASPECT_RATIO: {
+		break; }
+	case GO_Properties::NEAR_PLANE: {
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.nearPlaneDistance = dest;
 		go_to_fill->camera->near_plane = dest;
-		break;
-	case GO_Properties::FAR_PLANE:
+		break; }
+	case GO_Properties::FAR_PLANE: {
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.farPlaneDistance = dest;
 		go_to_fill->camera->far_plane = dest;
-		break;
-	case GO_Properties::HORIZONTAL_FOV:
+		break; }
+	case GO_Properties::HORIZONTAL_FOV: {
 
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.horizontalFov = dest;
 		go_to_fill->camera->horizontal_fov = dest;
-		break;
-	case GO_Properties::VERTICAL_FOV:
+		break; }
+	case GO_Properties::VERTICAL_FOV: {
 		memcpy(&dest, undefined, sizeof(float));
 		go_to_fill->camera->frustum.verticalFov = dest;
 		go_to_fill->camera->vertical_fov = dest;
-		break;
-	case GO_Properties::FRUSTRUM_COLOR: //doesnt modify alpha
+		break; }
+	case GO_Properties::FRUSTRUM_COLOR: { //doesnt modify alpha
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
 			go_to_fill->camera->color_frustum.r = dest;
-		else if(_counter == 1)
+		else if (_counter == 1)
 			go_to_fill->camera->color_frustum.g = dest;
 		else if (_counter == 2)
 			go_to_fill->camera->color_frustum.b = dest;
 		_counter++;
 		if (_counter == 3)
 			_counter = 0;
-		break;
-	case GO_Properties::CAMERA_BACKGROUND_COLOR://doesnt modify alpha
+		break; }
+	case GO_Properties::CAMERA_BACKGROUND_COLOR: {//doesnt modify alpha
 
 		memcpy(&dest, undefined, sizeof(float));
-		if (_counter == 0)  
+		if (_counter == 0)
 			go_to_fill->camera->color_camera_bg.r = dest;
 		else if (_counter == 1)
 			go_to_fill->camera->color_camera_bg.g = dest;
@@ -499,8 +499,8 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		_counter++;
 		if (_counter == 3)
 			_counter = 0;
-		break;
-	case GO_Properties::FRONT:
+		break; }
+	case GO_Properties::FRONT: {
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
 			go_to_fill->camera->frustum.front.x = dest;
@@ -511,9 +511,9 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 		_counter++;
 		if (_counter == 3)
 			_counter = 0;
-		break;
+		break; }
 
-	case GO_Properties::UP:
+	case GO_Properties::UP: {
 		memcpy(&dest, undefined, sizeof(float));
 		if (_counter == 0)
 			go_to_fill->camera->frustum.front.x = dest;
@@ -523,30 +523,30 @@ void infoToFill::ChooseWhatToFill(const char* field,void* undefined)
 			go_to_fill->camera->frustum.front.z = dest;
 		_counter++;
 		if (_counter == 3)
-		{	
+		{
 			go_to_fill->camera->ReloadFrustrum(); //RealodFrustum; !!! Necessary to work
 			_counter = 0;
 		}
-		break;
+		break; }
 
-	case GO_Properties::TYPE:
+	case GO_Properties::TYPE: {
 
 		a = static_cast<int>(reinterpret_cast<intptr_t>(undefined));
 
 		//if(go_to_fill->material!=nullptr/* || go_to_fill->IsParShape(a)*/)
 		//	go_to_fill->mesh->SetType(a);
 
-			if (go_to_fill->IsParShape(a))
-			{
-				go_to_fill->AddComponent(GO_COMPONENT::MESH);
-				go_to_fill->mesh->SetType(a);
-			}
+		if (go_to_fill->IsParShape(a))
+		{
+			go_to_fill->AddComponent(GO_COMPONENT::MESH);
+			go_to_fill->mesh->SetType(a);
+		}
 		//static_cast<OBJECT_TYPE>(static_cast<int>(reinterpret_cast<intptr_t>(undefined)))
 		LOG("Cannot find which property has to be filled");
-		break;
-	case GO_Properties::NONE:
+		break; }
+	case GO_Properties::NONE: {
 		LOG("Cannot find which property has to be filled");
-		break;
+		break; }
 
 
 	default:

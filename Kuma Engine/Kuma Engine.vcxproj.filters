@@ -253,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="ResourceMaterial.cpp">
       <Filter>Resource</Filter>
+      </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -803,6 +806,9 @@
     </ClInclude>
     <ClInclude Include="ResourceMaterial.h">
       <Filter>Resource</Filter>
+       </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

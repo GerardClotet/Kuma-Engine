@@ -18,34 +18,35 @@ Component_Mesh::Component_Mesh(OBJECT_TYPE type, GameObject* obj) : Components()
 	comp_type = GO_COMPONENT::MESH;
 	switch (type)
 	{
-	case OBJECT_TYPE::PARENT:
-		break;
-	case OBJECT_TYPE::SUBPARENT:
-		break;
-	case OBJECT_TYPE::CUBE:
+	case OBJECT_TYPE::PARENT: {
+		break; }
+	case OBJECT_TYPE::SUBPARENT: {
+		break; }
+	case OBJECT_TYPE::CUBE: {
 		GenerateCube();
-		break;
-	case OBJECT_TYPE::SPHERE:
+		break; }
+	case OBJECT_TYPE::SPHERE: {
 		GenerateSphere();
-		break;
-	case OBJECT_TYPE::CYLINDER:
+		break; }
+	case OBJECT_TYPE::CYLINDER: {
 		GenerateCylinder();
-		break;
-	case OBJECT_TYPE::CONE:
+		break; }
+	case OBJECT_TYPE::CONE: {
 		GenerateCone();
-		break;
-	case OBJECT_TYPE::PLANE:
+		break; }
+	case OBJECT_TYPE::PLANE: {
 		GeneratePlane();
-		break;
-	case OBJECT_TYPE::IMPORTER:
+		break; }
+	case OBJECT_TYPE::IMPORTER: {
 		//gl_int=true;
-		break;
-	case OBJECT_TYPE::DODECAHEDRON:
+		break; }
+	case OBJECT_TYPE::DODECAHEDRON: {
 		GenerateDodecahedron();
-		break;
+		break; }
 
-	case OBJECT_TYPE::TORUS:
+	case OBJECT_TYPE::TORUS: {
 		GenerateTorus();
+		break; }
 	default:
 		break;
 	}
@@ -811,27 +812,28 @@ void Component_Mesh::SwitchType(OBJECT_TYPE type)
 	switch (type)
 	{
 
-	case OBJECT_TYPE::CUBE:
+	case OBJECT_TYPE::CUBE: {
 		GenerateCube();
-		break;
-	case OBJECT_TYPE::SPHERE:
+		break; }
+	case OBJECT_TYPE::SPHERE: {
 		GenerateSphere();
-		break;
-	case OBJECT_TYPE::CYLINDER:
+		break; }
+	case OBJECT_TYPE::CYLINDER: {
 		GenerateCylinder();
-		break;
-	case OBJECT_TYPE::CONE:
+		break; }
+	case OBJECT_TYPE::CONE: {
 		GenerateCone();
-		break;
-	case OBJECT_TYPE::PLANE:
+		break; }
+	case OBJECT_TYPE::PLANE: {
 		GeneratePlane();
-		break;
-	case OBJECT_TYPE::DODECAHEDRON:
+		break; }
+	case OBJECT_TYPE::DODECAHEDRON: {
 		GenerateDodecahedron();
-		break;
+		break; }
 
-	case OBJECT_TYPE::TORUS:
+	case OBJECT_TYPE::TORUS: {
 		GenerateTorus();
+		break; }
 	default:
 		break;
 	}

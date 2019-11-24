@@ -63,30 +63,30 @@ void R_JSON_Value::ChangeType(rapidjson::Type type)
 {
 	switch (type)
 	{
-	case rapidjson::Type::kObjectType:
+	case rapidjson::Type::kObjectType: {
 		RELEASE(this->value);
 		this->value = new rapidjson::Value(rapidjson::kObjectType);
-		break;
-	case rapidjson::Type::kArrayType:
+		break; }
+	case rapidjson::Type::kArrayType: {
 		RELEASE(this->value);
 		this->value = new rapidjson::Value(rapidjson::kArrayType);
-		break;
-	case rapidjson::Type::kStringType:
+		break; }
+	case rapidjson::Type::kStringType: {
 		RELEASE(this->value);
 		this->value = new rapidjson::Value(rapidjson::kStringType);
-		break;
-	case rapidjson::Type::kNumberType:
+		break; }
+	case rapidjson::Type::kNumberType: {
 		RELEASE(this->value);
 		this->value = new rapidjson::Value(rapidjson::kNumberType);
-		break;
-	case rapidjson::Type::kTrueType:
+		break; }
+	case rapidjson::Type::kTrueType: {
 		RELEASE(this->value);
 		value = new rapidjson::Value(rapidjson::kTrueType);
-		break;
-	case rapidjson::Type::kFalseType:
+		break; }
+	case rapidjson::Type::kFalseType: {
 		RELEASE(this->value);
 		value = new rapidjson::Value(rapidjson::kFalseType);
-		break;
+		break; }
 
 	}
 }
@@ -103,16 +103,14 @@ void R_JSON_Value::AddValue(const char* name, const R_JSON_Value& val)
 	
 	switch (this->value->GetType())
 	{
-	case rapidjson::kObjectType:
-	{
+	case rapidjson::kObjectType:{
 		std::string str = name;
 		rapidjson::Value generic(str.c_str(), str.size(), *alloc_doc);
 		this->value->AddMember(generic, *val.value, *alloc_doc);
-		break;
-	}
-	case rapidjson::kArrayType:
+		break; }
+	case rapidjson::kArrayType: {
 		this->value->PushBack(*val.value, *alloc_doc);
-		break;
+		break; }
 	}
 }
 

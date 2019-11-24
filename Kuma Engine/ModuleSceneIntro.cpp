@@ -15,6 +15,7 @@
 #include "Component_Mesh.h"
 #include "Component_Transform.h"
 #include "PanelConfig.h"
+#include "Quadtree.h"
 #include "Assimp/include/anim.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
@@ -37,10 +38,9 @@ bool ModuleSceneIntro::Init()
 	App->camera->camera_fake->frustum.pos = { -20,20,20 };
 	App->camera->camera_fake->Look(float3(0, 0, 0));
 
+	
 
-	//RandomFloatGenerator();
-	//RandomintGenerator(5, 6);
-	//
+	
 	return ret;
 }
 
@@ -57,6 +57,12 @@ bool ModuleSceneIntro::Start()
 	camera_hardcoded = (Component_Camera*)hard_camera_go->AddComponent(GO_COMPONENT::CAMERA);
 	camera_hardcoded->frustum.farPlaneDistance = 30.0f;
 	hard_camera_go->transform->SetLocalPosition(0.0f, 0.0f, 10.0f);
+
+
+
+	quad_tree = new Quadtree(AABB(float3(-200, -10, -200), float3(200, 40, 200)));
+	
+
 	return true;
 }
 
@@ -78,6 +84,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	else
 		App->camera->capMouseInput = false;
 
+
+	//fill a list of candidates and then call the checkAABB iterating de list
+	std::vector<GameObject*> candidates;
+	quad_tree->GetCandidates(candidates, App->camera->camera_fake->frustum);
+	SetCandidates(root, candidates);
+	
+	for (std::vector<GameObject*>::iterator iter = candidates.begin(); iter != candidates.end(); ++iter)
+	{
+		UpdateDrawGameObject((*iter));
+	}
+
 	UpdateGameObject(root);
 
 
@@ -88,6 +105,9 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	createGrid();
 
+	//draw the quadtree
+	if (printQuadtree)
+		quad_tree->Draw();
 	//glColor3f(255.0f, 255.0f, 255.0f);
 	return UPDATE_CONTINUE;
 }
@@ -119,7 +139,6 @@ void ModuleSceneIntro::createGrid()
 	glColor4fv((float*)& ImVec4(1,1,1,1));
 	for (int i = -max_grid; i <= max_grid; i++)
 	{
-
 		sunX = separator * i;
 		
 
@@ -225,6 +244,7 @@ GameObject* ModuleSceneIntro::CreateGameObject(GameObject* parent,OBJECT_TYPE ty
 
 void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 {
+
 	parent->Update();
 	std::vector<GameObject*>::iterator iter = parent->game_object_childs.begin();
 	for (iter; iter != parent->game_object_childs.end(); ++iter)
@@ -238,7 +258,12 @@ void ModuleSceneIntro::UpdateGameObject(GameObject* parent)
 GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast & hit)
 {
 	std::vector<RayCast> scene_obj;
-	BoxIntersection(root, ray, scene_obj);
+
+	quad_tree->GetCandidates(scene_obj, ray);
+	//quadtree to pass the game obejct instead of the root
+
+	BoxIntersection(root, ray, scene_obj);  //do this only for non-static
+
 
 	//It takes the first value, and the last and with them two does the function compare
 	std::sort(scene_obj.begin(), scene_obj.end(), CompareRayCast);
@@ -260,18 +285,21 @@ GameObject* ModuleSceneIntro::MyRayCastIntersection(LineSegment * ray, RayCast &
 
 void ModuleSceneIntro::BoxIntersection(GameObject * obj, LineSegment * ray, std::vector<RayCast>& scene_obj)
 {
-	if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
+	if (!obj->isStatic)
 	{
-		if (obj->transform->ItIntersect(*ray))
+		if (obj->hasComponent(GO_COMPONENT::TRANSFORM))
 		{
-			RayCast hit(obj->transform);
-
-			float near_hit, far_hit;
-
-			if (ray->Intersects(obj->bbox.obb, near_hit, far_hit))
+			if (obj->transform->ItIntersect(*ray))
 			{
-				hit.distance = near_hit;
-				scene_obj.push_back(hit);
+				RayCast hit(obj->transform);
+
+				float near_hit, far_hit;
+
+				if (ray->Intersects(obj->bbox.obb, near_hit, far_hit))
+				{
+					hit.distance = near_hit;
+					scene_obj.push_back(hit);
+				}
 			}
 		}
 	}
@@ -359,24 +387,16 @@ void ModuleSceneIntro::GuizmosLogic()
 		if (App->scene_intro->selected_game_obj->hasComponent(GO_COMPONENT::TRANSFORM))
 
 		{
-			transform = App->scene_intro->selected_game_obj->transform;
+			Component_Transform* parent_transform = nullptr;
+			if (App->scene_intro->selected_game_obj->parent->transform != nullptr)
+				parent_transform = App->scene_intro->selected_game_obj->parent->transform;
 
-			float4x4 view_transposed = App->camera->camera_fake->frustum.ViewMatrix();
-			view_transposed.Transpose();
-			float4x4 projection_transposed = App->camera->camera_fake->frustum.ProjectionMatrix();
-			projection_transposed.Transpose();
-			float4x4 model = transform->global_transformation;
-			model.Transpose();
-			float4x4 delta;
-
-			ImGuizmo::SetRect(0.0f, 0.0f, App->window->GetScreenWidth(), App->window->GetScreenHeight());
-			ImGuizmo::SetDrawlist();
-			ImGuizmo::Manipulate(view_transposed.ptr(), projection_transposed.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
-
-			if (ImGuizmo::IsUsing() && !delta.IsIdentity()/*Test if the gameobject is static or dynamic*/)
+			if (App->scene_intro->selected_game_obj->parent != App->scene_intro->root)
 			{
-				transform->SetLocalTransform(model.Transposed());
+				transform->SetGlobalTransform(parent_transform->global_transformation.Inverted() * model.Transposed());
 			}
+			else
+				transform->SetGlobalTransform(model.Transposed());
 		}
 	}
 	
@@ -390,7 +410,6 @@ void ModuleSceneIntro::Play()
 		App->renderer3D->actual_camera = selected_camera_obj->camera;
 
 	App->ui->activate_gizmo = false;
-	//TODO  :/  Save Scene
 }
 
 void ModuleSceneIntro::Stop()
@@ -415,10 +434,84 @@ void ModuleSceneIntro::DeleteObjectsPostGame()
 		delete (*iter);
 		//root->game_object_childs.erase(iter);
 	}
+	quad_tree->Clear();
 	root->game_object_childs.clear();
 	App->scene_intro->camera_list.clear();
 	App->scene_intro->selected_game_obj = nullptr;
 	App->scene_intro->selected_camera_obj = nullptr;
+
+}
+
+void ModuleSceneIntro::SetCandidates(GameObject* obj, std::vector<GameObject*>& candidates)
+{
+	if (!obj->isStatic)
+	{
+		if (obj->CheckAABBinFrustum())
+		{
+			candidates.push_back(obj);
+		}
+	}
+
+	for (std::vector<GameObject*>::iterator iter = obj->game_object_childs.begin(); iter != obj->game_object_childs.end(); ++iter)
+	{
+		if (!(*iter)->isStatic)
+		{
+			if ((*iter)->CheckAABBinFrustum())
+			{
+				candidates.push_back((*iter));
+			}
+		}
+
+		for (std::vector<GameObject*>::iterator item = (*iter)->game_object_childs.begin(); item != (*iter)->game_object_childs.end(); ++item)
+		{
+			SetCandidates((*item), candidates);
+		}
+	}
+
+	
+}
+
+void ModuleSceneIntro::UpdateDrawGameObject(GameObject * obj)
+{
+	for (std::vector<Components*>::iterator item_comp = obj->components.begin(); item_comp != obj->components.end(); ++item_comp)
+	{
+		if ((*item_comp)->comp_type == GO_COMPONENT::MESH)
+		{
+
+			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)& App->importer->wire_color);
+				glLineWidth(1.0f);
+
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& App->importer->fill_color);
+
+				(*item_comp)->Update();
+
+
+			}
+			else if (App->ui->config_p->GetFill())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glColor4fv((float*)& App->importer->fill_color);
+				(*item_comp)->Update();
+
+			}
+			if (App->ui->config_p->Getwireframe())
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonOffset(1.0f, 0.375f); //test
+				glColor4fv((float*)& App->importer->wire_color);
+				glLineWidth(1.0f);
+				(*item_comp)->Update();
+
+			}
+
+
+		}
+	}
 
 }
 

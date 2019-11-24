@@ -578,12 +578,13 @@ const char * ModuleFileSystem::GetReadPaths() const
 	return paths;
 }
 
-const FileDropType & ModuleFileSystem::SearchExtension(const std::string & extern_path)
+FileDropType  ModuleFileSystem::SearchExtension(std::string & extern_path)
 {
 	std::string extension;
 	SplitFilePath(extern_path.data(), nullptr, nullptr, &extension);
 
 	FileDropType ext_type = FileDropType::UNKNOWN;
+	LOG("%i", ext_type);
 
 	if (strcmp(extension.c_str(), "FBX") == 0 || strcmp(extension.c_str(), "fbx") == 0)
 	{
@@ -638,19 +639,20 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 
 	FileDropType f_type = SearchExtension(std::string(first_path));
 
+	LOG("%i", f_type);
 	std::string aux_path = last_path;
 
 	switch (f_type)
 	{
-	case FileDropType::MODEL3D:
+	case FileDropType::MODEL3D: {
 		last_path = MODELS_FOLDER + last_path;
-		break;
-	case FileDropType::TEXTURE:
+		break; }
+	case FileDropType::TEXTURE: {
 		last_path = TEXTURES_FOLDER + last_path;
-		break;
-	case FileDropType::SCENE:
+		break;}
+	case FileDropType::SCENE:{
 		last_path = ASSETS_SCENE_FOLDER + last_path;
-		break;
+		break;}
 
 	default:
 		break;
@@ -666,16 +668,16 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 
 	switch (f_type)
 	{
-	case FileDropType::MODEL3D:
+	case FileDropType::MODEL3D: {
 		App->importer->LoadModelFile(last_path.c_str());
-		break;
-	case FileDropType::TEXTURE:
+		break; }
+	case FileDropType::TEXTURE: {
 		App->importer->LoadTextureFile(last_path.c_str());
-		break;
+		break;}
 
-	case FileDropType::SCENE:
+	case FileDropType::SCENE:{
 		App->serialize->LoadScene(last_path.c_str());
-		break;
+		break;}
 
 	}
 

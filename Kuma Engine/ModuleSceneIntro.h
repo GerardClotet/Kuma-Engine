@@ -20,6 +20,7 @@
 class GameObject;
 class Components;
 class Component_Camera;
+class Quadtree;
 struct SDL_Window;
 struct aiMesh;
 enum class OBJECT_TYPE;
@@ -52,7 +53,8 @@ public:
 	void Play();
 	void Stop();
 	void DeleteObjectsPostGame();
-
+	void SetCandidates(GameObject* obj, std::vector<GameObject*>& candidates);
+	void UpdateDrawGameObject(GameObject* obj);
 
 public:
 	GameObject* root = nullptr; //emptygame objects containing all game obects
@@ -65,6 +67,9 @@ public:
 	ImGuizmo::MODE guizmo_mode = ImGuizmo::MODE::WORLD;
 	bool                guizmo_useSnap = false;
 	float3              guizmo_snap = float3(1.0f);
+	bool printQuadtree = true;
+
+	Quadtree* quad_tree = nullptr;
 
 public:
 	//std::list<Spherestruct*> sphere_struct_list;

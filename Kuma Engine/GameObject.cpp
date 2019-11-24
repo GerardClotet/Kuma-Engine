@@ -11,6 +11,8 @@
 #include "ModuleImporter.h"
 #include <string_view>
 #include "RandomHelper.h"
+#include "Quadtree.h"
+
 GameObject::GameObject()
 {
 	//thought for constructing through SerializedScene and fill it later
@@ -42,23 +44,23 @@ Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 {
 	switch (type)
 	{
-	case GO_COMPONENT::NONE:
-		break;
-	case GO_COMPONENT::MESH:
+	case GO_COMPONENT::NONE: {
+		break; }
+	case GO_COMPONENT::MESH: {
 		mesh = new Component_Mesh(this->type, this);
 		components.push_back(mesh);
 
-		break;
-	case GO_COMPONENT::TRANSFORM:
-		break;
-	case GO_COMPONENT::MATERIAL:
+		break; }
+	case GO_COMPONENT::TRANSFORM: {
+		break; }
+	case GO_COMPONENT::MATERIAL: {
 		material = new Component_Material(this);
 		components.push_back(material);
-		break;
+		break; }
 			
-	case GO_COMPONENT::CAMERA:
+	case GO_COMPONENT::CAMERA: {
 
-		serialized_cam ?  camera = new Component_Camera() : camera = new Component_Camera(this);
+		serialized_cam ? camera = new Component_Camera() : camera = new Component_Camera(this);
 		components.push_back(camera);
 		component = camera;
 		if (this->name != "Camera Fake")
@@ -70,7 +72,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 		}
 
 
-		break;
+		break; }
 	}
 	return component;
 }
@@ -108,57 +110,18 @@ GameObject::~GameObject()
 
 bool GameObject::Update()
 {
-	isInsideFrustum = CheckAABBinFrustum();
+
+	//isInsideFrustum = CheckAABBinFrustum();
+
 	if (this->hasComponent(GO_COMPONENT::TRANSFORM) && this->transform->boundingBoxActive)
 		DrawBoundingBox();
 
 	for (std::vector<Components*>::iterator item_comp = components.begin(); item_comp != components.end(); ++item_comp)
 	{
-		
-		if ((*item_comp)->comp_type == GO_COMPONENT::MESH && isInsideFrustum)
-		{
-
-			if (App->ui->config_p->Getwireframe() && App->ui->config_p->GetFill())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)& App->importer->wire_color);
-				glLineWidth(1.0f);
-
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& App->importer->fill_color);
-
-				(*item_comp)->Update();
-
-
-			}
-			else if (App->ui->config_p->GetFill())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glColor4fv((float*)& App->importer->fill_color);
-				(*item_comp)->Update();
-
-			}
-			else if (App->ui->config_p->Getwireframe())
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glPolygonOffset(1.0f, 0.375f); //test
-				glColor4fv((float*)& App->importer->wire_color);
-				glLineWidth(1.0f);
-				(*item_comp)->Update();
-
-			}
-
-
-		}
-
-		
-		else if ((*item_comp)->comp_type != GO_COMPONENT::MESH) {
-
+		if ((*item_comp)->comp_type != GO_COMPONENT::MESH) {
 			(*item_comp)->Update(); 
 
 		}
-		
 	}
 
 	if (type == OBJECT_TYPE::SUBPARENT)
@@ -211,10 +174,11 @@ void GameObject::RemoveGameObject(GameObject* child)
 		{
 			(*iter)->CleanUp();
 			LOG("deleted component");
+			App->scene_intro->quad_tree->RemoveGameobjectTree(child);
 			delete (*iter);
 			App->scene_intro->root->game_object_childs.erase(iter);
 			App->scene_intro->selected_game_obj = nullptr;
-			//App->ui->inspector_window = false;
+			
 			return;
 		}
 		++iter;
@@ -224,7 +188,7 @@ void GameObject::RemoveGameObject(GameObject* child)
 
 void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 {
-
+	
 	std::vector<GameObject*>::iterator iter = App->scene_intro->root->game_object_childs.begin();
 
 	while (iter != App->scene_intro->root->game_object_childs.end())
@@ -240,6 +204,7 @@ void GameObject::RemoveSubChildGameObject(GameObject* subchild)
 				{
 					(*it)->CleanUp();
 					LOG("deleted component");
+					App->scene_intro->quad_tree->RemoveGameobjectTree(subchild);
 					delete (*it);
 					(*iter)->game_object_childs.erase(it);
 					App->scene_intro->selected_game_obj = nullptr;
@@ -270,6 +235,9 @@ bool GameObject::CleanUp()
 			++item;
 		}
 		(*it)->components.clear();
+
+		//--
+		App->scene_intro->quad_tree->RemoveGameobjectTree((*it));
 
 		delete (*it);
 		++it;
@@ -335,36 +303,36 @@ bool GameObject::hasComponent(GO_COMPONENT com)
 {
 	switch (com)
 	{
-	case GO_COMPONENT::NONE:
-		break;
+	case GO_COMPONENT::NONE: {
+		break; }
 
-	case GO_COMPONENT::MESH:
+	case GO_COMPONENT::MESH: {
 		if (this->mesh != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::TRANSFORM:
+	case GO_COMPONENT::TRANSFORM: {
 		if (this->transform != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::MATERIAL:
+	case GO_COMPONENT::MATERIAL: {
 		if (this->material != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::CAMERA:
+	case GO_COMPONENT::CAMERA: {
 		if (this->camera != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
 	default:
 		break;
@@ -490,32 +458,7 @@ void GameObject::GenerateParentBBox()
 
 bool GameObject::CheckAABBinFrustum()
 {
-	/*bool ret = true;
-	if (App->camera->camera_fake->frustum.Intersects(this->bbox.aabb_global))
-		ret = true;
-	else
-		ret = false;
-
-	
-		
-	if (App->scene_intro->selected_camera_obj!=nullptr && App->scene_intro->selected_camera_obj->hasComponent(GO_COMPONENT::CAMERA))
-	{
-		if (App->camera->camera_fake->frustum.Intersects(App->scene_intro->selected_camera_obj->camera->frustum))
-		{
-			if (App->scene_intro->selected_camera_obj->camera->culling)
-			{
-				if (App->scene_intro->selected_camera_obj->camera->frustum.Intersects(this->bbox.aabb_global))
-					ret = true;
-				else
-					ret = false;
-			}
-		}
-	}
-		
-
-	
-
-	return ret;*/
+	//nosense
 	bool ret = true;
 	if (CheckInsideFrustum(App->camera->camera_fake, this->bbox.aabb_global))
 		ret = true;
@@ -530,7 +473,7 @@ bool GameObject::CheckAABBinFrustum()
 		{
 			if (App->scene_intro->selected_camera_obj->camera->culling)
 			{
-				
+				//passar frustum i no camara
 				if (CheckInsideFrustum(App->scene_intro->selected_camera_obj->camera, this->bbox.aabb_global))
 					ret = true;
 				else
@@ -545,7 +488,7 @@ bool GameObject::CheckAABBinFrustum()
 	return ret;
 }
 
-bool GameObject::CheckInsideFrustum(const Component_Camera * camera, const AABB & aabb)
+bool GameObject::CheckInsideFrustum(const Component_Camera * camera, const AABB & aabb) // passarli frustum i no camara
 {
 	//get the 8 cornrs of the bounding box
 	float3 corners[8];

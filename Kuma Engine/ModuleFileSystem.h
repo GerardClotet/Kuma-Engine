@@ -73,8 +73,7 @@ public:
 	const char* GetReadPaths() const;
 
 public: 
-	const FileDropType& SearchExtension(const std::string& extern_path);
-	FileDropType SearchRelease(std::string extern_path);
+	FileDropType SearchExtension(std::string& extern_path);
 	void ManageImportedFile(const char* in_path);
 	std::string GetModelMetaPath(const char* path);
 	std::string GetTextureMetaPath(const char* path);
