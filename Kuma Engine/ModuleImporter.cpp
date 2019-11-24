@@ -414,7 +414,10 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		+ sizeof(uint) * mesh->num_uvs * 2
 		+ sizeof(uint) * mesh->num_color * 4
 		+ sizeof(uint)
-		+ sizeof(char) * mesh->path_text.size();
+		+ sizeof(char) * mesh->path_text.size()
+		+ sizeof(float) * 3
+		+ sizeof(float) * 3
+		+ sizeof(float) * 4;
 
 
 	char* data = new char[size]; //Allocate
@@ -467,6 +470,35 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 		bytes = sizeof(char)*path_texture.size();
 		memcpy(cursor, mesh->path_text.c_str(), bytes);
 	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		memcpy(cursor, &mesh->position[i], bytes);
+	}
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		memcpy(cursor, &mesh->scale[i], bytes);
+	}
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &mesh->rotation.x, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &mesh->rotation.y, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &mesh->rotation.z, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &mesh->rotation.w, bytes);
 
 
 
@@ -547,7 +579,7 @@ void ModuleImporter::LoadModelFromMeta(const char* original_path, const char* pa
 
 		child->AddComponent(GO_COMPONENT::MESH, LoadMeshFromMeta(a_temp.c_str()));
 
-		child->AddComponent(GO_COMPONENT::TRANSFORM, { 0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f,0.0f });
+		child->AddComponent(GO_COMPONENT::TRANSFORM, child->mesh->position, child->mesh->scale, child->mesh->rotation);
 		child->SetBoundingBox();
 
 		if (std::string(child->mesh->path_texture_associated_meta) != "")
@@ -667,6 +699,65 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 		}
 
 		mesh->route = path;
+
+
+		for (int i = 0; i < 3; ++i)
+		{
+			cursor += bytes;
+			bytes = sizeof(float);
+			float* t_f = new float;
+			memcpy(t_f, cursor, bytes);
+
+			//float& si;
+			mesh->position[i] = t_f[0];
+			LOG("pos %i %f", i, mesh->position[i]);
+
+		}
+		for (int i = 0; i < 3; ++i)
+		{
+			cursor += bytes;
+			bytes = sizeof(float);
+			float* t_f = new float;
+			memcpy(t_f, cursor, bytes);
+
+			//float& si;
+			mesh->scale[i] = t_f[0];
+			LOG("scale %i %f", i, mesh->scale[i]);
+
+		}
+
+		cursor += bytes;
+		bytes = sizeof(float);
+		float* t_x = new float;
+		memcpy(t_x, cursor, bytes);
+
+		mesh->rotation.x = t_x[0];
+		LOG("rot x %f", mesh->rotation.x);
+
+		cursor += bytes;
+		bytes = sizeof(float);
+		float* t_y = new float;
+		memcpy(t_y, cursor, bytes);
+
+		mesh->rotation.y = t_y[0];
+		LOG("rot y %f", mesh->rotation.y);
+
+		cursor += bytes;
+		bytes = sizeof(float);
+		float* t_z = new float;
+		memcpy(t_z, cursor, bytes);
+
+		mesh->rotation.z = t_z[0];
+		LOG("rot z %f", mesh->rotation.z);
+
+		cursor += bytes;
+		bytes = sizeof(float);
+		float* t_f = new float;
+		memcpy(t_f, cursor, bytes);
+
+		mesh->rotation.w = t_f[0];
+		LOG("rot w %f", mesh->rotation.w);
+
 		return mesh;
 }
 
