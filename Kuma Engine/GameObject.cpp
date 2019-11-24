@@ -44,23 +44,23 @@ Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 {
 	switch (type)
 	{
-	case GO_COMPONENT::NONE:
-		break;
-	case GO_COMPONENT::MESH:
+	case GO_COMPONENT::NONE: {
+		break; }
+	case GO_COMPONENT::MESH: {
 		mesh = new Component_Mesh(this->type, this);
 		components.push_back(mesh);
 
-		break;
-	case GO_COMPONENT::TRANSFORM:
-		break;
-	case GO_COMPONENT::MATERIAL:
+		break; }
+	case GO_COMPONENT::TRANSFORM: {
+		break; }
+	case GO_COMPONENT::MATERIAL: {
 		material = new Component_Material(this);
 		components.push_back(material);
-		break;
+		break; }
 			
-	case GO_COMPONENT::CAMERA:
+	case GO_COMPONENT::CAMERA: {
 
-		serialized_cam ?  camera = new Component_Camera() : camera = new Component_Camera(this);
+		serialized_cam ? camera = new Component_Camera() : camera = new Component_Camera(this);
 		components.push_back(camera);
 		component = camera;
 		if (this->name != "Camera Fake")
@@ -72,7 +72,7 @@ Components* GameObject::AddComponent(GO_COMPONENT type,bool serialized_cam)
 		}
 
 
-		break;
+		break; }
 	}
 	return component;
 }
@@ -302,36 +302,36 @@ bool GameObject::hasComponent(GO_COMPONENT com)
 {
 	switch (com)
 	{
-	case GO_COMPONENT::NONE:
-		break;
+	case GO_COMPONENT::NONE: {
+		break; }
 
-	case GO_COMPONENT::MESH:
+	case GO_COMPONENT::MESH: {
 		if (this->mesh != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::TRANSFORM:
+	case GO_COMPONENT::TRANSFORM: {
 		if (this->transform != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::MATERIAL:
+	case GO_COMPONENT::MATERIAL: {
 		if (this->material != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
-	case GO_COMPONENT::CAMERA:
+	case GO_COMPONENT::CAMERA: {
 		if (this->camera != nullptr)
 			return true;
 		else
 			return false;
-		break;
+		break; }
 
 	default:
 		break;

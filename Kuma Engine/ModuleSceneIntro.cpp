@@ -143,7 +143,6 @@ void ModuleSceneIntro::createGrid()
 	glColor4fv((float*)& ImVec4(1,1,1,1));
 	for (int i = -max_grid; i <= max_grid; i++)
 	{
-
 		sunX = separator * i;
 		
 

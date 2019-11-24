@@ -937,31 +937,31 @@ const char* ModuleEditor::ChooseExtension(const char* ext)
 	
 	switch (extension_case)
 	{
-	case 0:
+	case 0: {
 
 		ext = extensions_size[0];
 
-		break;
-	case 1:
+		break; }
+	case 1: {
 
 		ext = extensions_size[1];
 
-		break;
-	case 2:
+		break; }
+	case 2: {
 
 		ext = extensions_size[2];
 
-		break;
-	case 3:
+		break; }
+	case 3: {
 
 		ext = extensions_size[3];
 
-		break;
-	case 4:
+		break; }
+	case 4: {
 
 		ext = extensions_size[4];
 
-		break;
+		break; }
 	default:
 		return "Not Found";
 		break;

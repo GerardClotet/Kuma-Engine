@@ -567,12 +567,12 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 
 	switch (f_type)
 	{
-	case FileDropType::MODEL3D:
+	case FileDropType::MODEL3D: {
 		last_path = MODELS_FOLDER + last_path;
-		break;
-	case FileDropType::TEXTURE:
+		break; }
+	case FileDropType::TEXTURE: {
 		last_path = TEXTURES_FOLDER + last_path;
-		break;
+		break; }
 	}
 
 	//Copy the file to assets folder if it doesn't exist
@@ -585,12 +585,12 @@ void ModuleFileSystem::ManageImportedFile(const char * first_path)
 
 	switch (f_type)
 	{
-	case FileDropType::MODEL3D:
+	case FileDropType::MODEL3D: {
 		App->importer->LoadModelFile(last_path.c_str());
-		break;
-	case FileDropType::TEXTURE:
+		break; }
+	case FileDropType::TEXTURE: {
 		App->importer->LoadTextureFile(last_path.c_str());
-		break;
+		break; }
 	}
 
 }
