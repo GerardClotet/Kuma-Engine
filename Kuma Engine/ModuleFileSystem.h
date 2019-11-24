@@ -14,7 +14,7 @@ struct aiFileIO;
 #include "Bass/include/bass.h"
 //struct BASS_FILEPROCS;
 enum class FileDropType {
-	MODEL3D,
+	MODEL3D=0,
 	TEXTURE,
 	FOLDER,
 	SCRIPT,
@@ -74,7 +74,7 @@ public:
 
 public: 
 	const FileDropType& SearchExtension(const std::string& extern_path);
-
+	FileDropType SearchRelease(std::string extern_path);
 	void ManageImportedFile(const char* in_path);
 	std::string GetModelMetaPath(const char* path);
 	std::string GetTextureMetaPath(const char* path);

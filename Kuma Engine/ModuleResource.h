@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Globals.h"
-#include "Application.h"
 #include "Module.h"
 #include <map>
 #include <vector>
 #include "Resource.h"
+#include "ModuleInput.h"
 enum class FileDropType;
 class Resource;
 class ResourceMesh;

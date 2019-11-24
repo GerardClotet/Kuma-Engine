@@ -5,6 +5,8 @@
 #include "ResourceMesh.h"
 #include "ResourceModel.h"
 #include "RandomHelper.h"
+#include "Application.h"
+
 ModuleResource::ModuleResource(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -86,6 +88,7 @@ void ModuleResource::LookIn(const char* path)
 			LOG("exists %s",path_s.c_str());
 		}
 
+		
 		else
 		{
 			//CREATE RESOURCE, we have the type in d_type
@@ -167,6 +170,9 @@ Resource* ModuleResource::CreateNewResources(Resource::Resource_Type type, UID u
 bool ModuleResource::DropTypeToResourceType(Resource::Resource_Type& r_type, FileDropType d_type)
 {
 	bool ret = true;
+	LOG("%i",d_type);
+	int i =static_cast<int>(d_type);
+	LOG("type %i", i);
 	switch (d_type)
 	{
 	case FileDropType::MODEL3D:
