@@ -81,6 +81,11 @@ public:
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
+
+	float3 position;
+	float3 scale;
+	Quat rotation;
+
 	const char* path_texture_associated_meta;
 	const char* mesh_meta_route = nullptr;
 public:

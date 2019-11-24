@@ -53,6 +53,10 @@ struct meshInfo
 
 	uint32 UUID = 0;
 
+	float3 position;
+	float3 scale;
+	Quat rotation;
+
 	//route to _meta.kuma file
 };
 

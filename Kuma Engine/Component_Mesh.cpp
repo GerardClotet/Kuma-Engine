@@ -393,6 +393,9 @@ void Component_Mesh::GenerateImported(aiMesh* new_mesh, aiNode* node)
 	float3 scale(scaling.x / max_, scaling.y / max_, scaling.z / max_); 
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
+	position = pos;
+	this->rotation = rot;
+	this->scale = scale;
 	gameObject_Item->AddComponent(GO_COMPONENT::TRANSFORM, pos, scale, rot);
 	
 
@@ -753,6 +756,10 @@ meshInfo* Component_Mesh::saveMeshinfo()
 	mesh->color = color;
 	mesh->name = name;
 	mesh->UUID = gameObject_Item->UUID;
+
+	mesh->position = position;
+	mesh->rotation = rotation;
+	mesh->scale = scale;
 	//mesh->route = mesh_meta_route;
 	//TODO :/ mesh->UUID = gameObject_Item->ID;
 	return mesh;
@@ -775,6 +782,10 @@ void Component_Mesh::ExtractMeshInfo(meshInfo* info)
 	mesh_meta_route = info->route.c_str();
 	
 	path_texture_associated_meta = info->path_text.c_str();
+
+	position = info->position;
+	rotation = info->rotation;
+	scale = info->scale;
 	
 }
 

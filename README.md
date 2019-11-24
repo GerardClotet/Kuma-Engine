@@ -119,5 +119,21 @@ Link to Github Repository: [Kuma Engine GitHub](https://github.com/GerardClotet/
 - [R] = Scale
 	
 
+## Member Task List
+- Gerard Clotet Rodríguez
+	- Hierarchy
+	- Serialization
+	- Own file format
+	- Resource Managment
 
+- Pol Recasens Sarrà
+	- Component transform
+	- Panel Inspector
+	- Mouse Picking
+	- Frustum Culling
+	- Component Camera
+	- Quadtree
+	- Own file format
+	- Time Managment
+	- Game objects AABB
 

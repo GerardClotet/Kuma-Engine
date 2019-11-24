@@ -933,6 +933,51 @@ void ModuleFileSystem::CreateBassIO()
 	BassIO->seek = BassSeek;
 }
 
+bool ModuleFileSystem::HasDirectoryInPath(const char* path)
+{
+	std::string temp = path;
+	char a = '/';
+	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		if (*it == '\\' || *it == a)
+			return true;
+	}
+
+	return false;
+}
+
+void ModuleFileSystem::EraseDotsFromBegin(std::string& path)
+{
+	std::string temp = path;
+
+		size_t sz = 0;
+
+	bool previous = true;
+
+	for (string::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		const char a = *it;
+
+		if (*it == '.' && previous)
+		{
+
+
+			previous = true;
+
+			sz++;
+		}
+		else previous = false;
+	}
+
+
+
+	temp = temp.substr(sz, temp.size());
+	path = temp;
+
+
+
+}
+
 BASS_FILEPROCS * ModuleFileSystem::GetBassIO()
 {
 	return BassIO;
