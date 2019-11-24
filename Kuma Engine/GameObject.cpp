@@ -455,7 +455,7 @@ void GameObject::GenerateParentBBox()
 
 bool GameObject::CheckAABBinFrustum()
 {
-	
+	//nosense
 	bool ret = true;
 	if (CheckInsideFrustum(App->camera->camera_fake, this->bbox.aabb_global))
 		ret = true;
