@@ -3,7 +3,7 @@
 Kuma Engine is a Game Engine made by Pol Recasens Sarrà and Gerard Clotet Rodríguez,
 two students from CITM UPC university for the 3D engines subject during 3rd year of Game Design and Game Development degree.
 
-Link to Github Repository:
+Link to Github Repository: [Kuma Engine GitHub](https://github.com/GerardClotet/Kuma-Engine)
 
 # Authors Githubs
 [Pol Recasens Sarrà](https://github.com/PolRecasensSarra) GitHub page
@@ -15,10 +15,14 @@ Link to Github Repository:
 ## Main Menu Bar
 - File
 	- Quit
+	- Load Model
+	- Save Scene
+	- Load Scene
 -View
 	- Console(panel)
 	- Configuration(panel)
 	- Hierarchy(panel)
+	- Time Clocks(panel)
 - GameObject
 	- Inspector(panel)
 	- Create Empty
@@ -75,9 +79,17 @@ Link to Github Repository:
     - Render
       - Customize render options
       - Normals, vertex, colors, light, wireframe...
+      - Debug mouse picking ray and change color
+      - Debug quadtree AABB
+    
+    - Scene Camera
+      - Customize the camera view options
   
   - Panel Hierarchy
     - It shows the hierarchy of all game objects that are in the scene
+    
+  - Time Clocks
+    - It shows the scene and the game time
   
   - Panel Inspector
     - Game object name editor
@@ -96,10 +108,16 @@ Link to Github Repository:
 	- Mouse wheel or [LALT] + (drag)RIGHT CLICK
 - Focus
 	- [F]
+- Select/Pick
+	- RIGHT CLICK
+
+### Transform Gizmos
+- [W] = Position
+	
+- [E] = Rotate
+	
+- [R] = Scale
+	
 
 
-# Innovations
-- Docking
-- Customized Engine UI
-- Customized render options
-- Hierarchy System 
+
