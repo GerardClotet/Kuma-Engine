@@ -746,7 +746,7 @@ void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir
 
 			if (filter_extension == "kumaScene")
 			{
-				App->scene_intro->quad_tree->Clear();
+				App->scene_intro->DeleteObjectsPostGame();
 				App->serialize->LoadScene(selected_file);
 			}
 
