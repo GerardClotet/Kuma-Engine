@@ -555,7 +555,7 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 	}
 
 	go->AddValue("Components", *c);
-	json_val->AddValue("GameObject", *go);
+	json_val->AddValue("", *go);
 
 	for (auto& child : game_object_childs)
 	{

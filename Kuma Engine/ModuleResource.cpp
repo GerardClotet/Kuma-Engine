@@ -23,9 +23,8 @@ bool ModuleResource::Init()
 
 bool ModuleResource::Start()
 {
-	//posar aqui la func
 	
-	GenerateResourcesFromAssets();
+	//GenerateResourcesFromAssets();
 	return true;
 }
 
