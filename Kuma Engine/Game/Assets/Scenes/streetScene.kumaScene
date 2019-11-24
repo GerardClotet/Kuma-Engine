@@ -1,0 +1,1280 @@
+{
+    "GameObject Root": [
+        {
+            "UUID": 3838039470,
+            "Parent UUID": 1,
+            "Name": "Camera Harcoded",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                {
+                    "Component": "Camera",
+                    "FrustumType": 2,
+                    "Horizontal Fov": 1.287712812423706,
+                    "Vertical Fov": 1.0471975803375245,
+                    "AspectRatio": -1.5816464369601856e38,
+                    "Far Plane": 30.0,
+                    "Near Plane": 1.0,
+                    "Position": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "front": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "Up": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "Frustum Color": [
+                        1.0,
+                        0.5400000214576721,
+                        0.0,
+                        1.0
+                    ],
+                    "Camera Background Color": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 2675062747,
+            "Parent UUID": 1,
+            "Name": "street environment_v01",
+            "Components": [
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": 2947970696,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_004",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_004",
+                    "Meta Route": "/Library/Meshes/City_building_004_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -41.47589111328125,
+                        -0.0000025050758267752828,
+                        -21.014101028442384
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2556003678,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_001",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_001",
+                    "Meta Route": "/Library/Meshes/City_building_001_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        17.707164764404298,
+                        -0.0000021784294403914829,
+                        -20.05327796936035
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 691474029,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_007",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_007",
+                    "Meta Route": "/Library/Meshes/City_building_007_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        16.0104923248291,
+                        -0.000005980235982860904,
+                        -37.493289947509769
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3676580098,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_008",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_008",
+                    "Meta Route": "/Library/Meshes/City_building_008_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        40.97999572753906,
+                        -0.0000042302990550524559,
+                        -18.27082633972168
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 381644665,
+            "Parent UUID": 2675062747,
+            "Name": "Line002",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Line002",
+                    "Meta Route": "/Library/Meshes/Line002_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -2.1597719192504885,
+                        -2.2099473540038162e-7,
+                        -1.8538384437561036
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1305955525,
+            "Parent UUID": 2675062747,
+            "Name": "Plane001",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Plane001",
+                    "Meta Route": "/Library/Meshes/Plane001_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -0.02860260009765625,
+                        -3.103266976722807e-9,
+                        -0.026032093912363054
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2717167392,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_010",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_010",
+                    "Meta Route": "/Library/Meshes/City_building_010_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        25.154010772705079,
+                        0.000005522873834706843,
+                        39.153724670410159
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 717574390,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_010(1)",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_010(1)",
+                    "Meta Route": "/Library/Meshes/City_building_010(1)_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        25.154010772705079,
+                        0.000005522873834706843,
+                        39.153724670410159
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 740239317,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_011",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_011",
+                    "Meta Route": "/Library/Meshes/City_building_011_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        30.134540557861329,
+                        -0.000005980235982860904,
+                        -37.493289947509769
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2691051532,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_013",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_013",
+                    "Meta Route": "/Library/Meshes/City_building_013_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -42.288055419921878,
+                        -0.0000034564754969323987,
+                        -33.20158004760742
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1823918667,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_014",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_014",
+                    "Meta Route": "/Library/Meshes/City_building_014_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -19.439706802368165,
+                        -0.000003822055987257045,
+                        -32.06173324584961
+                    ],
+                    "Rotation": [
+                        3.090862321641907e-8,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        -3.090862321641907e-8
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2653758556,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_016",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_016",
+                    "Meta Route": "/Library/Meshes/City_building_016_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        34.270423889160159,
+                        0.000005858928034285782,
+                        41.97275161743164
+                    ],
+                    "Rotation": [
+                        3.090862321641907e-8,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        -3.090862321641907e-8
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 112755248,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_016(1)",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_016(1)",
+                    "Meta Route": "/Library/Meshes/City_building_016(1)_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        34.270423889160159,
+                        0.000005858928034285782,
+                        41.97275161743164
+                    ],
+                    "Rotation": [
+                        3.090862321641907e-8,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        -3.090862321641907e-8
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3271507875,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_017",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_017",
+                    "Meta Route": "/Library/Meshes/City_building_017_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        44.26008224487305,
+                        0.000005522873834706843,
+                        39.153724670410159
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3872248026,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_017(1)",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_017(1)",
+                    "Meta Route": "/Library/Meshes/City_building_017(1)_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        44.26008224487305,
+                        0.000005522873834706843,
+                        39.153724670410159
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2920593928,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_022",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_022",
+                    "Meta Route": "/Library/Meshes/City_building_022_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -20.831323623657228,
+                        0.0000032694922538212269,
+                        27.42649269104004
+                    ],
+                    "Rotation": [
+                        -1.3767878215276142e-7,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        1.3767879636361614e-7
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 4075048686,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_023",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_023",
+                    "Meta Route": "/Library/Meshes/City_building_023_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        42.13064193725586,
+                        -0.000005980235982860904,
+                        -37.493289947509769
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2800211524,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_024",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_024",
+                    "Meta Route": "/Library/Meshes/City_building_024_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -20.572771072387697,
+                        -0.06919959932565689,
+                        -43.06083297729492
+                    ],
+                    "Rotation": [
+                        -3.090862321641907e-8,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        3.090862321641907e-8
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3328398227,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_026",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_026",
+                    "Meta Route": "/Library/Meshes/City_building_026_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        31.51188850402832,
+                        0.000001960517920451821,
+                        16.44601821899414
+                    ],
+                    "Rotation": [
+                        -3.090862321641907e-8,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        3.090862321641907e-8
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 788654044,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_028",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_028",
+                    "Meta Route": "/Library/Meshes/City_building_028_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        13.38798999786377,
+                        0.00000308556900563417,
+                        33.755043029785159
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3043492988,
+            "Parent UUID": 2675062747,
+            "Name": "Object010",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "Object010",
+                    "Meta Route": "/Library/Meshes/Object010_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -2.5033531188964845,
+                        -0.0000018836076378647704,
+                        -15.800848007202149
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3102351235,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_030",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_030",
+                    "Meta Route": "/Library/Meshes/City_building_030_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -42.8072395324707,
+                        0.000004048842583870282,
+                        41.835567474365237
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 4035461096,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_031",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_031",
+                    "Meta Route": "/Library/Meshes/City_building_031_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -34.679481506347659,
+                        0.000004048842583870282,
+                        41.835567474365237
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1981533370,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_032",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_032",
+                    "Meta Route": "/Library/Meshes/City_building_032_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -29.478403091430665,
+                        -0.0000025050758267752828,
+                        -21.014101028442384
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1981425210,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_033",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_033",
+                    "Meta Route": "/Library/Meshes/City_building_033_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -32.36149597167969,
+                        -0.0000045494871301343668,
+                        -42.370426177978519
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2088005449,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_034",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_034",
+                    "Meta Route": "/Library/Meshes/City_building_034_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        16.049516677856447,
+                        0.000001990423697861843,
+                        16.69688606262207
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.4999999403953552
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 60353074,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_035",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_035",
+                    "Meta Route": "/Library/Meshes/City_building_035_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        13.38798999786377,
+                        0.000003925693818018772,
+                        40.802520751953128
+                    ],
+                    "Rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2900516196,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_036",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_036",
+                    "Meta Route": "/Library/Meshes/City_building_036_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -31.216331481933595,
+                        -0.0000034564754969323987,
+                        -33.20158004760742
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 1117741236,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_037",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_037",
+                    "Meta Route": "/Library/Meshes/City_building_037_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -20.31769371032715,
+                        0.0000019268522919446697,
+                        16.163610458374025
+                    ],
+                    "Rotation": [
+                        -1.3767878215276142e-7,
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        1.3767879636361614e-7
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2699084862,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_038",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_038",
+                    "Meta Route": "/Library/Meshes/City_building_038_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -41.64900207519531,
+                        0.0000019664041701616954,
+                        16.49539566040039
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.4999999403953552
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3463354122,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_039",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_039",
+                    "Meta Route": "/Library/Meshes/City_building_039_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -42.8072395324707,
+                        0.000002714690936045372,
+                        30.643892288208009
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 2391063463,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_040",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_040",
+                    "Meta Route": "/Library/Meshes/City_building_040_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        -34.679481506347659,
+                        0.000002714690936045372,
+                        30.643892288208009
+                    ],
+                    "Rotation": [
+                        0.5,
+                        0.5000000596046448,
+                        0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        },
+        {
+            "UUID": 3517682989,
+            "Parent UUID": 2675062747,
+            "Name": "City_building_041",
+            "Components": [
+                {
+                    "Component": "Mesh",
+                    "Name": "City_building_041",
+                    "Meta Route": "/Library/Meshes/City_building_041_meta.kuma",
+                    "Type": 7
+                },
+                {
+                    "Component": "Transform",
+                    "Position": [
+                        30.69527816772461,
+                        -0.000002364320835113176,
+                        -21.612648010253908
+                    ],
+                    "Rotation": [
+                        0.5,
+                        -0.5000000596046448,
+                        -0.5,
+                        -0.5000000596046448
+                    ],
+                    "Scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0000001192092896
+                    ]
+                },
+                {
+                    "Component": "Material",
+                    "Texture Path": "library/textures/building_v01_c.dds"
+                }
+            ]
+        }
+    ]
+}

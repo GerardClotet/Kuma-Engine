@@ -591,10 +591,10 @@ FileDropType  ModuleFileSystem::SearchExtension(std::string & extern_path)
 		ext_type = FileDropType::MODEL3D;
 		LOG("searched model");
 	}
-	else if (strcmp(extension.c_str(), "PNG") || strcmp(extension.c_str(), "png") || strcmp(extension.c_str(), "jpg") || strcmp(extension.c_str(), "dds") || strcmp(extension.c_str(), "tga"))
+	else if (strcmp(extension.c_str(), "PNG") ==0 || strcmp(extension.c_str(), "png")==0 || strcmp(extension.c_str(), "jpg")==0 || strcmp(extension.c_str(), "dds")==0 || strcmp(extension.c_str(), "tga")==0)
 		ext_type = FileDropType::TEXTURE;
 
-	else if (strcmp(extension.c_str(), "kumaScene") || strcmp(extension.c_str(), "kumascene"))
+	else if (strcmp(extension.c_str(), "kumaScene")==0 || strcmp(extension.c_str(), "kumascene")==0)
 		ext_type = FileDropType::SCENE;
 	else
 		LOG("Extension unknown!");

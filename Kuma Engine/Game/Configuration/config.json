@@ -20,7 +20,7 @@
   },
 
   "Importer": {
-    "File": "Assets\\models\\BakerHouse.fbx",
+    "File": "Assets\\Scenes\\streetScene.kumaScene",
     "Texture": "Assets\\textures\\BakerHouse.dds"
   },
 

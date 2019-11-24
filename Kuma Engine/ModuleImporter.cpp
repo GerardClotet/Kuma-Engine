@@ -514,7 +514,7 @@ void ModuleImporter::SaveMeshToMeta(const char* path,meshInfo* mesh, std::string
 
 	std::string output;
 	App->fs->SaveUnique(output, data, size, name.c_str());
-	LOG("output %s 1 %s", output, output.c_str());
+	LOG("output %s 1 %s", output.c_str(), output.c_str());
 	mesh->route = name; //route to meta file
 
 	model_info->meshinfo.push_back(mesh);
