@@ -77,8 +77,7 @@ public:
 	void ManageImportedFile(const char* in_path);
 	std::string GetModelMetaPath(const char* path);
 	std::string GetTextureMetaPath(const char* path);
-	bool HasDirectoryInPath(const char* path);
-	void EraseDotsFromBegin(std::string& path);
+	
 
 	bool CheckIfExistingInMeta(const char* base_file_path,FileDropType& type);
 private:

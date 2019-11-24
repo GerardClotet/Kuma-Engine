@@ -147,7 +147,7 @@ void Component_Transform::SetLocalScaleToSingleAxis(const float scale, int axis)
 		local_rotation.z = scale;
 }
 
-void Component_Transform::SetLocalRotation(const float x, const float y, const float z, const float angle)
+void Component_Transform::SetLocalRotation( float x,  float y,  float z,  float angle)
 {
 	local_rotation.x = x;
 	local_rotation.y = y;
@@ -481,13 +481,22 @@ void Component_Transform::DisplayInspector()
 void Component_Transform::SaveScene(R_JSON_Value* val)const
 {
 	R_JSON_Value* transform = val->NewValue(rapidjson::kObjectType);
+	Quat temp;
 
+	if (gameObject_Item->name == "Plane001") {
 
-
+		gameObject_Item->transform->SetLocalRotation(0.0f, 0.0f, 0.0f, 0.0f);
+		gameObject_Item->transform->SetLocalScale(0.0f, 0.0f, 0.0f);
+		temp = GetLocalRotation();
+	}
+	else temp =  GetGlobalRotation();
 	transform->SetString("Component", "Transform");
 
 	transform->Set3DVec("Position", GetGlobalPosition());
-	transform->SetQuat("Rotation", GetGlobalRotation());
+
+
+	
+	transform->SetQuat("Rotation", temp);
 
 	transform->Set3DVec("Scale", GetGlobalScale());
 

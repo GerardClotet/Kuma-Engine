@@ -543,6 +543,8 @@ void GameObject::SaveToScene(R_JSON_Value* json_val)
 		go->SetUint32("Parent UUID", parent->UUID);
 
 	go->SetString("Name", name.c_str());
+	if (name == "Plane001")
+		LOG("");
 
 	R_JSON_Value* c = go->NewValue(rapidjson::kArrayType);
 
