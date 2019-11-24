@@ -22,6 +22,8 @@
 #include "ModuleSerializeScene.h"
 #include "imGuizmo/ImGuizmo.h"
 #include "ModuleImporter.h"
+#include "Quadtree.h"
+
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	fps_log.resize(100);
@@ -740,9 +742,13 @@ void ModuleEditor::LoadFile(const char * filter_extension, const char * from_dir
 		{
 			//TODO
 			//LoadScene(selected_file)
+		
 
 			if (filter_extension == "kumaScene")
+			{
+				App->scene_intro->quad_tree->Clear();
 				App->serialize->LoadScene(selected_file);
+			}
 
 			else if (filter_extension == "fbx")
 				App->importer->LoadModelFile(selected_file);
