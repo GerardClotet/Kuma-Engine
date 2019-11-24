@@ -9,6 +9,7 @@
 
 ModuleResource::ModuleResource(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	//App->fs->Remove(LIBRARY_FOLDER);
 }
 
 ModuleResource::~ModuleResource()
@@ -23,6 +24,7 @@ bool ModuleResource::Init()
 bool ModuleResource::Start()
 {
 	//posar aqui la func
+	
 	GenerateResourcesFromAssets();
 	return true;
 }
@@ -141,6 +143,7 @@ Resource* ModuleResource::CreateNewResources(Resource::Resource_Type type, UID u
 	switch (type)
 	{
 	case Resource::model:
+		
 		resource = (Resource*) new ResourceModel(uid,base_path);
 		model_resources_vec.push_back(resource);
 		resources_vec.push_back(resource);

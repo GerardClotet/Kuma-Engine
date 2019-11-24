@@ -32,11 +32,11 @@ public:
 	void LoadModelMaterials(const aiScene* model);
 	bool ImportMaterial(aiMaterial* material,UID id);
 
-
+	bool LoadInMemory()override;
 
 	/// Resource Func
 
-	bool LoadToMemory();
+	//bool LoadToMemory();
 	void ReleaseFromMemory() override;
 	bool IsLoadedToMemory();
 public:

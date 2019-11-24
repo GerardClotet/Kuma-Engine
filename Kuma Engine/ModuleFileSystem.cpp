@@ -605,30 +605,6 @@ FileDropType  ModuleFileSystem::SearchExtension(std::string & extern_path)
 
 }
 
-FileDropType ModuleFileSystem::SearchRelease(std::string extern_path)
-{
-	std::string extension;
-	SplitFilePath(extern_path.data(), nullptr, nullptr, &extension);
-
-	FileDropType ext_type = FileDropType::UNKNOWN;
-
-	if (strcmp(extension.c_str(), "FBX") == 0 || strcmp(extension.c_str(), "fbx") == 0)
-	{
-		ext_type = FileDropType::MODEL3D;
-		LOG("searched model");
-	}
-	else if (strcmp(extension.c_str(), "PNG") || strcmp(extension.c_str(), "png") || strcmp(extension.c_str(), "jpg") || strcmp(extension.c_str(), "dds") || strcmp(extension.c_str(), "tga"))
-		ext_type = FileDropType::TEXTURE;
-
-	else if (strcmp(extension.c_str(), "kumaScene") || strcmp(extension.c_str(), "kumascene"))
-		ext_type = FileDropType::SCENE;
-	else
-		LOG("Extension unknown!");
-
-	int i = static_cast<int>(ext_type);
-	LOG("type %i", i);
-	return ext_type;
-}
 
 void ModuleFileSystem::ManageImportedFile(const char * first_path)
 {
@@ -705,11 +681,10 @@ std::string ModuleFileSystem::GetTextureMetaPath(const char * path)
 }
 bool ModuleFileSystem::CheckIfExistingInMeta(const char* base_file_path,FileDropType& type)
 {
-
-	SearchExtension(base_file_path);
+	std::string temp = base_file_path;
 	std::string name = GetFileName(base_file_path);
 	name = SubstractFromEnd(name.c_str(), ".", +1);
-	type = SearchRelease(base_file_path);
+	type = SearchExtension(temp);
 	switch (type)
 	{
 	case FileDropType::MODEL3D:

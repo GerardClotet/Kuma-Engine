@@ -27,11 +27,7 @@ ResourceModel::~ResourceModel()
 
 
 
-bool ResourceModel::LoadToMemory()
-{
-	LoadModelFromMeta();
-	return true;
-}
+
 
 void ResourceModel::ReleaseFromMemory()
 {
@@ -125,6 +121,12 @@ bool ResourceModel::ImportMaterial(aiMaterial* material,UID id)
 	ResourceMaterial* m = (ResourceMaterial*)App->resources->CreateNewResources(Resource::Resource_Type::material, id, ref_path);
 	m->Import(material, ref_path);
 	return false;
+}
+
+bool ResourceModel::LoadInMemory()
+{
+	LoadModelFromMeta();
+	return true;
 }
 
 
