@@ -32,6 +32,12 @@ void PanelAbout::DisplayAbout()
 	ImGui::BulletText("ImGui 1.73");
 	ImGui::BulletText("mmgr");
 	ImGui::BulletText("gpudetect");
+	ImGui::BulletText("Assimp");
+	ImGui::BulletText("Bass");
+	ImGui::BulletText("DevIL");
+	ImGui::BulletText("imGuizmo");
+	ImGui::BulletText("Parson");
+	ImGui::BulletText("Rapid json");
 	ImGui::NewLine();
 
 	ImGui::Text("%s", App->GetLicense());
