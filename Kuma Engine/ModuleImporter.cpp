@@ -5,6 +5,7 @@
 #include "par_shapes.h"
 #include "ModuleFileSystem.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleTexture.h"
 
 #include "PanelConfig.h"
 #include "ModuleUI.h"
@@ -217,8 +218,20 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 				aiString texture_path;
 				if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path) == aiReturn_SUCCESS)
 				{
+					std::string path;
+					if (App->fs->HasDirectoryInPath(texture_path.C_Str()))
+					{
+
+						path = texture_path.C_Str();
+						App->fs->EraseDotsFromBegin(path);
+						App->fs->NormalizePath(path);
+						path = App->fs->GetFileName(path.c_str(), true);
+					}
+
+
+					
 					LOG("%s", texture_path.C_Str());
-					path_tex = App->fs->GetTextureMetaPath(texture_path.data);
+					path_tex = App->fs->GetTextureMetaPath(path.c_str());
 						
 					//-----------Get a texture of a fbx that has an associated material--------
 					if (App->fs->Exists(path_tex.c_str()))
@@ -230,8 +243,8 @@ void ModuleImporter::LoadNode(const aiScene* importfile, aiNode* file_node, cons
 					}
 					else
 					{
-						LoadTextureFromMaterial(imported_route + texture_path.data, go);
-						SaveTextureToMeta(texture_path.C_Str());
+						LoadTextureFromMaterial(imported_route + path_tex, go);
+						SaveTextureToMeta(path_tex.c_str());
 					}
 
 				}
