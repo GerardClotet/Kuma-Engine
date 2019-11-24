@@ -590,6 +590,7 @@ meshInfo* ModuleImporter::LoadMeshFromMeta(const char* path)
 
 		char* cursor = buffer;
 		uint bytes = sizeof(ranges);
+		
 
 		memcpy(ranges, cursor, bytes);
 		mesh->num_vertex = ranges[0];

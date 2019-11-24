@@ -57,7 +57,8 @@ public:
 	unsigned int Load(const char* file, char** buffer) const;
 	SDL_RWops* Load(const char* file) const;
 	void* BassLoad(const char* file) const;
-
+	bool HasDirectoryInPath(const char* path);
+	void EraseDotsFromBegin(std::string& paht);
 	// IO interfaces for other libs to handle files via PHYSfs
 	aiFileIO* GetAssimpIO();
 	BASS_FILEPROCS* GetBassIO();

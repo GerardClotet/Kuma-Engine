@@ -142,7 +142,9 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 			
 			cmp_tex->name = path;
-			cmp_tex->name = tex_data->name.substr(tex_data->name.find_last_of("\\") + 1);
+
+			
+			//cmp_tex->name = cmp_tex->name.substr(tex_data->name.find_last_of("/") + 1);
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -168,7 +170,12 @@ TexData* ModuleTexture::LoadTexture(const char* path)
 
 			textures_vec.push_back(cmp_tex);
 		}
-		else LOG("Failure converting image, error: %s", iluErrorString(ilGetError())); //gives error whe laoding from meta, says the path has de dirtypart
+		else
+		{
+			LOG("Failure converting image, error: %s", iluErrorString(ilGetError())); //gives error whe laoding from meta, says the path has de dirtypart
+
+			return nullptr;
+		}
 
 
 

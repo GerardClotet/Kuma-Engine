@@ -78,9 +78,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	else
 		App->camera->capMouseInput = false;
 
-	LOG("preUpdte root");
 	UpdateGameObject(root);
-	LOG("postUpdte root");
 
 
 	return UPDATE_CONTINUE;

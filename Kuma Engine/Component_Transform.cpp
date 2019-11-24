@@ -51,8 +51,7 @@ Component_Transform::~Component_Transform()
 
 bool Component_Transform::Update()
 {
-	LOG("transfoorm update %s", gameObject_Item->name.c_str());
-
+	
 	return true;
 }
 

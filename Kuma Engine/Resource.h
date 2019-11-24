@@ -34,13 +34,19 @@ public:
 
 	bool LoadToMemory();
 
+
+	
+
 protected:
 	virtual bool LoadInMemory() = 0;
 	virtual void ReleaseFromMemory();
 
+	
 protected:
 	uint loaded;
 	UID uid;
 	Resource_Type type;
 	const char* ref_path;
+	std::string resource_name;
+
 };

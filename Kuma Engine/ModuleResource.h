@@ -35,7 +35,12 @@ public:
 
 	bool CheckifResourceExists(const char* ref_path);
 
+	bool FindFileInDirectory(const char* dir, const char* filename, const char* extension);
+
+
 	UID GenerateUID();
 public:
 	std::vector<Resource*> resources_vec;
+	std::vector<Resource*> model_resources_vec;
+
 };

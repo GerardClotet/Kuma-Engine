@@ -11,8 +11,7 @@
 
 #include <vector>
 
-#define CHECKERS_WIDTH 100	
-#define CHECKERS_HEIGHT 100
+
 
 class ResourceTexture;
 struct TexData

@@ -62,7 +62,8 @@ enum update_status
 #define LIBRARY_STATE_MACHINE_FOLDER "/Library/StateMachines/"
 #define FILE_MAX 250
 #define EXTENSION_LIST 5
-
+#define CHECKERS_WIDTH 100	
+#define CHECKERS_HEIGHT 100
 const char* extensions_size[EXTENSION_LIST]
 {
 	"fbx",

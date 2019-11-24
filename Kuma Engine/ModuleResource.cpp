@@ -139,18 +139,23 @@ Resource* ModuleResource::CreateNewResources(Resource::Resource_Type type, UID u
 	{
 	case Resource::model:
 		resource = (Resource*) new ResourceModel(uid,base_path);
+		model_resources_vec.push_back(resource);
+		resources_vec.push_back(resource);
 		break;
 	case Resource::texture:
 		resource = (Resource*) new ResourceTexture(uid, base_path);
+		resources_vec.push_back(resource);
 
 		break;
 	case Resource::mesh:
 		resource = (Resource*) new ResourceMesh(uid);
+		resources_vec.push_back(resource);
 
 		break;
 
 	case Resource::material:
 		resource = (Resource*) new ResourceMesh(uid);
+		resources_vec.push_back(resource);
 
 		break;
 	default:
@@ -200,6 +205,21 @@ bool ModuleResource::CheckifResourceExists(const char* ref_path) //check by refe
 
 		++it;
 	}
+
+	return false;
+}
+
+bool ModuleResource::FindFileInDirectory(const char* dir, const char* filename, const char* extension)
+{
+	std::vector<std::string> file_list;
+	
+	
+	std::string temp = dir;
+	temp = temp + filename;
+	temp = temp + extension;
+
+	if (App->fs->Exists(dir))
+		return true;
 
 	return false;
 }

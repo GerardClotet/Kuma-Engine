@@ -1,6 +1,12 @@
 #pragma once
 
 #include "Resource.h"
+#include "MathGeoLib/include/Math/float4x4.h"
+#include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Math/Quat.h"
+
+
+struct aiNode;
 struct aiMesh;
 struct m_debug
 {
@@ -18,10 +24,11 @@ public:
 	bool LoadInMemory() override;
 	void ReleaseFromMemory() override;
 
-	void GetInfoF(aiMesh* mesh);
+	void GetInfoF(aiMesh* mesh,aiNode* node);
 	void CreateFaceNormals();
 	bool SaveToMeta();
 	bool LoadMeta();
+	void BindBuffers();
 public:
 	uint id_index = 0;
 	uint num_index = 0;
@@ -44,4 +51,17 @@ public:
 	uint num_color = 0;
 	uint id_color = 0;
 	float* color = nullptr;
+
+	//
+
+	uint materialIndex;
+
+
+	//
+
+	float3 pos;
+	float3 scale;
+	Quat rot;
+
+	//float3* posptr;
 };

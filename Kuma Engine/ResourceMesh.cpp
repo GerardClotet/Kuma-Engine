@@ -3,6 +3,13 @@
 #include "Assimp/include/mesh.h"
 #include "glmath.h"
 #include "ModuleFileSystem.h"
+#include "MathGeoLib/include/MathGeoLib.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/postprocess.h"
+
+#include "Assimp/include/vector3.h"
+#include "Assimp/include/quaternion.h"
 ResourceMesh::ResourceMesh(UID id) : Resource(uid, Resource::Resource_Type::mesh)
 {
 	uid = id;
@@ -17,7 +24,7 @@ bool ResourceMesh::LoadInMemory()
 	return false;
 }
 
-void ResourceMesh::ReleaseFromMemory()
+void ResourceMesh::ReleaseFromMemory() //use when importing for fisrt time & and when reference count goes from 1 to 0
 {
 	delete[] index;
 	index = nullptr;
@@ -38,8 +45,11 @@ void ResourceMesh::ReleaseFromMemory()
 
 
 
-void ResourceMesh::GetInfoF(aiMesh* mesh)
+void ResourceMesh::GetInfoF(aiMesh* mesh,aiNode* node)
 {
+	resource_name = mesh->mName.C_Str();
+
+	materialIndex = mesh->mMaterialIndex;
 	num_vertex = mesh->mNumVertices;
 	vertex = new float[num_vertex * 3];
 
@@ -86,6 +96,26 @@ void ResourceMesh::GetInfoF(aiMesh* mesh)
 		}
 		LOG("New FBX mesh with %d colors", num_color);
 	}
+
+
+	aiVector3D translation, scaling;
+	aiQuaternion rotation;
+
+	node->mTransformation.Decompose(scaling, rotation, translation);
+
+	//Get the max value of the three components of the "scaling"
+	int max_ = max(scaling.x, scaling.y);
+	max_ = max(max_, scaling.z);
+
+	float3 pos_t(translation.x, translation.y, translation.z);
+	// Divide the scaling by it's max number to set to 1 the scale factor, and keeping the relation
+	float3 scale_t(scaling.x / max_, scaling.y / max_, scaling.z / max_);
+	Quat rot_t(rotation.x, rotation.y, rotation.z, rotation.w);
+
+	pos = pos_t;
+	scale = scale_t;
+	rot = rot_t;
+
 
 	//copy faces
 	
@@ -156,12 +186,15 @@ void ResourceMesh::CreateFaceNormals()
 
 bool ResourceMesh::SaveToMeta()
 {
+
 	uint ranges[5] = {
 		num_vertex,
 		num_index,
 		num_normal,
 		num_uvs,
 		num_color,
+	
+
 	};
 
 	uint size = sizeof(ranges)
@@ -169,9 +202,19 @@ bool ResourceMesh::SaveToMeta()
 		+ sizeof(uint) * num_index
 		+ sizeof(uint) * num_normal * 3
 		+ sizeof(uint) * num_uvs * 2
-		+ sizeof(uint) * num_color * 4;
-		/*+ sizeof(uint)
-		+ sizeof(char) * path_text.size();*/
+		+ sizeof(uint) * num_color * 4
+		+ sizeof(float) *3
+		+ sizeof(float)*3 
+		+ sizeof(float)*4;
+	
+		
+	/*		+ sizeof(float) * 3
+		+ sizeof(float) * 3
+		+ sizeof(float) * 4;*/
+
+
+
+
 	char* data = new char[size]; //Allocate
 	char* cursor = data;
 
@@ -213,13 +256,48 @@ bool ResourceMesh::SaveToMeta()
 
 
 
+
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		memcpy(cursor, &pos[i], bytes);
+	}
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		memcpy(cursor, &scale[i], bytes);
+	}
+
+	
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &rot.x, bytes);
+	
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &rot.y, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &rot.z, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	memcpy(cursor, &rot.w, bytes);
+	
+
+	
 	std::string name = LIBRARY_MESH_FOLDER + std::to_string(uid) + EXTENSION_META_KUMA;
 	std::string output;
 	bool ret = false;
 
 	ret = App->fs->SaveUnique(output, data, size, name.c_str());
 
-	
+	data = nullptr;
+	cursor = nullptr;
+
 	return ret;
 }
 
@@ -277,5 +355,101 @@ bool ResourceMesh::LoadMeta()
 	color = new float[num_color * 4];
 	memcpy(color, cursor, bytes);
 
-	return false;
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		float*t_f = new float;
+		memcpy(t_f, cursor, bytes);
+		
+		//float& si;
+		pos[i] = t_f[0];
+		LOG("pos %i %f",i,pos[i]);
+	
+	}
+	for (int i = 0; i < 3; ++i)
+	{
+		cursor += bytes;
+		bytes = sizeof(float);
+		float* t_f = new float;
+		memcpy(t_f, cursor, bytes);
+
+		//float& si;
+		scale[i] = t_f[0];
+		LOG("scale %i %f", i, pos[i]);
+
+	}
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	float* t_x = new float;
+	memcpy(t_x, cursor, bytes);
+
+	rot.x = t_x[0];
+	LOG("rot x %f",  rot.x);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	float* t_y = new float;
+	memcpy(t_y, cursor, bytes);
+
+	rot.y = t_y[0];
+	LOG("rot y %f", rot.y);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	float* t_z = new float;
+	memcpy(t_z, cursor, bytes);
+
+	rot.z = t_z[0];
+	LOG("rot z %f", rot.z);
+
+	cursor += bytes;
+	bytes = sizeof(float);
+	float* t_f = new float;
+	memcpy(t_f, cursor, bytes);
+
+	rot.w = t_f[0];
+	LOG("rot w %f", rot.w);
+
+	BindBuffers();
+
+	
+	return true;
+}
+
+void ResourceMesh::BindBuffers()
+{
+	id_vertex = 0;
+	glGenBuffers(1, (GLuint*) & (id_vertex));
+	glBindBuffer(GL_ARRAY_BUFFER, id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertex * 3, vertex, GL_STATIC_DRAW);
+
+
+	//Cube Vertex definition
+	id_index = 0;
+	glGenBuffers(1, (GLuint*) & (id_index));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_index);
+
+
+	//if ( OBJECT_TYPE::IMPORTER)  //if its from an fbx this
+	//{
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_index, index, GL_STATIC_DRAW);
+	//}
+
+	/*else  //if its parshape this
+	{
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_index * 3, index, GL_STATIC_DRAW);
+	}*/
+	//IndexNormal
+	id_normal = 0;
+	glGenBuffers(1, (GLuint*)& id_normal);
+	glBindBuffer(GL_ARRAY_BUFFER, id_normal);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_normal * 3, normal, GL_STATIC_DRAW);
+
+	//UVs
+	id_uvs = 0;
+	glGenBuffers(1, (GLuint*)& id_uvs);
+	glBindBuffer(GL_ARRAY_BUFFER, id_uvs);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_uvs * 2, uvs, GL_STATIC_DRAW);
 }

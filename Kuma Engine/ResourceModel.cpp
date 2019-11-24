@@ -2,10 +2,11 @@
 #include "ModuleResource.h"
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
+#include "ResourceMaterial.h"
+#include "ModuleFileSystem.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/postprocess.h"
-#include "RandomHelper.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -13,7 +14,8 @@ ResourceModel::ResourceModel(UID id, const char* base_path) : Resource(uid, Reso
 {
 	ref_path = base_path;
 	uid = id;
-	
+	resource_name = base_path;
+	resource_name = App->fs->GetFileName(base_path);
 	GenerateResource();
 }
 
@@ -52,55 +54,116 @@ void ResourceModel::LoadModel(const aiScene* model) //1
 	//i despres generate node per tindre totes les seves texts / materials
 
 	std::vector<UID> meshes;
+	uint n_mat = model->mNumMaterials;
+	uint num = model->mRootNode->mNumChildren;
+	
+	//model->mMeshes[0]->mMaterialIndex;
 
+	aiMaterial* mat;
+	
 	if (model->HasMeshes())
-		LoadModelMeshes(model,meshes);
+		LoadModelMeshes(model);
 
 	if (model->HasTextures()) {}
 		//LoadModelTextures()
 
-	if (model->HasMaterials()) {}
-		//LoadModelMaterials()
+	if (model->HasMaterials()) 
+		LoadModelMaterials(model);
 
-	uint num = model->mRootNode->mNumChildren;
+	
 	LOG("");
+}
+
+void ResourceModel::LoadNodeMesh(aiNode* node, const aiScene* model)
+{
+
+	for (uint i = 0; i < node->mNumMeshes; i++)
+	{
+		UID id = App->resources->GenerateUID();
+		ImportMesh(node,model->mMeshes[node->mMeshes[i]],id);
+		mesh_vec.push_back(id);
+	}
+
+	for (uint i = 0; i < node->mNumChildren; ++i)
+	{
+		LoadNodeMesh(node->mChildren[i], model);
+
+	}
+}
+
+void ResourceModel::LoadModelMaterials(const aiScene* model)
+{
+	for (uint i = 0; i < model->mNumMaterials; ++i)
+	{
+		UID id = App->resources->GenerateUID();
+		ImportMaterial(model->mMaterials[i],id);
+
+		mat_vec.push_back(id);
+	}
+}
+
+bool ResourceModel::ImportMaterial(aiMaterial* material,UID id)
+{
+
+	ResourceMaterial* m = (ResourceMaterial*)App->resources->CreateNewResources(Resource::Resource_Type::material, id, ref_path);
+	m->Import(material, ref_path);
+	return false;
 }
 
 
 
-void ResourceModel::LoadModelMeshes(const aiScene* model, std::vector<UID>& ids) //2 
+
+void ResourceModel::LoadModelMeshes(const aiScene* model) //2 
 {
 
 	//if(model->mNumMeshes >1)
 	//	LoadNode(const)
-	
+
 	//ids.reserve(model->mNumMeshes); //to create extact size_t of the vector //not needed
-	for (int i = 0; i < model->mNumMeshes; ++i)
+	
+	for (uint i =0 ; i < model->mRootNode->mNumMeshes; ++i)
 	{
 
-		UID kkk =  App->resources->GenerateUID();
-		ImportMesh(model->mMeshes[i],kkk);
-		ids.push_back(kkk);
-		
-		//ids.push_back(ResourceMesh::)
+		UID id = App->resources->GenerateUID();
+		ImportMesh(model->mRootNode, model->mMeshes[i], id);
+		mesh_vec.push_back(id);
 	}
+	for (int i = 0; i < model->mRootNode->mNumChildren; ++i)
+	{
+
+
+
+
+		//cridar funcio recvursiva aqui aqui
+		LoadNodeMesh(model->mRootNode->mChildren[i], model);
+
+		//ImportMesh()
+
+	}
+
+
+
 }
 
-void ResourceModel::ImportMesh(aiMesh* mesh, UID id) //3
+void ResourceModel::ImportMesh(aiNode* node,aiMesh* mesh, UID id) //3
 {
 	ResourceMesh* m = (ResourceMesh*)(App->resources->CreateNewResources(Resource::Resource_Type::mesh, id, ref_path));
 
-
-	m->GetInfoF(mesh);
+	mesh->mMaterialIndex;
+	m->GetInfoF(mesh,node);
 
 	if (m->SaveToMeta())
+	{
 		LOG("saved resource mesh to meta %i", m->GetUID());
+		m->ReleaseFromMemory();
+	}
 
 	else LOG("Failed saving resource mesh to meta %i", m->GetUID());
 
 
-	m->ReleaseFromMemory();
 
+
+	m->LoadMeta();
 	
 }
 
@@ -112,16 +175,8 @@ bool ResourceModel::SaveModelToMeta()
 	return false;
 }
 
-void ResourceModel::LoadNode(const aiScene* model, const aiNode* node, uint parent, const std::vector<UID>& meshes, const std::vector<UID>& mat)
-{
 
-	Node dst;
 
-	dst.transform = reinterpret_cast<const float4x4&>(node->mTransformation);
-	dst.name = node->mName.C_Str();
-	dst.parent = parent;
-
-}
 
 
 

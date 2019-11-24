@@ -28,7 +28,6 @@ bool Component_Material::Update()
 	{
 		LOG("SI");
 	}
-	LOG("material update %s", gameObject_Item->name.c_str());
 
 	return true;
 }
